@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         requestBody.put("password", password)
 
         val queue = Volley.newRequestQueue(this)
-        val url = "https://spotifiubyfy-users.herokuapp.com/docs#/default/register_new_user_users_post"
+        val url = "https://spotifiubyfy-users.herokuapp.com/users"
 
         val jsonRequest = JsonObjectRequest(Request.Method.POST, url, requestBody,
             { response -> val intent = Intent(this, DisplayMessageActivity::class.java).apply {
@@ -38,6 +38,8 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)},
             { response -> val intent = Intent(this, DisplayMessageActivity::class.java).apply {
                 putExtra("new_username", response.toString())
+                putExtra("new_password", response.networkResponse.statusCode.toString())
+
             }
                 startActivity(intent)})
 
