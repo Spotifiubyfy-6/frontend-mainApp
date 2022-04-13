@@ -12,70 +12,70 @@
         android:id="@+id/registration_password"
         android:layout_width="210dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@color/blue_800"
-        android:backgroundTint="@color/blue_800"
-        android:backgroundTintMode="multiply"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/registration_password"
         android:inputType="textPassword"
-        android:textColor="@color/blue_600"
-        android:textColorHint="@color/blue_600"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registration_username"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@+id/registration_username" />
 
     <EditText
         android:id="@+id/registration_username"
         android:layout_width="210dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@color/blue_800"
-        android:backgroundTint="@color/blue_800"
-        android:backgroundTintMode="multiply"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/registration_username"
         android:inputType="textPersonName"
-        android:textColor="@color/blue_600"
-        android:textColorHint="@color/blue_600"
         app:layout_constraintBottom_toTopOf="@+id/registration_password"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@+id/registration_email" />
+
+    <EditText
+        android:id="@+id/registration_email"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/registration_email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toTopOf="@+id/registration_username"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SpotifiubyfyLogo" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="72dp"
-        android:background="@color/dark_grey"
+        android:layout_marginBottom="8dp"
         android:onClick="sendMessage"
         android:text="@string/button_signIn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registration_password"
         tools:ignore="UsingOnClickInXml" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/SpotifiubyfyLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/registration_username"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/LogoApp"
+        app:layout_constraintBottom_toTopOf="@+id/registration_email"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/spotifiubyfy_removebg_preview"
-        android:contentDescription="@string/LogoApp" />
+        app:srcCompat="@drawable/spotifiubyfy_removebg_preview" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

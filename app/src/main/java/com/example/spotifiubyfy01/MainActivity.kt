@@ -18,12 +18,13 @@ class MainActivity : AppCompatActivity() {
     }
     /** Called when the user taps the Send button */
     fun sendMessage(view: View) {
+        val email = findViewById<EditText>(R.id.registration_email).text.toString()
         val username = findViewById<EditText>(R.id.registration_username).text.toString()
         val password = findViewById<EditText>(R.id.registration_password).text.toString()
 
         val requestBody = JSONObject()
 
-        requestBody.put("email", "unEjemploHardcodeado@fi.uba.ar")
+        requestBody.put("email", email)
         requestBody.put("username", username)
         requestBody.put("user_type", "listener")
         requestBody.put("password", password)
@@ -33,13 +34,12 @@ class MainActivity : AppCompatActivity() {
 
         val jsonRequest = JsonObjectRequest(Request.Method.POST, url, requestBody,
             { response -> val intent = Intent(this, DisplayMessageActivity::class.java).apply {
-                putExtra("new_username", response.toString())
+                putExtra("new_password", "Su usuario se registro correctamente")
             }
                 startActivity(intent)},
             { response -> val intent = Intent(this, DisplayMessageActivity::class.java).apply {
                 putExtra("new_username", response.toString())
                 putExtra("new_password", response.networkResponse.statusCode.toString())
-
             }
                 startActivity(intent)})
 
