@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
+import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
@@ -34,12 +35,12 @@ class MainActivity : AppCompatActivity() {
 
         val jsonRequest = JsonObjectRequest(Request.Method.POST, url, requestBody,
             { response -> val intent = Intent(this, DisplayMessageActivity::class.java).apply {
-                putExtra("new_password", "Su usuario se registro correctamente")
+                putExtra("new_password", "Registration successful")
             }
                 startActivity(intent)},
-            { response -> val intent = Intent(this, DisplayMessageActivity::class.java).apply {
-                putExtra("new_username", response.toString())
-                putExtra("new_password", response.networkResponse.statusCode.toString())
+            { response -> val intent = Intent(this, PopUpWindow::class.java).apply {
+                val error = response.networkResponse.data.decodeToString().split('"')[3]
+                putExtra("popuptext", error)
             }
                 startActivity(intent)})
 

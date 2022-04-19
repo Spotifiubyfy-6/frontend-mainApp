@@ -5,4 +5,7 @@
     <string name="registration_password">Enter a secure password</string>
     <string name="LogoApp" />
     <string name="registration_email">Enter your email</string>
+    <string name="Popup_content">Descriptive Message</string>
+    <string name="Popup_title">Error</string>
+    <string name="Popup_button_text">OK</string>
 </resources>
