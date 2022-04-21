@@ -2,11 +2,13 @@ package com.example.spotifiubyfy01
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
-import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
@@ -16,12 +18,85 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val signInButton = findViewById<Button>(R.id.sign_in_button)
+        signInButton.disable()
+
+        val email = findViewById<EditText>(R.id.registration_email)
+        val username = findViewById<EditText>(R.id.registration_username)
+        val password = findViewById<EditText>(R.id.registration_password)
+
+        var validEmail = false
+        var validUsername = false
+        var validPassword = false
+
+        email.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                val regex = """^[a-z0-9]+[._]?[a-z0-9]+@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(])""".toRegex()
+                if (!regex.matches(email.text.toString())) {
+                    email.error = "Please enter a valid email"
+                    validEmail = false
+                    signInButton.disable()
+                } else {
+                    email.error = null
+                    validEmail = true
+                    if (validEmail and validPassword and validUsername) signInButton.enable()
+                }
+            }
+        })
+        username.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                val regex = """^[A-Za-z][A-Za-z0-9_]{4,29}${'$'}""".toRegex()
+                if (!regex.matches(username.text.toString())) {
+                    username.error = "Please enter a valid username"
+                    validUsername = false
+                    signInButton.disable()
+                } else {
+                    username.error = null
+                    validUsername = true
+                    if (validEmail and validPassword and validUsername) signInButton.enable()
+                }
+            }
+        })
+        password.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                val regex = """^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}${'$'}""".toRegex()
+                if (!regex.matches(password.text.toString())) {
+                    password.error = "Please use a secure password"
+                    validPassword = false
+                    signInButton.disable()
+                } else {
+                    password.error = null
+                    validPassword = true
+                    if (validEmail and validPassword and validUsername) signInButton.enable()
+                }
+            }
+        })
     }
     /** Called when the user taps the Send button */
     fun sendMessage(view: View) {
         val email = findViewById<EditText>(R.id.registration_email).text.toString()
         val username = findViewById<EditText>(R.id.registration_username).text.toString()
         val password = findViewById<EditText>(R.id.registration_password).text.toString()
+
 
         val requestBody = JSONObject()
 
@@ -46,4 +121,15 @@ class MainActivity : AppCompatActivity() {
 
         queue.add(jsonRequest)
     }
+
+    fun View.disable() {
+        alpha = .2f
+        isClickable = false
+    }
+
+    fun View.enable() {
+        alpha = 1f
+        isClickable = true
+    }
 }
+
