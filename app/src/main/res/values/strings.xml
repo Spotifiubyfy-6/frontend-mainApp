@@ -8,4 +8,9 @@
     <string name="Popup_content">Descriptive Message</string>
     <string name="Popup_title">Error</string>
     <string name="Popup_button_text">OK</string>
+    <string name="Email_example">example99@domain.com</string>
+    <string name="Username_restriction1">No special characters nor white spaces allowed</string>
+    <string name="Username_restriction2">Between 5 and 30 characters</string>
+    <string name="Password_restrictions">At least 6 characters, 1 number and 1 letter</string>
+
 </resources>
