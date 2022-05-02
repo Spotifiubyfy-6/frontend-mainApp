@@ -14,7 +14,7 @@ import com.android.volley.toolbox.Volley
 import org.json.JSONObject
 
 
-class MainActivity : AppCompatActivity() {
+class SignInLandingPage : AppCompatActivity() {
     @Suppress("RegExpRedundantEscape")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,9 +39,8 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable) {
-                val regex = """^[a-z0-9]+[\._]?[a-z0-9]+@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)""".toRegex()
-                if (!regex.matches(email.text.toString())) {
-                    email.error = "Please enter a valid email"
+                if (!email.text.toString().contains('@')) {
+                    email.error = "Please enter an email"
                     validEmail = false
                     signInButton.disable()
                 } else {
