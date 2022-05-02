@@ -13,7 +13,32 @@
         android:theme="@style/Theme.Spotifiubyfy01">
         <activity
             android:name=".MainLandingPage"
-            android:exported="false" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".LogInPage"
+            android:exported="false"
+            android:parentActivityName=".MainLandingPage">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainLandingPage" />
+        </activity>
+        <activity
+            android:name=".SignInLandingPage"
+            android:exported="false"
+            android:parentActivityName=".MainLandingPage">
+
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainLandingPage" />
+        </activity>
         <activity
             android:name=".DisplayMessageActivity"
             android:parentActivityName=".SignInLandingPage">
@@ -22,15 +47,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SignInLandingPage" />
-        </activity>
-        <activity
-            android:name=".SignInLandingPage"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".PopUpWindow" />
     </application>

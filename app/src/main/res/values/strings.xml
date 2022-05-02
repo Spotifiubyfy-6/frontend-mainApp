@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">Spotifiubyfy.0.1</string>
     <string name="registration_username">Enter a Username</string>
-    <string name="button_signIn">Sign In</string>
+    <string name="button_create_account">Create Account</string>
+    <string name="button_log_in">Log In</string>
+    <string name="button_sign_up">Sign Up</string>
+    <string name="dont_have_account">Dont have an account? Just create one!</string>
     <string name="registration_password">Enter a secure password</string>
     <string name="LogoApp" />
     <string name="registration_email">Enter your email</string>

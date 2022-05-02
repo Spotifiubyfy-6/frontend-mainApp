@@ -19,7 +19,7 @@ class SignInLandingPage : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signin_landing_page)
 
-        val signInButton = findViewById<Button>(R.id.sign_in_button)
+        val signInButton = findViewById<Button>(R.id.create_account_button)
         signInButton.disable()
 
         val email = findViewById<EditText>(R.id.registration_email)
