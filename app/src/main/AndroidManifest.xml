@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.spotifiubyfy01">
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,8 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Spotifiubyfy01">
-        <activity android:name=".DisplayMessageActivity"
+        <activity
+            android:name=".MainLandingPage"
+            android:exported="false" />
+        <activity
+            android:name=".DisplayMessageActivity"
             android:parentActivityName=".SignInLandingPage">
+
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -25,9 +32,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.example.spotifiubyfy01.PopUpWindow"
-            />
+        <activity android:name=".PopUpWindow" />
     </application>
 
 </manifest>

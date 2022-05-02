@@ -15,10 +15,9 @@ import org.json.JSONObject
 
 
 class SignInLandingPage : AppCompatActivity() {
-    @Suppress("RegExpRedundantEscape")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_signin_landing_page)
 
         val signInButton = findViewById<Button>(R.id.sign_in_button)
         signInButton.disable()
