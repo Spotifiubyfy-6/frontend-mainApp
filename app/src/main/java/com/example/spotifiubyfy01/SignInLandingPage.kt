@@ -10,7 +10,6 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
 import org.json.JSONObject
 
 
@@ -104,7 +103,7 @@ class SignInLandingPage : AppCompatActivity() {
         requestBody.put("user_type", "listener")
         requestBody.put("password", password)
 
-        val queue = MyRequestQueue.getInstance(this.applicationContext).requestQueue
+//        val queue = MyRequestQueue.getInstance(this.applicationContext).requestQueue
         val url = "https://spotifiubyfy-users.herokuapp.com/users"
 
         val jsonRequest = JsonObjectRequest(Request.Method.POST, url, requestBody,
