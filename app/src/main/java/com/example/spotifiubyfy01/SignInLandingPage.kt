@@ -104,7 +104,7 @@ class SignInLandingPage : AppCompatActivity() {
         requestBody.put("user_type", "listener")
         requestBody.put("password", password)
 
-        val queue = Volley.newRequestQueue(this)
+        val queue = MyRequestQueue.getInstance(this.applicationContext).requestQueue
         val url = "https://spotifiubyfy-users.herokuapp.com/users"
 
         val jsonRequest = JsonObjectRequest(Request.Method.POST, url, requestBody,
@@ -112,13 +112,13 @@ class SignInLandingPage : AppCompatActivity() {
                 putExtra("new_password", "Registration successful")
             }
                 startActivity(intent)},
-            { response -> val intent = Intent(this, PopUpWindow::class.java).apply {
-                val error = response.networkResponse.data.decodeToString().split('"')[3]
+            { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
+                val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
                 putExtra("popuptext", error)
             }
                 startActivity(intent)})
 
-        queue.add(jsonRequest)
+        MyRequestQueue.getInstance(this).addToRequestQueue(jsonRequest)
     }
 
     fun View.disable() {
