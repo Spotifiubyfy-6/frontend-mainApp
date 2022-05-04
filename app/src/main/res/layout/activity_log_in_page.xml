@@ -8,6 +8,20 @@
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="6dp">
 
+    <ImageView
+        android:id="@+id/SpotifiubyfyLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/LogoApp"
+        app:layout_constraintBottom_toTopOf="@+id/logIn_username"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/spotifiubyfy_removebg_preview" />
+
     <EditText
         android:id="@+id/logIn_username"
         android:layout_width="250dp"
@@ -19,22 +33,21 @@
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/logIn_password"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/SpotifiubyfyLogo" />
 
     <EditText
         android:id="@+id/logIn_password"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/logIn_password"
         android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@+id/log_in_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logIn_username" />
 
@@ -42,12 +55,12 @@
         android:id="@+id/log_in_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/button_log_in"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logIn_password" />
 
