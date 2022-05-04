@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">Spotifiubyfy.0.1</string>
-    <string name="registration_username">Enter a Username</string>
-    <string name="button_signIn">Sign In</string>
+    <string name="registration_username">Enter a username</string>
+    <string name="button_create_account">Create Account</string>
+    <string name="button_log_in">Log In</string>
+    <string name="button_sign_up">Sign Up</string>
+    <string name="dont_have_account">Don\'t have an account? Just create one!</string>
     <string name="registration_password">Enter a secure password</string>
     <string name="LogoApp" />
     <string name="registration_email">Enter your email</string>
@@ -12,5 +15,7 @@
     <string name="Username_restriction1">No special characters nor white spaces allowed</string>
     <string name="Username_restriction2">Between 5 and 30 characters</string>
     <string name="Password_restrictions">At least 6 characters, 1 number and 1 letter</string>
+    <string name="LogIn_username">Enter your username</string>
+    <string name="logIn_password">Enter your password</string>
 
 </resources>

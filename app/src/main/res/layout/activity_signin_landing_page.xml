@@ -9,23 +9,26 @@
     tools:layout_editor_absoluteY="-95dp">
 
     <EditText
-        android:id="@+id/registration_password"
+        android:id="@+id/registration_email"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:autofillHints=""
         android:ems="10"
-        android:hint="@string/registration_password"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/sign_in_button"
+        android:hint="@string/registration_email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toTopOf="@+id/registration_username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registration_username" />
+        app:layout_constraintTop_toBottomOf="@+id/SpotifiubyfyLogo" />
 
     <EditText
         android:id="@+id/registration_username"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/registration_username"
@@ -37,26 +40,29 @@
         app:layout_constraintTop_toBottomOf="@+id/registration_email" />
 
     <EditText
-        android:id="@+id/registration_email"
+        android:id="@+id/registration_password"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:autofillHints=""
         android:ems="10"
-        android:hint="@string/registration_email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/registration_username"
+        android:hint="@string/registration_password"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/create_account_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SpotifiubyfyLogo" />
+        app:layout_constraintTop_toBottomOf="@+id/registration_username" />
+
 
     <Button
-        android:id="@+id/sign_in_button"
+        android:id="@+id/create_account_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:onClick="sendMessage"
-        android:text="@string/button_signIn"
+        android:text="@string/button_create_account"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
