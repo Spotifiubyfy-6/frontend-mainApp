@@ -17,5 +17,6 @@
     <string name="Password_restrictions">At least 6 characters, 1 number and 1 letter</string>
     <string name="LogIn_username">Enter your username</string>
     <string name="logIn_password">Enter your password</string>
+    <string name="token_key">token_key</string>
 
 </resources>
