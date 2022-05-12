@@ -1,6 +1,7 @@
 package com.example.spotifiubyfy01
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -26,8 +27,11 @@ class ProfilePage : AppCompatActivity() {
                 val responseJson = JSONObject(response)
                 findViewById<TextView>(R.id.username).text = responseJson.getString("username")
             },
-            Response.ErrorListener { error -> // TODO Auto-generated method stub
-                findViewById<TextView>(R.id.username).text =  error.networkResponse.data.decodeToString().split('"')[3] //todo mandar un popup diciendo que caduco el token y que debe logearse de vuelta, volver a la pantalla de inicio
+            { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
+                val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
+                putExtra("popuptext", error)
+                putExtra("tokenValidation", true) }
+                startActivity(intent)
             }
         ) {
             @Throws(AuthFailureError::class)
