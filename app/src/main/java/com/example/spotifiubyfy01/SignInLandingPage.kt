@@ -1,5 +1,6 @@
 package com.example.spotifiubyfy01
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -10,6 +11,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.StringRequest
 import org.json.JSONObject
 
 
@@ -88,37 +90,40 @@ class SignInLandingPage : AppCompatActivity() {
                 }
             }
         })
-    }
-    /** Called when the user taps the Send button */
-    fun sendMessage(view: View) {
-        val email = findViewById<EditText>(R.id.registration_email).text.toString()
-        val username = findViewById<EditText>(R.id.registration_username).text.toString()
-        val password = findViewById<EditText>(R.id.registration_password).text.toString()
 
 
-        val requestBody = JSONObject()
+        val logInClick = findViewById<Button>(R.id.create_account_button)
+        logInClick.setOnClickListener {
+            val email = findViewById<EditText>(R.id.registration_email).text.toString()
+            val username = findViewById<EditText>(R.id.registration_username).text.toString()
+            val password = findViewById<EditText>(R.id.registration_password).text.toString()
 
-        requestBody.put("email", email)
-        requestBody.put("username", username)
-        requestBody.put("user_type", "listener")
-        requestBody.put("password", password)
+
+            val requestBody = JSONObject()
+
+            requestBody.put("email", email)
+            requestBody.put("username", username)
+            requestBody.put("user_type", "listener")
+            requestBody.put("password", password)
 
 //        val queue = MyRequestQueue.getInstance(this.applicationContext).requestQueue
-        val url = "https://spotifiubyfy-users.herokuapp.com/users"
+            val url = "https://spotifiubyfy-users.herokuapp.com/users"
 
-        val jsonRequest = JsonObjectRequest(Request.Method.POST, url, requestBody,
-            { response -> val intent = Intent(this, DisplayMessageActivity::class.java).apply {
-                putExtra("new_password", "Registration successful")
-            }
-                startActivity(intent)},
-            { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
-                val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
-                putExtra("popuptext", error)
-            }
-                startActivity(intent)})
+            val jsonRequest = JsonObjectRequest(Request.Method.POST, url, requestBody,
+                { response -> val intent = Intent(this, DisplayMessageActivity::class.java).apply {
+                    putExtra("new_password", "Registration successful")
+                }
+                    startActivity(intent)},
+                { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
+                    val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
+                    putExtra("popuptext", error)
+                }
+                    startActivity(intent)})
 
-        MyRequestQueue.getInstance(this).addToRequestQueue(jsonRequest)
+            MyRequestQueue.getInstance(this).addToRequestQueue(jsonRequest)
+        }
     }
+
 
     fun View.disable() {
         alpha = .2f
