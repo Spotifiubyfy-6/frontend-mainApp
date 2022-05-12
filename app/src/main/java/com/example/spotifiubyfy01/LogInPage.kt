@@ -31,7 +31,6 @@ class LogInPage : AppCompatActivity() {
                         putString(getString(R.string.token_key), response.split('"')[3])
                         apply()
                     }
-                    putExtra("new_password", sharedPref.getString(getString(R.string.token_key), null))
                 }
                     startActivity(intent)},
                 { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
