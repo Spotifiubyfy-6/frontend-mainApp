@@ -26,6 +26,9 @@ class ProfilePage : AppCompatActivity() {
             Response.Listener { response -> // response
                 val responseJson = JSONObject(response)
                 findViewById<TextView>(R.id.username).text = responseJson.getString("username")
+                findViewById<TextView>(R.id.email).text = responseJson.getString("email")
+                findViewById<TextView>(R.id.subscription).text = responseJson.getString("user_suscription")
+
             },
             { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
                 val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
