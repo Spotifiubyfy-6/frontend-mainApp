@@ -4,6 +4,8 @@
     <string name="button_create_account">Create Account</string>
     <string name="button_log_in">Log In</string>
     <string name="button_sign_up">Sign Up</string>
+    <string name="button_edit">Edit</string>
+    <string name="button_logOut">Log Out</string>
     <string name="dont_have_account">Don\'t have an account? Just create one!</string>
     <string name="registration_password">Enter a secure password</string>
     <string name="LogoApp" />
@@ -17,5 +19,10 @@
     <string name="Password_restrictions">At least 6 characters, 1 number and 1 letter</string>
     <string name="LogIn_username">Enter your username</string>
     <string name="logIn_password">Enter your password</string>
+    <string name="token_key">token_key</string>
+    <string name="username">Username: </string>
+    <string name="email">Email: </string>
+    <string name="subscription">Active subscription: </string>
+    <string name="profile">Profile: </string>
 
 </resources>

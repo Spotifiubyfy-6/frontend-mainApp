@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -95,10 +96,14 @@ class PopUpWindow : AppCompatActivity() {
         findViewById<CardView>(R.id.popup_window_view_with_border).animate().alpha(0f).setDuration(500).setInterpolator(
             DecelerateInterpolator()
         ).start()
-
+        val context = this
         // After animation finish, close the Activity
         colorAnimation.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
+                if (intent.extras?.getBoolean("tokenValidation") == true) {
+                    val intent = Intent(context, MainLandingPage::class.java)
+                    startActivity(intent)
+                }
                 finish()
                 overridePendingTransition(0, 0)
             }
