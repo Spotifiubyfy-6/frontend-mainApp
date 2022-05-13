@@ -3,6 +3,7 @@ package com.example.spotifiubyfy01
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.AuthFailureError
@@ -16,6 +17,17 @@ class ProfilePage : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_page)
         get_profile_data()
+
+        val logOutClick = findViewById<Button>(R.id.logOutButton)
+        logOutClick.setOnClickListener {
+            val sharedPref = getSharedPreferences(getString(R.string.token_key), Context.MODE_PRIVATE)
+            with (sharedPref.edit()) {
+                putString(getString(R.string.token_key), "")
+                apply()
+            }
+            val intent = Intent(this, MainLandingPage::class.java)
+            startActivity(intent)
+        }
 
     }
 
