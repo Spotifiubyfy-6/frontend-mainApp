@@ -1,5 +1,6 @@
 package com.example.spotifiubyfy01
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -24,8 +25,12 @@ class LogInPage : AppCompatActivity() {
             val url = "https://spotifiubyfy-users.herokuapp.com/token"
 
             val jsonRequest: StringRequest = object : StringRequest(
-                Method.POST, url, { response -> val intent = Intent(this, DisplayMessageActivity::class.java).apply {
-                    putExtra("new_password", "LogIn successful")
+                Method.POST, url, { response -> val intent = Intent(this, ProfilePage::class.java).apply {
+                    val sharedPref = getSharedPreferences(getString(R.string.token_key), Context.MODE_PRIVATE)
+                    with (sharedPref.edit()) {
+                        putString(getString(R.string.token_key), response.split('"')[3])
+                        apply()
+                    }
                 }
                     startActivity(intent)},
                 { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {

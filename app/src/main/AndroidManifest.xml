@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Spotifiubyfy01">
         <activity
-            android:name=".MainLandingPage"
+            android:name=".LoadingScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,9 +21,19 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".MainLandingPage"
+            android:exported="true" />
+        <activity
+            android:name=".ProfilePage"
+            android:exported="false" />
+        <activity
+            android:name=".HomePage"
+            android:exported="false" />
+        <activity
             android:name=".LogInPage"
             android:exported="false"
             android:parentActivityName=".MainLandingPage">
+
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
