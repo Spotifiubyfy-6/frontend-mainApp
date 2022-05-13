@@ -1,6 +1,5 @@
 package com.example.spotifiubyfy01
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -11,7 +10,6 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.StringRequest
 import org.json.JSONObject
 
 
@@ -92,21 +90,14 @@ class SignInLandingPage : AppCompatActivity() {
         })
 
 
-        val logInClick = findViewById<Button>(R.id.create_account_button)
-        logInClick.setOnClickListener {
-            val email = findViewById<EditText>(R.id.registration_email).text.toString()
-            val username = findViewById<EditText>(R.id.registration_username).text.toString()
-            val password = findViewById<EditText>(R.id.registration_password).text.toString()
-
-
+        signInButton.setOnClickListener {
             val requestBody = JSONObject()
 
-            requestBody.put("email", email)
-            requestBody.put("username", username)
+            requestBody.put("email", email.toString())
+            requestBody.put("username", username.toString())
             requestBody.put("user_type", "listener")
-            requestBody.put("password", password)
+            requestBody.put("password", password.toString())
 
-//        val queue = MyRequestQueue.getInstance(this.applicationContext).requestQueue
             val url = "https://spotifiubyfy-users.herokuapp.com/users"
 
             val jsonRequest = JsonObjectRequest(Request.Method.POST, url, requestBody,

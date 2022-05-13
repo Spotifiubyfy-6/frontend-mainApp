@@ -16,7 +16,7 @@ class ProfilePage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_page)
-        get_profile_data()
+        getProfileData()
 
         val logOutClick = findViewById<Button>(R.id.logOutButton)
         logOutClick.setOnClickListener {
@@ -31,7 +31,7 @@ class ProfilePage : AppCompatActivity() {
 
     }
 
-    fun get_profile_data() {
+    private fun getProfileData() {
         val url = "https://spotifiubyfy-users.herokuapp.com/users/me"
         val getRequest: StringRequest = object : StringRequest(
             Method.GET, url,

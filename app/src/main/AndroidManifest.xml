@@ -27,9 +27,6 @@
             android:name=".ProfilePage"
             android:exported="false" />
         <activity
-            android:name=".HomePage"
-            android:exported="false" />
-        <activity
             android:name=".LogInPage"
             android:exported="false"
             android:parentActivityName=".MainLandingPage">
