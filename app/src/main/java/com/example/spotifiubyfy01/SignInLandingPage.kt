@@ -93,10 +93,10 @@ class SignInLandingPage : AppCompatActivity() {
         signInButton.setOnClickListener {
             val requestBody = JSONObject()
 
-            requestBody.put("email", email.toString())
-            requestBody.put("username", username.toString())
+            requestBody.put("email", email.text.toString())
+            requestBody.put("username", username.text.toString())
             requestBody.put("user_type", "listener")
-            requestBody.put("password", password.toString())
+            requestBody.put("password", password.text.toString())
 
             val url = "https://spotifiubyfy-users.herokuapp.com/users"
 
@@ -106,7 +106,8 @@ class SignInLandingPage : AppCompatActivity() {
                 }
                     startActivity(intent)},
                 { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
-                    val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
+//                    val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
+                    val error = requestBody.toString()
                     putExtra("popuptext", error)
                 }
                     startActivity(intent)})
