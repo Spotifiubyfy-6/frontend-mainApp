@@ -106,8 +106,7 @@ class SignInLandingPage : AppCompatActivity() {
                 }
                     startActivity(intent)},
                 { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
-//                    val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
-                    val error = requestBody.toString()
+                    val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
                     putExtra("popuptext", error)
                 }
                     startActivity(intent)})
