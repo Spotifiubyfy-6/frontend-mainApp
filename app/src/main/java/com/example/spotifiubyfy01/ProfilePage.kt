@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
@@ -18,6 +19,9 @@ class ProfilePage : AppCompatActivity() {
         setContentView(R.layout.activity_profile_page)
         getProfileData()
 
+        if ( !intent.getStringExtra("passwordChangeSuccess").isNullOrEmpty()) {
+            Toast.makeText(this, intent.getStringExtra("passwordChangeSuccess"),Toast.LENGTH_LONG).show()
+        }
         val logOutClick = findViewById<Button>(R.id.logOutButton)
         logOutClick.setOnClickListener {
             val sharedPref = getSharedPreferences(getString(R.string.token_key), Context.MODE_PRIVATE)
@@ -26,6 +30,12 @@ class ProfilePage : AppCompatActivity() {
                 apply()
             }
             val intent = Intent(this, MainLandingPage::class.java)
+            startActivity(intent)
+        }
+
+        val editClick = findViewById<Button>(R.id.editButton)
+        editClick.setOnClickListener {
+            val intent = Intent(this, ProfileEditPage::class.java)
             startActivity(intent)
         }
 
@@ -56,8 +66,6 @@ class ProfilePage : AppCompatActivity() {
                 return params
             }
         }
-
-
         MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
     }
 }
