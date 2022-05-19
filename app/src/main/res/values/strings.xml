@@ -25,5 +25,9 @@
     <string name="subscription">Active subscription: </string>
     <string name="profile">Profile: </string>
     <string name="example">TextSomething </string>
+    <string name="changePassword">Change Password: </string>
+    <string name="oldPassword">Enter your old password: </string>
+    <string name="newPassword">Enter your new password: </string>
+    <string name="changePasswordButton">Change Password </string>
 
 </resources>

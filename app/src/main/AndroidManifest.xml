@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Spotifiubyfy01">
         <activity
+            android:name=".ProfileEditPage"
+            android:exported="false" />
+        <activity
             android:name=".LoadingScreen"
             android:exported="true">
             <intent-filter>
