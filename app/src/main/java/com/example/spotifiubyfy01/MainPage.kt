@@ -15,6 +15,13 @@ class MainPage: AppCompatActivity() {
             val intent = Intent(this, ProfilePage::class.java)
             startActivity(intent)
         }
+
+        val search_button = findViewById<Button>(R.id.search_button)
+        search_button.setOnClickListener {
+            val intent = Intent(this, SearchPage::class.java)
+            startActivity(intent)
+        }
+
     }
 
 

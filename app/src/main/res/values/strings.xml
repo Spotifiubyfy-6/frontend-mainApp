@@ -21,6 +21,7 @@
     <string name="logIn_password">Enter your password</string>
     <string name="token_key">token_key</string>
     <string name="username">Username: </string>
+    <string name="search"> songs, artists, albums, playlists...</string>
     <string name="email">Email: </string>
     <string name="subscription">Active subscription: </string>
     <string name="profile">Profile: </string>
