@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -19,7 +18,7 @@ class SignInLandingPage : AppCompatActivity() {
         setContentView(R.layout.activity_signin_landing_page)
 
         val signInButton = findViewById<Button>(R.id.create_account_button)
-        signInButton.disable()
+        signInButton.isEnabled = false
 
         val email = findViewById<EditText>(R.id.registration_email)
         val username = findViewById<EditText>(R.id.registration_username)
@@ -40,11 +39,11 @@ class SignInLandingPage : AppCompatActivity() {
                 if (!email.text.toString().contains('@')) {
                     email.error = "Please enter an email"
                     validEmail = false
-                    signInButton.disable()
+                    signInButton.isEnabled = false
                 } else {
                     email.error = null
                     validEmail = true
-                    if (validEmail and validPassword and validUsername) signInButton.enable()
+                    if (validEmail and validPassword and validUsername) signInButton.isEnabled = true
                 }
             }
         })
@@ -60,11 +59,11 @@ class SignInLandingPage : AppCompatActivity() {
                 if (!regex.matches(username.text.toString())) {
                     username.error = "Please enter a valid username"
                     validUsername = false
-                    signInButton.disable()
+                    signInButton.isEnabled = false
                 } else {
                     username.error = null
                     validUsername = true
-                    if (validEmail and validPassword and validUsername) signInButton.enable()
+                    if (validEmail and validPassword and validUsername) signInButton.isEnabled = true
                 }
             }
         })
@@ -80,11 +79,11 @@ class SignInLandingPage : AppCompatActivity() {
                 if (!regex.matches(password.text.toString())) {
                     password.error = "Please use a secure password"
                     validPassword = false
-                    signInButton.disable()
+                    signInButton.isEnabled = false
                 } else {
                     password.error = null
                     validPassword = true
-                    if (validEmail and validPassword and validUsername) signInButton.enable()
+                    if (validEmail and validPassword and validUsername) signInButton.isEnabled = true
                 }
             }
         })
@@ -93,10 +92,10 @@ class SignInLandingPage : AppCompatActivity() {
         signInButton.setOnClickListener {
             val requestBody = JSONObject()
 
-            requestBody.put("email", email.toString())
-            requestBody.put("username", username.toString())
+            requestBody.put("email", email.text.toString())
+            requestBody.put("username", username.text.toString())
             requestBody.put("user_type", "listener")
-            requestBody.put("password", password.toString())
+            requestBody.put("password", password.text.toString())
 
             val url = "https://spotifiubyfy-users.herokuapp.com/users"
 
@@ -113,17 +112,6 @@ class SignInLandingPage : AppCompatActivity() {
 
             MyRequestQueue.getInstance(this).addToRequestQueue(jsonRequest)
         }
-    }
-
-
-    fun View.disable() {
-        alpha = .2f
-        isClickable = false
-    }
-
-    fun View.enable() {
-        alpha = 1f
-        isClickable = true
     }
 }
 

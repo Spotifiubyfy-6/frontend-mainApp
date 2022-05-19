@@ -29,5 +29,9 @@
     <string name="search_bar_preferences">artist name</string>
     <string name="next_button_artist_preferences">Next</string>
     <string name="title_activity_location_selection">LocationSelection</string>
+    <string name="changePassword">Change Password: </string>
+    <string name="oldPassword">Enter your old password: </string>
+    <string name="newPassword">Enter your new password: </string>
+    <string name="changePasswordButton">Change Password </string>
 
 </resources>

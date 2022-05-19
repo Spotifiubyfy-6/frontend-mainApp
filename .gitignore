@@ -14,4 +14,9 @@
 /captures
 .externalNativeBuild
 .cxx
+# Default ignored files
+/shelf/
+/workspace.xml
+.idea/
 local.properties
+.gradle/
