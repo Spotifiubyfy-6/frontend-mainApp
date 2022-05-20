@@ -21,7 +21,7 @@ class LoadingScreen : AppCompatActivity() {
         val getRequest: StringRequest = object : StringRequest(
             Method.GET, url,
             Response.Listener {
-                val intent = Intent(this, ProfilePage::class.java)
+                val intent = Intent(this, MainPage::class.java)
                 startActivity(intent)
             },
             { val intent = Intent(this, MainLandingPage::class.java)
