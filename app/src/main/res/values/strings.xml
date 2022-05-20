@@ -25,7 +25,7 @@
     <string name="subscription">Active subscription: </string>
     <string name="profile">Profile: </string>
     <string name="example">TextSomething </string>
-    <string name="artist_preference_title">Choose 3 or more artist you like</string>
+    <string name="genres_preference_title">Choose 3 or more genres you like</string>
     <string name="search_bar_preferences">artist name</string>
     <string name="next_button_artist_preferences">Next</string>
     <string name="title_activity_location_selection">LocationSelection</string>
@@ -33,5 +33,12 @@
     <string name="oldPassword">Enter your old password: </string>
     <string name="newPassword">Enter your new password: </string>
     <string name="changePasswordButton">Change Password </string>
+    <string name="genre_rock">Rock </string>
+    <string name="genre_jazz">Jazz </string>
+    <string name="genre_classic">Classic </string>
+    <string name="genre_house">House </string>
+    <string name="genre_reagge">Reagge </string>
+    <string name="genre_trap">Trap </string>
+
 
 </resources>
