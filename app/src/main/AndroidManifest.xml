@@ -36,7 +36,7 @@
                 android:value=".MainLandingPage" />
         </activity>
         <activity
-            android:name=".SearchPage"
+            android:name=".search.SearchPage"
             android:exported="false"
             android:parentActivityName=".MainPage">
             <!-- The meta-data tag is required if you support API level 15 and lower -->
