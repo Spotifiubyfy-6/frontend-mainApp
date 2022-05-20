@@ -35,15 +35,6 @@ class LocationSelection : AppCompatActivity(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
@@ -51,9 +42,12 @@ class LocationSelection : AppCompatActivity(), OnMapReadyCallback {
         val sydney = LatLng(-34.0, 151.0)
         mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+
+        // Set text to button with current location
         val button = findViewById<Button>(R.id.nextButton)
         button.setText("Australia, Sydney")
 
+        // onClick, clears map and adds a marker on click location. Updates camera position
         mMap.setOnMapClickListener(object :GoogleMap.OnMapClickListener {
             override fun onMapClick(latlng :LatLng) {
                 mMap.clear()
@@ -65,7 +59,7 @@ class LocationSelection : AppCompatActivity(), OnMapReadyCallback {
             }
         })
     }
-
+    // receives lat and lng, returns country and city name
     fun setCountry(latlng : LatLng) {
         val gcd = Geocoder(this)
         val addresses: List<Address> = gcd.getFromLocation(latlng.latitude, latlng.longitude, 1)
@@ -77,10 +71,8 @@ class LocationSelection : AppCompatActivity(), OnMapReadyCallback {
         }
 
     }
-
+    // Go to select Genres activity, passing location as
     public fun confirmLocation(view : View) {
-
-
         val intent = Intent(this, PreferencesSelection::class.java).apply{
             val button = findViewById<Button>(R.id.nextButton)
             val location = button.text.toString()
