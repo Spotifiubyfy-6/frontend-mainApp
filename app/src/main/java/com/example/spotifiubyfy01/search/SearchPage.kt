@@ -26,7 +26,13 @@ class SearchPage : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable) {
-                Log.d("TAG", search.text.toString())
+                val searchContainer =
+                    findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.recycler_view)
+                if (search.text.toString().isEmpty()) {
+                    searchContainer.visibility = android.view.View.GONE
+                } else {
+                    searchContainer.visibility = android.view.View.VISIBLE
+                }
             }
         })
         initRecyclerView()
