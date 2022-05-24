@@ -1,8 +1,10 @@
 package com.example.spotifiubyfy01.search
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -39,19 +41,24 @@ class ArtistRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     class ArtistViewHolder constructor(
         itemView: View
     ): RecyclerView.ViewHolder(itemView) {
-        val artist_image: ImageView =  itemView.findViewById(R.id.artist_image)
-        val artist_username: TextView =  itemView.findViewById(R.id.artist_name)
-
+        val artistImage: ImageView =  itemView.findViewById(R.id.artist_image)
+       /* val button: ImageButton = itemView.findViewById(R.id.artist_button)
+        button.setOnclickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                {Log.d("TAG", "message")})
+            }
+        }*/
+        val artistUsername: TextView =  itemView.findViewById(R.id.artist_name)
         fun bind(artist: Artist) {
-            artist_username.setText(artist.username)
-
+            artistUsername.setText(artist.username)
         /*    val requestOptions = RequestOptions()
                 .placeholder(R.drawable.ic_launcher_background)
-                .error(R.drawable.ic_launcher_background)
-*/
+                .error(R.drawable.ic_launcher_background)*/
             Glide.with(itemView.context)
                 .load(artist.image)
-                .into(artist_image)
+                .into(artistImage)
         }
+        val button: ImageView =  itemView.findViewById(R.id.artist_image)
     }
 }

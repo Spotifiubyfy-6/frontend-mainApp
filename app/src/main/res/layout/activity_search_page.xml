@@ -7,28 +7,27 @@
 
     <EditText
         android:id="@+id/search_textfield"
-        android:layout_width="325dp"
-        android:layout_height="49dp"
+        android:layout_width="295dp"
+        android:layout_height="51dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/search"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/recycler_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.525" />
+        app:layout_constraintVertical_bias="0.525"
+
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:layout_width="323dp"
-        android:layout_height="596dp"
-        android:layout_marginTop="108dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@id/search_textfield" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
