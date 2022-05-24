@@ -28,7 +28,22 @@
             android:exported="true" />
         <activity
             android:name=".ProfilePage"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainPage">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainLandingPage" />
+        </activity>
+        <activity
+            android:name=".search.SearchPage"
+            android:exported="false"
+            android:parentActivityName=".MainPage">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainLandingPage" />
+        </activity>
         <activity
             android:name=".LogInPage"
             android:exported="false"
@@ -48,6 +63,10 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainLandingPage" />
+        </activity>
+        <activity
+            android:name=".MainPage"
+            android:exported="false">
         </activity>
         <activity
             android:name=".DisplayMessageActivity"

@@ -25,7 +25,7 @@ class LogInPage : AppCompatActivity() {
             val url = "https://spotifiubyfy-users.herokuapp.com/token"
 
             val jsonRequest: StringRequest = object : StringRequest(
-                Method.POST, url, { response -> val intent = Intent(this, ProfilePage::class.java).apply {
+                Method.POST, url, { response -> val intent = Intent(this, MainPage::class.java).apply {
                     val sharedPref = getSharedPreferences(getString(R.string.token_key), Context.MODE_PRIVATE)
                     with (sharedPref.edit()) {
                         putString(getString(R.string.token_key), response.split('"')[3])
