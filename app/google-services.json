@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "778965507557",
+    "project_id": "spotifiubyfy-music",
+    "storage_bucket": "spotifiubyfy-music.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:778965507557:android:ee6f849f26ce2dafaba30c",
+        "android_client_info": {
+          "package_name": "com.fiuba.spotifiubyfy01"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "778965507557-lrl3q1uniuvl3aqmf879c6uqvq41crg6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKP3MABvyFbuzmA3SY9QOpGxYSLuK1PTQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "778965507557-lrl3q1uniuvl3aqmf879c6uqvq41crg6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

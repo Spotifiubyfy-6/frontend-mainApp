@@ -75,7 +75,7 @@
         </activity>
         <activity
             android:name=".MainPage"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".DisplayMessageActivity"
             android:parentActivityName=".SignInLandingPage">

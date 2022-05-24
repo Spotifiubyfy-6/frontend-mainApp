@@ -1,6 +1,7 @@
 package com.example.spotifiubyfy01
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -9,11 +10,14 @@ import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import org.json.JSONObject
+import java.io.File
 
 class SongCreationPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_song_creation_page)
+
+//        todo: pedir permisos de acceso a archivos
 
         if ( !intent.getStringExtra("songUploaded").isNullOrEmpty()) {
             Toast.makeText(this, intent.getStringExtra("songUploaded"),Toast.LENGTH_LONG).show()
@@ -37,8 +41,18 @@ class SongCreationPage : AppCompatActivity() {
             val jsonRequest = JsonObjectRequest(
                 Request.Method.POST, url, requestBody,
                 { response -> val intent = Intent(this, SongCreationPage::class.java).apply {
-                    putExtra("songUploaded", "Song successfully created")
-//                  todo: cargar link de imagen a firebase
+                    putExtra("songCreated", "Song successfully created")
+                    var storageName = "songs/"+response.getString("storage_name")
+                    var songRef =  app.getStorageReference().child(storageName)
+                    var file = Uri.fromFile(File("/sdcard/Download/MetalicaEsLaLuz.mp3"))
+                    var uploadTask = songRef.putFile(file)
+
+                    // Register observers to listen for when the download is done or if it fails
+                    uploadTask.addOnFailureListener {
+                        Toast.makeText(app, "Song not uploaded: ERROR",Toast.LENGTH_LONG).show()
+                    }.addOnSuccessListener { taskSnapshot ->
+                        Toast.makeText(app, "Song successfully uploaded",Toast.LENGTH_LONG).show()
+                    }
                 }
                     startActivity(intent)},
                 { val intent = Intent(this, PopUpWindow::class.java).apply {
