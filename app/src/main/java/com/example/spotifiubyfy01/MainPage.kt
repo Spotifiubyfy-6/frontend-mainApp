@@ -11,6 +11,8 @@ class MainPage: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_page)
 
+        (this.application as Spotifiubify).setProfile()
+
         val profile = findViewById<Button>(R.id.profile_button)
         profile.setOnClickListener {
             val intent = Intent(this, ProfilePage::class.java)

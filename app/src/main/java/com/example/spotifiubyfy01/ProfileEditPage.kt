@@ -14,12 +14,18 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import org.json.JSONObject
+import java.lang.Thread.sleep
 
 class ProfileEditPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_edit_page)
-        getProfileData()
+        var app = (this.application as Spotifiubify)
+
+        findViewById<TextView>(R.id.username).text = app.getProfileData("username")
+        findViewById<TextView>(R.id.email).text = app.getProfileData("email")
+        findViewById<TextView>(R.id.subscription).text = app.getProfileData("user_suscription")
+
 
         val email = findViewById<EditText>(R.id.email)
 
@@ -30,9 +36,14 @@ class ProfileEditPage : AppCompatActivity() {
 
             val postRequest: StringRequest = object : StringRequest(
                 Method.POST, url,
-                { val intent = Intent(this, ProfilePage::class.java).apply {
-                }
-                    startActivity(intent)},
+                { response -> val intent = Intent(this, ProfilePage::class.java).apply {
+                        val responseJson = JSONObject(response)
+//                    todo: cambiar message to new_email
+                        val email = responseJson.getString("email")
+                        app.setProfileData("email", email)
+                    }
+                    startActivity(intent)
+                },
                 { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
                     val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
                     putExtra("popuptext", error)
@@ -102,33 +113,5 @@ class ProfileEditPage : AppCompatActivity() {
 
             MyRequestQueue.getInstance(this).addToRequestQueue(jsonRequest)
         }
-    }
-
-    private fun getProfileData() {
-        val url = "https://spotifiubyfy-users.herokuapp.com/users/me"
-        val getRequest: StringRequest = object : StringRequest(
-            Method.GET, url,
-            Response.Listener { response ->
-                val responseJson = JSONObject(response)
-                findViewById<EditText>(R.id.username).setText(responseJson.getString("username"))
-                findViewById<EditText>(R.id.email).setText(responseJson.getString("email"))
-                findViewById<TextView>(R.id.subscription).text = responseJson.getString("user_suscription")
-
-            },
-            { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
-                val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
-                putExtra("popuptext", error)
-                putExtra("tokenValidation", true) }
-                startActivity(intent)
-            }
-        ) {
-            @Throws(AuthFailureError::class)
-            override fun getHeaders(): Map<String, String> {
-                val params: MutableMap<String, String> = HashMap()
-                params["Authorization"] = "Bearer " + getSharedPreferences(getString(R.string.token_key), Context.MODE_PRIVATE).getString(getString(R.string.token_key), null)
-                return params
-            }
-        }
-        MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
     }
 }

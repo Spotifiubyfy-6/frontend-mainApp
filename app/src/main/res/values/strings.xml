@@ -30,5 +30,14 @@
     <string name="oldPassword">Enter your old password: </string>
     <string name="newPassword">Enter your new password: </string>
     <string name="changePasswordButton">Change Password </string>
+    <string name="createAlbum">Create album </string>
+    <string name="createSong">Create Song </string>
+    <string name="createPlaylist">Create playlist </string>
+    <string name="albumDescription">Description:</string>
+    <string name="album_name">Album name:</string>
+    <string name="upload_song_title">Upload song:</string>
+    <string name="song_name_field">Song name</string>
+    <string name="upload_button">Upload</string>
+
 
 </resources>
