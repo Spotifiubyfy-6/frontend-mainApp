@@ -1,5 +1,6 @@
 package com.example.spotifiubyfy01.ArtistProfile
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
@@ -7,10 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.spotifiubyfy01.AlbumPage
 import com.example.spotifiubyfy01.ArtistProfile.adapter.AlbumRecyclerAdapter
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.search.Artist
-import com.example.spotifiubyfy01.search.adapter.ArtistRecyclerAdapter
 
 class ArtistPage: AppCompatActivity() {
 
@@ -25,11 +26,20 @@ class ArtistPage: AppCompatActivity() {
 
         initRecyclerView()
     }
+
     private fun initRecyclerView() {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
                                     false)
         recyclerView.adapter =
-            AlbumRecyclerAdapter(AlbumDataSource.createAlbumList())
+            AlbumRecyclerAdapter(AlbumDataSource.createAlbumList()) {album ->
+                onItemClicked(album)
+            }
+    }
+
+    private fun onItemClicked(album: Album) {
+        val intent = Intent(this, AlbumPage::class.java)
+        intent.putExtra("Album", album)
+        startActivity(intent)
     }
 }
