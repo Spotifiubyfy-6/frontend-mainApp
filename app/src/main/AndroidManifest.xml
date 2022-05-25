@@ -54,6 +54,15 @@
                 android:value=".MainLandingPage" />
         </activity>
         <activity
+            android:name=".search.ArtistPage"
+            android:exported="false"
+            android:parentActivityName=".search.SearchPage">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainLandingPage" />
+        </activity>
+        <activity
             android:name=".LogInPage"
             android:exported="false"
             android:parentActivityName=".MainLandingPage">
