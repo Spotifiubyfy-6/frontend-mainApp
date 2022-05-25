@@ -1,6 +1,7 @@
 package com.example.spotifiubyfy01.search
 
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.spotifiubyfy01.MainPage
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.search.adapter.ArtistRecyclerAdapter
 
@@ -53,6 +55,8 @@ class SearchPage : AppCompatActivity() {
     }
 
     fun onItemClicked(artist: Artist) {
-        Toast.makeText(this, artist.username, Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, ArtistPage::class.java)
+        intent.putExtra("Artist", artist)
+        startActivity(intent)
     }
 }
