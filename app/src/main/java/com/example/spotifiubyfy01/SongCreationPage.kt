@@ -1,12 +1,17 @@
 package com.example.spotifiubyfy01
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import org.json.JSONObject
@@ -17,7 +22,37 @@ class SongCreationPage : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_song_creation_page)
 
-//        todo: pedir permisos de acceso a archivos
+        val requestPermissionLauncher =
+            registerForActivityResult(
+                ActivityResultContracts.RequestPermission()
+            ) { isGranted: Boolean ->
+                if (isGranted) {
+                    // Permission is granted. Continue the action or workflow in your
+                    // app.
+                    Toast.makeText(this, "Permissions granted",Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(this, "Permissions are necessary to upload songs",Toast.LENGTH_LONG).show()
+                    finish()
+                }
+            }
+        when {
+            ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED -> {
+                Toast.makeText(this, "Permissions granted",Toast.LENGTH_LONG).show()
+            }
+            else -> {
+                // You can directly ask for the permission.
+                // The registered ActivityResultCallback gets the result of this request.
+                requestPermissionLauncher.launch(
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+            }
+        }
+//        if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//            // Permission is not granted
+//            ActivityCompat.requestPermissions(this,
+//                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE))
+//        }
+
 
         if ( !intent.getStringExtra("songUploaded").isNullOrEmpty()) {
             Toast.makeText(this, intent.getStringExtra("songUploaded"),Toast.LENGTH_LONG).show()
