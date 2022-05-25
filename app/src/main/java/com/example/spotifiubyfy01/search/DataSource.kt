@@ -2,8 +2,10 @@ package com.example.spotifiubyfy01.search
 
 class DataSource{
     companion object {
-        fun createDataSet(): ArrayList<Artist> {
+        fun createDataSet(slice: String): List<Artist> {
             val list = ArrayList<Artist>()
+            if (slice.isEmpty())
+                return list
             list.add(Artist("The Beatles", image_link))
             list.add(Artist("The Rolling Stones", image_link))
             list.add(Artist("Metallica", image_link))
@@ -20,7 +22,7 @@ class DataSource{
             list.add(Artist("Ariana Grande", image_link))
             list.add(Artist("Juan Luis Guerra", image_link))
             list.add(Artist("Biggie", image_link))
-            return list
+            return list.filter { artist -> artist.username.contains(slice, ignoreCase = true) }
         }
     }
 }

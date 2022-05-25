@@ -11,7 +11,7 @@ import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.search.Artist
 
 class ArtistRecyclerAdapter(
-    private val artistList: List<Artist>,
+    private var artistList: List<Artist>,
     private val onClickListener:(Artist) -> Unit
 ): RecyclerView.Adapter<ArtistViewHolder>() {
 
@@ -28,5 +28,10 @@ class ArtistRecyclerAdapter(
 
     override fun getItemCount(): Int {
         return artistList.size
+    }
+
+    fun updateList(artistList: List<Artist>) {
+        this.artistList = artistList
+        notifyDataSetChanged()
     }
 }

@@ -21,6 +21,7 @@ class SearchPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_page)
+        initRecyclerView()
         val search = findViewById<EditText>(R.id.search_textfield)
         search.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -32,21 +33,23 @@ class SearchPage : AppCompatActivity() {
             override fun afterTextChanged(s: Editable) {
                 val searchContainer =
                     findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.recycler_view)
-                Log.d(TAG, search.text.toString())
-                if (search.text.toString().isEmpty()) {
+                val searchText = search.text.toString()
+                if (searchText.isEmpty()) {
                     searchContainer.visibility = android.view.View.GONE
-                } else {
-                    searchContainer.visibility = android.view.View.VISIBLE
+                    return;
                 }
+                val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
+                val adapter = recyclerView.adapter as ArtistRecyclerAdapter
+                adapter.updateList(DataSource.createDataSet(searchText))
+                searchContainer.visibility = android.view.View.VISIBLE
             }
         })
-        initRecyclerView()
     }
 
     private fun initRecyclerView() {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = ArtistRecyclerAdapter(DataSource.createDataSet()) {artist ->
+        recyclerView.adapter = ArtistRecyclerAdapter(DataSource.createDataSet("")) {artist ->
                 onItemClicked(artist)
         }
     }
