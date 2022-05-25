@@ -3,7 +3,7 @@
     package="com.example.spotifiubyfy01">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".Spotifiubify"
@@ -13,6 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Spotifiubyfy01">
+        <activity
+            android:name=".AlbumPage"
+            android:exported="false" />
         <activity
             android:name=".SongCreationPage"
             android:exported="false" />
@@ -58,6 +61,7 @@
             android:name=".search.ArtistPage"
             android:exported="false"
             android:parentActivityName=".search.SearchPage">
+
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
