@@ -12,15 +12,13 @@ import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import org.json.JSONArray
 import org.json.JSONObject
-import java.sql.Types.NULL
-import java.util.*
 
 class AlbumPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_album_page)
 
-        var songs: JSONArray = JSONArray()
+        val songs = JSONArray()
 
         val url = "http://spotifiubyfy-music.herokuapp.com/albums/"+"16"
 
