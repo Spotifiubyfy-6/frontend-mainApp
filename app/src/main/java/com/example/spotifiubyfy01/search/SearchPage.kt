@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -42,28 +43,21 @@ class SearchPage : AppCompatActivity() {
             }
         })
         initRecyclerView()
-      //  addDataSet()
     }
-
-    /*private fun addDataSet() {
-        val data = DataSource.createDataSet()
-        artistAdapter.submitList(data)
-    }*/
 
     private fun initRecyclerView() {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
 
         recyclerView.apply {
             layoutManager = LinearLayoutManager(this@SearchPage)
-            artistAdapter = ArtistRecyclerAdapter(DataSource.createDataSet())
+            artistAdapter = ArtistRecyclerAdapter(DataSource.createDataSet()) {artist ->
+                onItemClicked(artist)
+            }
             adapter = artistAdapter
         }
     }
 
-   /* override fun onArtistClick(position: Int) {
-        Log.d(TAG, "onNoteClick: clicked.")
-        Log.d(TAG, position.toString())
-       // val intent = Intent(this, PopUpWindow::class.java)
-        //startActivity(intent)
-    }*/
+    fun onItemClicked(artist: Artist) {
+        Toast.makeText(this, artist.username, Toast.LENGTH_SHORT).show()
+    }
 }

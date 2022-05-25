@@ -14,13 +14,9 @@ class ArtistViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val artist_name = view.findViewById<TextView>(R.id.artist_name)
     val image = view.findViewById<ImageView>(R.id.artist_image)
 
-    fun render(artist: Artist) {
+    fun render(artist: Artist, onClickListener: (Artist) -> Unit) {
         artist_name.text = artist.username
         Glide.with(image.context).load(artist.image).into(image)
-        itemView.setOnClickListener { Toast.makeText(
-            image.context,
-            artist.username,
-            Toast.LENGTH_SHORT
-        ).show() }
+        itemView.setOnClickListener { onClickListener(artist) }
     }
 }

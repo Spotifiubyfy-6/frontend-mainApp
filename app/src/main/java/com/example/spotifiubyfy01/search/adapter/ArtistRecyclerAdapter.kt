@@ -12,6 +12,7 @@ import com.example.spotifiubyfy01.search.Artist
 
 class ArtistRecyclerAdapter(
     private val artistList: List<Artist>,
+    private val onClickListener:(Artist) -> Unit
 ): RecyclerView.Adapter<ArtistViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistViewHolder {
@@ -22,7 +23,7 @@ class ArtistRecyclerAdapter(
 
     override fun onBindViewHolder(holder: ArtistViewHolder, position: Int) {
         val item = artistList[position]
-        holder.render(item)
+        holder.render(item, onClickListener)
     }
 
     override fun getItemCount(): Int {
