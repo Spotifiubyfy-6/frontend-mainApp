@@ -16,7 +16,7 @@ import java.util.*
 
 class Spotifiubify : Application() {
     var profileData: Hashtable<String, String> = Hashtable<String, String>()
-    lateinit var storage: FirebaseStorage
+    private lateinit var storage: FirebaseStorage
 
     override fun onCreate() {
         super.onCreate()

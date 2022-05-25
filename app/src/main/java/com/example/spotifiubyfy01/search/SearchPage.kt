@@ -47,7 +47,7 @@ class SearchPage : AppCompatActivity(), VolleyCallBack {
         }
     }
 
-    fun onItemClicked(artist: Artist) {
+    private fun onItemClicked(artist: Artist) {
         val intent = Intent(this, ArtistPage::class.java)
         intent.putExtra("Artist", artist)
         startActivity(intent)
