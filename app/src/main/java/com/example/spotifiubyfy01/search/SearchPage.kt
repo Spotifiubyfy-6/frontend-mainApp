@@ -1,22 +1,17 @@
 package com.example.spotifiubyfy01.search
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.spotifiubyfy01.MainPage
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.search.adapter.ArtistRecyclerAdapter
 
-class SearchPage : AppCompatActivity() {
+class SearchPage : AppCompatActivity(), VolleyCallBack {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,16 +27,13 @@ class SearchPage : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable) {
                 val searchContainer =
-                    findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.recycler_view)
+                    findViewById<RecyclerView>(R.id.recycler_view)
                 val searchText = search.text.toString()
                 if (searchText.isEmpty()) {
                     searchContainer.visibility = android.view.View.GONE
-                    return;
+                    return
                 }
-                val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
-                val adapter = recyclerView.adapter as ArtistRecyclerAdapter
-                adapter.updateList(DataSource.createDataSet(searchText))
-                searchContainer.visibility = android.view.View.VISIBLE
+                DataSource.updateDataSet(this@SearchPage, searchText, this@SearchPage)
             }
         })
     }
@@ -49,7 +41,8 @@ class SearchPage : AppCompatActivity() {
     private fun initRecyclerView() {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = ArtistRecyclerAdapter(DataSource.createDataSet("")) {artist ->
+        recyclerView.adapter =
+            ArtistRecyclerAdapter(ArrayList()) {artist ->
                 onItemClicked(artist)
         }
     }
@@ -58,5 +51,12 @@ class SearchPage : AppCompatActivity() {
         val intent = Intent(this, ArtistPage::class.java)
         intent.putExtra("Artist", artist)
         startActivity(intent)
+    }
+
+    override fun updateDataInRecyclerView(artistList: List<Artist>) {
+        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
+        val adapter = recyclerView.adapter as ArtistRecyclerAdapter
+        adapter.updateList(artistList)
+        recyclerView.visibility = android.view.View.VISIBLE
     }
 }
