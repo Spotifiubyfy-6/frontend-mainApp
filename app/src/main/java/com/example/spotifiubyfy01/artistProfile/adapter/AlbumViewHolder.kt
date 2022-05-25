@@ -1,11 +1,11 @@
-package com.example.spotifiubyfy01.ArtistProfile.adapter
+package com.example.spotifiubyfy01.artistProfile.adapter
 
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.spotifiubyfy01.ArtistProfile.Album
+import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.R
 
 class AlbumViewHolder(view: View) : RecyclerView.ViewHolder(view) {

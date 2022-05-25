@@ -1,4 +1,4 @@
-package com.example.spotifiubyfy01.ArtistProfile
+package com.example.spotifiubyfy01.artistProfile
 
 var image_link = "https://he.cecollaboratory.com/public/layouts/images/group-default-logo.png"
 

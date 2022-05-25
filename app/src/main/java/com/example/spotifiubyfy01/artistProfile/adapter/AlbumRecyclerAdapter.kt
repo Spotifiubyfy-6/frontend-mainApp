@@ -1,9 +1,9 @@
-package com.example.spotifiubyfy01.ArtistProfile.adapter
+package com.example.spotifiubyfy01.artistProfile.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.spotifiubyfy01.ArtistProfile.Album
+import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.R
 
 class AlbumRecyclerAdapter(

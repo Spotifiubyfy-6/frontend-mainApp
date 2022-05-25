@@ -1,4 +1,4 @@
-package com.example.spotifiubyfy01.ArtistProfile
+package com.example.spotifiubyfy01.artistProfile
 
 import java.io.Serializable
 

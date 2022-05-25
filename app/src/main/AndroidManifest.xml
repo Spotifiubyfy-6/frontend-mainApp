@@ -28,10 +28,10 @@
         <activity
             android:name=".AlbumPage"
             android:exported="false"
-            android:parentActivityName=".search.ArtistPage">
+            android:parentActivityName=".artistProfile.ArtistPage">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".search.ArtistPage" />
+                android:value=".artistProfile.ArtistPage" />
         </activity>
         <activity
             android:name=".SongCreationPage"
@@ -76,7 +76,7 @@
                 android:value=".MainLandingPage" />
         </activity>
         <activity
-            android:name=".search.ArtistPage"
+            android:name=".artistProfile.ArtistPage"
             android:exported="false"
             android:parentActivityName=".search.SearchPage">
             <!-- The meta-data tag is required if you support API level 15 and lower -->
