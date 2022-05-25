@@ -1,5 +1,6 @@
 package com.example.spotifiubyfy01.search
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifiubyfy01.R
+import com.example.spotifiubyfy01.search.adapter.ArtistRecyclerAdapter
 
 class SearchPage : AppCompatActivity() {
 
@@ -31,6 +33,7 @@ class SearchPage : AppCompatActivity() {
             override fun afterTextChanged(s: Editable) {
                 val searchContainer =
                     findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.recycler_view)
+                Log.d(TAG, search.text.toString())
                 if (search.text.toString().isEmpty()) {
                     searchContainer.visibility = android.view.View.GONE
                 } else {
@@ -39,20 +42,28 @@ class SearchPage : AppCompatActivity() {
             }
         })
         initRecyclerView()
-        addDataSet()
+      //  addDataSet()
     }
 
-    private fun addDataSet() {
+    /*private fun addDataSet() {
         val data = DataSource.createDataSet()
         artistAdapter.submitList(data)
-    }
+    }*/
 
     private fun initRecyclerView() {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
+
         recyclerView.apply {
             layoutManager = LinearLayoutManager(this@SearchPage)
-            artistAdapter = ArtistRecyclerAdapter()
+            artistAdapter = ArtistRecyclerAdapter(DataSource.createDataSet())
             adapter = artistAdapter
         }
     }
+
+   /* override fun onArtistClick(position: Int) {
+        Log.d(TAG, "onNoteClick: clicked.")
+        Log.d(TAG, position.toString())
+       // val intent = Intent(this, PopUpWindow::class.java)
+        //startActivity(intent)
+    }*/
 }

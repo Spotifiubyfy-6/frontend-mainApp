@@ -1,0 +1,32 @@
+package com.example.spotifiubyfy01.search.adapter
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.spotifiubyfy01.R
+import com.example.spotifiubyfy01.search.Artist
+
+class ArtistRecyclerAdapter(
+    private val artistList: List<Artist>,
+): RecyclerView.Adapter<ArtistViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistViewHolder {
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.layout_artist_list_item, parent, false)
+        return ArtistViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ArtistViewHolder, position: Int) {
+        val item = artistList[position]
+        holder.render(item)
+    }
+
+    override fun getItemCount(): Int {
+        return artistList.size
+    }
+
+}
