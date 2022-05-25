@@ -8,14 +8,13 @@ import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.search.adapter.ArtistRecyclerAdapter
 
 class SearchPage : AppCompatActivity() {
-
-    private lateinit var artistAdapter : ArtistRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,13 +46,9 @@ class SearchPage : AppCompatActivity() {
 
     private fun initRecyclerView() {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
-
-        recyclerView.apply {
-            layoutManager = LinearLayoutManager(this@SearchPage)
-            artistAdapter = ArtistRecyclerAdapter(DataSource.createDataSet()) {artist ->
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = ArtistRecyclerAdapter(DataSource.createDataSet()) {artist ->
                 onItemClicked(artist)
-            }
-            adapter = artistAdapter
         }
     }
 
