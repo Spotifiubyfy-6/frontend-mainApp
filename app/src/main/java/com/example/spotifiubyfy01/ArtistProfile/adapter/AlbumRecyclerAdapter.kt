@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifiubyfy01.ArtistProfile.Album
 import com.example.spotifiubyfy01.R
-import com.example.spotifiubyfy01.search.adapter.ArtistViewHolder
 
 class AlbumRecyclerAdapter(
-        private var albumList: List<Album>
+        private val albumList: List<Album>,
+        private val onClickListener:(Album) -> Unit
 ): RecyclerView.Adapter<AlbumViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumViewHolder {
@@ -19,7 +19,7 @@ class AlbumRecyclerAdapter(
 
     override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
         val item = albumList[position]
-        holder.render(item)
+        holder.render(item, onClickListener)
     }
 
     override fun getItemCount(): Int {
