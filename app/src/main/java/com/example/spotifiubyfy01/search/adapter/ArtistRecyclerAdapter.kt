@@ -29,5 +29,4 @@ class ArtistRecyclerAdapter(
     override fun getItemCount(): Int {
         return artistList.size
     }
-
 }

@@ -21,9 +21,6 @@ class SearchPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_page)
-        val searchContainer =
-            findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.recycler_view)
-        searchContainer.visibility = android.view.View.GONE
         val search = findViewById<EditText>(R.id.search_textfield)
         search.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
