@@ -10,7 +10,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
@@ -22,43 +21,34 @@ class SongCreationPage : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_song_creation_page)
 
+//      falta hacer esto mas explicativo, que se entienda mejor cuando se dan los permisos y eso
         val requestPermissionLauncher =
             registerForActivityResult(
                 ActivityResultContracts.RequestPermission()
             ) { isGranted: Boolean ->
                 if (isGranted) {
-                    // Permission is granted. Continue the action or workflow in your
-                    // app.
                     Toast.makeText(this, "Permissions granted",Toast.LENGTH_LONG).show()
                 } else {
                     Toast.makeText(this, "Permissions are necessary to upload songs",Toast.LENGTH_LONG).show()
                     finish()
                 }
             }
-        when {
-            ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED -> {
+        when (PackageManager.PERMISSION_GRANTED) {
+            ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) -> {
                 Toast.makeText(this, "Permissions granted",Toast.LENGTH_LONG).show()
             }
             else -> {
-                // You can directly ask for the permission.
-                // The registered ActivityResultCallback gets the result of this request.
                 requestPermissionLauncher.launch(
                     Manifest.permission.READ_EXTERNAL_STORAGE
                 )
             }
         }
-//        if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-//            // Permission is not granted
-//            ActivityCompat.requestPermissions(this,
-//                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE))
-//        }
-
 
         if ( !intent.getStringExtra("songUploaded").isNullOrEmpty()) {
             Toast.makeText(this, intent.getStringExtra("songUploaded"),Toast.LENGTH_LONG).show()
         }
 
-        var app = (this.application as Spotifiubify)
+        val app = (this.application as Spotifiubify)
 
         val songName = findViewById<EditText>(R.id.songName)
 
@@ -77,10 +67,10 @@ class SongCreationPage : AppCompatActivity() {
                 Request.Method.POST, url, requestBody,
                 { response -> val intent = Intent(this, SongCreationPage::class.java).apply {
                     putExtra("songCreated", "Song successfully created")
-                    var storageName = "songs/"+response.getString("storage_name")
-                    var songRef =  app.getStorageReference().child(storageName)
-                    var file = Uri.fromFile(File("/sdcard/Download/MetalicaEsLaLuz.mp3"))
-                    var uploadTask = songRef.putFile(file)
+                    val storageName = "songs/"+response.getString("storage_name")
+                    val songRef =  app.getStorageReference().child(storageName)
+                    val file = Uri.fromFile(File("/sdcard/Download/MetalicaEsLaLuz.mp3"))
+                    val uploadTask = songRef.putFile(file)
 
                     // Register observers to listen for when the download is done or if it fails
                     uploadTask.addOnFailureListener {

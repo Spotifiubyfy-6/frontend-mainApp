@@ -19,8 +19,8 @@ class MainPage: AppCompatActivity() {
             startActivity(intent)
         }
 
-        val search_button = findViewById<Button>(R.id.search_button)
-        search_button.setOnClickListener {
+        val searchButton = findViewById<Button>(R.id.search_button)
+        searchButton.setOnClickListener {
             val intent = Intent(this, SearchPage::class.java)
             startActivity(intent)
         }

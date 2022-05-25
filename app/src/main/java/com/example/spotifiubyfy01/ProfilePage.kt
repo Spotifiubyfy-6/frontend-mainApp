@@ -7,11 +7,6 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.android.volley.AuthFailureError
-import com.android.volley.Response
-import com.android.volley.toolbox.StringRequest
-import org.json.JSONObject
-import java.lang.Thread.sleep
 
 
 class ProfilePage : AppCompatActivity() {
@@ -19,7 +14,7 @@ class ProfilePage : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_page)
 
-        var app = (this.application as Spotifiubify)
+        val app = (this.application as Spotifiubify)
 
         findViewById<TextView>(R.id.username).text = app.getProfileData("username")
         findViewById<TextView>(R.id.email).text = app.getProfileData("email")

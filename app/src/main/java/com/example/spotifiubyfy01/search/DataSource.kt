@@ -39,9 +39,8 @@ class DataSource{
              */ }){
                 @Throws(AuthFailureError::class)
                 override fun getHeaders(): Map<String, String> {
-                    val params: MutableMap<String, String> = HashMap()
-                //    params["Authorization"] = "Bearer " + getSharedPreferences(getString(R.string.token_key), Context.MODE_PRIVATE).getString(getString(R.string.token_key), null)
-                    return params
+                    //    params["Authorization"] = "Bearer " + getSharedPreferences(getString(R.string.token_key), Context.MODE_PRIVATE).getString(getString(R.string.token_key), null)
+                    return HashMap()
                 }
             }
             MyRequestQueue.getInstance(context).addToRequestQueue(getRequest)

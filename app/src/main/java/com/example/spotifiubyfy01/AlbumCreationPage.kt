@@ -13,7 +13,7 @@ class AlbumCreationPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_album_creation_page)
-        var app = (this.application as Spotifiubify)
+        val app = (this.application as Spotifiubify)
 
         val albumName = findViewById<EditText>(R.id.albumName)
         val albumDescription = findViewById<EditText>(R.id.albumDescription)
