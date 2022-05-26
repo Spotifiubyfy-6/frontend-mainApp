@@ -17,29 +17,13 @@ var image_link = "https://he.cecollaboratory.com/public/layouts/images/group-def
 class AlbumDataSource {
     companion object {
         fun createAlbumList(context: Context, artist_id: Int, callBack: VolleyCallBack<Album>) {
-            val list = ArrayList<Album>()
             val url = "https://spotifiubyfy-music.herokuapp.com/artists/" + artist_id +
                     "/albums?skip=0&limit=100"
             val getRequest: JsonArrayRequest = object : JsonArrayRequest(
                 Method.GET,
                 url, null,
                 Response.Listener { response ->
-                    for (i in 0 until response.length()) {
-                        val jsonAlbum = JSONObject(response.get(i).toString())
-                        val albumName = jsonAlbum.getString("album_name")
-                        val songs = ArrayList<Song>()
-                        val jsonSongs = JSONArray(jsonAlbum.getString("songs").toString())
-                        for (i in 0 until jsonSongs.length()) {
-                            val jsonSong = JSONObject(jsonSongs.get(i).toString())
-                            val songName = jsonSong.getString("song_name")
-                            val album_id = jsonSong.getString("album_id").toInt()
-                            val id = jsonSong.getString("id").toInt()
-                            val storageName = jsonSong.getString("storage_name")
-                            songs.add(Song(songName, album_id, id, storageName))
-                        }
-                        list.add(Album(albumName, image_link, songs))
-                    }
-                    callBack.updateDataInRecyclerView(list)
+                    callBack.updateDataInRecyclerView(getListOfAlbums(response))
                 },
                 { errorResponse ->
                     /*   val intent = Intent(context, PopUpWindow::class.java).apply {
@@ -57,5 +41,33 @@ class AlbumDataSource {
                 }
             MyRequestQueue.getInstance(context).addToRequestQueue(getRequest)
         }
+
+        private fun getSong(jsonSong: JSONObject): Song {
+            val songName = jsonSong.getString("song_name")
+            val albumId = jsonSong.getString("album_id").toInt()
+            val id = jsonSong.getString("id").toInt()
+            val storageName = jsonSong.getString("storage_name")
+            return Song(songName, albumId, id, storageName)
+        }
+
+        private fun getListOfSongs(jsonSongs: JSONArray): List<Song> {
+            val songs = ArrayList<Song>()
+            for (i in 0 until jsonSongs.length())
+                songs.add(getSong(JSONObject(jsonSongs.get(i).toString())))
+            return songs
+        }
+
+        private fun getAlbum(jsonAlbum: JSONObject): Album {
+            val albumName = jsonAlbum.getString("album_name")
+            return Album(albumName, image_link, getListOfSongs(JSONArray(jsonAlbum.getString("songs").toString())))
+        }
+
+        private fun getListOfAlbums(response: JSONArray): List<Album> {
+            val list = ArrayList<Album>()
+            for (i in 0 until response.length())
+                list.add(getAlbum(JSONObject(response.get(i).toString())))
+            return list
+        }
     }
+
 }
