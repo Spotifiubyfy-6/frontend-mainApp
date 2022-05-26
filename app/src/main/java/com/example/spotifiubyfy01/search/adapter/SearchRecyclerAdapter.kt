@@ -1,10 +1,7 @@
 package com.example.spotifiubyfy01.search.adapter
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.SearchItem
 
 
@@ -14,12 +11,7 @@ class SearchRecyclerAdapter(
 ): RecyclerView.Adapter<SearchViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
-        val itemType = searchItemList[position].javaClass
-        Log.d(TAG, itemType.toString())
-        if (itemType == Artist::javaClass)
-            return 0
-        else
-            return super.getItemViewType(position)
+        return searchItemList[position].getSearchItemType()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
