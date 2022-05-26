@@ -11,7 +11,7 @@ var image_link = "https://he.cecollaboratory.com/public/layouts/images/group-def
 
 class DataSource{
     companion object {
-        fun updateDataSet(context: Context, slice: String, callBack: VolleyCallBack<Artist>) {
+        fun updateDataSet(context: Context, slice: String, callBack: VolleyCallBack<SearchItem>) {
             val list = ArrayList<Artist>()
             if (slice.isEmpty()) {
                 callBack.updateDataInRecyclerView(list)
