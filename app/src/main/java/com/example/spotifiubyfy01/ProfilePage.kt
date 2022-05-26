@@ -41,12 +41,6 @@ class ProfilePage : AppCompatActivity() {
             finish()
         }
 
-        val albumTempButton = findViewById<Button>(R.id.createPlaylistButton)
-        albumTempButton.setOnClickListener {
-            val intent = Intent(this, AlbumPage::class.java)
-            startActivity(intent)
-        }
-
         val createAlbumClick = findViewById<Button>(R.id.createAlbumButton)
         createAlbumClick.setOnClickListener {
             val intent = Intent(this, AlbumCreationPage::class.java)
