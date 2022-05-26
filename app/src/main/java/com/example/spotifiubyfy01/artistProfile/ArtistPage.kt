@@ -1,9 +1,7 @@
 package com.example.spotifiubyfy01.artistProfile
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
@@ -16,7 +14,6 @@ import com.example.spotifiubyfy01.artistProfile.adapter.AlbumRecyclerAdapter
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
-import com.example.spotifiubyfy01.search.adapter.ArtistRecyclerAdapter
 
 class ArtistPage: AppCompatActivity(), VolleyCallBack<Album> {
     private var artist: Artist? = null
@@ -49,8 +46,8 @@ class ArtistPage: AppCompatActivity(), VolleyCallBack<Album> {
             }
     }
 
-    override fun updateDataInRecyclerView(albumList: List<Album>) {
-        initRecyclerView(albumList)
+    override fun updateDataInRecyclerView(list: List<Album>) {
+        initRecyclerView(list)
     }
 
     private fun onItemClicked(album: Album) {
