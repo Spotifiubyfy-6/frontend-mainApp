@@ -1,48 +1,42 @@
 package com.example.spotifiubyfy01.search.adapter
 
-import android.view.LayoutInflater
+import android.content.ContentValues.TAG
+import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.search.Artist
-
+import com.example.spotifiubyfy01.search.SearchItem
 
 
 class ArtistRecyclerAdapter(
-    private var artistList: List<Artist>,
-    private val onClickListener:(Artist) -> Unit
-): RecyclerView.Adapter<ArtistViewHolder>() {
+    private var searchItemList: List<SearchItem>,
+    private val onClickListener:(SearchItem) -> Unit
+): RecyclerView.Adapter<SearchViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
-        val itemType = artistList[position].javaClass
+        val itemType = searchItemList[position].javaClass
+        Log.d(TAG, itemType.toString())
         if (itemType == Artist::javaClass)
             return 0
         else
             return super.getItemViewType(position)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistViewHolder {
-        val layout =
-            when (viewType) {
-                0 -> R.layout.layout_artist_list_item
-                else -> {1}
-            }
-        val view =
-            LayoutInflater.from(parent.context).inflate(layout, parent, false)
-        return ArtistViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
+        return createRespectiveHolder(parent, viewType)
     }
 
-    override fun onBindViewHolder(holder: ArtistViewHolder, position: Int) {
-        val item = artistList[position]
+    override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
+        val item = searchItemList[position]
         holder.render(item, onClickListener)
     }
 
     override fun getItemCount(): Int {
-        return artistList.size
+        return searchItemList.size
     }
 
-    fun updateList(artistList: List<Artist>) {
-        this.artistList = artistList
+    fun updateList(searchItemList: List<SearchItem>) {
+        this.searchItemList = searchItemList
         notifyDataSetChanged()
     }
 }
