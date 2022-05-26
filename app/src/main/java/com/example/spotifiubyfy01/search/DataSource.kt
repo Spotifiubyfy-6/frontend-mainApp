@@ -9,7 +9,7 @@ import org.json.JSONObject
 
 class DataSource{
     companion object {
-        fun updateDataSet(context: Context, slice: String, callBack: VolleyCallBack) {
+        fun updateDataSet(context: Context, slice: String, callBack: VolleyCallBack<Artist>) {
             val list = ArrayList<Artist>()
             if (slice.isEmpty()) {
                 callBack.updateDataInRecyclerView(list)

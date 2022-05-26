@@ -1,5 +1,5 @@
 package com.example.spotifiubyfy01.search
 
-interface VolleyCallBack {
-    fun updateDataInRecyclerView(artistList: List<Artist>)
+interface VolleyCallBack<T> {
+    fun updateDataInRecyclerView(list: List<T>)
 }

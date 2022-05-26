@@ -12,7 +12,7 @@ import com.example.spotifiubyfy01.artistProfile.ArtistPage
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.search.adapter.ArtistRecyclerAdapter
 
-class SearchPage : AppCompatActivity(), VolleyCallBack {
+class SearchPage : AppCompatActivity(), VolleyCallBack<Artist> {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
