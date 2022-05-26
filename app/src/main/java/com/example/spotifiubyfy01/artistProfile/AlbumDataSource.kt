@@ -4,7 +4,7 @@ var image_link = "https://he.cecollaboratory.com/public/layouts/images/group-def
 
 class AlbumDataSource {
     companion object {
-        fun createAlbumList() : List<Album> {
+        fun createAlbumList(artist_id: Int) : List<Album> {
             val list = ArrayList<Album>()
             list.add(Album("Sgt Peppers Lonely Hearts Club Band", image_link))
             list.add(Album("Revolver", image_link))

@@ -25,7 +25,8 @@ class DataSource{
                     for (i in 0 until size) {
                         val jsonArtist = JSONObject(response.get(i).toString())
                         val username = jsonArtist.getString("username")
-                        list.add(Artist(username, image_link))
+                        val id = jsonArtist.getString("id").toInt()
+                        list.add(Artist(id, username, image_link))
                     }
                     callBack.updateDataInRecyclerView(list)
                 },
