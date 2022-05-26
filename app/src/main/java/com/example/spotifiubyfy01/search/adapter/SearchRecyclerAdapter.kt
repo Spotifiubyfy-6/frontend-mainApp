@@ -8,7 +8,7 @@ import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.SearchItem
 
 
-class ArtistRecyclerAdapter(
+class SearchRecyclerAdapter(
     private var searchItemList: List<SearchItem>,
     private val onClickListener:(SearchItem) -> Unit
 ): RecyclerView.Adapter<SearchViewHolder>() {

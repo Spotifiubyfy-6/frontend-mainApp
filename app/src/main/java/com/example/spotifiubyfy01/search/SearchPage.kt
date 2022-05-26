@@ -1,18 +1,16 @@
 package com.example.spotifiubyfy01.search
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifiubyfy01.artistProfile.ArtistPage
 import com.example.spotifiubyfy01.R
-import com.example.spotifiubyfy01.search.adapter.ArtistRecyclerAdapter
+import com.example.spotifiubyfy01.search.adapter.SearchRecyclerAdapter
 
 class SearchPage : AppCompatActivity(), VolleyCallBack<SearchItem> {
 
@@ -45,7 +43,7 @@ class SearchPage : AppCompatActivity(), VolleyCallBack<SearchItem> {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter =
-            ArtistRecyclerAdapter(ArrayList()) {artist ->
+            SearchRecyclerAdapter(ArrayList()) { artist ->
                 onItemClicked(artist)
         }
     }
@@ -58,7 +56,7 @@ class SearchPage : AppCompatActivity(), VolleyCallBack<SearchItem> {
 
     override fun updateDataInRecyclerView(searchList: List<SearchItem>) {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
-        val adapter = recyclerView.adapter as ArtistRecyclerAdapter
+        val adapter = recyclerView.adapter as SearchRecyclerAdapter
         adapter.updateList(searchList)
         recyclerView.visibility = android.view.View.VISIBLE
     }
