@@ -12,11 +12,13 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import org.json.JSONObject
 import java.util.*
+import com.example.spotifiubyfy01.SongManager
 
 
 class Spotifiubify : Application() {
     var profileData: Hashtable<String, String> = Hashtable<String, String>()
     private lateinit var storage: FirebaseStorage
+    val SongManager  = SongManager()
 
     override fun onCreate() {
         super.onCreate()

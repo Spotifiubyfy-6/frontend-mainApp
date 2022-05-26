@@ -1,7 +1,6 @@
 package com.example.spotifiubyfy01
 
 import android.content.ContentValues.TAG
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -13,9 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.artistProfile.Song
-import com.example.spotifiubyfy01.artistProfile.adapter.AlbumRecyclerAdapter
 import com.example.spotifiubyfy01.artistProfile.adapter.SongRecyclerAdapter
-import com.example.spotifiubyfy01.search.VolleyCallBack
 
 class AlbumPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +36,8 @@ class AlbumPage : AppCompatActivity() {
 
     private fun onItemClicked(song: Song) {
         //Do something with the Song
+        val app = (this.application as Spotifiubify)
+        app.SongManager.play(song, app)
         Log.d(TAG, song.song_name +" with id " + song.id.toString() + " made by " + song.artist)
     }
 
