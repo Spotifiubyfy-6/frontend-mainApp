@@ -12,7 +12,7 @@ import com.example.spotifiubyfy01.search.SearchItem
 class AlbumSearchViewHolder(view: View) : SearchViewHolder(view) {
 
     private val albumName: TextView = view.findViewById(R.id.album_name)
-    private val artistName: TextView = view.findViewById(R.id.artist_name)
+    private val artistName: TextView = view.findViewById(R.id.album_specification)
     private val albumImage: ImageView = view.findViewById(R.id.album_image)
 
     override fun render(item: SearchItem, onClickListener: (SearchItem) -> Unit) {

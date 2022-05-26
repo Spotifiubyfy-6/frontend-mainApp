@@ -1,5 +1,7 @@
 package com.example.spotifiubyfy01.search.adapter
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +16,11 @@ fun createRespectiveHolder(parent: ViewGroup, viewType: Int) : SearchViewHolder{
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.layout_artist_list_item, parent, false)
                 ArtistViewHolder(view)
+            }
+            1 -> {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.layout_album_search_item, parent, false)
+                AlbumSearchViewHolder(view)
             }
             else -> {
                 val view = LayoutInflater.from(parent.context)
