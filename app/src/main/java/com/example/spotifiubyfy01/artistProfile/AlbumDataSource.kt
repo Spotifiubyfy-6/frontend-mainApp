@@ -1,12 +1,15 @@
 package com.example.spotifiubyfy01.artistProfile
 
+import android.content.ContentValues.TAG
 import android.content.Context
+import android.util.Log
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.example.spotifiubyfy01.MyRequestQueue
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
+import org.json.JSONArray
 import org.json.JSONObject
 
 var image_link = "https://he.cecollaboratory.com/public/layouts/images/group-default-logo.png"
@@ -21,12 +24,20 @@ class AlbumDataSource {
                 Method.GET,
                 url, null,
                 Response.Listener { response ->
-                    val size = response.length()
-                    for (i in 0 until size) {
-                        val jsonArtist = JSONObject(response.get(i).toString())
-                        val albumName = jsonArtist.getString("album_name")
-                        val id = jsonArtist.getString("id").toInt()
-                        list.add(Album(albumName, image_link))
+                    for (i in 0 until response.length()) {
+                        val jsonAlbum = JSONObject(response.get(i).toString())
+                        val albumName = jsonAlbum.getString("album_name")
+                        val songs = ArrayList<Song>()
+                        val jsonSongs = JSONArray(jsonAlbum.getString("songs").toString())
+                        for (i in 0 until jsonSongs.length()) {
+                            val jsonSong = JSONObject(jsonSongs.get(i).toString())
+                            val songName = jsonSong.getString("song_name")
+                            val album_id = jsonSong.getString("album_id").toInt()
+                            val id = jsonSong.getString("id").toInt()
+                            val storageName = jsonSong.getString("storage_name")
+                            songs.add(Song(songName, album_id, id, storageName))
+                        }
+                        list.add(Album(albumName, image_link, songs))
                     }
                     callBack.updateDataInRecyclerView(list)
                 },
