@@ -15,8 +15,10 @@ import com.example.spotifiubyfy01.AlbumPage
 import com.example.spotifiubyfy01.artistProfile.adapter.AlbumRecyclerAdapter
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.search.Artist
+import com.example.spotifiubyfy01.search.VolleyCallBack
+import com.example.spotifiubyfy01.search.adapter.ArtistRecyclerAdapter
 
-class ArtistPage: AppCompatActivity() {
+class ArtistPage: AppCompatActivity(), VolleyCallBack<Album> {
     private var artist: Artist? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,17 +36,21 @@ class ArtistPage: AppCompatActivity() {
         artistName.text = artist!!.username //Use !! because at this point artist is not null
         Glide.with(image.context).load(artist!!.image).into(image)
 
-        initRecyclerView()
+        AlbumDataSource.createAlbumList(artist!!.id, this)
     }
 
-    private fun initRecyclerView() {
+    private fun initRecyclerView(albumList: List<Album>) {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
                                     false)
         recyclerView.adapter =
-            AlbumRecyclerAdapter(AlbumDataSource.createAlbumList(artist!!.id)) {album ->
+            AlbumRecyclerAdapter(albumList) {album ->
                 onItemClicked(album)
             }
+    }
+
+    override fun updateDataInRecyclerView(albumList: List<Album>) {
+        initRecyclerView(albumList)
     }
 
     private fun onItemClicked(album: Album) {
