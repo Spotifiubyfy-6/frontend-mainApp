@@ -16,14 +16,15 @@ var image_link = "https://ladydanville.files.wordpress.com/2012/03/blankart.png"
 
 class AlbumDataSource {
     companion object {
-        fun createAlbumList(context: Context, artist_id: Int, callBack: VolleyCallBack<Album>) {
+        fun createAlbumList(context: Context, artist_id: Int, artist_name: String,
+                            callBack: VolleyCallBack<Album>) {
             val url = "https://spotifiubyfy-music.herokuapp.com/artists/" + artist_id +
                     "/albums?skip=0&limit=100"
             val getRequest: JsonArrayRequest = object : JsonArrayRequest(
                 Method.GET,
                 url, null,
                 Response.Listener { response ->
-                    callBack.updateDataInRecyclerView(getListOfAlbums(response))
+                    callBack.updateDataInRecyclerView(getListOfAlbums(artist_name, response))
                 },
                 { errorResponse ->
                     /*   val intent = Intent(context, PopUpWindow::class.java).apply {
@@ -57,15 +58,16 @@ class AlbumDataSource {
             return songs
         }
 
-        private fun getAlbum(jsonAlbum: JSONObject): Album {
+        private fun getAlbum(artist_name: String, jsonAlbum: JSONObject): Album {
             val albumName = jsonAlbum.getString("album_name")
-            return Album(albumName, image_link, getListOfSongs(JSONArray(jsonAlbum.getString("songs").toString())))
+            return Album(albumName, image_link, artist_name,
+                getListOfSongs(JSONArray(jsonAlbum.getString("songs").toString())))
         }
 
-        private fun getListOfAlbums(response: JSONArray): List<Album> {
+        private fun getListOfAlbums(artist_name: String, response: JSONArray): List<Album> {
             val list = ArrayList<Album>()
             for (i in 0 until response.length())
-                list.add(getAlbum(JSONObject(response.get(i).toString())))
+                list.add(getAlbum(artist_name, JSONObject(response.get(i).toString())))
             return list
         }
     }

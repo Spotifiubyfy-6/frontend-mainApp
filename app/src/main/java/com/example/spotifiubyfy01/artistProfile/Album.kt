@@ -5,5 +5,6 @@ import java.io.Serializable
 data class Album (
     var album_name: String,
     var album_image: String,
+    var artist_name: String,
     var song_list: List<Song>
 ) : Serializable
