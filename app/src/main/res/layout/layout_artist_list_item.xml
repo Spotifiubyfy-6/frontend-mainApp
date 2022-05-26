@@ -15,10 +15,13 @@
         android:layout_height="105dp">
 
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/artist_image"
             android:layout_width="71dp"
             android:layout_height="61dp"
+            app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+            app:strokeColor="@color/white"
+            app:strokeWidth="1dp"
             android:layout_margin="0dp"
             android:layout_marginStart="8dp"
             android:adjustViewBounds="true"
