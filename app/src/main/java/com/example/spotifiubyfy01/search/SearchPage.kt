@@ -8,10 +8,11 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.spotifiubyfy01.artistProfile.ArtistPage
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.search.adapter.ArtistRecyclerAdapter
 
-class SearchPage : AppCompatActivity(), VolleyCallBack {
+class SearchPage : AppCompatActivity(), VolleyCallBack<Artist> {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,4 +60,5 @@ class SearchPage : AppCompatActivity(), VolleyCallBack {
         adapter.updateList(artistList)
         recyclerView.visibility = android.view.View.VISIBLE
     }
+
 }

@@ -7,9 +7,11 @@ import com.android.volley.toolbox.JsonArrayRequest
 import com.example.spotifiubyfy01.MyRequestQueue
 import org.json.JSONObject
 
+var image_link = "https://he.cecollaboratory.com/public/layouts/images/group-default-logo.png"
+
 class DataSource{
     companion object {
-        fun updateDataSet(context: Context, slice: String, callBack: VolleyCallBack) {
+        fun updateDataSet(context: Context, slice: String, callBack: VolleyCallBack<Artist>) {
             val list = ArrayList<Artist>()
             if (slice.isEmpty()) {
                 callBack.updateDataInRecyclerView(list)
@@ -25,7 +27,8 @@ class DataSource{
                     for (i in 0 until size) {
                         val jsonArtist = JSONObject(response.get(i).toString())
                         val username = jsonArtist.getString("username")
-                        list.add(Artist(username, image_link))
+                        val id = jsonArtist.getString("id").toInt()
+                        list.add(Artist(id, username, image_link))
                     }
                     callBack.updateDataInRecyclerView(list)
                 },
