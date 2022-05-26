@@ -65,6 +65,7 @@ class ArtistPage: AppCompatActivity(), VolleyCallBack<Album> {
         outState.putString("ArtistImage", artist!!.image)
         super.onSaveInstanceState(outState)
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             finish()

@@ -60,4 +60,5 @@ class SearchPage : AppCompatActivity(), VolleyCallBack<Artist> {
         adapter.updateList(artistList)
         recyclerView.visibility = android.view.View.VISIBLE
     }
+
 }
