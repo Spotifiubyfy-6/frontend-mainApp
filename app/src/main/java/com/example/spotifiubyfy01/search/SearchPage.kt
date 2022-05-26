@@ -1,15 +1,18 @@
 package com.example.spotifiubyfy01.search
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifiubyfy01.artistProfile.ArtistPage
 import com.example.spotifiubyfy01.R
+import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.search.adapter.SearchRecyclerAdapter
 
 class SearchPage : AppCompatActivity(), VolleyCallBack<SearchItem> {
@@ -49,15 +52,19 @@ class SearchPage : AppCompatActivity(), VolleyCallBack<SearchItem> {
     }
 
     private fun onItemClicked(searchItem: SearchItem) {
+        if (searchItem.getSearchItemType() == ALBUM_SEARCH_ITEM) {
+            Log.d(TAG, "Album clicked!")
+            return
+        }
         val intent = Intent(this, ArtistPage::class.java)
         intent.putExtra("Artist", searchItem as Artist)
         startActivity(intent)
     }
 
-    override fun updateDataInRecyclerView(searchList: List<SearchItem>) {
+    override fun updateDataInRecyclerView(list: List<SearchItem>) {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         val adapter = recyclerView.adapter as SearchRecyclerAdapter
-        adapter.updateList(searchList)
+        adapter.updateList(list)
         recyclerView.visibility = android.view.View.VISIBLE
     }
 
