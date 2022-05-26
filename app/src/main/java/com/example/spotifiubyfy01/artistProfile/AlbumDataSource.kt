@@ -12,7 +12,7 @@ import com.example.spotifiubyfy01.search.VolleyCallBack
 import org.json.JSONArray
 import org.json.JSONObject
 
-var image_link = "https://he.cecollaboratory.com/public/layouts/images/group-default-logo.png"
+var image_link = "https://ladydanville.files.wordpress.com/2012/03/blankart.png"
 
 class AlbumDataSource {
     companion object {
