@@ -7,6 +7,8 @@ import com.android.volley.toolbox.JsonArrayRequest
 import com.example.spotifiubyfy01.MyRequestQueue
 import org.json.JSONObject
 
+var image_link = "https://he.cecollaboratory.com/public/layouts/images/group-default-logo.png"
+
 class DataSource{
     companion object {
         fun updateDataSet(context: Context, slice: String, callBack: VolleyCallBack<Artist>) {
