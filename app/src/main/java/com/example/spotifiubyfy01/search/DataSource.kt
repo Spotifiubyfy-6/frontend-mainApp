@@ -5,14 +5,16 @@ import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.example.spotifiubyfy01.MyRequestQueue
+import com.example.spotifiubyfy01.artistProfile.Album
+import com.example.spotifiubyfy01.artistProfile.Song
 import org.json.JSONObject
 
 var image_link = "https://he.cecollaboratory.com/public/layouts/images/group-default-logo.png"
-
+var album_image_link = "https://ladydanville.files.wordpress.com/2012/03/blankart.png"
 class DataSource{
     companion object {
         fun updateDataSet(context: Context, slice: String, callBack: VolleyCallBack<SearchItem>) {
-            val list = ArrayList<Artist>()
+            val list = ArrayList<SearchItem>()
             if (slice.isEmpty()) {
                 callBack.updateDataInRecyclerView(list)
                 return
@@ -30,6 +32,11 @@ class DataSource{
                         val id = jsonArtist.getString("id").toInt()
                         list.add(Artist(id, username, image_link))
                     }
+                    list.add(Album("Rubber Soul", album_image_link, "The Beatles", ArrayList<Song>()))
+                    list.add(Album("Revolver", album_image_link, "The Beatles", ArrayList<Song>()))
+                    list.add(Album("Led Zeppelin I", album_image_link, "Led Zeppelin", ArrayList<Song>()))
+                    list.add(Album("Hold on, we are going down", album_image_link, "Drake", ArrayList<Song>()))
+
                     callBack.updateDataInRecyclerView(list)
                 },
                 { errorResponse ->
