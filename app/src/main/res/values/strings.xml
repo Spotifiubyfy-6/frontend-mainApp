@@ -38,6 +38,11 @@
     <string name="upload_song_title">Upload song:</string>
     <string name="song_name_field">Song name</string>
     <string name="upload_button">Upload</string>
+    <string name="AlbumGenreHint">Genre: </string>
+    <string name="enter_album_cover_image_path">Enter album cover image path:</string>
+    <string name="song_description_hint">Song description:</string>
+    <string name="song_path_hint">Song path:</string>
+    <string name="finish_song_creation_button">Finish</string>
 
 
 </resources>

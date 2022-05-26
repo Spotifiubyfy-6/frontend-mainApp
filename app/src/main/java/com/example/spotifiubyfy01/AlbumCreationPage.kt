@@ -17,6 +17,8 @@ class AlbumCreationPage : AppCompatActivity() {
 
         val albumName = findViewById<EditText>(R.id.albumName)
         val albumDescription = findViewById<EditText>(R.id.albumDescription)
+        val albumGenre = findViewById<EditText>(R.id.albumGenre)
+        val albumMediaPath = findViewById<EditText>(R.id.albumMediaPath)
 
         val createAlbumButton = findViewById<Button>(R.id.createAlbumButton)
 
@@ -25,9 +27,9 @@ class AlbumCreationPage : AppCompatActivity() {
 
             requestBody.put("album_name", albumName.text.toString())
             requestBody.put("album_description", albumDescription.text.toString())
-            requestBody.put("album_genre", "hardcodeado")
-            requestBody.put("album_media", "hardcodeado")
-            requestBody.put("suscription", "free")
+            requestBody.put("album_genre", albumGenre.text.toString())
+            requestBody.put("album_media", "hardcodeado") //todo completar con el storageName cuando este implementada el upload de imagenes
+            requestBody.put("suscription", "free") //todo agregar editText de tipo de suscription a la vista y extraer el dato
             requestBody.put("artist_id", app.getProfileData("id"))
 
             val url = "http://spotifiubyfy-music.herokuapp.com/albums"
