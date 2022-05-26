@@ -32,7 +32,7 @@ class ArtistPage: AppCompatActivity(), VolleyCallBack<Album> {
         val image = findViewById<ImageView>(R.id.artist_image)
         artistName.text = artist!!.username //Use !! because at this point artist is not null
         Glide.with(image.context).load(artist!!.image).into(image)
-
+        initRecyclerView(ArrayList<Album>())
         AlbumDataSource.createAlbumList(this, artist!!.id, this)
     }
 
