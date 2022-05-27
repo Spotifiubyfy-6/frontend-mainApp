@@ -8,13 +8,26 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.example.spotifiubyfy01.MyRequestQueue
 import com.example.spotifiubyfy01.artistProfile.Album
-import com.example.spotifiubyfy01.artistProfile.AlbumDataSource
 import com.example.spotifiubyfy01.artistProfile.Song
 import org.json.JSONArray
 import org.json.JSONObject
 
 var image_link = "https://he.cecollaboratory.com/public/layouts/images/group-default-logo.png"
 var album_image_link = "https://ladydanville.files.wordpress.com/2012/03/blankart.png"
+
+class counterToCallBack() {
+    var sharedCounter: Int = 0
+
+    fun updateCounterAndCallBackIfNeeded(list: ArrayList<SearchItem>,
+                                         callBack: VolleyCallBack<SearchItem> ) {
+        synchronized(this) {
+            sharedCounter++
+            if (sharedCounter == 2)
+                callBack.updateDataInRecyclerView(list)
+        }
+    }
+}
+
 
 class DataSource {
     companion object {
@@ -24,7 +37,7 @@ class DataSource {
                 callBack.updateDataInRecyclerView(list)
                 return
             }
-            fetchArtists(list, slice, context)
+            fetchArtists(list, slice, context, callBack)
             fetchAlbums(list, slice, context, callBack)
         }
 
@@ -76,7 +89,6 @@ class DataSource {
                     Log.d(TAG, "fetching albums")
                     for (i in 0 until response.length())
                         list.add(getAlbum("defaultArtist", JSONObject(response.get(i).toString())))
-                    callBack.updateDataInRecyclerView(list)
                 },
                 { errorResponse ->
                     /*   val intent = Intent(context, PopUpWindow::class.java).apply {
@@ -94,11 +106,6 @@ class DataSource {
                 }
             }
             MyRequestQueue.getInstance(context).addToRequestQueue(getRequest)
-            /* list.add(Album("Rubber Soul", album_image_link, "The Beatles", ArrayList<Song>()))
-            list.add(Album("Revolver", album_image_link, "The Beatles", ArrayList<Song>()))
-            list.add(Album("Led Zeppelin I", album_image_link, "Led Zeppelin", ArrayList<Song>()))
-            list.add(Album("Hold on, we are going down", album_image_link, "Drake", ArrayList<Song>()))
-        */
         }
 
         private fun getSong(artist_name: String, jsonSong: JSONObject): Song {
@@ -125,7 +132,7 @@ class DataSource {
             val albumName = jsonAlbum.getString("album_name")
             return Album(
                 albumName,
-                com.example.spotifiubyfy01.artistProfile.image_link, artist_name,
+                album_image_link, artist_name,
                 getListOfSongs(
                     artist_name,
                     JSONArray(jsonAlbum.getString("songs").toString())
