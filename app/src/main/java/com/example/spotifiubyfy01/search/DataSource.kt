@@ -15,7 +15,7 @@ import org.json.JSONObject
 var image_link = "https://he.cecollaboratory.com/public/layouts/images/group-default-logo.png"
 var album_image_link = "https://ladydanville.files.wordpress.com/2012/03/blankart.png"
 
-class counterToCallBack() {
+class CounterToCallBack() {
     var sharedCounter: Int = 0
 
     fun updateCounterAndCallBackIfNeeded(list: ArrayList<SearchItem>,
@@ -37,8 +37,9 @@ class DataSource {
                 callBack.updateDataInRecyclerView(list)
                 return
             }
-            fetchArtists(list, slice, context, callBack)
-            fetchAlbums(list, slice, context, callBack)
+            val counter = CounterToCallBack()
+            fetchArtists(list, slice, context, callBack, counter)
+            fetchAlbums(list, slice, context, callBack, counter)
         }
 
         private fun getArtist(jsonArtist: JSONObject): SearchItem {
@@ -47,7 +48,8 @@ class DataSource {
             return Artist(id, username, image_link)
         }
 
-        private fun fetchArtists(list: ArrayList<SearchItem>, slice: String, context: Context) {
+        private fun fetchArtists(list: ArrayList<SearchItem>, slice: String, context: Context,
+                                 callBack: VolleyCallBack<SearchItem>, counter: CounterToCallBack) {
             val url = "https://spotifiubyfy-users.herokuapp.com/users/information/" + slice +
                     "?skip=0&limit=10"
             val getRequest: JsonArrayRequest = object : JsonArrayRequest(
@@ -56,7 +58,7 @@ class DataSource {
                 Response.Listener { response ->
                     for (i in 0 until response.length())
                         list.add(getArtist(JSONObject(response.get(i).toString())))
-                    Log.d(TAG, "artists fetched")
+                    counter.updateCounterAndCallBackIfNeeded(list, callBack)
                 },
                 { errorResponse ->
                     /*   val intent = Intent(context, PopUpWindow::class.java).apply {
@@ -78,7 +80,7 @@ class DataSource {
 
         private fun fetchAlbums(
             list: ArrayList<SearchItem>, slice: String, context: Context,
-            callBack: VolleyCallBack<SearchItem>
+            callBack: VolleyCallBack<SearchItem>, counter: CounterToCallBack
         ) {
             val url = "https://spotifiubyfy-music.herokuapp.com/albums?q=" + slice +
                     "&skip=0&limit=100"
@@ -86,9 +88,9 @@ class DataSource {
                 Method.GET,
                 url, null,
                 Response.Listener { response ->
-                    Log.d(TAG, "fetching albums")
                     for (i in 0 until response.length())
                         list.add(getAlbum("defaultArtist", JSONObject(response.get(i).toString())))
+                    counter.updateCounterAndCallBackIfNeeded(list, callBack)
                 },
                 { errorResponse ->
                     /*   val intent = Intent(context, PopUpWindow::class.java).apply {
