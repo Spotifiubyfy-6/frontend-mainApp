@@ -10,6 +10,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.spotifiubyfy01.AlbumPage
 import com.example.spotifiubyfy01.artistProfile.ArtistPage
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.artistProfile.Album
@@ -52,12 +53,20 @@ class SearchPage : AppCompatActivity(), VolleyCallBack<SearchItem> {
     }
 
     private fun onItemClicked(searchItem: SearchItem) {
-        if (searchItem.getSearchItemType() == ALBUM_SEARCH_ITEM) {
-            Log.d(TAG, "Album clicked!")
-            return
+        val intent = when(searchItem.getSearchItemType()) {
+            ARTIST_SEARCH_ITEM -> {
+                val intent = Intent(this, ArtistPage::class.java)
+                intent.putExtra("Artist", searchItem as Artist)
+            }
+            ALBUM_SEARCH_ITEM -> {
+                val intent = Intent(this, AlbumPage::class.java)
+                intent.putExtra("Album", searchItem as Album)
+            }
+            else -> {
+                val intent = Intent(this, ArtistPage::class.java)
+                intent.putExtra("Artist", searchItem as Artist)
+            }
         }
-        val intent = Intent(this, ArtistPage::class.java)
-        intent.putExtra("Artist", searchItem as Artist)
         startActivity(intent)
     }
 
