@@ -38,6 +38,9 @@
     <string name="upload_song_title">Upload song:</string>
     <string name="song_name_field">Song name</string>
     <string name="upload_button">Upload</string>
+    <string name="albums">Albums</string>
+    <string name="songs">Songs</string>
+    <string name="artists">Artists</string>
 
 
 </resources>
