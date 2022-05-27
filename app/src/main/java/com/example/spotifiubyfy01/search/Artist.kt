@@ -7,7 +7,7 @@ data class Artist(
     var image: String
 ) : Serializable, SearchItem() {
 
-    override fun getSearchItemType(): Int {
-        return ARTIST_SEARCH_ITEM
+    override fun getSearchItemType(): SearchItemEnum {
+        return SearchItemEnum.ARTIST_SEARCH_ITEM
     }
 }
