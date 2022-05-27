@@ -1,10 +1,11 @@
-package com.example.spotifiubyfy01.artistProfile.adapter
+package com.example.spotifiubyfy01.artistProfile.adapterSongRecyclerAdapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.R
+import com.example.spotifiubyfy01.artistProfile.adapter.AlbumViewHolder
 
 class AlbumRecyclerAdapter(
         private val albumList: List<Album>,

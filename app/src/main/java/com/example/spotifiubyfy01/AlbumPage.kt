@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.artistProfile.Song
-import com.example.spotifiubyfy01.artistProfile.adapter.AlbumRecyclerAdapter
 import com.example.spotifiubyfy01.artistProfile.adapter.SongRecyclerAdapter
 import com.example.spotifiubyfy01.search.VolleyCallBack
 
