@@ -43,6 +43,8 @@
     <string name="song_description_hint">Song description:</string>
     <string name="song_path_hint">Song path:</string>
     <string name="finish_song_creation_button">Finish</string>
-
+    <string name="albums">Albums</string>
+    <string name="songs">Songs</string>
+    <string name="artists">Artists</string>
 
 </resources>

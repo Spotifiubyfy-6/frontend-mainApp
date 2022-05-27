@@ -1,18 +1,22 @@
 package com.example.spotifiubyfy01.search
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.spotifiubyfy01.AlbumPage
 import com.example.spotifiubyfy01.artistProfile.ArtistPage
 import com.example.spotifiubyfy01.R
-import com.example.spotifiubyfy01.search.adapter.ArtistRecyclerAdapter
+import com.example.spotifiubyfy01.artistProfile.Album
+import com.example.spotifiubyfy01.search.adapter.SearchRecyclerAdapter
 
-class SearchPage : AppCompatActivity(), VolleyCallBack<Artist> {
+class SearchPage : AppCompatActivity(), VolleyCallBack<SearchItem> {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +38,7 @@ class SearchPage : AppCompatActivity(), VolleyCallBack<Artist> {
                     searchContainer.visibility = android.view.View.GONE
                     return
                 }
+                searchContainer.visibility = android.view.View.VISIBLE
                 DataSource.updateDataSet(this@SearchPage, searchText, this@SearchPage)
             }
         })
@@ -43,22 +48,29 @@ class SearchPage : AppCompatActivity(), VolleyCallBack<Artist> {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter =
-            ArtistRecyclerAdapter(ArrayList()) {artist ->
+            SearchRecyclerAdapter(ArrayList()) { artist ->
                 onItemClicked(artist)
         }
     }
 
-    private fun onItemClicked(artist: Artist) {
-        val intent = Intent(this, ArtistPage::class.java)
-        intent.putExtra("Artist", artist)
+    private fun onItemClicked(searchItem: SearchItem) {
+        val intent = when(searchItem.getSearchItemType()) {
+            SearchItemEnum.ARTIST_SEARCH_ITEM -> {
+                val intent = Intent(this, ArtistPage::class.java)
+                intent.putExtra("Artist", searchItem as Artist)
+            }
+            SearchItemEnum.ALBUM_SEARCH_ITEM -> {
+                val intent = Intent(this, AlbumPage::class.java)
+                intent.putExtra("Album", searchItem as Album)
+            }
+        }
         startActivity(intent)
     }
 
-    override fun updateDataInRecyclerView(artistList: List<Artist>) {
+    override fun updateDataInRecyclerView(list: List<SearchItem>) {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
-        val adapter = recyclerView.adapter as ArtistRecyclerAdapter
-        adapter.updateList(artistList)
-        recyclerView.visibility = android.view.View.VISIBLE
+        val adapter = recyclerView.adapter as SearchRecyclerAdapter
+        adapter.updateList(list)
     }
 
 }
