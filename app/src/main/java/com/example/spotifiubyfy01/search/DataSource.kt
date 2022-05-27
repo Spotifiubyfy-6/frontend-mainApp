@@ -1,8 +1,6 @@
 package com.example.spotifiubyfy01.search
 
-import android.content.ContentValues.TAG
 import android.content.Context
-import android.util.Log
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
@@ -15,15 +13,18 @@ import org.json.JSONObject
 var image_link = "https://he.cecollaboratory.com/public/layouts/images/group-default-logo.png"
 var album_image_link = "https://ladydanville.files.wordpress.com/2012/03/blankart.png"
 
-class CounterToCallBack() {
+class SynchronizerToCallBack {
+    val listToBeSent = ArrayList<SearchItem>()
     var sharedCounter: Int = 0
 
-    fun updateCounterAndCallBackIfNeeded(list: ArrayList<SearchItem>,
-                                         callBack: VolleyCallBack<SearchItem> ) {
+    fun updateListAndCounterAndCallBackIfNeeded(auxList: ArrayList<SearchItem>,
+                                                callBack: VolleyCallBack<SearchItem> ) {
         synchronized(this) {
+            for (i in 0 until auxList.size)
+                listToBeSent.add(auxList[i])
             sharedCounter++
             if (sharedCounter == 2)
-                callBack.updateDataInRecyclerView(list)
+                callBack.updateDataInRecyclerView(listToBeSent)
         }
     }
 }
@@ -32,14 +33,13 @@ class CounterToCallBack() {
 class DataSource {
     companion object {
         fun updateDataSet(context: Context, slice: String, callBack: VolleyCallBack<SearchItem>) {
-            val list = ArrayList<SearchItem>()
             if (slice.isEmpty()) {
-                callBack.updateDataInRecyclerView(list)
+                callBack.updateDataInRecyclerView(ArrayList<SearchItem>())
                 return
             }
-            val counter = CounterToCallBack()
-            fetchArtists(list, slice, context, callBack, counter)
-            fetchAlbums(list, slice, context, callBack, counter)
+            val synchronizer = SynchronizerToCallBack()
+            fetchArtists(slice, context, callBack, synchronizer)
+            fetchAlbums(slice, context, callBack, synchronizer)
         }
 
         private fun getArtist(jsonArtist: JSONObject): SearchItem {
@@ -48,8 +48,10 @@ class DataSource {
             return Artist(id, username, image_link)
         }
 
-        private fun fetchArtists(list: ArrayList<SearchItem>, slice: String, context: Context,
-                                 callBack: VolleyCallBack<SearchItem>, counter: CounterToCallBack) {
+        private fun fetchArtists(slice: String, context: Context,
+                                 callBack: VolleyCallBack<SearchItem>,
+                                 synchronizer: SynchronizerToCallBack) {
+            val auxList = ArrayList<SearchItem>()
             val url = "https://spotifiubyfy-users.herokuapp.com/users/information/" + slice +
                     "?skip=0&limit=10"
             val getRequest: JsonArrayRequest = object : JsonArrayRequest(
@@ -57,8 +59,8 @@ class DataSource {
                 url, null,
                 Response.Listener { response ->
                     for (i in 0 until response.length())
-                        list.add(getArtist(JSONObject(response.get(i).toString())))
-                    counter.updateCounterAndCallBackIfNeeded(list, callBack)
+                        auxList.add(getArtist(JSONObject(response.get(i).toString())))
+                    synchronizer.updateListAndCounterAndCallBackIfNeeded(auxList, callBack)
                 },
                 { errorResponse ->
                     /*   val intent = Intent(context, PopUpWindow::class.java).apply {
@@ -78,10 +80,10 @@ class DataSource {
             MyRequestQueue.getInstance(context).addToRequestQueue(getRequest)
         }
 
-        private fun fetchAlbums(
-            list: ArrayList<SearchItem>, slice: String, context: Context,
-            callBack: VolleyCallBack<SearchItem>, counter: CounterToCallBack
+        private fun fetchAlbums(slice: String, context: Context,
+            callBack: VolleyCallBack<SearchItem>, synchronizer: SynchronizerToCallBack
         ) {
+            val auxList = ArrayList<SearchItem>()
             val url = "https://spotifiubyfy-music.herokuapp.com/albums?q=" + slice +
                     "&skip=0&limit=100"
             val getRequest: JsonArrayRequest = object : JsonArrayRequest(
@@ -89,8 +91,8 @@ class DataSource {
                 url, null,
                 Response.Listener { response ->
                     for (i in 0 until response.length())
-                        list.add(getAlbum("defaultArtist", JSONObject(response.get(i).toString())))
-                    counter.updateCounterAndCallBackIfNeeded(list, callBack)
+                        auxList.add(getAlbum("defaultArtist", JSONObject(response.get(i).toString())))
+                    synchronizer.updateListAndCounterAndCallBackIfNeeded(auxList, callBack)
                 },
                 { errorResponse ->
                     /*   val intent = Intent(context, PopUpWindow::class.java).apply {
