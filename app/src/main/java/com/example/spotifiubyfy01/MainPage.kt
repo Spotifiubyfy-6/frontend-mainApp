@@ -18,7 +18,7 @@ import com.example.spotifiubyfy01.artistProfile.adapterSongRecyclerAdapter.Album
 import com.example.spotifiubyfy01.artistProfile.image_link
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.SearchPage
-import com.example.spotifiubyfy01.search.adapter.ArtistRecyclerAdapter
+import com.example.spotifiubyfy01.search.adapter.SearchRecyclerAdapter
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -68,11 +68,11 @@ class MainPage: AppCompatActivity() {
     }
 
     private fun initRecyclerViewArtist(listOfArtist:  List<Artist>) {
-        val recyclerViewAlbums = findViewById<RecyclerView>(R.id.recycler_view_artist)
-        recyclerViewAlbums.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
+        val recyclerViewArtist= findViewById<RecyclerView>(R.id.recycler_view_artist)
+        recyclerViewArtist.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
             false)
-        recyclerViewAlbums.adapter = ArtistRecyclerAdapter(listOfArtist) { artist ->
-            onArtistClicked(artist)
+        recyclerViewArtist.adapter = SearchRecyclerAdapter(listOfArtist) { artist ->
+            onArtistClicked(artist as Artist)
         }
     }
 
