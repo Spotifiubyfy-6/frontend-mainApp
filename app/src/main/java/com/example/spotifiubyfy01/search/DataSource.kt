@@ -13,9 +13,9 @@ import org.json.JSONObject
 var image_link = "https://he.cecollaboratory.com/public/layouts/images/group-default-logo.png"
 var album_image_link = "https://ladydanville.files.wordpress.com/2012/03/blankart.png"
 
-class SynchronizerToCallBack {
+class SearchListMonitor {
     val listToBeSent = ArrayList<SearchItem>()
-    var sharedCounter: Int = 0
+    private var sharedCounter: Int = 0
 
     fun updateListAndCounterAndCallBackIfNeeded(auxList: ArrayList<SearchItem>,
                                                 callBack: VolleyCallBack<SearchItem> ) {
@@ -37,7 +37,7 @@ class DataSource {
                 callBack.updateDataInRecyclerView(ArrayList<SearchItem>())
                 return
             }
-            val synchronizer = SynchronizerToCallBack()
+            val synchronizer = SearchListMonitor()
             fetchArtists(slice, context, callBack, synchronizer)
             fetchAlbums(slice, context, callBack, synchronizer)
         }
@@ -50,7 +50,7 @@ class DataSource {
 
         private fun fetchArtists(slice: String, context: Context,
                                  callBack: VolleyCallBack<SearchItem>,
-                                 synchronizer: SynchronizerToCallBack) {
+                                 synchronizer: SearchListMonitor) {
             val auxList = ArrayList<SearchItem>()
             val url = "https://spotifiubyfy-users.herokuapp.com/users/information/" + slice +
                     "?skip=0&limit=10"
@@ -81,7 +81,7 @@ class DataSource {
         }
 
         private fun fetchAlbums(slice: String, context: Context,
-            callBack: VolleyCallBack<SearchItem>, synchronizer: SynchronizerToCallBack
+            callBack: VolleyCallBack<SearchItem>, synchronizer: SearchListMonitor
         ) {
             val auxList = ArrayList<SearchItem>()
             val url = "https://spotifiubyfy-music.herokuapp.com/albums?q=" + slice +
