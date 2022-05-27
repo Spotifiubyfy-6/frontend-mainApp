@@ -35,7 +35,7 @@ class SongCreationPage : AppCompatActivity() {
             }
         when (PackageManager.PERMISSION_GRANTED) {
             ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) -> {
-                Toast.makeText(this, "Permissions granted",Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Permissions granted",Toast.LENGTH_SHORT).show()
             }
             else -> {
                 requestPermissionLauncher.launch(
@@ -44,21 +44,22 @@ class SongCreationPage : AppCompatActivity() {
             }
         }
 
-        if ( !intent.getStringExtra("songUploaded").isNullOrEmpty()) {
-            Toast.makeText(this, intent.getStringExtra("songUploaded"),Toast.LENGTH_LONG).show()
+        if ( !intent.getStringExtra("songCreated").isNullOrEmpty()) {
+            Toast.makeText(this, intent.getStringExtra("songCreated"),Toast.LENGTH_SHORT).show()
         }
 
         val app = (this.application as Spotifiubify)
 
         val songName = findViewById<EditText>(R.id.songName)
+        val songDescription = findViewById<EditText>(R.id.songDescription)
+        val songPath = findViewById<EditText>(R.id.songPath)
 
         val uploadSongButton = findViewById<Button>(R.id.upload_song_button)
-
         uploadSongButton.setOnClickListener {
             val requestBody = JSONObject()
 
             requestBody.put("song_name", songName.text.toString())
-            requestBody.put("song_description", "hardcodeado")
+            requestBody.put("song_description", songDescription.text.toString())
             requestBody.put("album_id", intent.getStringExtra("album_id"))
 
             val url = "http://spotifiubyfy-music.herokuapp.com/music"
@@ -67,16 +68,17 @@ class SongCreationPage : AppCompatActivity() {
                 Request.Method.POST, url, requestBody,
                 { response -> val intent = Intent(this, SongCreationPage::class.java).apply {
                     putExtra("songCreated", "Song successfully created")
+                    // puede ser que haya que agregar al bundle el album_id
                     val storageName = "songs/"+response.getString("storage_name")
                     val songRef =  app.getStorageReference().child(storageName)
-                    val file = Uri.fromFile(File("/sdcard/Download/MetalicaEsLaLuz.mp3"))
+                    val file = Uri.fromFile(File(songPath.text.toString()))
                     val uploadTask = songRef.putFile(file)
-
+                    putExtra("album_id", intent.getStringExtra("album_id"))
                     // Register observers to listen for when the download is done or if it fails
                     uploadTask.addOnFailureListener {
                         Toast.makeText(app, "Song not uploaded: ERROR",Toast.LENGTH_LONG).show()
                     }.addOnSuccessListener { taskSnapshot ->
-                        Toast.makeText(app, "Song successfully uploaded",Toast.LENGTH_LONG).show()
+                        Toast.makeText(app, "Song successfully uploaded",Toast.LENGTH_SHORT).show()
                     }
                 }
                     startActivity(intent)},
@@ -88,5 +90,12 @@ class SongCreationPage : AppCompatActivity() {
 
             MyRequestQueue.getInstance(this).addToRequestQueue(jsonRequest)
         }
+        val finishAlbumCreationButton = findViewById<Button>(R.id.finishCreation)
+        finishAlbumCreationButton.setOnClickListener {
+            val intent = Intent(this, ProfilePage::class.java)
+            startActivity(intent)
+        }
     }
 }
+
+//  /sdcard/Download/shrek.mp3  para la demo
