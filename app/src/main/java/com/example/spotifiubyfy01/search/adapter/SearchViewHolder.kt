@@ -1,31 +1,26 @@
 package com.example.spotifiubyfy01.search.adapter
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.search.SearchItem
+import com.example.spotifiubyfy01.search.SearchItemEnum
+import com.example.spotifiubyfy01.search.convertIntToSearchEnum
 
 fun createRespectiveHolder(parent: ViewGroup, viewType: Int) : SearchViewHolder{
     val holder =
-        when (viewType) {
-            0 ->    {
+        when (convertIntToSearchEnum(viewType)) {
+            SearchItemEnum.ARTIST_SEARCH_ITEM ->    {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.layout_artist_list_item, parent, false)
                 ArtistViewHolder(view)
             }
-            1 -> {
+            SearchItemEnum.ALBUM_SEARCH_ITEM -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.layout_album_search_item, parent, false)
                 AlbumSearchViewHolder(view)
-            }
-            else -> {
-                val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.layout_artist_list_item, parent, false)
-                ArtistViewHolder(view)
             }
         }
     return holder

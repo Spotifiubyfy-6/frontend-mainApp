@@ -11,7 +11,7 @@ class SearchRecyclerAdapter(
 ): RecyclerView.Adapter<SearchViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
-        return searchItemList[position].getSearchItemType()
+        return searchItemList[position].getSearchItemType().ordinal
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {

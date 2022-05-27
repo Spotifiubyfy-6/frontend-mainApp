@@ -54,17 +54,13 @@ class SearchPage : AppCompatActivity(), VolleyCallBack<SearchItem> {
 
     private fun onItemClicked(searchItem: SearchItem) {
         val intent = when(searchItem.getSearchItemType()) {
-            ARTIST_SEARCH_ITEM -> {
+            SearchItemEnum.ARTIST_SEARCH_ITEM -> {
                 val intent = Intent(this, ArtistPage::class.java)
                 intent.putExtra("Artist", searchItem as Artist)
             }
-            ALBUM_SEARCH_ITEM -> {
+            SearchItemEnum.ALBUM_SEARCH_ITEM -> {
                 val intent = Intent(this, AlbumPage::class.java)
                 intent.putExtra("Album", searchItem as Album)
-            }
-            else -> {
-                val intent = Intent(this, ArtistPage::class.java)
-                intent.putExtra("Artist", searchItem as Artist)
             }
         }
         startActivity(intent)
