@@ -38,6 +38,7 @@ class SearchPage : AppCompatActivity(), VolleyCallBack<SearchItem> {
                     searchContainer.visibility = android.view.View.GONE
                     return
                 }
+                searchContainer.visibility = android.view.View.VISIBLE
                 DataSource.updateDataSet(this@SearchPage, searchText, this@SearchPage)
             }
         })
@@ -70,7 +71,6 @@ class SearchPage : AppCompatActivity(), VolleyCallBack<SearchItem> {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         val adapter = recyclerView.adapter as SearchRecyclerAdapter
         adapter.updateList(list)
-        recyclerView.visibility = android.view.View.VISIBLE
     }
 
 }

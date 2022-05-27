@@ -14,7 +14,7 @@ var image_link = "https://he.cecollaboratory.com/public/layouts/images/group-def
 var album_image_link = "https://ladydanville.files.wordpress.com/2012/03/blankart.png"
 
 class SearchListMonitor {
-    val listToBeSent = ArrayList<SearchItem>()
+    private val listToBeSent = ArrayList<SearchItem>()
     private var sharedCounter: Int = 0
 
     fun updateListAndCounterAndCallBackIfNeeded(auxList: ArrayList<SearchItem>,
@@ -29,12 +29,11 @@ class SearchListMonitor {
     }
 }
 
-
 class DataSource {
     companion object {
         fun updateDataSet(context: Context, slice: String, callBack: VolleyCallBack<SearchItem>) {
             if (slice.isEmpty()) {
-                callBack.updateDataInRecyclerView(ArrayList<SearchItem>())
+                callBack.updateDataInRecyclerView(ArrayList())
                 return
             }
             val synchronizer = SearchListMonitor()
