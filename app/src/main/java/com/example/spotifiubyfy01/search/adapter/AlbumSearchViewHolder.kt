@@ -18,7 +18,7 @@ class AlbumSearchViewHolder(view: View) : SearchViewHolder(view) {
     override fun render(item: SearchItem, onClickListener: (SearchItem) -> Unit) {
         val album = item as Album
         albumName.text = album.album_name
-        val text = "Album by" + album.artist_name
+        val text = "Album by " + album.artist_name
         artistName.text = text
         Glide.with(albumImage.context).load(album.album_image).into(albumImage)
         itemView.setOnClickListener { onClickListener(album) }
