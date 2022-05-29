@@ -1,18 +1,29 @@
 package com.example.spotifiubyfy01
+import android.content.Context.WIFI_SERVICE
 import android.media.AudioAttributes
 import android.media.MediaPlayer
+import android.net.wifi.WifiManager
+import android.net.wifi.WifiManager.WifiLock
+import android.os.PowerManager
 import android.widget.Toast
-import java.util.*
 import com.example.spotifiubyfy01.artistProfile.Song
+import java.util.*
 
 
-class SongManager {
-    val MediaPlayer = MediaPlayer()
+class SongManager(app: Spotifiubify) {
+    private val MediaPlayer = MediaPlayer()
     val playlist = LinkedList<Song>()
+    private var wifiLock:  WifiLock
 
 
+    init {
+        MediaPlayer.setWakeMode(app, PowerManager.PARTIAL_WAKE_LOCK)
+        val wifiManager = app.applicationContext.getSystemService(WIFI_SERVICE) as WifiManager
+        wifiLock = wifiManager.createWifiLock(WifiManager.WIFI_MODE_FULL_HIGH_PERF, "wifi_lock")
+    }
 
     fun play(song: Song, app: Spotifiubify) {
+        wifiLock.acquire()
         val storageName = "songs/"+song.storage_name
         val songRef = app.getStorageReference().child(storageName)
         songRef.downloadUrl.addOnSuccessListener { url ->
@@ -24,13 +35,20 @@ class SongManager {
                         .setUsage(AudioAttributes.USAGE_MEDIA)
                         .build()
                 )
+                isLooping = false
+                setOnCompletionListener {
+                    if (playlist.isEmpty()) {
+                        wifiLock.release()
+                    } else {
+                        //play next song on que
+                    }
+                }
                 setDataSource(url.toString())
-                prepare() // might take long! (for buffering, etc)
+                prepare()
                 start()
             }
         }.addOnFailureListener {
-            // Handle any errors
-            Toast.makeText(app, "couldnt play song", Toast.LENGTH_LONG).show()
+            Toast.makeText(app, "couldn't play song", Toast.LENGTH_LONG).show()
         }
     }
 }

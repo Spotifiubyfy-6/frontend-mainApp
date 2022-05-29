@@ -18,11 +18,12 @@ import com.example.spotifiubyfy01.SongManager
 class Spotifiubify : Application() {
     var profileData: Hashtable<String, String> = Hashtable<String, String>()
     private lateinit var storage: FirebaseStorage
-    val SongManager  = SongManager()
+    lateinit var SongManager: SongManager
 
     override fun onCreate() {
         super.onCreate()
         storage = Firebase.storage
+        SongManager = SongManager(this)
     }
 
     fun setProfile() {
