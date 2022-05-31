@@ -1,15 +1,24 @@
 package com.example.spotifiubyfy01
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.AuthFailureError
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonArrayRequest
+import com.example.spotifiubyfy01.artistProfile.Album
+import com.example.spotifiubyfy01.artistProfile.AlbumDataSource
+import com.example.spotifiubyfy01.artistProfile.AlbumDataSource.Companion.createAlbumList
+import com.example.spotifiubyfy01.search.VolleyCallBack
 
 
-class ProfilePage : AppCompatActivity() {
+class ProfilePage : AppCompatActivity(), VolleyCallBack<Album> {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_page)
@@ -46,5 +55,21 @@ class ProfilePage : AppCompatActivity() {
             val intent = Intent(this, AlbumCreationPage::class.java)
             startActivity(intent)
         }
+
+        val createSongButton = findViewById<Button>(R.id.createSongButton)
+        createSongButton.setOnClickListener {
+            createAlbumList(this, app.getProfileData("id")!!.toInt(),
+                app.getProfileData("username")!!, this)
+        }
     }
+
+    override fun updateData(list: List<Album>) {
+        if (list.isEmpty()) {
+            Toast.makeText(this, "You do not have any albums. Create an album first.",
+                Toast.LENGTH_LONG).show()
+            return
+        }
+    }
+
+
 }
