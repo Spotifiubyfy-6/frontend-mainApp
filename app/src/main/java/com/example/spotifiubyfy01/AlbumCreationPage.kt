@@ -38,6 +38,7 @@ class AlbumCreationPage : AppCompatActivity() {
                 Request.Method.POST, url, requestBody,
                 { response -> val intent = Intent(this, SongCreationPage::class.java).apply {
                     putExtra("album_id", response.getString("id"))
+                    putExtra("album_name", albumName.text.toString())
 //                  todo: cargar link de imagen a firebase
                 }
                     startActivity(intent)},
