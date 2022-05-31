@@ -14,12 +14,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Spotifiubyfy01">
         <activity
+            android:name=".ReproductionPage"
+            android:exported="false" />
+        <activity
             android:name=".MainLandingPage"
             android:exported="true" />
         <activity
             android:name=".ProfilePage"
             android:exported="false"
             android:parentActivityName=".MainPage">
+
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -66,7 +70,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".search.SearchPage"
             android:exported="false"
@@ -79,6 +82,7 @@
             android:name=".artistProfile.ArtistPage"
             android:exported="false"
             android:parentActivityName=".search.SearchPage">
+
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
