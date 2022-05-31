@@ -1,13 +1,10 @@
 package com.example.spotifiubyfy01.artistProfile
 
-import android.content.ContentValues.TAG
 import android.content.Context
-import android.util.Log
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.example.spotifiubyfy01.MyRequestQueue
-import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
 import org.json.JSONArray
 import org.json.JSONObject
@@ -24,7 +21,7 @@ class AlbumDataSource {
                 Method.GET,
                 url, null,
                 Response.Listener { response ->
-                    callBack.updateDataInRecyclerView(getListOfAlbums(artist_name, response))
+                    callBack.updateData(getListOfAlbums(artist_name, response))
                 },
                 { errorResponse ->
                     /*   val intent = Intent(context, PopUpWindow::class.java).apply {

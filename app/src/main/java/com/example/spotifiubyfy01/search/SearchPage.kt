@@ -67,7 +67,7 @@ class SearchPage : AppCompatActivity(), VolleyCallBack<SearchItem> {
         startActivity(intent)
     }
 
-    override fun updateDataInRecyclerView(list: List<SearchItem>) {
+    override fun updateData(list: List<SearchItem>) {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         val adapter = recyclerView.adapter as SearchRecyclerAdapter
         adapter.updateList(list)

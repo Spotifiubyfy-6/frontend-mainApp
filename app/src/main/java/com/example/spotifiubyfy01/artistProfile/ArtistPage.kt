@@ -47,7 +47,7 @@ class ArtistPage: AppCompatActivity(), VolleyCallBack<Album> {
             }
     }
 
-    override fun updateDataInRecyclerView(list: List<Album>) {
+    override fun updateData(list: List<Album>) {
         initRecyclerView(list)
     }
 

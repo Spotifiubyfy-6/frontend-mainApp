@@ -24,7 +24,7 @@ class SearchListMonitor {
                 listToBeSent.add(auxList[i])
             sharedCounter++
             if (sharedCounter == 2)
-                callBack.updateDataInRecyclerView(listToBeSent)
+                callBack.updateData(listToBeSent)
         }
     }
 }
@@ -33,7 +33,7 @@ class DataSource {
     companion object {
         fun updateDataSet(context: Context, slice: String, callBack: VolleyCallBack<SearchItem>) {
             if (slice.isEmpty()) {
-                callBack.updateDataInRecyclerView(ArrayList())
+                callBack.updateData(ArrayList())
                 return
             }
             val synchronizer = SearchListMonitor()
