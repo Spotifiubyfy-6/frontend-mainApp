@@ -11,7 +11,7 @@ import java.util.*
 
 
 class SongManager(app: Spotifiubify) {
-    private val MediaPlayer = MediaPlayer()
+    val MediaPlayer = MediaPlayer()
     val playlist = LinkedList<Song>()
     private var wifiLock:  WifiLock
 
@@ -23,6 +23,7 @@ class SongManager(app: Spotifiubify) {
     }
 
     fun play(song: Song, app: Spotifiubify) {
+        playlist.push(song)
         wifiLock.acquire()
         val storageName = "songs/"+song.storage_name
         val songRef = app.getStorageReference().child(storageName)
@@ -37,6 +38,7 @@ class SongManager(app: Spotifiubify) {
                 )
                 isLooping = false
                 setOnCompletionListener {
+                    playlist.remove()
                     if (playlist.isEmpty()) {
                         wifiLock.release()
                     } else {
@@ -51,4 +53,15 @@ class SongManager(app: Spotifiubify) {
             Toast.makeText(app, "couldn't play song", Toast.LENGTH_LONG).show()
         }
     }
+
+//    fun pause() {
+//        MediaPlayer.pause()
+//    }
+
+//    fun start
+
+    fun getCurrent(): Song? {
+        return playlist.peekFirst()
+    }
+
 }

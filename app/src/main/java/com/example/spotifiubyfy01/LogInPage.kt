@@ -34,8 +34,8 @@ class LogInPage : AppCompatActivity() {
                 }
                     startActivity(intent)},
                 { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
-                    val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
-                    putExtra("popuptext", error)
+//                    val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
+                    putExtra("popuptext", "error failed log in")
                 }
                     startActivity(intent)}) {
                 override fun getBody(): ByteArray {

@@ -4,6 +4,8 @@ import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,7 +24,21 @@ import com.example.spotifiubyfy01.search.adapter.SearchRecyclerAdapter
 import org.json.JSONArray
 import org.json.JSONObject
 
+
+
+
 class MainPage: AppCompatActivity() {
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.top_bar, menu)
+        return true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_playback) {
+            startActivity(Intent(this, ReproductionPage::class.java))
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
