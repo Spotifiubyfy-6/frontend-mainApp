@@ -1,9 +1,11 @@
 package com.example.spotifiubyfy01
 
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.artistProfile.Song
 import com.example.spotifiubyfy01.artistProfile.adapter.SongRecyclerAdapter
+import com.example.spotifiubyfy01.search.SearchPage
 
 class AlbumPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +27,12 @@ class AlbumPage : AppCompatActivity() {
         val image = findViewById<ImageView>(R.id.album_image)
         Glide.with(image.context).load(album!!.album_image).into(image)
         initRecyclerView(album.song_list)
+        val play_button = findViewById<Button>(R.id.playButton)
+        play_button.setOnClickListener {
+            //play album! obtain album songs using album.song_list
+            for (song in album.song_list)
+                Log.d(TAG, song.song_name)
+        }
     }
 
     private fun initRecyclerView(songList: List<Song>) {
