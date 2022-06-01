@@ -16,13 +16,8 @@ class ReproductionPage : AppCompatActivity() {
         setContentView(R.layout.activity_reproduction_page)
 
         val app = (this.application as Spotifiubify)
-        var song: Song? = app.SongManager.getCurrent()
-        if (song == null) {
-            song = Song("songName", "artist_name", 1, 1, "storageName")
-        }
-
+        var song: Song = app.SongManager.currentSong
         val mediaPlayer = app.SongManager.MediaPlayer
-
         val currentSongTime = findViewById<TextView>(R.id.position)
 
         findViewById<TextView>(R.id.title).text = song.song_name
@@ -30,20 +25,33 @@ class ReproductionPage : AppCompatActivity() {
         findViewById<TextView>(R.id.duration).text = convertToMinutesString(mediaPlayer.duration)
         currentSongTime.text = convertToMinutesString(mediaPlayer.currentPosition)
 
+
         val timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
                 runOnUiThread {
-                    if (mediaPlayer.isPlaying) {
+                    if (app.SongManager.isPlaying()) {
                         currentSongTime.post { currentSongTime.text = convertToMinutesString(mediaPlayer.currentPosition)
                         }
                     } else {
+                        song = app.SongManager.currentSong
+                        findViewById<TextView>(R.id.title).text = song.song_name
+                        findViewById<TextView>(R.id.subtitle).text = song.artist
+                        findViewById<TextView>(R.id.duration).text = convertToMinutesString(mediaPlayer.duration)
+                        currentSongTime.text = convertToMinutesString(mediaPlayer.currentPosition)
                         timer.cancel()
                         timer.purge()
                     }
+                    if (song != app.SongManager.currentSong) {
+                        song = app.SongManager.currentSong
+                        findViewById<TextView>(R.id.title).text = song.song_name
+                        findViewById<TextView>(R.id.subtitle).text = song.artist
+                        findViewById<TextView>(R.id.duration).text = convertToMinutesString(mediaPlayer.duration)
+                        currentSongTime.text = convertToMinutesString(mediaPlayer.currentPosition)
+                    }
                 }
             }
-        }, 0, 1000)
+        }, 0, 500)
 
         val pauseButton = findViewById<ImageButton>(R.id.media_button)
         if (mediaPlayer.isPlaying) {
@@ -61,6 +69,14 @@ class ReproductionPage : AppCompatActivity() {
                     Toast.makeText(this, "No song on que", Toast.LENGTH_SHORT).show()
                 }
                 pauseButton.setImageResource(R.drawable.ic_pause_black_24dp)
+            }
+        }
+
+        val nextButton = findViewById<ImageButton>(R.id.nextButton)
+
+        nextButton.setOnClickListener {
+            if (mediaPlayer.isPlaying) {
+                app.SongManager.next()
             }
         }
 
