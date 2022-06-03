@@ -1,17 +1,18 @@
 package com.example.spotifiubyfy01.search
 
 import android.content.Context
-import com.android.volley.AuthFailureError
+import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.example.spotifiubyfy01.MyRequestQueue
+import com.example.spotifiubyfy01.Spotifiubify
 import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.artistProfile.Song
 import org.json.JSONArray
 import org.json.JSONObject
 
 var image_link = "https://he.cecollaboratory.com/public/layouts/images/group-default-logo.png"
-var album_image_link = "https://ladydanville.files.wordpress.com/2012/03/blankart.png"
 
 class SearchListMonitor {
     private val listToBeSent = ArrayList<SearchItem>()
@@ -53,29 +54,17 @@ class DataSource {
             val auxList = ArrayList<SearchItem>()
             val url = "https://spotifiubyfy-users.herokuapp.com/users/information/" + slice +
                     "?skip=0&limit=10"
-            val getRequest: JsonArrayRequest = object : JsonArrayRequest(
-                Method.GET,
+            val getRequest = JsonArrayRequest(
+                Request.Method.GET,
                 url, null,
-                Response.Listener { response ->
+                { response ->
                     for (i in 0 until response.length())
                         auxList.add(getArtist(JSONObject(response.get(i).toString())))
                     synchronizer.updateListAndCounterAndCallBackIfNeeded(auxList, callBack)
                 },
-                { errorResponse ->
-                    /*   val intent = Intent(context, PopUpWindow::class.java).apply {
-                           val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
-                           putExtra("popuptext", error)
-                           putExtra("tokenValidation", true)
-                       }
-                       startActivity(intent)
-                */
-                }) {
-                @Throws(AuthFailureError::class)
-                override fun getHeaders(): Map<String, String> {
-                    //    params["Authorization"] = "Bearer " + getSharedPreferences(getString(R.string.token_key), Context.MODE_PRIVATE).getString(getString(R.string.token_key), null)
-                    return HashMap()
-                }
-            }
+                {
+
+                })
             MyRequestQueue.getInstance(context).addToRequestQueue(getRequest)
         }
 
@@ -85,28 +74,15 @@ class DataSource {
             val auxList = ArrayList<SearchItem>()
             val url = "https://spotifiubyfy-music.herokuapp.com/albums?q=" + slice +
                     "&skip=0&limit=100"
-            val getRequest: JsonArrayRequest = object : JsonArrayRequest(
-                Method.GET,
+            val getRequest = JsonArrayRequest(
+                Request.Method.GET,
                 url, null,
-                Response.Listener { response ->
+                { response ->
                     for (i in 0 until response.length())
                         auxList.add(getAlbum("defaultArtist", JSONObject(response.get(i).toString())))
                     synchronizer.updateListAndCounterAndCallBackIfNeeded(auxList, callBack)
-                },
-                { errorResponse ->
-                    /*   val intent = Intent(context, PopUpWindow::class.java).apply {
-                           val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
-                           putExtra("popuptext", error)
-                           putExtra("tokenValidation", true)
-                       }
-                       startActivity(intent)
-                */
-                }) {
-                @Throws(AuthFailureError::class)
-                override fun getHeaders(): Map<String, String> {
-                    //    params["Authorization"] = "Bearer " + getSharedPreferences(getString(R.string.token_key), Context.MODE_PRIVATE).getString(getString(R.string.token_key), null)
-                    return HashMap()
                 }
+            ) {
             }
             MyRequestQueue.getInstance(context).addToRequestQueue(getRequest)
         }
@@ -133,9 +109,10 @@ class DataSource {
 
         private fun getAlbum(artist_name: String, jsonAlbum: JSONObject): SearchItem {
             val albumName = jsonAlbum.getString("album_name")
+            val storageName = "covers/"+jsonAlbum.getString("album_media")
             return Album(
                 albumName,
-                album_image_link, artist_name,
+                storageName, artist_name,
                 getListOfSongs(
                     artist_name,
                     JSONArray(jsonAlbum.getString("songs").toString())

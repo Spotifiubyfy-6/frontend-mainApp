@@ -17,7 +17,6 @@ import com.example.spotifiubyfy01.artistProfile.ArtistPage
 import com.example.spotifiubyfy01.artistProfile.Song
 import com.example.spotifiubyfy01.artistProfile.adapter.SongRecyclerAdapter
 import com.example.spotifiubyfy01.artistProfile.adapterSongRecyclerAdapter.AlbumRecyclerAdapter
-import com.example.spotifiubyfy01.artistProfile.image_link
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.SearchPage
 import com.example.spotifiubyfy01.search.adapter.SearchRecyclerAdapter
@@ -195,7 +194,8 @@ class MainPage: AppCompatActivity() {
 
     private fun getAlbum(jsonAlbum: JSONObject): Album {
         val albumName = jsonAlbum.getString("album_name")
-        return Album(albumName, image_link, "artist_name",
+        val storageName = "covers/"+jsonAlbum.getString("album_media")
+        return Album(albumName, storageName, "artist_name",
             getListOfSongs(
                 JSONArray(jsonAlbum.getString("songs").toString())
             )

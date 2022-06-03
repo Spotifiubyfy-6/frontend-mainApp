@@ -35,7 +35,7 @@ class SongCreationPage : AppCompatActivity() {
             }
         when (PackageManager.PERMISSION_GRANTED) {
             ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) -> {
-                Toast.makeText(this, "Permissions granted",Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "Permissions granted",Toast.LENGTH_SHORT).show()
             }
             else -> {
                 requestPermissionLauncher.launch(
@@ -68,22 +68,19 @@ class SongCreationPage : AppCompatActivity() {
                 Request.Method.POST, url, requestBody,
                 { response -> val intent = Intent(this, SongCreationPage::class.java).apply {
                     putExtra("songCreated", "Song successfully created")
-                    // puede ser que haya que agregar al bundle el album_id
+                    putExtra("album_id", intent.getStringExtra("album_id"))
                     val storageName = "songs/"+response.getString("storage_name")
                     val songRef =  app.getStorageReference().child(storageName)
                     val file = Uri.fromFile(File(songPath.text.toString()))
                     val uploadTask = songRef.putFile(file)
-                    putExtra("album_id", intent.getStringExtra("album_id"))
-                    // Register observers to listen for when the download is done or if it fails
                     uploadTask.addOnFailureListener {
                         Toast.makeText(app, "Song not uploaded: ERROR",Toast.LENGTH_LONG).show()
-                    }.addOnSuccessListener { taskSnapshot ->
+                    }.addOnSuccessListener {
                         Toast.makeText(app, "Song successfully uploaded",Toast.LENGTH_SHORT).show()
                     }
                 }
                     startActivity(intent)},
                 { val intent = Intent(this, PopUpWindow::class.java).apply {
-//                    val error = errorResponse//.networkResponse.data.decodeToString() //.split('"')[3]
                     putExtra("popuptext", "cant create album right now")
                 }
                     startActivity(intent)})
