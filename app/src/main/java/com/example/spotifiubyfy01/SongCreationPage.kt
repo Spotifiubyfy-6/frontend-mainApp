@@ -3,16 +3,18 @@ package com.example.spotifiubyfy01
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
+import android.util.Log
+import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
+import com.example.spotifiubyfy01.artistProfile.Album
 import org.json.JSONObject
 import java.io.File
 
@@ -20,7 +22,17 @@ class SongCreationPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_song_creation_page)
-
+        val dropDownMenu = findViewById<AutoCompleteTextView>(R.id.albums_names)
+        val albumList = intent.extras?.get("albums") as ArrayList<Album>?
+        val albumNames = ArrayList<String>()
+        if (albumList == null) {
+            val albumName = intent.extras?.get("album_name") as String
+            albumNames.add(albumName)
+        } else {
+            obtainAlbumNamesAndAddToList(albumList, albumNames)
+        }
+        val adapter = ArrayAdapter(this, R.layout.dropdown_item, albumNames)
+        dropDownMenu.setAdapter(adapter)
 //      falta hacer esto mas explicativo, que se entienda mejor cuando se dan los permisos y eso
         val requestPermissionLauncher =
             registerForActivityResult(
@@ -95,6 +107,12 @@ class SongCreationPage : AppCompatActivity() {
             val intent = Intent(this, ProfilePage::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun obtainAlbumNamesAndAddToList(albumList: ArrayList<Album>,
+                                             albumNames: ArrayList<String>) {
+        for (album in albumList)
+            albumNames.add(album.album_name)
     }
 }
 
