@@ -31,6 +31,7 @@ class SongCreationPage : AppCompatActivity() {
         } else {
             obtainAlbumNamesAndAddToList(albumList, albumNames)
         }
+        dropDownMenu.setText(albumNames[0])
         val adapter = ArrayAdapter(this, R.layout.dropdown_item, albumNames)
         dropDownMenu.setAdapter(adapter)
 //      falta hacer esto mas explicativo, que se entienda mejor cuando se dan los permisos y eso
