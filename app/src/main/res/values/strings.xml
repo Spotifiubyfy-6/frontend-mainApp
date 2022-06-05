@@ -50,4 +50,6 @@
     <string name="action_playback_page">Go to playback</string>
 
     <string name="playlist_name">Playlist Name</string>
+    <string name="playlist_description">Playlist Description</string>
+    <string name="playlist_media">Playlist Media</string>
 </resources>
