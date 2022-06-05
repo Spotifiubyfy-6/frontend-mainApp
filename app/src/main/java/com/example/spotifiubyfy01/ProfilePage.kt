@@ -60,10 +60,12 @@ class ProfilePage : AppCompatActivity() {
             startActivity(intent)
         }
 
-//        val tempClick = findViewById<Button>(R.id.createPlaylistButton)
-//        tempClick.setOnClickListener {
-//            val intent = Intent(this, ReproductionPage::class.java)
-//            startActivity(intent)
-//        }
+
+
+        val tempClick = findViewById<Button>(R.id.createPlaylistButton)
+        tempClick.setOnClickListener {
+            val intent = Intent(this, PlaylistCreationPage::class.java)
+            startActivity(intent)
+        }
     }
 }
