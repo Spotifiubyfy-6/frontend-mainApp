@@ -2,25 +2,28 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
     android:layout_marginVertical="2dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    app:cardBackgroundColor="#121212"
     app:cardCornerRadius="2dp"
     app:cardElevation="0dp"
     app:cardPreventCornerOverlap="false">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#121212">
 
         <TextView
             android:id="@+id/song_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="The Name of the song"
-            android:textColor="#000"
+            android:textColor="#FFFFFF"
             android:textSize="22sp"
+            android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -31,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="The Name of an Artist"
-            android:textColor="#000"
+            android:textColor="#FFFFFF"
             android:textSize="17sp"
             app:layout_constraintHorizontal_bias="0.108"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -39,17 +42,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/song_name" />
 
+
         <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="4dp"
             android:backgroundTint="#1db954"
             android:paddingLeft="1dp"
             android:paddingRight="1dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/artist_name" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
