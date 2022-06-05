@@ -177,7 +177,9 @@ class MainPage: AppCompatActivity() {
         val albumId = jsonSong.getString("album_id").toInt()
         val id = jsonSong.getString("id").toInt()
         val storageName = jsonSong.getString("storage_name")
-        return Song(songName, "artist_name", albumId, id, storageName)
+        val artistName = jsonSong.getString("artist_name")
+
+        return Song(songName, artistName, albumId, id, storageName)
     }
 
     private fun getArtist( jsonSong: JSONObject): Artist {
