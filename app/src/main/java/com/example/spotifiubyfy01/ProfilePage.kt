@@ -69,7 +69,8 @@ class ProfilePage : AppCompatActivity(), VolleyCallBack<Album> {
                 Toast.LENGTH_LONG).show()
             return
         }
+        val intent = Intent(this, SongCreationPage::class.java)
+        intent.putExtra("albums", ArrayList(list))
+        startActivity(intent)
     }
-
-
 }
