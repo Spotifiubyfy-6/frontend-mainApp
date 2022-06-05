@@ -1,8 +1,10 @@
 package com.example.spotifiubyfy01
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import com.android.volley.Request
@@ -36,15 +38,17 @@ class AlbumCreationPage : AppCompatActivity() {
 
             val jsonRequest = JsonObjectRequest(
                 Request.Method.POST, url, requestBody,
-                { response -> val intent = Intent(this, SongCreationPage::class.java).apply {
+                { response ->
+                    Log.d(TAG, "here")
+                    val intent = Intent(this, SongCreationPage::class.java).apply {
                     putExtra("album_id", response.getString("id"))
                     putExtra("album_name", albumName.text.toString())
 //                  todo: cargar link de imagen a firebase
                 }
                     startActivity(intent)},
-                { val intent = Intent(this, PopUpWindow::class.java).apply {
+                { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
 //                    val error = errorResponse//.networkResponse.data.decodeToString() //.split('"')[3]
-                    putExtra("popuptext", "cant create album right now")
+                    putExtra("popuptext", errorResponse.toString())
                 }
                     startActivity(intent)})
 
