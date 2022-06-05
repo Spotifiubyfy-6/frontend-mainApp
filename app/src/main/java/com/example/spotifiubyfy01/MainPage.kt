@@ -98,7 +98,8 @@ class MainPage: AppCompatActivity() {
         startActivity(intent)
     }
     private fun onSongClicked(song: Song) {
-        //Do something with the Song
+        val app = (this.application as Spotifiubify)
+        app.SongManager.play(song)
         Log.d(ContentValues.TAG, song.song_name +" with id " + song.id.toString() + " made by " + song.artist)
     }
     private fun onAlbumClicked(album: Album) {
