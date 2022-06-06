@@ -94,7 +94,7 @@ class SignInLandingPage : AppCompatActivity() {
 
             requestBody.put("email", email.text.toString())
             requestBody.put("username", username.text.toString())
-            requestBody.put("user_type", "listener")
+            requestBody.put("user_type", "artist")
             requestBody.put("password", password.text.toString())
 
             val url = "https://spotifiubyfy-users.herokuapp.com/users"
