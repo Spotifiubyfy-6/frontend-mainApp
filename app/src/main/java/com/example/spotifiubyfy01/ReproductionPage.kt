@@ -1,6 +1,9 @@
 package com.example.spotifiubyfy01
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.MenuItem
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
@@ -82,7 +85,13 @@ class ReproductionPage : AppCompatActivity() {
 
     }
 
-
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
 
     private fun convertToMinutesString(time: Int): String {
