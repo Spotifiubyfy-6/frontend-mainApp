@@ -8,8 +8,11 @@ import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.Spotifiubify
 import com.example.spotifiubyfy01.artistProfile.Album
+import com.example.spotifiubyfy01.artistProfile.adapter.default_album_image
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.SearchItem
+
+var default_album_image = "https://ladydanville.files.wordpress.com/2012/03/blankart.png"
 
 class AlbumSearchViewHolder(view: View) : SearchViewHolder(view) {
 
@@ -26,6 +29,8 @@ class AlbumSearchViewHolder(view: View) : SearchViewHolder(view) {
         val coverRef = app.getStorageReference().child(album.album_image)
         coverRef.downloadUrl.addOnSuccessListener { url ->
             Glide.with(albumImage.context).load(url).into(albumImage)
+        }.addOnFailureListener {
+            Glide.with(albumImage.context).load(default_album_image).into(albumImage)
         }
         itemView.setOnClickListener { onClickListener(album) }
     }
