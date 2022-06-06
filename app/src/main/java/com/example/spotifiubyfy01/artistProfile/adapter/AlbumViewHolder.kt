@@ -1,5 +1,6 @@
 package com.example.spotifiubyfy01.artistProfile.adapter
 
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -9,6 +10,8 @@ import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.Spotifiubify
+
+var default_album_image = "https://ladydanville.files.wordpress.com/2012/03/blankart.png"
 
 class AlbumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -21,6 +24,8 @@ class AlbumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val coverRef = app.getStorageReference().child(album.album_image)
         coverRef.downloadUrl.addOnSuccessListener { url ->
             Glide.with(albumImage.context).load(url).into(albumImage)
+        }.addOnFailureListener {
+            Glide.with(albumImage.context).load(default_album_image).into(albumImage)
         }
         itemView.setOnClickListener { onClickListener(album) }
     }
