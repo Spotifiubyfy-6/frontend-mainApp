@@ -5,6 +5,7 @@ import com.example.spotifiubyfy01.search.SearchItemEnum
 import java.io.Serializable
 
 data class Album (
+    var album_id: String,
     var album_name: String,
     var album_image: String,
     var artist_name: String,

@@ -179,7 +179,8 @@ class MainPage: AppCompatActivity() {
 
     private fun getAlbum(jsonAlbum: JSONObject): Album {
         val albumName = jsonAlbum.getString("album_name")
-        return Album(albumName, image_link, "artist_name",
+        val albumId = jsonAlbum.getString("id")
+        return Album(albumId, albumName, image_link, "artist_name",
             getListOfSongs(
                 JSONArray(jsonAlbum.getString("songs").toString())
             )
