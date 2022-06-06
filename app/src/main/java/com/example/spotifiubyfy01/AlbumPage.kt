@@ -4,6 +4,7 @@ import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.ImageView
@@ -15,9 +16,14 @@ import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.artistProfile.Song
 import com.example.spotifiubyfy01.artistProfile.adapter.SongRecyclerAdapter
-import com.example.spotifiubyfy01.search.SearchPage
 
 class AlbumPage : AppCompatActivity() {
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.top_bar, menu)
+        return true
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_album_page)
@@ -30,6 +36,8 @@ class AlbumPage : AppCompatActivity() {
         val play_button = findViewById<Button>(R.id.playButton)
         play_button.setOnClickListener {
             //play album! obtain album songs using album.song_list
+            val app = (this.application as Spotifiubify)
+            app.SongManager.playSongList(album.song_list)
             for (song in album.song_list)
                 Log.d(TAG, song.song_name)
         }
@@ -46,7 +54,7 @@ class AlbumPage : AppCompatActivity() {
     private fun onItemClicked(song: Song) {
         //Do something with the Song
         val app = (this.application as Spotifiubify)
-        app.SongManager.play(song, app)
+        app.SongManager.play(song)
         Log.d(TAG, song.song_name +" with id " + song.id.toString() + " made by " + song.artist)
     }
 
@@ -54,6 +62,9 @@ class AlbumPage : AppCompatActivity() {
         if (item.itemId == android.R.id.home) {
             finish()
             return true
+        }
+        if (item.itemId == R.id.action_playback) {
+            startActivity(Intent(this, ReproductionPage::class.java))
         }
         return super.onOptionsItemSelected(item)
     }

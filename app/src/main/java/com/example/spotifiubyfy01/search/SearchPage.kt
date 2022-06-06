@@ -1,11 +1,11 @@
 package com.example.spotifiubyfy01.search
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,10 +13,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifiubyfy01.AlbumPage
 import com.example.spotifiubyfy01.artistProfile.ArtistPage
 import com.example.spotifiubyfy01.R
+import com.example.spotifiubyfy01.ReproductionPage
 import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.search.adapter.SearchRecyclerAdapter
 
 class SearchPage : AppCompatActivity(), VolleyCallBack<SearchItem> {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.top_bar, menu)
+        return true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_playback) {
+            startActivity(Intent(this, ReproductionPage::class.java))
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

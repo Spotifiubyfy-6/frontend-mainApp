@@ -8,23 +8,29 @@ import android.os.PowerManager
 import android.widget.Toast
 import com.example.spotifiubyfy01.artistProfile.Song
 import java.util.*
+import kotlin.NoSuchElementException
 
 
 class SongManager(app: Spotifiubify) {
-    private val MediaPlayer = MediaPlayer()
+    val MediaPlayer = MediaPlayer()
     val playlist = LinkedList<Song>()
+    var currentSong: Song
     private var wifiLock:  WifiLock
-
+    private var app: Spotifiubify
+    private val nullSong =  Song("songName", "artist_name", 1, 1, "storageName")
 
     init {
         MediaPlayer.setWakeMode(app, PowerManager.PARTIAL_WAKE_LOCK)
         val wifiManager = app.applicationContext.getSystemService(WIFI_SERVICE) as WifiManager
         wifiLock = wifiManager.createWifiLock(WifiManager.WIFI_MODE_FULL_HIGH_PERF, "wifi_lock")
+        this.app = app
+        currentSong = nullSong
     }
 
-    fun play(song: Song, app: Spotifiubify) {
+    fun play(song: Song) {
+        currentSong = song
         wifiLock.acquire()
-        val storageName = "songs/"+song.storage_name
+        val storageName = "songs/"+currentSong.storage_name
         val songRef = app.getStorageReference().child(storageName)
         songRef.downloadUrl.addOnSuccessListener { url ->
             MediaPlayer.apply {
@@ -37,10 +43,13 @@ class SongManager(app: Spotifiubify) {
                 )
                 isLooping = false
                 setOnCompletionListener {
-                    if (playlist.isEmpty()) {
-                        wifiLock.release()
-                    } else {
-                        //play next song on que
+                    try {
+                        play(playlist.pop())
+                    } catch(e: NoSuchElementException) {
+                        currentSong = nullSong
+                        if (wifiLock.isHeld) {
+                            wifiLock.release()
+                        }
                     }
                 }
                 setDataSource(url.toString())
@@ -50,5 +59,27 @@ class SongManager(app: Spotifiubify) {
         }.addOnFailureListener {
             Toast.makeText(app, "couldn't play song", Toast.LENGTH_LONG).show()
         }
+    }
+
+    fun next() {
+        try {
+            play(playlist.pop())
+        } catch(e: NoSuchElementException) {
+            MediaPlayer.stop()
+//            currentSong = nullSong
+//            if (wifiLock.isHeld) {
+//                wifiLock.release()
+//            }
+        }
+    }
+
+    fun isPlaying(): Boolean {
+        return currentSong != nullSong
+    }
+
+    fun playSongList(songs: List<Song>) {
+        playlist.clear()
+        playlist.addAll(songs)
+        play(playlist.pop())
     }
 }

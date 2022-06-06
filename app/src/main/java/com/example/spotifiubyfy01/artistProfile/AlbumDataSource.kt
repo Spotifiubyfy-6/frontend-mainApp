@@ -1,15 +1,15 @@
 package com.example.spotifiubyfy01.artistProfile
 
 import android.content.Context
-import com.android.volley.AuthFailureError
+import android.content.Intent
+import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.example.spotifiubyfy01.MyRequestQueue
+import com.example.spotifiubyfy01.PopUpWindow
 import com.example.spotifiubyfy01.search.VolleyCallBack
 import org.json.JSONArray
 import org.json.JSONObject
-
-var image_link = "https://ladydanville.files.wordpress.com/2012/03/blankart.png"
 
 class AlbumDataSource {
     companion object {
@@ -17,26 +17,17 @@ class AlbumDataSource {
                             callBack: VolleyCallBack<Album>) {
             val url = "https://spotifiubyfy-music.herokuapp.com/artists/" + artist_id +
                     "/albums?skip=0&limit=100"
-            val getRequest: JsonArrayRequest = object : JsonArrayRequest(
-                Method.GET,
+            val getRequest = JsonArrayRequest(
+                Request.Method.GET,
                 url, null,
                 Response.Listener { response ->
                     callBack.updateData(getListOfAlbums(artist_name, response))
                 },
-                { errorResponse ->
-                    /*   val intent = Intent(context, PopUpWindow::class.java).apply {
-                           val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
-                           putExtra("popuptext", error)
-                           putExtra("tokenValidation", true)
-                       }
-                       startActivity(intent)
-                */ }){
-                @Throws(AuthFailureError::class)
-                override fun getHeaders(): Map<String, String> {
-                    //    params["Authorization"] = "Bearer " + getSharedPreferences(getString(R.string.token_key), Context.MODE_PRIVATE).getString(getString(R.string.token_key), null)
-                    return HashMap()
+                { val intent = Intent(context, PopUpWindow::class.java).apply {
+//                    val error = errorResponse//.networkResponse.data.decodeToString() //.split('"')[3]
+                    putExtra("popuptext", "cant create album right now")
                 }
-                }
+                    context.startActivity(intent)})
             MyRequestQueue.getInstance(context).addToRequestQueue(getRequest)
         }
 
@@ -58,7 +49,8 @@ class AlbumDataSource {
         private fun getAlbum(artist_name: String, jsonAlbum: JSONObject): Album {
             val albumName = jsonAlbum.getString("album_name")
             val albumId = jsonAlbum.getString("id")
-            return Album(albumId, albumName, image_link, artist_name,
+	    val storageName = "covers/"+jsonAlbum.getString("album_media")
+            return Album(albumId, albumName, storageName, artist_name,
                 getListOfSongs(artist_name, JSONArray(jsonAlbum.getString("songs").toString())))
         }
 

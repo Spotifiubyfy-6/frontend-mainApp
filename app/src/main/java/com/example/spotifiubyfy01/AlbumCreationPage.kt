@@ -2,14 +2,17 @@ package com.example.spotifiubyfy01
 
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import org.json.JSONObject
+import java.io.File
 
 class AlbumCreationPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +33,6 @@ class AlbumCreationPage : AppCompatActivity() {
             requestBody.put("album_name", albumName.text.toString())
             requestBody.put("album_description", albumDescription.text.toString())
             requestBody.put("album_genre", albumGenre.text.toString())
-            requestBody.put("album_media", "hardcodeado") //todo completar con el storageName cuando este implementada el upload de imagenes
             requestBody.put("suscription", "free") //todo agregar editText de tipo de suscription a la vista y extraer el dato
             requestBody.put("artist_id", app.getProfileData("id"))
 
@@ -39,16 +41,24 @@ class AlbumCreationPage : AppCompatActivity() {
             val jsonRequest = JsonObjectRequest(
                 Request.Method.POST, url, requestBody,
                 { response ->
-                    Log.d(TAG, "here")
+     
                     val intent = Intent(this, SongCreationPage::class.java).apply {
                     putExtra("album_id", response.getString("id"))
-                    putExtra("album_name", albumName.text.toString())
-//                  todo: cargar link de imagen a firebase
+		    putExtra("album_name", albumName.text.toString())
+                    val storageName = "covers/"+response.getString("album_media")
+                    val coverRef =  app.getStorageReference().child(storageName)
+                    val file = Uri.fromFile(File(albumMediaPath.text.toString()))
+                    val uploadTask = coverRef.putFile(file)
+                    uploadTask.addOnFailureListener {
+                        Toast.makeText(app, "Cover not uploaded: ERROR", Toast.LENGTH_LONG).show()
+                    }.addOnSuccessListener {
+                        Toast.makeText(app, "Cover successfully uploaded", Toast.LENGTH_SHORT).show()
+                    }
                 }
                     startActivity(intent)},
-                { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
+                { val intent = Intent(this, PopUpWindow::class.java).apply {
 //                    val error = errorResponse//.networkResponse.data.decodeToString() //.split('"')[3]
-                    putExtra("popuptext", errorResponse.toString())
+                    putExtra("popuptext", "cant create album right now")
                 }
                     startActivity(intent)})
 

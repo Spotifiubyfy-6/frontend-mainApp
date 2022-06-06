@@ -2,6 +2,7 @@ package com.example.spotifiubyfy01.artistProfile
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
@@ -11,12 +12,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.AlbumPage
 import com.example.spotifiubyfy01.R
+import com.example.spotifiubyfy01.ReproductionPage
 import com.example.spotifiubyfy01.artistProfile.adapterSongRecyclerAdapter.AlbumRecyclerAdapter
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
 
 class ArtistPage: AppCompatActivity(), VolleyCallBack<Album> {
     private var artist: Artist? = null
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.top_bar, menu)
+        return true
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +75,9 @@ class ArtistPage: AppCompatActivity(), VolleyCallBack<Album> {
         if (item.itemId == android.R.id.home) {
             finish()
             return true
+        }
+        if (item.itemId == R.id.action_playback) {
+            startActivity(Intent(this, ReproductionPage::class.java))
         }
         return super.onOptionsItemSelected(item)
     }

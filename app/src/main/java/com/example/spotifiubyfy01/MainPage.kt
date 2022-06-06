@@ -4,6 +4,8 @@ import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,14 +17,27 @@ import com.example.spotifiubyfy01.artistProfile.ArtistPage
 import com.example.spotifiubyfy01.artistProfile.Song
 import com.example.spotifiubyfy01.artistProfile.adapter.SongRecyclerAdapter
 import com.example.spotifiubyfy01.artistProfile.adapterSongRecyclerAdapter.AlbumRecyclerAdapter
-import com.example.spotifiubyfy01.artistProfile.image_link
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.SearchPage
 import com.example.spotifiubyfy01.search.adapter.SearchRecyclerAdapter
 import org.json.JSONArray
 import org.json.JSONObject
 
+
+
+
 class MainPage: AppCompatActivity() {
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.top_bar, menu)
+        return true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_playback) {
+            startActivity(Intent(this, ReproductionPage::class.java))
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -180,7 +195,8 @@ class MainPage: AppCompatActivity() {
     private fun getAlbum(jsonAlbum: JSONObject): Album {
         val albumName = jsonAlbum.getString("album_name")
         val albumId = jsonAlbum.getString("id")
-        return Album(albumId, albumName, image_link, "artist_name",
+    	val storageName = "covers/"+jsonAlbum.getString("album_media")
+        return Album(albumId, albumName, storageName, "artist_name",
             getListOfSongs(
                 JSONArray(jsonAlbum.getString("songs").toString())
             )
