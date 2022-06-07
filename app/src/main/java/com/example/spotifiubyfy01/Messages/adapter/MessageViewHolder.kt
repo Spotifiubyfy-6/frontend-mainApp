@@ -20,7 +20,7 @@ fun createRespectiveHolder(parent: ViewGroup, viewType: Int) : MessageViewHolder
             }
             MessageEnum.MESSAGE_SENT -> {
                 val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.layout_message_received_item, parent, false)
+                    .inflate(R.layout.layout_message_sent_item, parent, false)
                 MessageReceivedViewHolder(view)
             }
         }
