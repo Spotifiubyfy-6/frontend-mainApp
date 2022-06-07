@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfilePage">
+    tools:context=".ProfilePage"
+    android:background="#121212"
+    >
 
 
     <TextView
@@ -13,6 +15,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:text="@string/example"
+
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/usernameText"
         app:layout_constraintStart_toEndOf="@+id/susbscriptionText"
         app:layout_constraintTop_toTopOf="@+id/usernameText" />
@@ -23,6 +27,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
         android:text="@string/example"
+
+        android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="@+id/email"
         app:layout_constraintTop_toBottomOf="@+id/email" />
 
@@ -33,6 +39,8 @@
         android:layout_marginStart="2dp"
         android:layout_marginTop="18dp"
         android:text="@string/example"
+
+        android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="@+id/username"
         app:layout_constraintTop_toBottomOf="@+id/username" />
 
@@ -44,6 +52,8 @@
         android:layout_marginTop="32dp"
         android:text="@string/username"
         android:textStyle="bold"
+
+        android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="@+id/userInformationText"
         app:layout_constraintTop_toBottomOf="@+id/userInformationText" />
 
@@ -54,6 +64,8 @@
         android:layout_marginTop="18dp"
         android:text="@string/email"
         android:textStyle="bold"
+
+        android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="@+id/usernameText"
         app:layout_constraintTop_toBottomOf="@+id/usernameText" />
 
@@ -63,6 +75,8 @@
         android:layout_height="wrap_content"
         android:text="@string/subscription"
         android:textStyle="bold"
+
+        android:textColor="#FFFFFF"
         app:layout_constraintBaseline_toBaselineOf="@+id/subscription"
         app:layout_constraintStart_toStartOf="@+id/emailText" />
 
@@ -74,6 +88,8 @@
         android:layout_marginTop="16dp"
         android:text="@string/profile"
         android:textSize="34sp"
+
+        android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -82,6 +98,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="41dp"
+        android:backgroundTint="#1DB954"
         android:text="@string/button_edit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -92,6 +109,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="43dp"
+        android:backgroundTint="#1DB954"
         android:text="@string/button_logOut"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -102,6 +120,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
+        android:backgroundTint="#1DB954"
         android:text="@string/createSong"
         app:layout_constraintBottom_toTopOf="@+id/createPlaylistButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -113,6 +132,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="170dp"
+        android:backgroundTint="#1DB954"
         android:text="@string/createAlbum"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/createSongButton"
@@ -124,6 +144,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:backgroundTint="#1DB954"
         android:text="@string/createPlaylist"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

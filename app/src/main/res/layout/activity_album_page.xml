@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:background="#121212"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+
+        android:background="#121212"
+        >
         <androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_marginHorizontal="30dp"
             android:layout_marginVertical="16dp"
@@ -37,13 +43,16 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.6"
                 android:text="TextView"
-                android:textColor="#000"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
                 android:textSize="30sp" />
             <Button
                 android:id="@+id/playButton"
                 android:layout_width="0dp"
                 android:layout_marginEnd="28dp"
                 android:layout_height="wrap_content"
+
+                android:backgroundTint="#1DB954"
                 android:layout_weight="0.4"
                 android:text="play" />
         </LinearLayout>
@@ -53,13 +62,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
-            android:textColor="#000"
+            android:textColor="#FFFFFF"
             android:textSize="15sp" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#3C0020EE"/>
+
+            android:background="#121212"
+
+            />
 
     </LinearLayout>
 

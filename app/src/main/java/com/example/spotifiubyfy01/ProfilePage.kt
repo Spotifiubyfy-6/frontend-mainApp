@@ -73,6 +73,12 @@ class ProfilePage : AppCompatActivity(), VolleyCallBack<Album> {
             createAlbumList(this, app.getProfileData("id")!!.toInt(),
                 app.getProfileData("username")!!, this)
         }
+	
+	val tempClick = findViewById<Button>(R.id.createPlaylistButton)
+        tempClick.setOnClickListener {
+            val intent = Intent(this, PlaylistCreationPage::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun updateData(list: List<Album>) {

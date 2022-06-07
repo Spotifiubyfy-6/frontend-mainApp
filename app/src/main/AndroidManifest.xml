@@ -15,12 +15,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Spotifiubyfy01">
         <activity
+            android:name=".PlaylistCreationPage"
+            android:exported="false" />
+        <activity
             android:name=".ReproductionPage"
             android:exported="false"
             android:parentActivityName=".MainPage">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".MainPage" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainPage" />
         </activity>
         <activity
             android:name=".MainLandingPage"

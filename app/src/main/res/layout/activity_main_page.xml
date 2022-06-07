@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true"
+    android:background="#121212"
+    >
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#121212"
+    >
 
     <Button
         android:id="@+id/profile_button"
@@ -12,6 +23,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="Profile"
+        android:backgroundTint="#1DB954"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -19,12 +31,14 @@
         android:id="@+id/search_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginTop="16dp"
         android:text="Search"
-        app:layout_constraintBottom_toBottomOf="parent"
+
+        android:backgroundTint="#1DB954"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.44"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/songs"
@@ -32,7 +46,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="@string/songs"
-        android:textColor="#0020EE"
+        android:textColor="#FFFFFF"
+
+        android:textStyle="bold"
         android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/recycler_view_songs"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,11 +59,11 @@
         android:id="@+id/recycler_view_songs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
-        android:background="#3C0020EE"
+        android:layout_marginTop="128dp"
+        android:background="#121212"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,7 +73,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:text="@string/albums"
-        android:textColor="#0020EE"
+
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
         android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/recycler_view_album"
         app:layout_constraintEnd_toEndOf="parent"
@@ -69,8 +87,8 @@
         android:id="@+id/recycler_view_album"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="224dp"
-        android:background="#3C0020EE"
+        android:layout_marginTop="320dp"
+        android:background="#121212"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -84,7 +102,9 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="12dp"
         android:text="@string/artists"
-        android:textColor="#0020EE"
+        android:textColor="#FFFFFF"
+
+        android:textStyle="bold"
         android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/recycler_view_artist"
         app:layout_constraintEnd_toEndOf="parent"
@@ -97,13 +117,16 @@
         android:id="@+id/recycler_view_artist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="582dp"
-        android:background="#3C0020EE"
+        android:layout_marginTop="604dp"
+        android:background="#121212"
         android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
+</ScrollView>
 
 
 

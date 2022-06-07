@@ -98,7 +98,8 @@ class MainPage: AppCompatActivity() {
         startActivity(intent)
     }
     private fun onSongClicked(song: Song) {
-        //Do something with the Song
+        val app = (this.application as Spotifiubify)
+        app.SongManager.play(song)
         Log.d(ContentValues.TAG, song.song_name +" with id " + song.id.toString() + " made by " + song.artist)
     }
     private fun onAlbumClicked(album: Album) {
@@ -176,7 +177,9 @@ class MainPage: AppCompatActivity() {
         val albumId = jsonSong.getString("album_id").toInt()
         val id = jsonSong.getString("id").toInt()
         val storageName = jsonSong.getString("storage_name")
-        return Song(songName, "artist_name", albumId, id, storageName)
+        val artistName = jsonSong.getString("artist_name")
+
+        return Song(songName, artistName, albumId, id, storageName)
     }
 
     private fun getArtist( jsonSong: JSONObject): Artist {
