@@ -4,8 +4,9 @@
     android:id="@+id/message"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginRight="30dp"
     android:text="A message..."
     android:textColor="@color/white"
-    android:background="@color/black"
+    android:background="#7E000000"
     android:textSize="25sp"
     xmlns:android="http://schemas.android.com/apk/res/android" />

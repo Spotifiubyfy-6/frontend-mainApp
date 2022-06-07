@@ -78,7 +78,7 @@
         android:layout_height="0dp"
         android:layout_weight="7.5"
         android:orientation="horizontal"
-        android:background="#3C0020EE"/>
+        android:background="@color/black"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="0dp"
