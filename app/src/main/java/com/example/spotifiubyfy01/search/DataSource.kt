@@ -8,6 +8,7 @@ import com.android.volley.toolbox.JsonArrayRequest
 import com.example.spotifiubyfy01.MyRequestQueue
 import com.example.spotifiubyfy01.Spotifiubify
 import com.example.spotifiubyfy01.artistProfile.Album
+import com.example.spotifiubyfy01.artistProfile.Playlist
 import com.example.spotifiubyfy01.artistProfile.Song
 import org.json.JSONArray
 import org.json.JSONObject
@@ -40,6 +41,7 @@ class DataSource {
             val synchronizer = SearchListMonitor()
             fetchArtists(slice, context, callBack, synchronizer)
             fetchAlbums(slice, context, callBack, synchronizer)
+            fetchPlaylists(slice, context, callBack, synchronizer)
         }
 
         private fun getArtist(jsonArtist: JSONObject): SearchItem {
@@ -60,6 +62,27 @@ class DataSource {
                 { response ->
                     for (i in 0 until response.length())
                         auxList.add(getArtist(JSONObject(response.get(i).toString())))
+                    synchronizer.updateListAndCounterAndCallBackIfNeeded(auxList, callBack)
+                },
+                {
+
+                })
+            MyRequestQueue.getInstance(context).addToRequestQueue(getRequest)
+        }
+
+        private fun fetchPlaylists(slice: String, context: Context,
+                                 callBack: VolleyCallBack<SearchItem>,
+                                 synchronizer: SearchListMonitor) {
+            val auxList = ArrayList<SearchItem>()
+
+            val url = "https://spotifiubyfy-music.herokuapp.com/playlists?q=$slice&skip=0&limit=5"
+
+            val getRequest = JsonArrayRequest(
+                Request.Method.GET,
+                url, null,
+                { response ->
+                    for (i in 0 until response.length())
+                        auxList.add(getPlaylist("default_username" ,JSONObject(response.get(i).toString())))
                     synchronizer.updateListAndCounterAndCallBackIfNeeded(auxList, callBack)
                 },
                 {
@@ -118,6 +141,21 @@ class DataSource {
                 getListOfSongs(
                     artist_name,
                     JSONArray(jsonAlbum.getString("songs").toString())
+                )
+            )
+        }
+
+        private fun getPlaylist(userName: String, jsonPlaylist: JSONObject): SearchItem {
+            val playlistName = jsonPlaylist.getString("playlist_name")
+            val playlistId = jsonPlaylist.getString("id")
+            val storageName = "covers/"+jsonPlaylist.getString("playlist_media")
+            return Playlist(
+                playlistId,
+                playlistName,
+                storageName, userName,
+                getListOfSongs(
+                    userName,
+                    JSONArray(jsonPlaylist.getString("songs").toString())
                 )
             )
         }

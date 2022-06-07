@@ -1,9 +1,12 @@
 package com.example.spotifiubyfy01.search
 
+import android.content.ContentValues
 import android.content.Intent
+import android.nfc.Tag
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
@@ -11,10 +14,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifiubyfy01.AlbumPage
+import com.example.spotifiubyfy01.PlaylistPage
 import com.example.spotifiubyfy01.artistProfile.ArtistPage
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.ReproductionPage
 import com.example.spotifiubyfy01.artistProfile.Album
+import com.example.spotifiubyfy01.artistProfile.Playlist
 import com.example.spotifiubyfy01.search.adapter.SearchRecyclerAdapter
 
 class SearchPage : AppCompatActivity(), VolleyCallBack<SearchItem> {
@@ -73,6 +78,11 @@ class SearchPage : AppCompatActivity(), VolleyCallBack<SearchItem> {
             SearchItemEnum.ALBUM_SEARCH_ITEM -> {
                 val intent = Intent(this, AlbumPage::class.java)
                 intent.putExtra("Album", searchItem as Album)
+            }
+            SearchItemEnum.PLAYLIST_SEARCH_ITEM -> {
+                val intent = Intent(this, PlaylistPage::class.java)
+                Log.d(ContentValues.TAG, "search Item $searchItem")
+                intent.putExtra("Playlist", searchItem as Playlist)
             }
         }
         startActivity(intent)

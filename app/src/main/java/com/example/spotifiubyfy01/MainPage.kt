@@ -97,16 +97,23 @@ class MainPage: AppCompatActivity() {
         intent.putExtra("Artist", artist)
         startActivity(intent)
     }
+
+
+
     private fun onSongClicked(song: Song) {
         val app = (this.application as Spotifiubify)
         app.SongManager.play(song)
         Log.d(ContentValues.TAG, song.song_name +" with id " + song.id.toString() + " made by " + song.artist)
     }
+
     private fun onAlbumClicked(album: Album) {
         val intent = Intent(this, AlbumPage::class.java)
         intent.putExtra("Album", album)
         startActivity(intent)
     }
+
+
+
 
     private fun fetchArtist() {
         val url = "https://spotifiubyfy-users.herokuapp.com/users/artists/a?skip=0&limit=10"

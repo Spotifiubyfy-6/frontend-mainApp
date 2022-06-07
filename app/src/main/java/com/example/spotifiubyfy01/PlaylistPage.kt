@@ -1,0 +1,71 @@
+package com.example.spotifiubyfy01
+
+import android.content.ContentValues
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.spotifiubyfy01.artistProfile.Album
+import com.example.spotifiubyfy01.artistProfile.Playlist
+import com.example.spotifiubyfy01.artistProfile.Song
+import com.example.spotifiubyfy01.artistProfile.adapter.SongRecyclerAdapter
+
+class PlaylistPage : AppCompatActivity() {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.top_bar, menu)
+        return true
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_playlist_page)
+        val playlist = intent.extras?.get("Playlist") as Playlist
+        findViewById<TextView>(R.id.playlistName).text = playlist.playlist_name
+        findViewById<TextView>(R.id.userName).text = playlist.user_name
+        val image = findViewById<ImageView>(R.id.playlist_image)
+        Glide.with(image.context).load(playlist!!.playlist_image).into(image)
+        initRecyclerView(playlist.song_list)
+        val play_button = findViewById<Button>(R.id.playButton)
+        play_button.setOnClickListener {
+            //play album! obtain album songs using album.song_list
+            val app = (this.application as Spotifiubify)
+            app.SongManager.playSongList(playlist.song_list)
+            for (song in playlist.song_list)
+                Log.d(ContentValues.TAG, song.song_name)
+        }
+    }
+
+    private fun initRecyclerView(songList: List<Song>) {
+        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = SongRecyclerAdapter(songList) {song ->
+            onItemClicked(song)
+        }
+    }
+
+    private fun onItemClicked(song: Song) {
+        //Do something with the Song
+        val app = (this.application as Spotifiubify)
+        app.SongManager.play(song)
+        Log.d(ContentValues.TAG, song.song_name +" with id " + song.id.toString() + " made by " + song.artist)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+            return true
+        }
+        if (item.itemId == R.id.action_playback) {
+            startActivity(Intent(this, ReproductionPage::class.java))
+        }
+        return super.onOptionsItemSelected(item)
+    }
+}
