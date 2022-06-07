@@ -48,7 +48,7 @@
     <string name="artists">Artists</string>
     <string name="album_art_alt">Album art</string>
     <string name="action_playback_page">Go to playback</string>
-
+    <string name="message">Message...</string>
     <string name="playlist_name">Playlist Name</string>
     <string name="playlist_description">Playlist Description</string>
     <string name="playlist_media">Playlist Media</string>
