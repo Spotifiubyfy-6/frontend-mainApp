@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonArrayRequest
+import com.example.spotifiubyfy01.Messages.MessagesPage
 import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.artistProfile.ArtistPage
 import com.example.spotifiubyfy01.artistProfile.Song
@@ -55,6 +56,12 @@ class MainPage: AppCompatActivity() {
         val searchButton = findViewById<Button>(R.id.search_button)
         searchButton.setOnClickListener {
             val intent = Intent(this, SearchPage::class.java)
+            startActivity(intent)
+        }
+
+        val messagesButton = findViewById<Button>(R.id.messages_button)
+        messagesButton.setOnClickListener {
+            val intent = Intent(this, MessagesPage::class.java)
             startActivity(intent)
         }
 

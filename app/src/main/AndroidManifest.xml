@@ -119,6 +119,14 @@
             android:name=".MainPage"
             android:exported="false" />
         <activity
+            android:name=".Messages.MessagesPage"
+            android:exported="false"
+            android:parentActivityName=".MainPage">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainPage" />
+        </activity>
+        <activity
             android:name=".DisplayMessageActivity"
             android:parentActivityName=".SignInLandingPage">
 
