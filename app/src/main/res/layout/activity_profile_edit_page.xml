@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileEditPage">
+    tools:context=".ProfileEditPage"
+    android:background="#121212">
 
     <EditText
         android:id="@+id/username"
@@ -14,6 +15,8 @@
         android:hint="@string/registration_username"
         android:text="@string/example"
         app:layout_constraintStart_toEndOf="@+id/userInformationText"
+        android:backgroundTint="#FFFFFF"
+        android:textColor="#FFFFFF"
         app:layout_constraintTop_toBottomOf="@+id/userInformationText"
         android:inputType="text"
         android:autofillHints="" />
@@ -25,6 +28,8 @@
         android:layout_marginStart="28dp"
         android:layout_marginTop="17dp"
         android:text="@string/username"
+
+        android:textColor="#FFFFFF"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userInformationText" />
@@ -36,6 +41,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:text="@string/example"
+
+        android:textColor="#FFFFFF"
         app:layout_constraintStart_toEndOf="@+id/susbscriptionText"
         app:layout_constraintTop_toBottomOf="@+id/email" />
 
@@ -45,6 +52,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:text="@string/subscription"
+
+        android:textColor="#FFFFFF"
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/subscription"
         app:layout_constraintStart_toStartOf="parent" />
@@ -54,6 +63,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
+
+        android:backgroundTint="#FFFFFF"
+        android:textColor="#FFFFFF"
         android:layout_marginTop="12dp"
         android:hint="@string/registration_email"
         android:text="@string/example"
@@ -70,6 +82,8 @@
         android:layout_marginTop="20dp"
         android:text="@string/email"
         android:textStyle="bold"
+
+        android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/usernameText" />
 
@@ -79,6 +93,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+
+        android:textColor="#FFFFFF"
         android:text="@string/profile"
         android:textSize="34sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -91,6 +107,9 @@
         android:ems="10"
         android:hint="@string/oldPassword"
         android:inputType="textPassword"
+
+        android:backgroundTint="#FFFFFF"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/changePassword"
@@ -102,6 +121,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="78dp"
         android:layout_marginBottom="16dp"
+
+        android:textColor="#FFFFFF"
         android:text="@string/Password_restrictions"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/changePasswordButton"
@@ -113,6 +134,9 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/newPassword"
+
+        android:backgroundTint="#FFFFFF"
+        android:textColor="#FFFFFF"
         android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@+id/password_restictions"
         app:layout_constraintStart_toStartOf="@+id/password_restictions"
@@ -125,6 +149,8 @@
         android:layout_marginStart="28dp"
         android:layout_marginBottom="55dp"
         android:text="@string/changePassword"
+
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/newPassword"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -134,6 +160,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
         android:text="@string/button_edit"
+
+        android:backgroundTint="#1DB954"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/subscription" />
@@ -146,6 +174,8 @@
         android:text="@string/changePasswordButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+
+        android:backgroundTint="#1DB954"
         app:layout_constraintStart_toStartOf="parent" />
 
 

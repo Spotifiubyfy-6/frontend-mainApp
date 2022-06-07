@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SongCreationPage">
+    tools:context=".SongCreationPage"
+
+    android:background="#121212">
 
     <LinearLayout
         android:id="@+id/upload_song_title"
@@ -21,6 +23,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
             android:layout_marginTop="16dp"
+
+            android:textColor="#FFFFFF"
             android:layout_weight="0.5"
             android:text="@string/upload_song_title"
             android:textSize="16sp"/>
@@ -38,6 +42,8 @@
                 android:id="@+id/albums_names"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
+                android:textColor="#FFFFFF"
                 android:text="Album title"
                 android:inputType="none"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -52,6 +58,8 @@
         android:ems="10"
         android:hint="@string/song_name_field"
         android:inputType="textPersonName"
+        android:backgroundTint="#FFFFFF"
+        android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/upload_song_title" />
 
@@ -65,6 +73,8 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:hint="@string/song_description_hint"
+        android:backgroundTint="#FFFFFF"
+        android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/songName" />
 
@@ -75,6 +85,8 @@
         android:layout_marginStart="28dp"
         android:layout_marginTop="28dp"
         android:ems="10"
+        android:backgroundTint="#FFFFFF"
+        android:textColor="#FFFFFF"
         android:inputType="textPersonName"
         android:hint="@string/song_path_hint"
         app:layout_constraintStart_toStartOf="parent"
@@ -87,6 +99,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
         android:text="@string/upload_button"
+        android:backgroundTint="#1DB954"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/songPath" />
@@ -96,6 +109,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        android:backgroundTint="#1DB954"
         android:text="@string/finish_song_creation_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

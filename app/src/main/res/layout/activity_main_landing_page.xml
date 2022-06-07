@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainLandingPage">
+    tools:context=".MainLandingPage"
+    android:background="#121212"
+    >
 
     <ImageView
         android:id="@+id/SpotifiubyfyLogo"
@@ -25,6 +27,7 @@
         android:layout_height="wrap_content"
         android:text="@string/button_log_in"
         android:visibility="visible"
+        android:backgroundTint="#1DB954"
         app:layout_constraintBottom_toTopOf="@+id/sing_up_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -38,6 +41,7 @@
         android:layout_marginBottom="8dp"
         android:text="@string/button_sign_up"
         android:visibility="visible"
+        android:backgroundTint="#1DB954"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -53,6 +57,7 @@
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textSize="12sp"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
