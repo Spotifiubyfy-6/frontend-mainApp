@@ -23,11 +23,12 @@ class MessagesDataSource {
         fun getConversationBetween(context: Context, requesterId: Int, otherId: Int,
                                    callBack: VolleyCallBack<Message>) {
             val messagesList = ArrayList<Message>()
-            messagesList.add(Message(requesterId, otherId, "hello!!", null))
-            messagesList.add(Message(otherId, requesterId, "whats up?!", null))
-            messagesList.add(Message(requesterId, otherId, "how are you?", null))
-            messagesList.add(Message(otherId, requesterId,"good wbu?", null))
-            messagesList.add(Message(requesterId, otherId, "everything blessed!", null))
+            //messagesList.addFront
+            messagesList.add(Message(requesterId, requesterId, otherId, "hello!!", null))
+            messagesList.add(Message(requesterId, otherId, requesterId, "whats up?!", null))
+            messagesList.add(Message(requesterId, requesterId, otherId, "how are you?", null))
+            messagesList.add(Message(requesterId, otherId, requesterId,"good wbu?", null))
+            messagesList.add(Message(requesterId, requesterId, otherId, "everything blessed!", null))
             callBack.updateData(messagesList)
         }
     }
