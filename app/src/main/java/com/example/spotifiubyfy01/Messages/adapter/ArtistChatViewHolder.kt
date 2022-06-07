@@ -12,7 +12,7 @@ import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.SearchItem
 
-class MessageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class ArtistChatViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private val artistName: TextView = view.findViewById(R.id.artist_name)
     private val image: ImageView = view.findViewById(R.id.artist_image)

@@ -4,22 +4,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifiubyfy01.R
-import com.example.spotifiubyfy01.artistProfile.adapter.AlbumViewHolder
 import com.example.spotifiubyfy01.search.Artist
 
 class MessagesRecyclerAdapter(
     private val chatsList: List<Artist>,
     private val onClickListener:(Artist) -> Unit
-): RecyclerView.Adapter<MessageViewHolder>() {
+): RecyclerView.Adapter<ArtistChatViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistChatViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.layout_artist_chat_list_item,
                 parent, false)
-        return MessageViewHolder(view)
+        return ArtistChatViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ArtistChatViewHolder, position: Int) {
         val item = chatsList[position]
         holder.render(item, onClickListener)
     }
