@@ -127,6 +127,14 @@
                 android:value=".MainPage" />
         </activity>
         <activity
+            android:name=".Messages.ChatPage"
+            android:exported="false"
+            android:parentActivityName=".Messages.MessagesPage">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Messages.MessagesPage" />
+        </activity>
+        <activity
             android:name=".DisplayMessageActivity"
             android:parentActivityName=".SignInLandingPage">
 

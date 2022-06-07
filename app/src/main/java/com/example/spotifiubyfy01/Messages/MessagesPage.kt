@@ -31,8 +31,8 @@ class MessagesPage: AppCompatActivity(), VolleyCallBack<Artist> {
 
     private fun onItemClicked(artist: Artist) {
         val intent = Intent(this, ChatPage::class.java)
-        intent.putExtra("requester", 6)
-        intent.putExtra("other", artist.id)
+        intent.putExtra("requester_id", 6)
+        intent.putExtra("other", artist)
         startActivity(intent)
     }
 
