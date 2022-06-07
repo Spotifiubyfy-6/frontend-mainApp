@@ -20,7 +20,7 @@ class MessagesPage: AppCompatActivity(), VolleyCallBack<Artist> {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_messages_page)
         initRecyclerView(ArrayList())
-        MessagesDataSource.getChatsOfArtistWithID(this, 1, this)
+        MessagesDataSource.getChatsOfArtistWithID(this, 6, this)
     }
 
     private fun initRecyclerView(artistList: List<Artist>) {
@@ -33,7 +33,10 @@ class MessagesPage: AppCompatActivity(), VolleyCallBack<Artist> {
     }
 
     private fun onItemClicked(artist: Artist) {
-        Log.d("TAG", "clicked!")
+        val intent = Intent(this, ChatPage::class.java)
+        intent.putExtra("requester", 6)
+        intent.putExtra("other", artist.id)
+        startActivity(intent)
     }
 
     override fun updateData(list: List<Artist>) {
