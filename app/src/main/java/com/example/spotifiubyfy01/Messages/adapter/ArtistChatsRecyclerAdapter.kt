@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.search.Artist
 
-class MessagesRecyclerAdapter(
+class ArtistChatsRecyclerAdapter(
     private val chatsList: List<Artist>,
     private val onClickListener:(Artist) -> Unit
 ): RecyclerView.Adapter<ArtistChatViewHolder>() {
