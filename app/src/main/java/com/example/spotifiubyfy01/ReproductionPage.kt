@@ -1,14 +1,15 @@
 package com.example.spotifiubyfy01
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.artistProfile.Song
+import com.example.spotifiubyfy01.artistProfile.adapter.default_album_image
 import java.util.*
 
 
@@ -21,6 +22,7 @@ class ReproductionPage : AppCompatActivity() {
         val app = (this.application as Spotifiubify)
         var song: Song = app.SongManager.currentSong
         val mediaPlayer = app.SongManager.MediaPlayer
+        val albumImage = findViewById<ImageView>(R.id.albumArt)
         val currentSongTime = findViewById<TextView>(R.id.position)
 
         findViewById<TextView>(R.id.title).text = song.song_name
@@ -28,6 +30,14 @@ class ReproductionPage : AppCompatActivity() {
         findViewById<TextView>(R.id.duration).text = convertToMinutesString(mediaPlayer.duration)
         currentSongTime.text = convertToMinutesString(mediaPlayer.currentPosition)
 
+        val coverRef = app.getStorageReference().child(song.album_cover)
+        coverRef.downloadUrl.addOnSuccessListener { url ->
+            Glide.with(albumImage.context).load(url).into(albumImage)
+        }.addOnFailureListener {
+            Glide.with(albumImage.context).load(default_album_image).into(albumImage)
+        }
+
+        Glide.with(albumImage.context).load(song.album_cover).into(albumImage)
 
         val timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask() {
@@ -51,6 +61,12 @@ class ReproductionPage : AppCompatActivity() {
                         findViewById<TextView>(R.id.subtitle).text = song.artist
                         findViewById<TextView>(R.id.duration).text = convertToMinutesString(mediaPlayer.duration)
                         currentSongTime.text = convertToMinutesString(mediaPlayer.currentPosition)
+                        val coverRef = app.getStorageReference().child(song.album_cover)
+                        coverRef.downloadUrl.addOnSuccessListener { url ->
+                            Glide.with(albumImage.context).load(url).into(albumImage)
+                        }.addOnFailureListener {
+                            Glide.with(albumImage.context).load(default_album_image).into(albumImage)
+                        }
                     }
                 }
             }
