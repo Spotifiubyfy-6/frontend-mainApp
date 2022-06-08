@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Spotifiubyfy01"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ListOfPlaylistsPage"
+            android:exported="false" />
+        <activity
             android:name=".PlaylistPage"
             android:exported="false" />
         <activity
