@@ -1,6 +1,8 @@
 package com.example.spotifiubyfy01.Messages
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.Messages.adapter.ArtistChatsRecyclerAdapter
 import com.example.spotifiubyfy01.Messages.adapter.MessagesRecyclerAdapter
 import com.example.spotifiubyfy01.R
+import com.example.spotifiubyfy01.ReproductionPage
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
 
@@ -42,5 +45,16 @@ class ChatPage: AppCompatActivity(), VolleyCallBack<Message> {
 
     override fun updateData(messageList: List<Message>) {
         initRecyclerView(messageList)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+            return true
+        }
+        if (item.itemId == R.id.action_playback) {
+            startActivity(Intent(this, ReproductionPage::class.java))
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

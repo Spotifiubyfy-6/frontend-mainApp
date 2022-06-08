@@ -40,9 +40,14 @@ class ArtistChatViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val artistName: TextView = view.findViewById(R.id.artist_name)
     private val image: ImageView = view.findViewById(R.id.artist_image)
 
-    fun render(chatBundle: ChatBundle, onClickListener: (ChatBundle) -> Unit) {
+    fun render(chatBundle: ChatBundle, position: Int,
+               onClickListener: (ArtistChatViewHolder, ChatBundle, Int) -> Unit) {
         artistName.text = chatBundle.artist.username
         Glide.with(image.context).load(chatBundle.artist.image).into(image)
-        itemView.setOnClickListener { onClickListener(chatBundle) }
+        itemView.setOnClickListener { onClickListener(this, chatBundle, position) }
+    }
+
+    fun changeToSeen() {
+        artistName.setTypeface(null, Typeface.NORMAL)
     }
 }

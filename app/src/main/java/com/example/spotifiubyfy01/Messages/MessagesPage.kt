@@ -7,6 +7,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.spotifiubyfy01.Messages.adapter.ArtistChatViewHolder
 import com.example.spotifiubyfy01.Messages.adapter.ArtistChatsRecyclerAdapter
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.ReproductionPage
@@ -30,12 +31,16 @@ class MessagesPage: AppCompatActivity(), VolleyCallBack<ChatBundle> {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter =
-            ArtistChatsRecyclerAdapter(chatList) { chatBundle ->
-                onItemClicked(chatBundle)
+            ArtistChatsRecyclerAdapter(chatList) { chatView, chatBundle, position ->
+                onItemClicked(chatView, chatBundle, position)
             }
     }
 
-    private fun onItemClicked(chatBundle: ChatBundle) {
+    private fun onItemClicked(chatView: ArtistChatViewHolder, chatBundle: ChatBundle, position: Int) {
+        chatBundle.chat_seen = true
+        chatView.changeToSeen()
+        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
+        recyclerView.adapter!!.notifyItemChanged(position)
         val intent = Intent(this, ChatPage::class.java)
         intent.putExtra("requester_id", userId!!)
         intent.putExtra("other", chatBundle.artist)
