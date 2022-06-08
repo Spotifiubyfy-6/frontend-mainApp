@@ -2,6 +2,7 @@ package com.example.spotifiubyfy01.Messages
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,15 +10,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifiubyfy01.Messages.adapter.ArtistChatsRecyclerAdapter
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.ReproductionPage
+import com.example.spotifiubyfy01.Spotifiubify
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
 
 class MessagesPage: AppCompatActivity(), VolleyCallBack<Artist> {
+    var userId: Int? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_messages_page)
         initRecyclerView(ArrayList())
-        MessagesDataSource.getChatsOfArtistWithID(this, 6, this)
+        val app = (this.application as Spotifiubify)
+        userId = app.getProfileData("id")!!.toInt()
+        MessagesDataSource.getChatsOfArtistWithID(this, userId!!, this)
     }
 
     private fun initRecyclerView(artistList: List<Artist>) {
@@ -31,7 +37,7 @@ class MessagesPage: AppCompatActivity(), VolleyCallBack<Artist> {
 
     private fun onItemClicked(artist: Artist) {
         val intent = Intent(this, ChatPage::class.java)
-        intent.putExtra("requester_id", 6)
+        intent.putExtra("requester_id", userId!!)
         intent.putExtra("other", artist)
         startActivity(intent)
     }
