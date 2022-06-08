@@ -9,7 +9,9 @@ data class Album (
     var album_name: String,
     var album_image: String,
     var artist_name: String,
-    var song_list: List<Song>
+    var song_list: List<Song>,
+    var album_description: String,
+    var album_genre: String
 ) : Serializable, SearchItem() {
 
     override fun getSearchItemType(): SearchItemEnum {

@@ -52,8 +52,11 @@ class AlbumDataSource {
             val albumName = jsonAlbum.getString("album_name")
             val albumId = jsonAlbum.getString("id")
 	        val storageName = "covers/"+jsonAlbum.getString("album_media")
+            val description = jsonAlbum.getString("album_description")
+            val genre = jsonAlbum.getString("album_genre")
             return Album(albumId, albumName, storageName, artist_name,
-                getListOfSongs(artist_name, JSONArray(jsonAlbum.getString("songs").toString())))
+                getListOfSongs(artist_name, JSONArray(jsonAlbum.getString("songs").toString())),
+                description, genre)
         }
 
         private fun getListOfAlbums(artist_name: String, response: JSONArray): List<Album> {

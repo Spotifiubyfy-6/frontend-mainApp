@@ -119,14 +119,16 @@ class DataSource {
             val song = songs.getJSONObject(0)
             artistName = song.getString("artist_name")
         }
-	    return Album(
+        val description = jsonAlbum.getString("album_description")
+        val genre = jsonAlbum.getString("album_genre")
+            return Album(
                 albumId,
                 albumName,
                 storageName, artistName,
                 getListOfSongs(
                     artistName,
                     JSONArray(jsonAlbum.getString("songs").toString())
-                )
+                ), description, genre
             )
         }
     }

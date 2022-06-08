@@ -32,6 +32,8 @@ class AlbumPage : AppCompatActivity() {
         val album = intent.extras?.get("Album") as Album
         findViewById<TextView>(R.id.albumName).text = album.album_name
         findViewById<TextView>(R.id.artistName).text = album.artist_name
+        findViewById<TextView>(R.id.album_genre).text = album.album_genre
+        findViewById<TextView>(R.id.album_description).text = album.album_description
         val image = findViewById<ImageView>(R.id.album_image)
 
 
