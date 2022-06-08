@@ -12,11 +12,12 @@ class ArtistChatsRecyclerAdapter(
     private val onClickListener:(Artist) -> Unit
 ): RecyclerView.Adapter<ArtistChatViewHolder>() {
 
+    override fun getItemViewType(position: Int): Int {
+        return chatsList[position].getChatType().ordinal
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistChatViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.layout_artist_chat_list_item,
-                parent, false)
-        return ArtistChatViewHolder(view)
+        return createRespectiveArtistChatHolder(parent, viewType)
     }
 
     override fun onBindViewHolder(holder: ArtistChatViewHolder, position: Int) {

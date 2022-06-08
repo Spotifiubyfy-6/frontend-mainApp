@@ -1,17 +1,37 @@
 package com.example.spotifiubyfy01.Messages.adapter
 
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.spotifiubyfy01.Messages.ChatBundle
+import com.example.spotifiubyfy01.Messages.*
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.Spotifiubify
 import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.SearchItem
+
+fun createRespectiveArtistChatHolder(parent: ViewGroup, viewType: Int) : ArtistChatViewHolder {
+    val holder =
+        when (convertIntToChatBundleEnum(viewType)) {
+            ChatBundleEnum.CHAT_NOT_SEEN ->    {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.layout_artist_chat_list_item, parent, false)
+                ArtistChatViewHolder(view)
+            }
+            ChatBundleEnum.CHAT_SEEN -> {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.layout_artist_chat_list_item, parent, false)
+                ArtistChatViewHolder(view)
+            }
+        }
+    return holder
+}
+
 
 class ArtistChatViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
