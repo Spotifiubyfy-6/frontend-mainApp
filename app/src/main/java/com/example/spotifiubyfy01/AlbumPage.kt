@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.artistProfile.Song
 import com.example.spotifiubyfy01.artistProfile.adapter.SongRecyclerAdapter
+import com.example.spotifiubyfy01.artistProfile.adapter.default_album_image
 
 class AlbumPage : AppCompatActivity() {
 
@@ -25,13 +26,23 @@ class AlbumPage : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val app = (this.application as Spotifiubify)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_album_page)
         val album = intent.extras?.get("Album") as Album
         findViewById<TextView>(R.id.albumName).text = album.album_name
         findViewById<TextView>(R.id.artistName).text = album.artist_name
         val image = findViewById<ImageView>(R.id.album_image)
-        Glide.with(image.context).load(album!!.album_image).into(image)
+
+
+        val coverRef = app.getStorageReference().child(album.album_image)
+
+        coverRef.downloadUrl.addOnSuccessListener { url ->
+            Glide.with(image.context).load(url).into(image)
+        }.addOnFailureListener {
+            Glide.with(image.context).load(default_album_image).into(image)
+        }
+
         initRecyclerView(album.song_list)
         val play_button = findViewById<Button>(R.id.playButton)
         play_button.setOnClickListener {
