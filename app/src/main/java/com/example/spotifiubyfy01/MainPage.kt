@@ -186,6 +186,7 @@ class MainPage: AppCompatActivity() {
 
         val id = jsonSong.getString("id").toInt()
         val username = jsonSong.getString("name")
+        val artistImage = jsonSong.getString("name")
         return Artist(id, username  , "image_url")
     }
     private fun getListOfAlbums(response: JSONArray): List<Album> {
@@ -199,7 +200,13 @@ class MainPage: AppCompatActivity() {
         val albumName = jsonAlbum.getString("album_name")
         val albumId = jsonAlbum.getString("id")
     	val storageName = "covers/"+jsonAlbum.getString("album_media")
-        return Album(albumId, albumName, storageName, "artist_name",
+        val songs = jsonAlbum.getJSONArray("songs")
+        var artistName = "default artist name"
+        if (songs.length() > 0) {
+            val song = songs.getJSONObject(0)
+            artistName = song.getString("artist_name")
+        }
+        return Album(albumId, albumName, storageName, artistName,
             getListOfSongs(
                 JSONArray(jsonAlbum.getString("songs").toString())
             )
