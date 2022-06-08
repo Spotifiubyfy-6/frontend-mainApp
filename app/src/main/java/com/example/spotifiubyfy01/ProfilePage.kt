@@ -1,6 +1,5 @@
 package com.example.spotifiubyfy01
 
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -10,11 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.android.volley.AuthFailureError
-import com.android.volley.Response
-import com.android.volley.toolbox.JsonArrayRequest
 import com.example.spotifiubyfy01.artistProfile.Album
-import com.example.spotifiubyfy01.artistProfile.AlbumDataSource
 import com.example.spotifiubyfy01.artistProfile.AlbumDataSource.Companion.createAlbumList
 import com.example.spotifiubyfy01.search.VolleyCallBack
 
@@ -37,7 +32,7 @@ class ProfilePage : AppCompatActivity(), VolleyCallBack<Album> {
 
         val app = (this.application as Spotifiubify)
 
-        findViewById<TextView>(R.id.username).text = app.getProfileData("username")
+        findViewById<TextView>(R.id.artistName).text = app.getProfileData("username")
         findViewById<TextView>(R.id.email).text = app.getProfileData("email")
         findViewById<TextView>(R.id.subscription).text = app.getProfileData("user_suscription")
 

@@ -11,7 +11,7 @@ import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.Spotifiubify
 
-var default_album_image = "https://ladydanville.files.wordpress.com/2012/03/blankart.png"
+var default_album_image = "https://i.pinimg.com/originals/33/58/0c/33580cd023504630a4ea63fe0a1650f6.jpg"
 
 class AlbumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 

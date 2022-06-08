@@ -79,7 +79,7 @@ class DataSource {
                 url, null,
                 { response ->
                     for (i in 0 until response.length())
-                        auxList.add(getAlbum("defaultArtist", JSONObject(response.get(i).toString())))
+                        auxList.add(getAlbum(JSONObject(response.get(i).toString())))
                     synchronizer.updateListAndCounterAndCallBackIfNeeded(auxList, callBack)
                 }
             ) {
@@ -92,7 +92,9 @@ class DataSource {
             val albumId = jsonSong.getString("album_id").toInt()
             val id = jsonSong.getString("id").toInt()
             val storageName = jsonSong.getString("storage_name")
-            return Song(songName, artist_name, albumId, id, storageName)
+            val albumCover = "covers/"+jsonSong.getString("album_media")
+
+            return Song(songName, artist_name, albumId, id, storageName, albumCover)
         }
 
         private fun getListOfSongs(artist_name: String, jsonSongs: JSONArray): List<Song> {
@@ -107,18 +109,26 @@ class DataSource {
             return songs
         }
 
-        private fun getAlbum(artist_name: String, jsonAlbum: JSONObject): SearchItem {
+        private fun getAlbum(jsonAlbum: JSONObject): SearchItem {
             val albumName = jsonAlbum.getString("album_name")
             val albumId = jsonAlbum.getString("id")
-	    val storageName = "covers/"+jsonAlbum.getString("album_media")            
-	    return Album(
+	    val storageName = "covers/"+jsonAlbum.getString("album_media")
+        val songs = jsonAlbum.getJSONArray("songs")
+        var artistName = "default artist name"
+        if (songs.length() > 0) {
+            val song = songs.getJSONObject(0)
+            artistName = song.getString("artist_name")
+        }
+        val description = jsonAlbum.getString("album_description")
+        val genre = jsonAlbum.getString("album_genre")
+            return Album(
                 albumId,
                 albumName,
-                storageName, artist_name,
+                storageName, artistName,
                 getListOfSongs(
-                    artist_name,
+                    artistName,
                     JSONArray(jsonAlbum.getString("songs").toString())
-                )
+                ), description, genre
             )
         }
     }

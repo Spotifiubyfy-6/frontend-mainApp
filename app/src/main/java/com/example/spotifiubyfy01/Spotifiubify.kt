@@ -40,6 +40,8 @@ class Spotifiubify : Application() {
                 profileData["user_type"] = responseJson.getString("user_type")
                 profileData["location"] = responseJson.getString("location")
                 profileData["id"] = responseJson.getString("id")
+                profileData["name"] = responseJson.getString("name")
+
             },
             { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
                 val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]

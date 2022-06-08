@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.Spotifiubyfy01" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#0020EE</item>
-        <item name="colorPrimaryVariant">#0600B3</item>
+        <item name="colorPrimary">#1DB954</item>
+        <item name="colorPrimaryVariant">#107A35</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>

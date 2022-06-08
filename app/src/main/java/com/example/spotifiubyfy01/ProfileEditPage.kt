@@ -20,23 +20,22 @@ class ProfileEditPage : AppCompatActivity() {
         setContentView(R.layout.activity_profile_edit_page)
         val app = (this.application as Spotifiubify)
 
-        findViewById<TextView>(R.id.username).text = app.getProfileData("username")
+        findViewById<TextView>(R.id.artistName).text = app.getProfileData("name")
+        findViewById<TextView>(R.id.usernameView).text = app.getProfileData("username")
         findViewById<TextView>(R.id.email).text = app.getProfileData("email")
         findViewById<TextView>(R.id.subscription).text = app.getProfileData("user_suscription")
 
-
         val email = findViewById<EditText>(R.id.email)
-
+        val artistName = findViewById<EditText>(R.id.artistName)
         val editClick = findViewById<Button>(R.id.editButton)
         editClick.setOnClickListener {
 
-            val url = "https://spotifiubyfy-users.herokuapp.com/users/email/"+email.text.toString()
+            var url = "https://spotifiubyfy-users.herokuapp.com/users/email/"+email.text.toString()
 
             val postRequest: StringRequest = object : StringRequest(
                 Method.POST, url,
                 { response -> val intent = Intent(this, ProfilePage::class.java).apply {
                         val responseJson = JSONObject(response)
-//                    todo: cambiar message to new_email
                         val email = responseJson.getString("email")
                         app.setProfileData("email", email)
                     }
@@ -56,7 +55,59 @@ class ProfileEditPage : AppCompatActivity() {
             }
 
             MyRequestQueue.getInstance(this).addToRequestQueue(postRequest)
+
+            url = "https://spotifiubyfy-users.herokuapp.com/users/name/"+artistName.text.toString()
+
+            val namePostRequest: StringRequest = object : StringRequest(
+                Method.POST, url,
+                { response -> val intent = Intent(this, ProfilePage::class.java).apply {
+                    val responseJson = JSONObject(response)
+                    val newName = responseJson.getString("name")
+                    app.setProfileData("name", newName)
+                }
+                    startActivity(intent)
+                },
+                { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
+                    val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
+                    putExtra("popuptext", error)
+                }
+                    startActivity(intent)}) {
+                @Throws(AuthFailureError::class)
+                override fun getHeaders(): Map<String, String> {
+                    val params: MutableMap<String, String> = HashMap()
+                    params["Authorization"] = "Bearer " + getSharedPreferences(getString(R.string.token_key), Context.MODE_PRIVATE).getString(getString(R.string.token_key), null)
+                    return params
+                }
+            }
+
+            MyRequestQueue.getInstance(this).addToRequestQueue(namePostRequest)
         }
+
+        val makeArtist = findViewById<Button>(R.id.makeArtistButton)
+        makeArtist.setOnClickListener {
+            val url = "https://spotifiubyfy-users.herokuapp.com/users/user_type/artist"
+
+            val makeArtistRequest: StringRequest = object : StringRequest(
+                Method.POST, url,
+                { response -> val intent = Intent(this, ProfilePage::class.java)
+                    app.setProfileData("user_type", "artist")
+                    startActivity(intent)
+                },
+                { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
+                    val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
+                    putExtra("popuptext", error)
+                }
+                    startActivity(intent)}) {
+                @Throws(AuthFailureError::class)
+                override fun getHeaders(): Map<String, String> {
+                    val params: MutableMap<String, String> = HashMap()
+                    params["Authorization"] = "Bearer " + getSharedPreferences(getString(R.string.token_key), Context.MODE_PRIVATE).getString(getString(R.string.token_key), null)
+                    return params
+                }
+            }
+            MyRequestQueue.getInstance(this).addToRequestQueue(makeArtistRequest)
+        }
+
 
         val oldPassword = findViewById<EditText>(R.id.oldPassword)
         val newPassword = findViewById<EditText>(R.id.newPassword)

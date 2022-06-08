@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#121212"
+
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="#121212">
 
         <ImageView
             android:id="@+id/artist_image"
@@ -23,21 +27,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="The Name of an Artist"
-            android:textColor="#000"
+
+            android:textColor="#FFFFFF"
             android:textSize="32sp" />
         <TextView
             android:id="@+id/albums_key_word"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Albums"
-            android:textColor="#0020EE"
+            android:textColor="#FFFFFF"
             android:textSize="25sp" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="#3C0020EE"/>
+            android:background="#121212"/>
 
     </LinearLayout>
 
