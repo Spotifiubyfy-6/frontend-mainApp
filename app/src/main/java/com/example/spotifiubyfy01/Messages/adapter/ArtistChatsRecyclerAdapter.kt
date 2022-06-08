@@ -9,7 +9,7 @@ import com.example.spotifiubyfy01.search.Artist
 
 class ArtistChatsRecyclerAdapter(
     private val chatsList: List<ChatBundle>,
-    private val onClickListener:(Artist) -> Unit
+    private val onClickListener:(ChatBundle) -> Unit
 ): RecyclerView.Adapter<ArtistChatViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {

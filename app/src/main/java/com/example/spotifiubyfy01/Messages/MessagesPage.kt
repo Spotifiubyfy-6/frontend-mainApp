@@ -30,15 +30,15 @@ class MessagesPage: AppCompatActivity(), VolleyCallBack<ChatBundle> {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter =
-            ArtistChatsRecyclerAdapter(chatList) { artist ->
-                onItemClicked(artist)
+            ArtistChatsRecyclerAdapter(chatList) { chatBundle ->
+                onItemClicked(chatBundle)
             }
     }
 
-    private fun onItemClicked(artist: Artist) {
+    private fun onItemClicked(chatBundle: ChatBundle) {
         val intent = Intent(this, ChatPage::class.java)
         intent.putExtra("requester_id", userId!!)
-        intent.putExtra("other", artist)
+        intent.putExtra("other", chatBundle.artist)
         startActivity(intent)
     }
 
