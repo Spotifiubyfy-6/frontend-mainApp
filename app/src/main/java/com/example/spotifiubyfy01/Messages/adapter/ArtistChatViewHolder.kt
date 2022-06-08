@@ -1,5 +1,6 @@
 package com.example.spotifiubyfy01.Messages.adapter
 
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,8 @@ fun createRespectiveArtistChatHolder(parent: ViewGroup, viewType: Int) : ArtistC
             ChatBundleEnum.CHAT_NOT_SEEN ->    {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.layout_artist_chat_list_item, parent, false)
+                val artistName = view.findViewById<TextView>(R.id.artist_name)
+                artistName.setTypeface(null, Typeface.BOLD)
                 ArtistChatViewHolder(view)
             }
             ChatBundleEnum.CHAT_SEEN -> {
@@ -34,7 +37,6 @@ fun createRespectiveArtistChatHolder(parent: ViewGroup, viewType: Int) : ArtistC
 
 
 class ArtistChatViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
     private val artistName: TextView = view.findViewById(R.id.artist_name)
     private val image: ImageView = view.findViewById(R.id.artist_image)
 
