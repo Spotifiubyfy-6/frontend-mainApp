@@ -53,4 +53,5 @@
     <string name="playlist_description">Playlist Description</string>
     <string name="playlist_media">Playlist Media</string>
     <string name="defaultImage">https://i.pinimg.com/originals/33/58/0c/33580cd023504630a4ea63fe0a1650f6.jpg</string>
+    <string name="artistName">"Artist name: "</string>
 </resources>

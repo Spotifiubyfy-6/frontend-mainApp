@@ -17,7 +17,7 @@
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/registration_email"
-
+        android:textColorHint ="#56FFFFFF"
         android:textColor="#FFFFFF"
         android:backgroundTint="#FFFFFF"
         android:inputType="textEmailAddress"
@@ -37,6 +37,7 @@
         android:ems="10"
         android:hint="@string/registration_username"
         android:textColor="#FFFFFF"
+        android:textColorHint ="#56FFFFFF"
         android:backgroundTint="#FFFFFF"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/registration_password"
@@ -56,6 +57,7 @@
         android:hint="@string/registration_password"
         android:textColor="#FFFFFF"
         android:backgroundTint="#FFFFFF"
+        android:textColorHint ="#56FFFFFF"
         android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@+id/create_account_button"
         app:layout_constraintEnd_toEndOf="parent"
@@ -71,6 +73,7 @@
         android:layout_marginBottom="8dp"
         android:text="@string/button_create_account"
         android:visibility="visible"
+        android:textColor="#FFFFFF"
 
         android:backgroundTint="#1DB954"
         app:layout_constraintBottom_toBottomOf="parent"
