@@ -16,26 +16,21 @@ fun createRespectiveHolder(parent: ViewGroup, viewType: Int) : MessageViewHolder
             MessageEnum.MESSAGE_RECEIVED ->    {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.layout_message_received_item, parent, false)
-                MessageReceivedViewHolder(view)
+                MessageViewHolder(view)
             }
             MessageEnum.MESSAGE_SENT -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.layout_message_sent_item, parent, false)
-                MessageReceivedViewHolder(view)
+                MessageViewHolder(view)
             }
         }
     return holder
 }
 
-abstract class MessageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    abstract fun render(message: Message)
-}
-
-class MessageReceivedViewHolder(view: View) : MessageViewHolder(view) {
-
+class MessageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val messageBox: TextView = view.findViewById(R.id.message)
 
-    override fun render(message: Message) {
-        messageBox.setText(message.message)
+    fun render(message: Message) {
+        messageBox.text = message.message
     }
 }
