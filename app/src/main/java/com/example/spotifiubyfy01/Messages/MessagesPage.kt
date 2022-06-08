@@ -14,7 +14,7 @@ import com.example.spotifiubyfy01.Spotifiubify
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
 
-class MessagesPage: AppCompatActivity(), VolleyCallBack<Artist> {
+class MessagesPage: AppCompatActivity(), VolleyCallBack<ChatBundle> {
     var userId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,12 +26,12 @@ class MessagesPage: AppCompatActivity(), VolleyCallBack<Artist> {
         MessagesDataSource.getChatsOfArtistWithID(this, userId!!, this)
     }
 
-    private fun initRecyclerView(artistList: List<Artist>) {
+    private fun initRecyclerView(chatList: List<ChatBundle>) {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter =
-            ArtistChatsRecyclerAdapter(artistList) { album ->
-                onItemClicked(album)
+            ArtistChatsRecyclerAdapter(chatList) { artist ->
+                onItemClicked(artist)
             }
     }
 
@@ -42,7 +42,7 @@ class MessagesPage: AppCompatActivity(), VolleyCallBack<Artist> {
         startActivity(intent)
     }
 
-    override fun updateData(list: List<Artist>) {
+    override fun updateData(list: List<ChatBundle>) {
         initRecyclerView(list)
     }
 

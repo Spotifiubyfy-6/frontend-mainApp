@@ -3,11 +3,12 @@ package com.example.spotifiubyfy01.Messages.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.spotifiubyfy01.Messages.ChatBundle
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.search.Artist
 
 class ArtistChatsRecyclerAdapter(
-    private val chatsList: List<Artist>,
+    private val chatsList: List<ChatBundle>,
     private val onClickListener:(Artist) -> Unit
 ): RecyclerView.Adapter<ArtistChatViewHolder>() {
 
