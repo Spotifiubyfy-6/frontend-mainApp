@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.spotifiubyfy01.Messages.adapter.ArtistChatsRecyclerAdapter
 import com.example.spotifiubyfy01.Messages.adapter.MessagesRecyclerAdapter
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.ReproductionPage
@@ -41,10 +40,11 @@ class ChatPage: AppCompatActivity(), VolleyCallBack<Message> {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = MessagesRecyclerAdapter(messagesList)
+        recyclerView.smoothScrollToPosition((recyclerView.adapter as MessagesRecyclerAdapter).itemCount)
     }
 
-    override fun updateData(messageList: List<Message>) {
-        initRecyclerView(messageList)
+    override fun updateData(list: List<Message>) {
+        initRecyclerView(list)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
