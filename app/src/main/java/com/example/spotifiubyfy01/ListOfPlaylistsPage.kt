@@ -65,6 +65,11 @@ class ListOfPlaylistsPage : AppCompatActivity() {
             { errorResponse ->
                 print(errorResponse)
                 Log.d(ContentValues.TAG, "AGREGADO ERRONEO: $errorResponse")
+                val intent = Intent(this, PopUpWindow::class.java).apply {
+//                    val error = errorResponse//.networkResponse.data.decodeToString() //.split('"')[3]
+                    putExtra("popuptext", "song already in playlist")
+                }
+                startActivity(intent)
             })
         MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
     }
