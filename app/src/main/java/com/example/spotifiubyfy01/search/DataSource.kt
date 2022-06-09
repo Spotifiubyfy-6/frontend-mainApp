@@ -115,7 +115,9 @@ class DataSource {
             val albumId = jsonSong.getString("album_id").toInt()
             val id = jsonSong.getString("id").toInt()
             val storageName = jsonSong.getString("storage_name")
-            return Song(songName, artist_name, albumId, id, storageName)
+            val albumCover = "covers/"+jsonSong.getString("album_media")
+
+            return Song(songName, artist_name, albumId, id, storageName, albumCover)
         }
 
         private fun getListOfSongs(artist_name: String, jsonSongs: JSONArray): List<Song> {
@@ -140,14 +142,16 @@ class DataSource {
             val song = songs.getJSONObject(0)
             artistName = song.getString("artist_name")
         }
-	    return Album(
+        val description = jsonAlbum.getString("album_description")
+        val genre = jsonAlbum.getString("album_genre")
+            return Album(
                 albumId,
                 albumName,
                 storageName, artistName,
                 getListOfSongs(
                     artistName,
                     JSONArray(jsonAlbum.getString("songs").toString())
-                )
+                ), description, genre
             )
         }
 

@@ -7,5 +7,6 @@ data class Song (
     var artist: String,
     var album_id: Int,
     var id: Int,
-    var storage_name: String
-) : Serializable
+    var storage_name: String,
+    var album_cover: String
+    ) : Serializable
