@@ -23,11 +23,23 @@ class MessagesDataSource {
                                    callBack: VolleyCallBack<Message>) {
             val messagesList = ArrayList<Message>()
             //messagesList.addFront
+            //var current_day = 0
+            //for (i in (0 until jsonMessages.length()).reversed()) {
+            //val time = json
+            //val message = json
+            //obtain messages_not_seen via first call (maybe)
+            //if (time.day >= current_day) {
+            //      messagesList.add(time.day)
+            //      current_day = time.day
+            // }
+            //messagesList.add(Message(requesterId, requesterId, otherId, message, time.hour))
+            // }
             messagesList.add(Message(requesterId, requesterId, otherId, "hello!!", null))
             messagesList.add(Message(requesterId, otherId, requesterId, "whats up?!", null))
             messagesList.add(Message(requesterId, requesterId, otherId, "how are you?", null))
             messagesList.add(Message(requesterId, otherId, requesterId,"good wbu?", null))
             messagesList.add(Message(requesterId, requesterId, otherId, "everything blessed!", null))
+
             callBack.updateData(messagesList)
         }
     }
