@@ -15,14 +15,18 @@ enum class MessageEnum {
     MESSAGE_RECEIVED, MESSAGE_SENT; //NEVER CHANGE THIS ORDER
 }
 
+abstract class MessageItem() {
+    abstract fun getMessageType(): MessageEnum
+}
+
 data class Message(
     var requester_id: Int,
     var receiver_id: Int,
     var sender_id: Int,
     var message: String,
     var time: Time?
-) : Serializable {
-    fun getMessageType(): MessageEnum {
+) : Serializable, MessageItem() {
+    override fun getMessageType(): MessageEnum {
         if (requester_id == receiver_id)
             return MessageEnum.MESSAGE_RECEIVED
         else

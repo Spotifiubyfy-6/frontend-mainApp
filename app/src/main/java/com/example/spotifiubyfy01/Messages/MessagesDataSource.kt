@@ -20,8 +20,8 @@ class MessagesDataSource {
         }
 
         fun getConversationBetween(context: Context, requesterId: Int, otherId: Int,
-                                   callBack: VolleyCallBack<Message>) {
-            val messagesList = ArrayList<Message>()
+                                   callBack: VolleyCallBack<MessageItem>) {
+            val messagesList = ArrayList<MessageItem>()
             //messagesList.addFront
             //var current_day = 0
             //for (i in (0 until jsonMessages.length()).reversed()) {

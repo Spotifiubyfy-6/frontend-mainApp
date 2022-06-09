@@ -3,9 +3,10 @@ package com.example.spotifiubyfy01.Messages.adapter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifiubyfy01.Messages.Message
+import com.example.spotifiubyfy01.Messages.MessageItem
 
 class MessagesRecyclerAdapter(
-    private val messageList: List<Message>,
+    private val messageList: List<MessageItem>,
 ): RecyclerView.Adapter<MessageViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {

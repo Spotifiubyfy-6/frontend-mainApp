@@ -15,7 +15,7 @@ import com.example.spotifiubyfy01.ReproductionPage
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
 
-class ChatPage: AppCompatActivity(), VolleyCallBack<Message> {
+class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
     var requesterId: Int? = null
     var other: Artist? = null
 
@@ -36,14 +36,14 @@ class ChatPage: AppCompatActivity(), VolleyCallBack<Message> {
         Glide.with(image.context).load(other!!.image).into(image)
     }
 
-    private fun initRecyclerView(messagesList: List<Message>) {
+    private fun initRecyclerView(messagesList: List<MessageItem>) {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = MessagesRecyclerAdapter(messagesList)
         recyclerView.smoothScrollToPosition((recyclerView.adapter as MessagesRecyclerAdapter).itemCount)
     }
 
-    override fun updateData(list: List<Message>) {
+    override fun updateData(list: List<MessageItem>) {
         initRecyclerView(list)
     }
 
