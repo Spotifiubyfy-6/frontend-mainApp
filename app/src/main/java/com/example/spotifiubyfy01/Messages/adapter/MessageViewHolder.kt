@@ -11,7 +11,7 @@ import com.example.spotifiubyfy01.Messages.MessageItem
 import com.example.spotifiubyfy01.Messages.convertIntToMessageEnum
 import com.example.spotifiubyfy01.R
 
-fun createRespectiveHolder(parent: ViewGroup, viewType: Int) : MessageViewHolder {
+fun createRespectiveHolder(parent: ViewGroup, viewType: Int) : MessageItemViewHolder {
     val holder =
         when (convertIntToMessageEnum(viewType)) {
             MessageEnum.MESSAGE_RECEIVED ->    {
@@ -28,10 +28,14 @@ fun createRespectiveHolder(parent: ViewGroup, viewType: Int) : MessageViewHolder
     return holder
 }
 
-class MessageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+abstract class MessageItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    abstract fun render(message: MessageItem)
+}
+
+class MessageViewHolder(view: View) : MessageItemViewHolder(view) {
     private val messageBox: TextView = view.findViewById(R.id.message)
 
-    fun render(message: MessageItem) {
+    override fun render(message: MessageItem) {
         messageBox.text = (message as Message).message
     }
 }
