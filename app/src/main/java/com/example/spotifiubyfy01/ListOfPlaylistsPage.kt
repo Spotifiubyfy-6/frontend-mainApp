@@ -93,8 +93,8 @@ class ListOfPlaylistsPage : AppCompatActivity() {
         val id = jsonSong.getString("id").toInt()
         val storageName = jsonSong.getString("storage_name")
         val artistName = jsonSong.getString("artist_name")
-
-        return Song(songName, artistName, albumId, id, storageName)
+        val albumCover = jsonSong.getString("album_media")
+        return Song(songName, artistName, albumId, id, storageName, albumCover)
     }
     private fun getListOfSongs(jsonSongs: JSONArray): List<Song> {
         val songs = ArrayList<Song>()
