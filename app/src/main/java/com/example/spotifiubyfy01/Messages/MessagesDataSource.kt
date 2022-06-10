@@ -41,15 +41,16 @@ class MessagesDataSource {
             //messagesList.add(Message(requesterId, requesterId, otherId, message, time.hour))
             // }
             val jsonTime = "2022-06-10T13:24:35.769910"
-            val date = obtainDate(jsonTime)
-            messagesList.add(DateItem(
-                date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)).toString()))
-            messagesList.add(Message(requesterId, requesterId, otherId, "hello!!", date.format(
-                DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)).toString()))
-            messagesList.add(Message(requesterId, otherId, requesterId, "whats up?!", null))
-            messagesList.add(Message(requesterId, requesterId, otherId, "how are you?", null))
-            messagesList.add(Message(requesterId, otherId, requesterId,"good wbu?", null))
-            messagesList.add(Message(requesterId, requesterId, otherId, "everything blessed!", null))
+            val dateAndTime = obtainDate(jsonTime)
+            val date =  dateAndTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)).toString()
+            val time = dateAndTime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)).toString()
+            Log.d("TAG", time)
+            messagesList.add(DateItem(date))
+            messagesList.add(Message(requesterId, requesterId, otherId, "hello!!", time))
+            messagesList.add(Message(requesterId, otherId, requesterId, "whats up?!", time))
+            messagesList.add(Message(requesterId, requesterId, otherId, "how are you?", time))
+            messagesList.add(Message(requesterId, otherId, requesterId,"good wbu?", time))
+            messagesList.add(Message(requesterId, requesterId, otherId, "everything blessed!", time))
 
             callBack.updateData(messagesList)
         }
