@@ -82,6 +82,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <EditText
+            android:id="@+id/message_text"
             android:layout_width="0dp"
             android:layout_weight="8"
             android:layout_height="wrap_content"
@@ -95,6 +96,7 @@
             android:layout_marginBottom="10dp"
             />
         <Button
+            android:id="@+id/send_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="send"

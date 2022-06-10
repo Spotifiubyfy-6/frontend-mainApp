@@ -3,9 +3,7 @@ package com.example.spotifiubyfy01.Messages
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,11 +28,16 @@ class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
         initRecyclerView(ArrayList())
         MessagesDataSource.getConversationBetween(this, requesterId!!, other!!.id, this)
         val artistProfile = findViewById<LinearLayout>(R.id.artist_profile)
-        artistProfile.setOnClickListener({
+        artistProfile.setOnClickListener{
             val intent = Intent(this, ArtistPage::class.java)
             intent.putExtra("Artist", other)
             startActivity(intent)
-        })
+        }
+        val messageTextBox = findViewById<EditText>(R.id.message_text)
+        val sendButton = findViewById<Button>(R.id.send_button)
+        sendButton.setOnClickListener{
+            MessagesDataSender.sendMessage(messageTextBox.text.toString())
+        }
     }
 
     private fun initOtherArtistField() {
