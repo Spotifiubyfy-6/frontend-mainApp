@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -11,8 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.AlbumPage
+import com.example.spotifiubyfy01.Messages.ChatPage
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.ReproductionPage
+import com.example.spotifiubyfy01.Spotifiubify
 import com.example.spotifiubyfy01.artistProfile.adapterSongRecyclerAdapter.AlbumRecyclerAdapter
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
@@ -42,6 +45,15 @@ class ArtistPage: AppCompatActivity(), VolleyCallBack<Album> {
         Glide.with(image.context).load(artist!!.image).into(image)
         initRecyclerView(ArrayList())
         AlbumDataSource.createAlbumList(this, artist!!.id, artist!!.username,this)
+
+        val messageButton = findViewById<Button>(R.id.message_button)
+        messageButton.setOnClickListener{
+            val intent = Intent(this, ChatPage::class.java)
+            intent.putExtra("requester_id",
+                (this.application as Spotifiubify).getProfileData("id")!!.toInt())
+            intent.putExtra("other", artist!!)
+            startActivity(intent)
+        }
     }
 
     private fun initRecyclerView(albumList: List<Album>) {
