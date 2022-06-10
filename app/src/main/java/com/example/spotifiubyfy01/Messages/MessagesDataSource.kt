@@ -43,7 +43,7 @@ class MessagesDataSource {
             val jsonTime = "2022-06-10T13:24:35.769910"
             val dateAndTime = obtainDate(jsonTime)
             val date =  dateAndTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)).toString()
-            val time = dateAndTime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)).toString()
+            val time = dateAndTime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)).toString()
             Log.d("TAG", time)
             messagesList.add(DateItem(date))
             messagesList.add(Message(requesterId, requesterId, otherId, "hello!!", time))
