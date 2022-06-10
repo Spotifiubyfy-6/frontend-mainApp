@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.Messages.adapter.MessagesRecyclerAdapter
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.ReproductionPage
+import com.example.spotifiubyfy01.artistProfile.ArtistPage
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
 
@@ -27,6 +29,12 @@ class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
         initOtherArtistField()
         initRecyclerView(ArrayList())
         MessagesDataSource.getConversationBetween(this, requesterId!!, other!!.id, this)
+        val artistProfile = findViewById<LinearLayout>(R.id.artist_profile)
+        artistProfile.setOnClickListener({
+            val intent = Intent(this, ArtistPage::class.java)
+            intent.putExtra("Artist", other)
+            startActivity(intent)
+        })
     }
 
     private fun initOtherArtistField() {
