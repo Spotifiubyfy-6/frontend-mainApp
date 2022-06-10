@@ -48,11 +48,16 @@ class ArtistPage: AppCompatActivity(), VolleyCallBack<Album> {
 
         val messageButton = findViewById<Button>(R.id.message_button)
         messageButton.setOnClickListener{
-            val intent = Intent(this, ChatPage::class.java)
-            intent.putExtra("requester_id",
-                (this.application as Spotifiubify).getProfileData("id")!!.toInt())
-            intent.putExtra("other", artist!!)
-            startActivity(intent)
+            val chatOnStack = (intent.extras?.get("chat_in_stack") as Boolean?)
+            if (chatOnStack == null) {
+                val intent = Intent(this, ChatPage::class.java)
+                intent.putExtra("requester_id",
+                    (this.application as Spotifiubify).getProfileData("id")!!.toInt())
+                intent.putExtra("other", artist!!)
+                startActivity(intent)
+            } else {
+                finish()
+            }
         }
     }
 

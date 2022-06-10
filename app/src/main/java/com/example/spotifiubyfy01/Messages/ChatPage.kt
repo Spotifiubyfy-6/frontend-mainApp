@@ -32,6 +32,7 @@ class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
         artistProfile.setOnClickListener{
             val intent = Intent(this, ArtistPage::class.java)
             intent.putExtra("Artist", other)
+            intent.putExtra("chat_in_stack", true)
             startActivity(intent)
         }
         val messageTextBox = findViewById<EditText>(R.id.message_text)
