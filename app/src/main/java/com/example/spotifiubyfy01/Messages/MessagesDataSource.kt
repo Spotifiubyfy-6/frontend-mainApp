@@ -3,12 +3,16 @@ package com.example.spotifiubyfy01.Messages
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.StringRequest
+import com.example.spotifiubyfy01.MainPage
 import com.example.spotifiubyfy01.MyRequestQueue
 import com.example.spotifiubyfy01.PopUpWindow
+import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
 import org.json.JSONArray
@@ -20,15 +24,19 @@ import java.time.format.FormatStyle
 var image_link = "https://he.cecollaboratory.com/public/layouts/images/group-default-logo.png"
 
 class ChatList(
-    val numberOfArtist: Int,
-    val callBack: VolleyCallBack<ChatBundle>
+    private val numberOfArtist: Int,
+    private val callBack: VolleyCallBack<ChatBundle>
 ) {
     private var artistInserted = 0
-    private val chatList = ArrayList<ChatBundle>(numberOfArtist)
+    private val chatList = ArrayList<ChatBundle>()
+    init {
+        chatList.add(ChatBundle(Artist(0,"fu", "kot"), true))
+        chatList.add(ChatBundle(Artist(0,"lin", "ck"), true))
+    }
 
     fun addArtistWithIdToPositionInList(artist: Artist, position: Int, seen: Boolean) {
         synchronized(this) {
-            chatList.add(position, ChatBundle(artist, seen))
+            chatList.set(position, ChatBundle(artist, seen))
             artistInserted++
             if (artistInserted == numberOfArtist)
                 callBack.updateData(chatList)
@@ -92,7 +100,25 @@ class MessagesDataSource {
         fun getConversationBetween(context: Context, requesterId: Int, otherId: Int,
                                    callBack: VolleyCallBack<MessageItem>) {
             val messagesList = ArrayList<MessageItem>()
-            //messagesList.addFront
+            val url = "http://spotifiubyfy-messages.herokuapp.com/messages/conversation?skip=0&limit=100"
+            val jsonRequest: StringRequest = object : StringRequest(
+                Method.POST, url, { response ->
+                    Log.d("TAG", response.toString())},
+                { errorResponse ->
+                    Log.d("TAG", errorResponse.toString())
+                }) {
+                override fun getBodyContentType(): String {
+                    return "application/json"
+                }
+
+                override fun getBody(): ByteArray {
+                    val params2 = HashMap<String, String>()
+                    params2["user_who_request"] = requesterId.toString()
+                    params2["another_user"] = otherId.toString()
+                    return JSONObject(params2 as Map<String, String>).toString().toByteArray()
+                }
+            }
+            MyRequestQueue.getInstance(context).addToRequestQueue(jsonRequest)
             //var current_day = 0
             //for (i in (0 until jsonMessages.length()).reversed()) {
             //val time = json
@@ -104,7 +130,7 @@ class MessagesDataSource {
             // }
             //messagesList.add(Message(requesterId, requesterId, otherId, message, time.hour))
             // }
-            val jsonTime = "2022-06-10T13:24:35.769910"
+            /*val jsonTime = "2022-06-10T13:24:35.769910"
             val dateAndTime = obtainDate(jsonTime)
             val date =  dateAndTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)).toString()
             val time = dateAndTime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)).toString()
@@ -116,7 +142,7 @@ class MessagesDataSource {
             messagesList.add(Message(requesterId, otherId, requesterId,"good wbu?", time))
             messagesList.add(Message(requesterId, requesterId, otherId, "everything blessed!", time))
 
-            callBack.updateData(messagesList)
+            callBack.updateData(messagesList)*/
         }
 
         private fun obtainDate(jsonTime: String): LocalDateTime {
