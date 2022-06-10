@@ -3,16 +3,13 @@ package com.example.spotifiubyfy01.Messages
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
-import com.example.spotifiubyfy01.MainPage
 import com.example.spotifiubyfy01.MyRequestQueue
 import com.example.spotifiubyfy01.PopUpWindow
-import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
 import org.json.JSONArray
@@ -108,18 +105,15 @@ class MessagesDataSource {
                     var currentDay = LocalDate.of(2000, 1, 2)
                     for (i in (0 until jsonArrayMessages.length()).reversed()) {
                         val jsonMessage = JSONObject(jsonArrayMessages.get(i).toString())
-                        val senderId = jsonMessage.get("sender").toString().toInt()
-                        val receiverId = jsonMessage.get("receiver").toString().toInt()
                         val dateNTime = obtainDate(jsonMessage.get("time") as String)
-                        val message = jsonMessage.get("message") as String
+                        val message = this.getMessage(requesterId, jsonMessage, dateNTime)
                         val messagedDay = LocalDate.of(dateNTime.year, dateNTime.month, dateNTime.dayOfMonth)
                         if (messagedDay > currentDay) {
                             val date =  dateNTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)).toString()
                             messagesList.add(DateItem(date))
                             currentDay = messagedDay
                         }
-                        val time = dateNTime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)).toString()
-                        messagesList.add(Message(requesterId, receiverId, senderId, message, time))
+                        messagesList.add(message)
                     }
                     callBack.updateData(messagesList) },
                 { errorResponse ->
@@ -137,6 +131,15 @@ class MessagesDataSource {
                 }
             }
             MyRequestQueue.getInstance(context).addToRequestQueue(jsonRequest)
+        }
+
+        private fun getMessage(requesterId: Int, jsonMessage: JSONObject,
+                               dateNTime: LocalDateTime): Message {
+            val senderId = jsonMessage.get("sender").toString().toInt()
+            val receiverId = jsonMessage.get("receiver").toString().toInt()
+            val message = jsonMessage.get("message") as String
+            val time = dateNTime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)).toString()
+            return Message(requesterId, receiverId, senderId, message, time)
         }
 
         private fun obtainDate(jsonTime: String): LocalDateTime {
