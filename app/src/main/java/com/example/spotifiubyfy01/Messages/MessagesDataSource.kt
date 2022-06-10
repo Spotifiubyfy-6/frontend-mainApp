@@ -138,8 +138,7 @@ class MessagesDataSource {
             val senderId = jsonMessage.get("sender").toString().toInt()
             val receiverId = jsonMessage.get("receiver").toString().toInt()
             val message = jsonMessage.get("message") as String
-            val time = dateNTime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)).toString()
-            return Message(requesterId, receiverId, senderId, message, time)
+            return Message(requesterId, receiverId, senderId, message, dateNTime)
         }
 
         fun obtainDate(jsonTime: String): LocalDateTime {

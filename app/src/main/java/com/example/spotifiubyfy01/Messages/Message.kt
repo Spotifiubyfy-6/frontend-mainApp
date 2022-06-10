@@ -2,6 +2,7 @@ package com.example.spotifiubyfy01.Messages
 import java.io.Serializable
 import java.lang.RuntimeException
 import java.sql.Time
+import java.time.LocalDateTime
 
 fun convertIntToMessageEnum(value: Int): MessageEnum {
     return when(value) {
@@ -25,7 +26,7 @@ data class Message(
     var receiver_id: Int,
     var sender_id: Int,
     var message: String,
-    var time: String
+    var time: LocalDateTime
 ) : Serializable, MessageItem() {
     override fun getMessageType(): MessageEnum {
         if (requester_id == receiver_id)

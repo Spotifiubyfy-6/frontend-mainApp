@@ -7,6 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifiubyfy01.Messages.*
 import com.example.spotifiubyfy01.R
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 fun createRespectiveHolder(parent: ViewGroup, viewType: Int) : MessageItemViewHolder {
     val holder =
@@ -40,7 +42,7 @@ class MessageViewHolder(view: View) : MessageItemViewHolder(view) {
     override fun render(messageItem: MessageItem) {
         val message = messageItem as Message
         messageBox.text = message.message
-        hour.text = message.time
+        hour.text = message.time.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
     }
 }
 
