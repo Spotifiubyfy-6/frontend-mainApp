@@ -5,10 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.spotifiubyfy01.Messages.Message
-import com.example.spotifiubyfy01.Messages.MessageEnum
-import com.example.spotifiubyfy01.Messages.MessageItem
-import com.example.spotifiubyfy01.Messages.convertIntToMessageEnum
+import com.example.spotifiubyfy01.Messages.*
 import com.example.spotifiubyfy01.R
 
 fun createRespectiveHolder(parent: ViewGroup, viewType: Int) : MessageItemViewHolder {
@@ -24,18 +21,30 @@ fun createRespectiveHolder(parent: ViewGroup, viewType: Int) : MessageItemViewHo
                     .inflate(R.layout.layout_message_sent_item, parent, false)
                 MessageViewHolder(view)
             }
+            MessageEnum.DATE -> {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.layout_chat_date, parent, false)
+                DateViewHolder(view)
+            }
         }
     return holder
 }
 
 abstract class MessageItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    abstract fun render(message: MessageItem)
+    abstract fun render(messageItem: MessageItem)
 }
 
 class MessageViewHolder(view: View) : MessageItemViewHolder(view) {
     private val messageBox: TextView = view.findViewById(R.id.message)
 
-    override fun render(message: MessageItem) {
-        messageBox.text = (message as Message).message
+    override fun render(messageItem: MessageItem) {
+        messageBox.text = (messageItem as Message).message
+    }
+}
+
+class DateViewHolder(view: View) : MessageItemViewHolder(view) {
+    private val dateBox: TextView = view.findViewById(R.id.date)
+    override fun render(messageItem: MessageItem) {
+        dateBox.text = (messageItem as DateItem).date
     }
 }
