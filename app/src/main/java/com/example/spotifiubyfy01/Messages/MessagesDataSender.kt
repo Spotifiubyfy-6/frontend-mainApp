@@ -7,6 +7,7 @@ import com.example.spotifiubyfy01.MyRequestQueue
 import org.json.JSONArray
 import org.json.JSONObject
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import kotlin.reflect.KFunction1
@@ -14,19 +15,23 @@ import kotlin.reflect.KFunction1
 class MessagesDataSender {
 
     companion object {
-        fun sendMessage(context: Context, senderId: Int, receiverId: Int, message: String,
-                        addMessage: KFunction1<Message, Unit>) {
+        fun sendMessage(
+            context: Context,
+            senderId: Int,
+            receiverId: Int,
+            message: String,
+            addMessage: (Message, LocalDateTime) -> Unit
+        ) {
             if (message.isEmpty())
                 return
             val url = "http://spotifiubyfy-messages.herokuapp.com/messages/send"
             val jsonRequest: StringRequest = object : StringRequest(
                 Method.POST, url, { response ->
                     val jsonMessage = JSONObject(response)
-                    var currentDay = LocalDate.of(2000, 1, 2)
                     val dateNTime =
                         MessagesDataSource.obtainDate(jsonMessage.get("time") as String)
                     val messageItem = MessagesDataSource.getMessage(senderId, jsonMessage, dateNTime)
-                    addMessage(messageItem) },
+                    addMessage(messageItem, dateNTime) },
                 { errorResponse ->
                     Log.d("TAG", errorResponse.toString())
                 }) {

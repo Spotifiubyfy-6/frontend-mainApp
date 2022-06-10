@@ -2,8 +2,12 @@ package com.example.spotifiubyfy01.Messages.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.spotifiubyfy01.Messages.DateItem
 import com.example.spotifiubyfy01.Messages.Message
 import com.example.spotifiubyfy01.Messages.MessageItem
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 class MessagesRecyclerAdapter(
     private val messageList: ArrayList<MessageItem>,
@@ -26,7 +30,11 @@ class MessagesRecyclerAdapter(
         return messageList.size
     }
 
-    fun addMessage(message: Message) {
+    fun addMessage(message: Message, dateNTime: LocalDateTime) {
+        if (messageList.size == 0) {
+            val date =  dateNTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)).toString()
+            messageList.add(DateItem(date))
+        }
         messageList.add(message)
         this.notifyItemInserted(messageList.size - 1)
     }

@@ -2,7 +2,6 @@ package com.example.spotifiubyfy01.Messages
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +14,7 @@ import com.example.spotifiubyfy01.ReproductionPage
 import com.example.spotifiubyfy01.artistProfile.ArtistPage
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
+import java.time.LocalDateTime
 
 class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
     var requesterId: Int? = null
@@ -58,9 +58,9 @@ class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
         recyclerView.smoothScrollToPosition((recyclerView.adapter as MessagesRecyclerAdapter).itemCount)
     }
 
-    private fun addMessage(message: Message) {
+    private fun addMessage(message: Message, date: LocalDateTime) {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
-        (recyclerView.adapter as MessagesRecyclerAdapter).addMessage(message)
+        (recyclerView.adapter as MessagesRecyclerAdapter).addMessage(message, date)
         recyclerView.smoothScrollToPosition((recyclerView.adapter as MessagesRecyclerAdapter).itemCount)
     }
 
