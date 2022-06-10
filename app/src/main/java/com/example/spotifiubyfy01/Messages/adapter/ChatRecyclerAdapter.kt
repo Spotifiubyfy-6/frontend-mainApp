@@ -6,7 +6,7 @@ import com.example.spotifiubyfy01.Messages.Message
 import com.example.spotifiubyfy01.Messages.MessageItem
 
 class MessagesRecyclerAdapter(
-    private val messageList: List<MessageItem>,
+    private val messageList: ArrayList<MessageItem>,
 ): RecyclerView.Adapter<MessageItemViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
@@ -24,5 +24,10 @@ class MessagesRecyclerAdapter(
 
     override fun getItemCount(): Int {
         return messageList.size
+    }
+
+    fun addMessage(message: Message) {
+        messageList.add(message)
+        this.notifyItemInserted(messageList.size - 1)
     }
 }

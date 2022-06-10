@@ -50,19 +50,22 @@ class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
         Glide.with(image.context).load(other!!.image).into(image)
     }
 
-    private fun initRecyclerView(messagesList: List<MessageItem>) {
+    private fun initRecyclerView(messagesList: ArrayList<MessageItem>) {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = MessagesRecyclerAdapter(messagesList)
         recyclerView.smoothScrollToPosition((recyclerView.adapter as MessagesRecyclerAdapter).itemCount)
     }
 
-    fun addMessage(message: Message) {
-        Log.d("TAG", "adding message...")
+    private fun addMessage(message: Message) {
+        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
+        (recyclerView.adapter as MessagesRecyclerAdapter).addMessage(message)
+        recyclerView.smoothScrollToPosition((recyclerView.adapter as MessagesRecyclerAdapter).itemCount)
     }
 
     override fun updateData(list: List<MessageItem>) {
-        initRecyclerView(list)
+        val arrayList = ArrayList<MessageItem>(list)
+        initRecyclerView(arrayList)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
