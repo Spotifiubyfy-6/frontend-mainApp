@@ -2,15 +2,13 @@ package com.example.spotifiubyfy01.Messages
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
+import com.android.volley.toolbox.JsonObjectRequest
 import com.example.spotifiubyfy01.MyRequestQueue
 import com.example.spotifiubyfy01.PopUpWindow
-import com.example.spotifiubyfy01.artistProfile.AlbumDataSource
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
 import org.json.JSONArray
@@ -25,12 +23,12 @@ class ChatList(
     val numberOfArtist: Int,
     val callBack: VolleyCallBack<ChatBundle>
 ) {
-    var artistInserted = 0
-    val chatList = ArrayList<ChatBundle>(numberOfArtist)
+    private var artistInserted = 0
+    private val chatList = ArrayList<ChatBundle>(numberOfArtist)
 
     fun addArtistWithIdToPositionInList(artist: Artist, position: Int, seen: Boolean) {
         synchronized(this) {
-            chatList[position] = ChatBundle(artist, seen)
+            chatList.add(position, ChatBundle(artist, seen))
             artistInserted++
             if (artistInserted == numberOfArtist)
                 callBack.updateData(chatList)
@@ -48,23 +46,22 @@ class MessagesDataSource {
             val chatList = ChatList(numberOfArtists, callBack)
             for (i in 0 until numberOfArtists) {
                 val idNSeenTuple = JSONObject(idNSeenTuples.get(i).toString())
-                this.searchArist(context, chatList, idNSeenTuple, i)
+                this.searchArtist(context, chatList, idNSeenTuple, i)
             }
         }
 
-        private fun searchArist(context: Context, chatList: ChatList, idNSeenTuple: JSONObject,
-                                position: Int) {
-            val artistId = idNSeenTuple.toString()
+        private fun searchArtist(context: Context, chatList: ChatList, idNSeenTuple: JSONObject,
+                                 position: Int) {
+            val artistId = idNSeenTuple.get("id") as Int
             val url = "https://spotifiubyfy-users.herokuapp.com/users/user_by_id/" + artistId
-            val getRequest = JsonArrayRequest(
+            val getRequest = JsonObjectRequest(
                 Request.Method.GET,
                 url, null,
-                Response.Listener { response ->
-                    val jsonArtist = JSONObject(response.get(0).toString())
+                Response.Listener { jsonArtist ->
                     val username = jsonArtist.getString("username")
-                    val id = jsonArtist.getString("id").toInt()
-                    chatList.addArtistWithIdToPositionInList(Artist(id, username, image_link),
-                                                            position, false)
+                    chatList.addArtistWithIdToPositionInList(Artist(artistId, username, image_link),
+                                                            position,
+                                                            idNSeenTuple.get("seen") as Boolean)
                 },
                 { error -> val intent = Intent(context, PopUpWindow::class.java).apply {
 //                    val error = errorResponse//.networkResponse.data.decodeToString() //.split('"')[3]
@@ -90,11 +87,6 @@ class MessagesDataSource {
                 }
                     context.startActivity(intent)})
             MyRequestQueue.getInstance(context).addToRequestQueue(getRequest)
-            /*chatList.add(ChatBundle(Artist(1, "The Beatles", image_link), false))
-            chatList.add(ChatBundle(Artist(1, "The Rollings", image_link), true))
-            chatList.add(ChatBundle(Artist(1, "Adele", image_link), true))
-            chatList.add(ChatBundle(Artist(1, "Perrito", image_link), true))
-            chatList.add(ChatBundle(Artist(1, "El Bicho", image_link), false))*/
         }
 
         fun getConversationBetween(context: Context, requesterId: Int, otherId: Int,

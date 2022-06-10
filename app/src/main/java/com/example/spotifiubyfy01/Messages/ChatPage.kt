@@ -22,7 +22,7 @@ class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_page)
-        requesterId = intent.extras?.get("requester_id") as Int
+        requesterId = 6//intent.extras?.get("requester_id") as Int
         other = intent.extras?.get("other") as Artist
         initOtherArtistField()
         initRecyclerView(ArrayList())
