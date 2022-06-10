@@ -39,6 +39,7 @@ class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
         sendButton.setOnClickListener{
             MessagesDataSender.sendMessage(this, requesterId!!, other!!.id,
                 messageTextBox.text.toString(), this::addMessage)
+            messageTextBox.text.clear()
         }
     }
 
