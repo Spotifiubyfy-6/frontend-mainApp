@@ -25,7 +25,7 @@ data class Message(
     var receiver_id: Int,
     var sender_id: Int,
     var message: String,
-    var time: String?
+    var time: String
 ) : Serializable, MessageItem() {
     override fun getMessageType(): MessageEnum {
         if (requester_id == receiver_id)
