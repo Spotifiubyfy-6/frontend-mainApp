@@ -133,7 +133,7 @@ class MessagesDataSource {
             MyRequestQueue.getInstance(context).addToRequestQueue(jsonRequest)
         }
 
-        private fun getMessage(requesterId: Int, jsonMessage: JSONObject,
+        fun getMessage(requesterId: Int, jsonMessage: JSONObject,
                                dateNTime: LocalDateTime): Message {
             val senderId = jsonMessage.get("sender").toString().toInt()
             val receiverId = jsonMessage.get("receiver").toString().toInt()
@@ -142,7 +142,7 @@ class MessagesDataSource {
             return Message(requesterId, receiverId, senderId, message, time)
         }
 
-        private fun obtainDate(jsonTime: String): LocalDateTime {
+        fun obtainDate(jsonTime: String): LocalDateTime {
             val year = jsonTime.substringBefore("-")
             val month = jsonTime.substringAfter("$year-").substringBefore("-")
             val day = jsonTime.substringAfter("$year-$month-").substringBefore("T")

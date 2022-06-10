@@ -2,6 +2,7 @@ package com.example.spotifiubyfy01.Messages
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -36,7 +37,8 @@ class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
         val messageTextBox = findViewById<EditText>(R.id.message_text)
         val sendButton = findViewById<Button>(R.id.send_button)
         sendButton.setOnClickListener{
-            MessagesDataSender.sendMessage(messageTextBox.text.toString())
+            MessagesDataSender.sendMessage(this, requesterId!!, other!!.id,
+                messageTextBox.text.toString(), this::addMessage)
         }
     }
 
@@ -52,6 +54,10 @@ class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = MessagesRecyclerAdapter(messagesList)
         recyclerView.smoothScrollToPosition((recyclerView.adapter as MessagesRecyclerAdapter).itemCount)
+    }
+
+    fun addMessage(message: Message) {
+        Log.d("TAG", "adding message...")
     }
 
     override fun updateData(list: List<MessageItem>) {
