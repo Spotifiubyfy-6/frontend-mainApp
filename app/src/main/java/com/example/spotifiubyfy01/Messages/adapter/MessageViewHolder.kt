@@ -36,9 +36,11 @@ abstract class MessageItemViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
 class MessageViewHolder(view: View) : MessageItemViewHolder(view) {
     private val messageBox: TextView = view.findViewById(R.id.message)
-
+    private val hour: TextView = view.findViewById(R.id.hour)
     override fun render(messageItem: MessageItem) {
-        messageBox.text = (messageItem as Message).message
+        val message = messageItem as Message
+        messageBox.text = message.message
+        hour.text = message.time
     }
 }
 
