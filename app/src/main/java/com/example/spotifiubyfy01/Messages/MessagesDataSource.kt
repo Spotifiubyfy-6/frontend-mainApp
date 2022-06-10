@@ -17,6 +17,7 @@ import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
 import org.json.JSONArray
 import org.json.JSONObject
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -30,8 +31,8 @@ class ChatList(
     private var artistInserted = 0
     private val chatList = ArrayList<ChatBundle>()
     init {
-        chatList.add(ChatBundle(Artist(0,"fu", "kot"), true))
-        chatList.add(ChatBundle(Artist(0,"lin", "ck"), true))
+        for (i in 0 until numberOfArtist)
+            chatList.add(ChatBundle(Artist(0,"kotfu", "cklin"), true))
     }
 
     fun addArtistWithIdToPositionInList(artist: Artist, position: Int, seen: Boolean) {
@@ -103,7 +104,24 @@ class MessagesDataSource {
             val url = "http://spotifiubyfy-messages.herokuapp.com/messages/conversation?skip=0&limit=100"
             val jsonRequest: StringRequest = object : StringRequest(
                 Method.POST, url, { response ->
-                    Log.d("TAG", response.toString())},
+                    val jsonArrayMessages = JSONArray(response)
+                    var currentDay = LocalDate.of(2000, 1, 2)
+                    for (i in (0 until jsonArrayMessages.length()).reversed()) {
+                        val jsonMessage = JSONObject(jsonArrayMessages.get(i).toString())
+                        val senderId = jsonMessage.get("sender").toString().toInt()
+                        val receiverId = jsonMessage.get("receiver").toString().toInt()
+                        val dateNTime = obtainDate(jsonMessage.get("time") as String)
+                        val message = jsonMessage.get("message") as String
+                        val messagedDay = LocalDate.of(dateNTime.year, dateNTime.month, dateNTime.dayOfMonth)
+                        if (messagedDay > currentDay) {
+                            val date =  dateNTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)).toString()
+                            messagesList.add(DateItem(date))
+                            currentDay = messagedDay
+                        }
+                        val time = dateNTime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)).toString()
+                        messagesList.add(Message(requesterId, receiverId, senderId, message, time))
+                    }
+                    callBack.updateData(messagesList) },
                 { errorResponse ->
                     Log.d("TAG", errorResponse.toString())
                 }) {
@@ -119,30 +137,6 @@ class MessagesDataSource {
                 }
             }
             MyRequestQueue.getInstance(context).addToRequestQueue(jsonRequest)
-            //var current_day = 0
-            //for (i in (0 until jsonMessages.length()).reversed()) {
-            //val time = json
-            //val message = json
-            //obtain messages_not_seen via first call (maybe)
-            //if (time.day >= current_day) {
-            //      messagesList.add(time.day)
-            //      current_day = time.day
-            // }
-            //messagesList.add(Message(requesterId, requesterId, otherId, message, time.hour))
-            // }
-            /*val jsonTime = "2022-06-10T13:24:35.769910"
-            val dateAndTime = obtainDate(jsonTime)
-            val date =  dateAndTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)).toString()
-            val time = dateAndTime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)).toString()
-            Log.d("TAG", time)
-            messagesList.add(DateItem(date))
-            messagesList.add(Message(requesterId, requesterId, otherId, "hello!!", time))
-            messagesList.add(Message(requesterId, otherId, requesterId, "whats up?!", time))
-            messagesList.add(Message(requesterId, requesterId, otherId, "how are you?", time))
-            messagesList.add(Message(requesterId, otherId, requesterId,"good wbu?", time))
-            messagesList.add(Message(requesterId, requesterId, otherId, "everything blessed!", time))
-
-            callBack.updateData(messagesList)*/
         }
 
         private fun obtainDate(jsonTime: String): LocalDateTime {
