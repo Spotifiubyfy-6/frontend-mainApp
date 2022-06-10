@@ -1,8 +1,14 @@
 package com.example.spotifiubyfy01.Messages
 
 import android.content.Context
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 var image_link = "https://he.cecollaboratory.com/public/layouts/images/group-default-logo.png"
 
@@ -34,13 +40,27 @@ class MessagesDataSource {
             // }
             //messagesList.add(Message(requesterId, requesterId, otherId, message, time.hour))
             // }
-            messagesList.add(Message(requesterId, requesterId, otherId, "hello!!", null))
+            val jsonTime = "2022-06-10T13:24:35.769910"
+            val date = obtainDate(jsonTime)
+            messagesList.add(DateItem(
+                date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)).toString()))
+            messagesList.add(Message(requesterId, requesterId, otherId, "hello!!", date.format(
+                DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)).toString()))
             messagesList.add(Message(requesterId, otherId, requesterId, "whats up?!", null))
             messagesList.add(Message(requesterId, requesterId, otherId, "how are you?", null))
             messagesList.add(Message(requesterId, otherId, requesterId,"good wbu?", null))
             messagesList.add(Message(requesterId, requesterId, otherId, "everything blessed!", null))
 
             callBack.updateData(messagesList)
+        }
+
+        private fun obtainDate(jsonTime: String): LocalDateTime {
+            val year = jsonTime.substringBefore("-")
+            val month = jsonTime.substringAfter("$year-").substringBefore("-")
+            val day = jsonTime.substringAfter("$year-$month-").substringBefore("T")
+            val hour = jsonTime.substringAfter("T").substringBefore(":")
+            val minute = jsonTime.substringAfter("T$hour:").substringBefore(":")
+            return LocalDateTime.of(year.toInt(), month.toInt(), day.toInt(), hour.toInt(), minute.toInt())
         }
     }
 }
