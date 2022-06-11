@@ -109,8 +109,7 @@ class MessagesDataSource {
                         val message = this.getMessage(requesterId, jsonMessage, dateNTime)
                         val messagedDay = LocalDate.of(dateNTime.year, dateNTime.month, dateNTime.dayOfMonth)
                         if (messagedDay > currentDay) {
-                            val date =  dateNTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)).toString()
-                            messagesList.add(DateItem(date))
+                            messagesList.add(DateItem(dateNTime))
                             currentDay = messagedDay
                         }
                         messagesList.add(message)

@@ -50,5 +50,6 @@ class DateViewHolder(view: View) : MessageItemViewHolder(view) {
     private val dateBox: TextView = view.findViewById(R.id.date)
     override fun render(messageItem: MessageItem) {
         dateBox.text = (messageItem as DateItem).date
+            .format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)).toString()
     }
 }

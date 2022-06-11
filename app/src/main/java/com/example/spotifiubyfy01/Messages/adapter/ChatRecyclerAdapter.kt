@@ -33,16 +33,14 @@ class MessagesRecyclerAdapter(
 
     fun addMessage(message: Message, dateNTime: LocalDateTime) {
         if (messageList.size == 0) {
-            val date =  dateNTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)).toString()
-            messageList.add(DateItem(date))
+            messageList.add(DateItem(dateNTime))
         } else { //there were messages before and last item is always a message
             val lastMessageDateNTime = (messageList.last() as Message).time
             val lastMessageDay = LocalDate.of(lastMessageDateNTime.year, lastMessageDateNTime.month,
                                                 lastMessageDateNTime.dayOfMonth)
             val currentDay = LocalDate.of(dateNTime.year, dateNTime.month, dateNTime.dayOfMonth)
             if (currentDay > lastMessageDay) {
-                val date =  dateNTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)).toString()
-                messageList.add(DateItem(date))
+                messageList.add(DateItem(dateNTime))
             }
         }
         messageList.add(message)
