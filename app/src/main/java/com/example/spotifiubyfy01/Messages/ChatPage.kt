@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -28,7 +29,7 @@ class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
         initOtherArtistField()
         initRecyclerView(ArrayList())
         MessagesDataSource.getConversationBetween(this, requesterId!!, other!!.id, this)
-        val artistProfile = findViewById<LinearLayout>(R.id.artist_profile)
+        val artistProfile = findViewById<CardView>(R.id.artist_profile)
         artistProfile.setOnClickListener{
             val intent = Intent(this, ArtistPage::class.java)
             intent.putExtra("Artist", other)
