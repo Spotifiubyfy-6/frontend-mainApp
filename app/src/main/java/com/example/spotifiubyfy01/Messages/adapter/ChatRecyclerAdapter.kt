@@ -32,18 +32,21 @@ class MessagesRecyclerAdapter(
     }
 
     fun addMessage(message: Message, dateNTime: LocalDateTime) {
-        if (messageList.size == 0) {
+        if (messageList.size == 0)
             messageList.add(DateItem(dateNTime))
-        } else { //there were messages before and last item is always a message
-            val lastMessageDateNTime = (messageList.last() as Message).time
-            val lastMessageDay = LocalDate.of(lastMessageDateNTime.year, lastMessageDateNTime.month,
-                                                lastMessageDateNTime.dayOfMonth)
-            val currentDay = LocalDate.of(dateNTime.year, dateNTime.month, dateNTime.dayOfMonth)
-            if (currentDay > lastMessageDay) {
-                messageList.add(DateItem(dateNTime))
-            }
-        }
+        else  //there were messages before
+            addDateIfNeeded(dateNTime)
         messageList.add(message)
         this.notifyItemInserted(messageList.size - 1)
+    }
+
+    private fun addDateIfNeeded(dateNTime: LocalDateTime) {
+        //last item is always a message
+        val lastMessageDateNTime = (messageList.last() as Message).time
+        val lastMessageDay = LocalDate.of(lastMessageDateNTime.year, lastMessageDateNTime.month,
+            lastMessageDateNTime.dayOfMonth)
+        val currentDay = LocalDate.of(dateNTime.year, dateNTime.month, dateNTime.dayOfMonth)
+        if (currentDay > lastMessageDay)
+            messageList.add(DateItem(dateNTime))
     }
 }
