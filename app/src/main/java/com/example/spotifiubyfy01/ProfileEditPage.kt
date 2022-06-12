@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -162,5 +163,18 @@ class ProfileEditPage : AppCompatActivity() {
 
             MyRequestQueue.getInstance(this).addToRequestQueue(jsonRequest)
         }
+    }
+
+    public fun editPreferences(view : View) {
+        val intent = Intent(this, PreferencesSelection::class.java).apply {
+            val location = "a place in the World"
+            putExtra("Location", location)
+        }
+        startActivity(intent)
+    }
+
+    public fun editLocation(view : View) {
+        val intent = Intent(this, LocationSelection::class.java)
+        startActivity(intent)
     }
 }

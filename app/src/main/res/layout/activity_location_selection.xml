@@ -26,6 +26,7 @@
         android:layout_marginBottom="25dp"
         android:onClick="confirmLocation"
         android:text="Confirm Location"
+        android:backgroundTint="#1DB954"
         app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -35,6 +36,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="39dp"
+        android:backgroundTint="#1DB954"
+        android:onClick="skip"
         android:text="Skip"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,6 +49,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
         android:text="TextView"
+        android:textColor="#121212"
+        android:textStyle="bold"
+        android:textSize="15pt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
