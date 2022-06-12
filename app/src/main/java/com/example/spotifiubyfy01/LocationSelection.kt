@@ -102,7 +102,7 @@ class LocationSelection : AppCompatActivity(), OnMapReadyCallback {
 
 
 
-        val url = "https://spotifiubyfy-users.herokuapp.com/users/location/${this.currentLtd}/${this.currentLng}"
+        val url = "https://spotifiubyfy-users.herokuapp.com/users/location/${this.currentLng}/${this.currentLtd}"
         val postRequest: StringRequest = object : StringRequest(
             Method.POST, url,
             Response.Listener { response ->
