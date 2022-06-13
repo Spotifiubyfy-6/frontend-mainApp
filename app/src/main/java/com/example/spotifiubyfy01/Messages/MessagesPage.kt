@@ -66,10 +66,10 @@ class MessagesPage: AppCompatActivity(), VolleyCallBack<ChatBundle> {
     }
 
     var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == -1) {
-            Log.d("TAG", "not modified")
-        } else {
-            Log.d("TAG", result.resultCode.toString())
+        if (result.resultCode != -1) { //chats need to be updated
+            val position = result.resultCode
+            val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
+            (recyclerView.adapter as ArtistChatsRecyclerAdapter).putItemOfPositionOnTop(position)
         }
     }
 

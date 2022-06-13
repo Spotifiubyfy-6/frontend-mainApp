@@ -28,4 +28,11 @@ class ArtistChatsRecyclerAdapter(
     override fun getItemCount(): Int {
         return chatsList.size
     }
+
+    fun putItemOfPositionOnTop(position: Int) {
+        val updatedChat = chatsList[position]
+        chatsList.removeAt(position)
+        chatsList.add(0, updatedChat)
+        notifyItemRangeChanged(0, position + 1)
+    }
 }
