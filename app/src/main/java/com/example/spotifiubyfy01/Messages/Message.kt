@@ -21,13 +21,18 @@ abstract class MessageItem() {
     abstract fun getMessageType(): MessageEnum
 }
 
-data class Message(
+class Message(
     var requester_id: Int,
     var receiver_id: Int,
     var sender_id: Int,
-    var message: String,
+    message: String,
     var time: LocalDateTime
 ) : Serializable, MessageItem() {
+    val messages: ArrayList<String> = ArrayList()
+    init{
+        messages.add(message)
+    }
+    
     override fun getMessageType(): MessageEnum {
         if (requester_id == receiver_id)
             return MessageEnum.MESSAGE_RECEIVED

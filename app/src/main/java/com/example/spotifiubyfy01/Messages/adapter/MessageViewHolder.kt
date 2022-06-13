@@ -41,7 +41,10 @@ class MessageViewHolder(view: View) : MessageItemViewHolder(view) {
     private val hour: TextView = view.findViewById(R.id.hour)
     override fun render(messageItem: MessageItem) {
         val message = messageItem as Message
-        messageBox.text = message.message
+        var text = message.messages[0]
+        for (i in 1 until message.messages.size)
+            text = text + '\n' + message
+        messageBox.text = text
         hour.text = message.time.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
     }
 }
