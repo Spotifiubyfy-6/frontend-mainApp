@@ -31,7 +31,7 @@ class MessagesPage: AppCompatActivity(), VolleyCallBack<ChatBundle> {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter =
-            ArtistChatsRecyclerAdapter(chatList) { chatView, chatBundle, position ->
+            ArtistChatsRecyclerAdapter(chatList as MutableList<ChatBundle>) { chatView, chatBundle, position ->
                 onItemClicked(chatView, chatBundle, position)
             }
     }

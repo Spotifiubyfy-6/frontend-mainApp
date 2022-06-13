@@ -8,7 +8,7 @@ import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.search.Artist
 
 class ArtistChatsRecyclerAdapter(
-    private val chatsList: List<ChatBundle>,
+    private val chatsList: MutableList<ChatBundle>,
     private val onClickListener:(ArtistChatViewHolder, ChatBundle, Int) -> Unit
 ): RecyclerView.Adapter<ArtistChatViewHolder>() {
 
