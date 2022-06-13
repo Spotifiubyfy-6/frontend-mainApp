@@ -102,15 +102,14 @@ class MessagesDataSource {
             val jsonRequest: StringRequest = object : StringRequest(
                 Method.POST, url, { response ->
                     val jsonArrayMessages = JSONArray(response)
-                    var currentDay = LocalDate.of(2000, 1, 2)
-                    for (i in (0 until jsonArrayMessages.length()).reversed()) {
+                    var currentDay = addFirstDateAndMessage(messagesList,
+                                        JSONObject(jsonArrayMessages.get(0).toString()), requesterId)
+                    for (i in (1 until jsonArrayMessages.length()).reversed()) {
                         val jsonMessage = JSONObject(jsonArrayMessages.get(i).toString())
                         val dateNTime = obtainDate(jsonMessage.get("time") as String)
-                        if (messagesList.size > 0) {
-                            if ((messagesList.last() as Message).addMessageIfSameTime(
+                        if ((messagesList.last() as Message).addMessageIfSameTime(
                                     jsonMessage.get("message") as String, dateNTime))
                                 continue
-                        }
                         val messagedDay = LocalDate.of(dateNTime.year, dateNTime.month, dateNTime.dayOfMonth)
                         if (messagedDay > currentDay) {
                             messagesList.add(DateItem(dateNTime))
@@ -135,6 +134,15 @@ class MessagesDataSource {
                 }
             }
             MyRequestQueue.getInstance(context).addToRequestQueue(jsonRequest)
+        }
+
+        private fun addFirstDateAndMessage(messagesList: ArrayList<MessageItem>,
+                                           jsonMessage: JSONObject, requesterId: Int): LocalDate {
+            val dateNTime = obtainDate(jsonMessage.get("time") as String)
+            messagesList.add(DateItem(dateNTime))
+            val message = this.getMessage(requesterId, jsonMessage, dateNTime)
+            messagesList.add(message)
+            return LocalDate.of(dateNTime.year, dateNTime.month, dateNTime.dayOfMonth)
         }
 
         fun getMessage(requesterId: Int, jsonMessage: JSONObject,
