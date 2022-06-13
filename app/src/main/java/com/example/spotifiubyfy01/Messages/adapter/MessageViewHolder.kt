@@ -1,5 +1,6 @@
 package com.example.spotifiubyfy01.Messages.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,7 +44,8 @@ class MessageViewHolder(view: View) : MessageItemViewHolder(view) {
         val message = messageItem as Message
         var text = message.messages[0]
         for (i in 1 until message.messages.size)
-            text = text + '\n' + message
+            text = text + '\n' + message.messages[i]
+        Log.d("TAG", text)
         messageBox.text = text
         hour.text = message.time.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
     }

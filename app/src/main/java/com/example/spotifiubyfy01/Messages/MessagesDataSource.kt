@@ -106,12 +106,17 @@ class MessagesDataSource {
                     for (i in (0 until jsonArrayMessages.length()).reversed()) {
                         val jsonMessage = JSONObject(jsonArrayMessages.get(i).toString())
                         val dateNTime = obtainDate(jsonMessage.get("time") as String)
-                        val message = this.getMessage(requesterId, jsonMessage, dateNTime)
+                        if (messagesList.size > 0) {
+                            if ((messagesList.last() as Message).addMessageIfSameTime(
+                                    jsonMessage.get("message") as String, dateNTime))
+                                continue
+                        }
                         val messagedDay = LocalDate.of(dateNTime.year, dateNTime.month, dateNTime.dayOfMonth)
                         if (messagedDay > currentDay) {
                             messagesList.add(DateItem(dateNTime))
                             currentDay = messagedDay
                         }
+                        val message = this.getMessage(requesterId, jsonMessage, dateNTime)
                         messagesList.add(message)
                     }
                     callBack.updateData(messagesList) },
