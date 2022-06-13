@@ -45,7 +45,6 @@ class MessageViewHolder(view: View) : MessageItemViewHolder(view) {
         var text = message.messages[0]
         for (i in 1 until message.messages.size)
             text = text + '\n' + message.messages[i]
-        Log.d("TAG", text)
         messageBox.text = text
         hour.text = message.time.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
     }
