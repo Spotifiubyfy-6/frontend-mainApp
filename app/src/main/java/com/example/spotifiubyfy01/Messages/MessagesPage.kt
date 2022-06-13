@@ -65,8 +65,8 @@ class MessagesPage: AppCompatActivity(), VolleyCallBack<ChatBundle> {
         return super.onOptionsItemSelected(item)
     }
 
-    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode != -1) { //chats need to be updated
+    private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode > 0) { //chats need to be updated
             val position = result.resultCode
             val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
             (recyclerView.adapter as ArtistChatsRecyclerAdapter).putItemOfPositionOnTop(position)
