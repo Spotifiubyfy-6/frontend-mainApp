@@ -40,7 +40,7 @@ class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
         val sendButton = findViewById<Button>(R.id.send_button)
         sendButton.setOnClickListener{
             MessagesDataSender.sendMessage(this, requesterId!!, other!!.id,
-                messageTextBox.text.toString(), this::addMessage)
+                messageTextBox.text.toString().trim(), this::addMessage)
             messageTextBox.text.clear()
         }
     }
