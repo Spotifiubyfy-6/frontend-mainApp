@@ -32,10 +32,15 @@ class MessagesRecyclerAdapter(
     }
 
     fun addMessage(message: Message, dateNTime: LocalDateTime) {
-        if (messageList.size == 0)
+        if (messageList.size == 0) {
             messageList.add(DateItem(dateNTime))
-        else  //there were messages before
+        }else if ((messageList.last() as Message).addMessageIfSameTime(message.messages[0],
+                dateNTime)) {
+            this.notifyItemChanged(messageList.size - 1)
+            return
+        } else {
             addDateIfNeeded(dateNTime)
+        }
         messageList.add(message)
         this.notifyItemInserted(messageList.size - 1)
     }
