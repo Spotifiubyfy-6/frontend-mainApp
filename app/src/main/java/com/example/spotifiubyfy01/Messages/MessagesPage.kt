@@ -46,6 +46,7 @@ class MessagesPage: AppCompatActivity(), VolleyCallBack<ChatBundle> {
         val intent = Intent(this, ChatPage::class.java)
         intent.putExtra("requester_id", userId!!)
         intent.putExtra("other", chatBundle.artist)
+        intent.putExtra("position", position)
         resultLauncher.launch(intent)
     }
 
@@ -68,7 +69,7 @@ class MessagesPage: AppCompatActivity(), VolleyCallBack<ChatBundle> {
         if (result.resultCode == -1) {
             Log.d("TAG", "not modified")
         } else {
-            Log.d("TAG", "modified")
+            Log.d("TAG", result.resultCode.toString())
         }
     }
 

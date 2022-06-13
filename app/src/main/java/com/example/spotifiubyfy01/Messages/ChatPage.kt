@@ -74,7 +74,7 @@ class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             if (updated)
-                setResult(123, intent);
+                setResult(intent.extras?.get("position") as Int, intent);
             else
                 setResult(-1, intent);
             finish()
