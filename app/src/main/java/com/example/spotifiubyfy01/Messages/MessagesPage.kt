@@ -1,9 +1,11 @@
 package com.example.spotifiubyfy01.Messages
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -44,7 +46,7 @@ class MessagesPage: AppCompatActivity(), VolleyCallBack<ChatBundle> {
         val intent = Intent(this, ChatPage::class.java)
         intent.putExtra("requester_id", userId!!)
         intent.putExtra("other", chatBundle.artist)
-        startActivity(intent)
+        resultLauncher.launch(intent)
     }
 
     override fun updateData(list: List<ChatBundle>) {
@@ -61,4 +63,13 @@ class MessagesPage: AppCompatActivity(), VolleyCallBack<ChatBundle> {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == -1) {
+            Log.d("TAG", "not modified")
+        } else {
+            Log.d("TAG", "modified")
+        }
+    }
+
 }

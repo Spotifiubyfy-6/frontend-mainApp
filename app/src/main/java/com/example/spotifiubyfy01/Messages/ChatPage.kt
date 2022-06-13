@@ -20,7 +20,7 @@ import java.time.LocalDateTime
 class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
     var requesterId: Int? = null
     var other: Artist? = null
-
+    var updated: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_page)
@@ -39,6 +39,7 @@ class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
         val messageTextBox = findViewById<EditText>(R.id.message_text)
         val sendButton = findViewById<Button>(R.id.send_button)
         sendButton.setOnClickListener{
+            updated = true
             MessagesDataSender.sendMessage(this, requesterId!!, other!!.id,
                 messageTextBox.text.toString().trim(), this::addMessage)
             messageTextBox.text.clear()
@@ -72,6 +73,10 @@ class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
+            if (updated)
+                setResult(123, intent);
+            else
+                setResult(-1, intent);
             finish()
             return true
         }
