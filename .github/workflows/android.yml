@@ -20,9 +20,9 @@ jobs:
         distribution: 'temurin'
         cache: gradle
     - name: Access MAPS_API_KEY
-      env:
-        super_secret: ${{ secrets.MAPS_API_KEY }}
-      run: echo MAPS_API_KEY=\"$super_secret\" > ./local.properties
+      with:
+        maps_api_key: ${{ secrets.MAPS_API_KEY }}
+      run: echo MAPS_API_KEY=\"$maps_api_key\" > ./local.properties
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
