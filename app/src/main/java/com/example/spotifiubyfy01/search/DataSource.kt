@@ -169,5 +169,23 @@ class DataSource {
                 )
             )
         }
+
+        fun updateDataSetOfArtist(context: Context, slice: String, callBack: VolleyCallBack<Artist>) {
+            val list = ArrayList<Artist>()
+            val url = "https://spotifiubyfy-users.herokuapp.com/users/artists/" + slice +
+                    "?skip=0&limit=10"
+            val getRequest = JsonArrayRequest(
+                Request.Method.GET,
+                url, null,
+                { response ->
+                    for (i in 0 until response.length())
+                        list.add(getArtist(JSONObject(response.get(i).toString())) as Artist)
+                    callBack.updateData(list)
+                },
+                {
+
+                })
+            MyRequestQueue.getInstance(context).addToRequestQueue(getRequest)
+        }
     }
 }
