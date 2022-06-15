@@ -106,8 +106,10 @@ class MessagesDataSource {
                 Method.POST, url, { response ->
                     val jsonArrayMessages = JSONArray(response)
                     var currentDay = addFirstDateAndMessage(messagesList,
-                                        JSONObject(jsonArrayMessages.get(0).toString()), requesterId)
-                    for (i in (1 until jsonArrayMessages.length()).reversed()) {
+                                        JSONObject(jsonArrayMessages.
+                                                    get(jsonArrayMessages.length() -1).toString()),
+                                        requesterId)
+                    for (i in (0 until jsonArrayMessages.length() - 1).reversed()) {
                         val jsonMessage = JSONObject(jsonArrayMessages.get(i).toString())
                         val dateNTime = obtainDate(jsonMessage.get("time") as String)
                         if ((messagesList.last() as Message).addMessageIfSameTime(
