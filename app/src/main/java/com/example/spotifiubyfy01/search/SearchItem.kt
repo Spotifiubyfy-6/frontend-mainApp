@@ -7,12 +7,13 @@ fun convertIntToSearchEnum(value: Int): SearchItemEnum {
         0 -> SearchItemEnum.ARTIST_SEARCH_ITEM
         1 -> SearchItemEnum.ALBUM_SEARCH_ITEM
         2 -> SearchItemEnum.PLAYLIST_SEARCH_ITEM
+        3 -> SearchItemEnum.SONG_SEARCH_ITEM
         else -> throw RuntimeException() //should never happen
     }
 }
 
 enum class SearchItemEnum {
-    ARTIST_SEARCH_ITEM, ALBUM_SEARCH_ITEM, PLAYLIST_SEARCH_ITEM; //NEVER CHANGE THIS ORDER
+    ARTIST_SEARCH_ITEM, ALBUM_SEARCH_ITEM, PLAYLIST_SEARCH_ITEM, SONG_SEARCH_ITEM; //NEVER CHANGE THIS ORDER
 }
 
 abstract class SearchItem {
