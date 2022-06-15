@@ -17,14 +17,15 @@ class SearchListMonitor {
     private val listToBeSent = ArrayList<SearchItem>()
     private var sharedCounter: Int = 0
 
-    fun updateListAndCounterAndCallBackIfNeeded(auxList: ArrayList<SearchItem>,
-                                                callBack: VolleyCallBack<SearchItem> ) {
+    fun updateCounterAndCallBackIfNeeded(callBack: VolleyCallBack<SearchItem>) {
+        sharedCounter++
+        if (sharedCounter == 2)
+            callBack.updateData(listToBeSent)
+    }
+    fun updateList(auxList: ArrayList<SearchItem>) {
         synchronized(this) {
             for (i in 0 until auxList.size)
                 listToBeSent.add(auxList[i])
-            sharedCounter++
-            if (sharedCounter == 2)
-                callBack.updateData(listToBeSent)
         }
     }
 }
@@ -51,15 +52,17 @@ class DataSource {
         private fun fetchByArtistsAsFilter(slice: String, context: Context,
                                  callBack: VolleyCallBack<SearchItem>,
                                  synchronizer: SearchListMonitor) {
-            val auxList = ArrayList<SearchItem>()
             val url = "https://spotifiubyfy-music.herokuapp.com/search/" + slice
             val getRequest = JsonArrayRequest(
                 Request.Method.GET,
                 url, null,
                 { response ->
-                    for (i in 0 until response.length())
+                    for (i in 0 until response.length()) {
+                        val auxList = ArrayList<SearchItem>()
                         insertArtistAlbumsAndSongsToList(auxList, JSONObject(response.get(i).toString()))
-                    synchronizer.updateListAndCounterAndCallBackIfNeeded(auxList, callBack)
+                        synchronizer.updateList(auxList)
+                    }
+                    synchronizer.updateCounterAndCallBackIfNeeded(callBack)
                 },
                 {
 
@@ -104,7 +107,8 @@ class DataSource {
                 { response ->
                     for (i in 0 until response.length())
                         auxList.add(getPlaylist("default_username" ,JSONObject(response.get(i).toString())))
-                    synchronizer.updateListAndCounterAndCallBackIfNeeded(auxList, callBack)
+                    synchronizer.updateList(auxList)
+                    synchronizer.updateCounterAndCallBackIfNeeded(callBack)
                 },
                 {
 
@@ -124,7 +128,8 @@ class DataSource {
                 { response ->
                     for (i in 0 until response.length())
                         auxList.add(getAlbum(JSONObject(response.get(i).toString())))
-                    synchronizer.updateListAndCounterAndCallBackIfNeeded(auxList, callBack)
+                    synchronizer.updateList(auxList)
+                    synchronizer.updateCounterAndCallBackIfNeeded(callBack)
                 }
             ) {
             }
