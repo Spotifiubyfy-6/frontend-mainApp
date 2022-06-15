@@ -22,9 +22,7 @@ fun createRespectiveArtistChatHolder(parent: ViewGroup, viewType: Int) : ArtistC
             ChatBundleEnum.CHAT_NOT_SEEN ->    {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.layout_artist_chat_list_item, parent, false)
-                val artistName = view.findViewById<TextView>(R.id.artist_name)
-                artistName.setTypeface(null, Typeface.BOLD)
-                ArtistChatSeenViewHolder(view)
+                ArtistChatNotSeenViewHolder(view)
             }
             ChatBundleEnum.CHAT_SEEN -> {
                 val view = LayoutInflater.from(parent.context)
@@ -52,6 +50,23 @@ class ArtistChatSeenViewHolder(view: View) : ArtistChatViewHolder(view) {
         artistName.text = chatBundle.artist.username
         Glide.with(image.context).load(chatBundle.artist.image).into(image)
         itemView.setOnClickListener { onClickListener(this, chatBundle, position) }
+    }
+
+    override fun changeToSeen() {
+        //No need to change
+    }
+}
+
+class ArtistChatNotSeenViewHolder(view: View) : ArtistChatViewHolder(view) {
+    private val artistName: TextView = view.findViewById(R.id.artist_name)
+    private val image: ImageView = view.findViewById(R.id.artist_image)
+
+    override fun render(chatBundle: ChatBundle, position: Int,
+                        onClickListener: (ArtistChatViewHolder, ChatBundle, Int) -> Unit) {
+        artistName.text = chatBundle.artist.username
+        Glide.with(image.context).load(chatBundle.artist.image).into(image)
+        itemView.setOnClickListener { onClickListener(this, chatBundle, position) }
+        artistName.setTypeface(null, Typeface.BOLD)
     }
 
     override fun changeToSeen() {
