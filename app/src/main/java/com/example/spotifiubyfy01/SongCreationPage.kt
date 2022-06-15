@@ -27,8 +27,9 @@ class SongCreationPage : AppCompatActivity(), AdapterView.OnItemClickListener {
         val dropDownMenu = findViewById<AutoCompleteTextView>(R.id.albums_names)
         albumList = intent.extras?.get("albums") as ArrayList<Album>?
         val albumNames = ArrayList<String>()
+        var albumName = ""
         if (albumList == null) {
-            val albumName = intent.extras?.get("album_name") as String
+            albumName = intent.extras?.get("album_name") as String
             albumNames.add(albumName)
             albumId = (intent.getStringExtra("album_id") as String).toInt()
         } else {
@@ -89,6 +90,9 @@ class SongCreationPage : AppCompatActivity(), AdapterView.OnItemClickListener {
                 { response -> val intent = Intent(this, SongCreationPage::class.java).apply {
                     putExtra("songCreated", "Song successfully created")
                     putExtra("album_id", intent.getStringExtra("album_id"))
+                    putExtra("albums", albumList)
+                    putExtra("album_name", albumName)
+
                     val storageName = "songs/"+response.getString("storage_name")
                     val songRef =  app.getStorageReference().child(storageName)
                     val file = Uri.fromFile(File(songPath.text.toString()))
