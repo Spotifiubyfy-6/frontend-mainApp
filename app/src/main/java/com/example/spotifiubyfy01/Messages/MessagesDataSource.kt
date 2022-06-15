@@ -16,8 +16,6 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 
 var image_link = "https://he.cecollaboratory.com/public/layouts/images/group-default-logo.png"
 
@@ -112,7 +110,7 @@ class MessagesDataSource {
                     for (i in (0 until jsonArrayMessages.length() - 1).reversed()) {
                         val jsonMessage = JSONObject(jsonArrayMessages.get(i).toString())
                         val dateNTime = obtainDate(jsonMessage.get("time") as String)
-                        if ((messagesList.last() as Message).addMessageIfSameTime(
+                        if ((messagesList.last() as Message).addMessageIfSameTimeNReceiver(
                                 jsonMessage.get("receiver") as Int,
                                 jsonMessage.get("message") as String, dateNTime))
                                 continue
