@@ -81,7 +81,6 @@ class SearchPage : AppCompatActivity(), VolleyCallBack<SearchItem> {
             }
             SearchItemEnum.PLAYLIST_SEARCH_ITEM -> {
                 val intent = Intent(this, PlaylistPage::class.java)
-                Log.d(ContentValues.TAG, "search Item $searchItem")
                 intent.putExtra("Playlist", searchItem as Playlist)
             }
         }
