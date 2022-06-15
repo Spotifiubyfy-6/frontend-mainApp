@@ -64,8 +64,8 @@ class SearchPage : AppCompatActivity(), VolleyCallBack<SearchItem> {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter =
-            SearchRecyclerAdapter(ArrayList()) { artist ->
-                onItemClicked(artist)
+            SearchRecyclerAdapter(ArrayList()) { searchItem ->
+                onItemClicked(searchItem)
         }
     }
 
