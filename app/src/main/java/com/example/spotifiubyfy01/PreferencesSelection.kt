@@ -169,6 +169,9 @@ class PreferencesSelection : AppCompatActivity(), AdapterView.OnItemClickListene
         MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
     }
 
-
+    fun goBack(view : View) {
+        val intent = Intent(this, MainPage::class.java)
+        startActivity(intent)
+    }
 
 }
