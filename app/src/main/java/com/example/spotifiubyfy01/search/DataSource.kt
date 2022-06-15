@@ -39,11 +39,11 @@ class DataSource {
                 callBack.updateData(ArrayList())
                 return
             }
-            val synchronizer = SearchListMonitor(3)
+            val synchronizer = SearchListMonitor(4)
             fetchByArtistsAsFilter(slice, context, callBack, synchronizer)
             fetchAlbumsBySlice(slice, context, callBack, synchronizer, false)
             fetchAlbumsBySlice(slice, context, callBack, synchronizer, true)
-            //fetchPlaylistsBySlice(slice, context, callBack, synchronizer)
+            fetchPlaylistsBySlice(slice, context, callBack, synchronizer)
         }
 
         private fun getArtist(jsonArtist: JSONObject): SearchItem {

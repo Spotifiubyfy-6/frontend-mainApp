@@ -23,7 +23,7 @@ class PlaylistSearchViewHolder(view: View) : SearchViewHolder(view) {
     override fun render(item: SearchItem, onClickListener: (SearchItem) -> Unit) {
         val playlist = item as Playlist
         playlistName.text = playlist.playlist_name
-        val text = "Playlist by " + playlist.user_name
+        val text = "Playlist"
         userName.text = text
         val coverRef = app.getStorageReference().child(playlist.playlist_image)
         coverRef.downloadUrl.addOnSuccessListener { url ->

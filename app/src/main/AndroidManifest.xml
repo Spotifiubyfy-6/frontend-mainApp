@@ -41,7 +41,12 @@
             android:exported="false" />
         <activity
             android:name=".PlaylistPage"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".search.SearchPage">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".search.SearchPage"/>
+        </activity>
         <activity
             android:name=".PlaylistCreationPage"
             android:exported="false" />
