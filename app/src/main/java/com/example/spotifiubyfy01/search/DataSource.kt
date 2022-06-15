@@ -1,7 +1,6 @@
 package com.example.spotifiubyfy01.search
 
 import android.content.Context
-import android.util.Log
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonArrayRequest
 import com.example.spotifiubyfy01.MyRequestQueue
@@ -13,14 +12,16 @@ import org.json.JSONObject
 
 var image_link = "https://he.cecollaboratory.com/public/layouts/images/group-default-logo.png"
 
-class SearchListMonitor {
+class SearchListMonitor(val countTo: Int) {
     private val listToBeSent = ArrayList<SearchItem>()
     private var sharedCounter: Int = 0
 
     fun updateCounterAndCallBackIfNeeded(callBack: VolleyCallBack<SearchItem>) {
-        sharedCounter++
-        if (sharedCounter == 2)
-            callBack.updateData(listToBeSent)
+        synchronized(this) {
+            sharedCounter++
+            if (sharedCounter == countTo)
+                callBack.updateData(listToBeSent)
+        }
     }
     fun updateList(auxList: ArrayList<SearchItem>) {
         synchronized(this) {
@@ -37,10 +38,10 @@ class DataSource {
                 callBack.updateData(ArrayList())
                 return
             }
-            val synchronizer = SearchListMonitor()
+            val synchronizer = SearchListMonitor(3)
             fetchByArtistsAsFilter(slice, context, callBack, synchronizer)
-            fetchAlbums(slice, context, callBack, synchronizer)
-            fetchPlaylists(slice, context, callBack, synchronizer)
+            fetchAlbumsBySlice(slice, context, callBack, synchronizer)
+            fetchPlaylistsBySlice(slice, context, callBack, synchronizer)
         }
 
         private fun getArtist(jsonArtist: JSONObject): SearchItem {
@@ -76,8 +77,8 @@ class DataSource {
         ) {
             auxList.add(getArtist(jsonArtistWithSongsNAlbums))
             addAlbumsToList(auxList, jsonArtistWithSongsNAlbums.get("albums") as JSONArray)
-            //addSongsToList(auxList, jsonArtistWithSongsNAlbums.get("songs") as JSONArray,
-              //  jsonArtistWithSongsNAlbums.get("name") as String)
+            addSongsToList(auxList, jsonArtistWithSongsNAlbums.get("songs") as JSONArray,
+                jsonArtistWithSongsNAlbums.get("name") as String)
         }
 
         private fun addSongsToList(
@@ -85,8 +86,8 @@ class DataSource {
             songsJsonArray: JSONArray,
             artistName: String
         ) {
-            //for (i in 0 until songsJsonArray.length())
-               // auxList.add(getSong(artistName, JSONObject(songsJsonArray.get(i).toString())))
+            for (i in 0 until songsJsonArray.length())
+                auxList.add(getSong(artistName, JSONObject(songsJsonArray.get(i).toString())))
         }
 
         private fun addAlbumsToList(auxList: ArrayList<SearchItem>, albumsJsonArray: JSONArray) {
@@ -94,9 +95,9 @@ class DataSource {
                 auxList.add(getAlbum(JSONObject(albumsJsonArray.get(i).toString())))
         }
 
-        private fun fetchPlaylists(slice: String, context: Context,
-                                 callBack: VolleyCallBack<SearchItem>,
-                                 synchronizer: SearchListMonitor) {
+        private fun fetchPlaylistsBySlice(slice: String, context: Context,
+                                          callBack: VolleyCallBack<SearchItem>,
+                                          synchronizer: SearchListMonitor) {
             val auxList = ArrayList<SearchItem>()
 
             val url = "https://spotifiubyfy-music.herokuapp.com/playlists?q=$slice&skip=0&limit=5"
@@ -116,8 +117,8 @@ class DataSource {
             MyRequestQueue.getInstance(context).addToRequestQueue(getRequest)
         }
 
-        private fun fetchAlbums(slice: String, context: Context,
-            callBack: VolleyCallBack<SearchItem>, synchronizer: SearchListMonitor
+        private fun fetchAlbumsBySlice(slice: String, context: Context,
+                                       callBack: VolleyCallBack<SearchItem>, synchronizer: SearchListMonitor
         ) {
             val auxList = ArrayList<SearchItem>()
             val url = "https://spotifiubyfy-music.herokuapp.com/albums?q=" + slice +
