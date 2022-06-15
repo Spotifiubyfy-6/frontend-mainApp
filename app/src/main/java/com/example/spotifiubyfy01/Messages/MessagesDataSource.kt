@@ -113,7 +113,8 @@ class MessagesDataSource {
                         val jsonMessage = JSONObject(jsonArrayMessages.get(i).toString())
                         val dateNTime = obtainDate(jsonMessage.get("time") as String)
                         if ((messagesList.last() as Message).addMessageIfSameTime(
-                                    jsonMessage.get("message") as String, dateNTime))
+                                jsonMessage.get("receiver") as Int,
+                                jsonMessage.get("message") as String, dateNTime))
                                 continue
                         val messagedDay = LocalDate.of(dateNTime.year, dateNTime.month, dateNTime.dayOfMonth)
                         if (messagedDay > currentDay) {
@@ -152,7 +153,7 @@ class MessagesDataSource {
 
         fun getMessage(requesterId: Int, jsonMessage: JSONObject,
                                dateNTime: LocalDateTime): Message {
-            val receiverId = jsonMessage.get("receiver").toString().toInt()
+            val receiverId = jsonMessage.get("receiver") as Int
             val message = jsonMessage.get("message") as String
             return Message(requesterId, receiverId, message, dateNTime)
         }

@@ -39,8 +39,8 @@ class Message(
             return MessageEnum.MESSAGE_SENT
     }
 
-    fun addMessageIfSameTime(message: String, dateNTime: LocalDateTime): Boolean {
-        if ((time.hour == dateNTime.hour) && (time.minute == dateNTime.minute)) {
+    fun addMessageIfSameTime(receiverId: Int, message: String, dateNTime: LocalDateTime): Boolean {
+        if ((receiver_id == receiverId) && (time.hour == dateNTime.hour) && (time.minute == dateNTime.minute)) {
             messages.add(message)
             return true
         }
