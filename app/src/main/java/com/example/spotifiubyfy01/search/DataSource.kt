@@ -1,6 +1,7 @@
 package com.example.spotifiubyfy01.search
 
 import android.content.Context
+import android.util.Log
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonArrayRequest
 import com.example.spotifiubyfy01.MyRequestQueue
@@ -40,8 +41,9 @@ class DataSource {
             }
             val synchronizer = SearchListMonitor(3)
             fetchByArtistsAsFilter(slice, context, callBack, synchronizer)
-            fetchAlbumsBySlice(slice, context, callBack, synchronizer)
-            fetchPlaylistsBySlice(slice, context, callBack, synchronizer)
+            fetchAlbumsBySlice(slice, context, callBack, synchronizer, false)
+            fetchAlbumsBySlice(slice, context, callBack, synchronizer, true)
+            //fetchPlaylistsBySlice(slice, context, callBack, synchronizer)
         }
 
         private fun getArtist(jsonArtist: JSONObject): SearchItem {
@@ -117,12 +119,19 @@ class DataSource {
             MyRequestQueue.getInstance(context).addToRequestQueue(getRequest)
         }
 
-        private fun fetchAlbumsBySlice(slice: String, context: Context,
-                                       callBack: VolleyCallBack<SearchItem>, synchronizer: SearchListMonitor
+        private fun fetchAlbumsBySlice(
+            slice: String, context: Context,
+            callBack: VolleyCallBack<SearchItem>, synchronizer: SearchListMonitor,
+            sliceForGender: Boolean
         ) {
             val auxList = ArrayList<SearchItem>()
-            val url = "https://spotifiubyfy-music.herokuapp.com/albums?q=" + slice +
-                    "&skip=0&limit=100"
+            val url: String
+            if (sliceForGender) {
+                url = "http://spotifiubyfy-music.herokuapp.com/albums?genre=" + slice + "&skip=0&limit=100"
+            } else {
+                url = "https://spotifiubyfy-music.herokuapp.com/albums?q=" + slice +
+                        "&skip=0&limit=100"
+            }
             val getRequest = JsonArrayRequest(
                 Request.Method.GET,
                 url, null,
@@ -162,24 +171,24 @@ class DataSource {
         private fun getAlbum(jsonAlbum: JSONObject): SearchItem {
             val albumName = jsonAlbum.getString("album_name")
             val albumId = jsonAlbum.getString("id")
-	    val storageName = "covers/"+jsonAlbum.getString("album_media")
-        val songs = jsonAlbum.getJSONArray("songs")
-        var artistName = "default artist name"
-        if (songs.length() > 0) {
-            val song = songs.getJSONObject(0)
-            artistName = song.getString("artist_name")
-        }
-        val description = jsonAlbum.getString("album_description")
-        val genre = jsonAlbum.getString("album_genre")
-            return Album(
-                albumId,
-                albumName,
-                storageName, artistName,
-                getListOfSongs(
-                    artistName,
-                    JSONArray(jsonAlbum.getString("songs").toString())
-                ), description, genre
-            )
+            val storageName = "covers/"+jsonAlbum.getString("album_media")
+            val songs = jsonAlbum.getJSONArray("songs")
+            var artistName = "default artist name"
+            if (songs.length() > 0) {
+                val song = songs.getJSONObject(0)
+                artistName = song.getString("artist_name")
+            }
+            val description = jsonAlbum.getString("album_description")
+            val genre = jsonAlbum.getString("album_genre")
+                return Album(
+                    albumId,
+                    albumName,
+                    storageName, artistName,
+                    getListOfSongs(
+                        artistName,
+                        JSONArray(jsonAlbum.getString("songs").toString())
+                    ), description, genre
+                )
         }
 
         private fun getPlaylist(userName: String, jsonPlaylist: JSONObject): SearchItem {
