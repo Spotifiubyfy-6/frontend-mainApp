@@ -2,6 +2,7 @@ package com.example.spotifiubyfy01.Messages
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
@@ -29,7 +30,7 @@ class MessagesPage: AppCompatActivity(), VolleyCallBack<ChatBundle> {
         val messageNewArtistButton = findViewById<Button>(R.id.searchArtistToMessageButton)
         messageNewArtistButton.setOnClickListener {
             val intent = Intent(this, SearchArtistPage::class.java)
-            startActivity(intent)
+            resultLauncher.launch(intent)
         }
     }
 
@@ -69,11 +70,15 @@ class MessagesPage: AppCompatActivity(), VolleyCallBack<ChatBundle> {
         return super.onOptionsItemSelected(item)
     }
 
-    private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+    private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            result ->
         if (result.resultCode > 0) { //chats need to be updated
             val position = result.resultCode
             val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
             (recyclerView.adapter as ArtistChatsRecyclerAdapter).putItemOfPositionOnTop(position)
+        } else if (result.resultCode == -10) {
+            Log.d("TAG", "updating list")
+            MessagesDataSource.getChatsOfArtistWithID(this, userId!!, this)
         }
     }
 

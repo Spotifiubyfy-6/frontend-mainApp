@@ -6,10 +6,12 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
 import android.widget.EditText
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifiubyfy01.Messages.ChatPage
+import com.example.spotifiubyfy01.Messages.adapter.ArtistChatsRecyclerAdapter
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.ReproductionPage
 import com.example.spotifiubyfy01.Spotifiubify
@@ -61,7 +63,7 @@ class SearchArtistPage: AppCompatActivity(), VolleyCallBack<Artist> {
         intent.putExtra("requester_id", userId!!)
         intent.putExtra("other", artist)
         intent.putExtra("position", 0)
-        startActivity(intent)
+        resultLauncher.launch(intent)
     }
 
     override fun updateData(list: List<Artist>) {
@@ -79,5 +81,13 @@ class SearchArtistPage: AppCompatActivity(), VolleyCallBack<Artist> {
             startActivity(Intent(this, ReproductionPage::class.java))
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            result ->
+        if (result.resultCode == 0) { //chats need to be updated
+            setResult(-10, intent)
+            finish()
+        }
     }
 }
