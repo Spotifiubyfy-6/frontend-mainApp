@@ -24,7 +24,6 @@ abstract class MessageItem() {
 class Message(
     var requester_id: Int,
     var receiver_id: Int,
-    var sender_id: Int,
     message: String,
     var time: LocalDateTime
 ) : Serializable, MessageItem() {
