@@ -20,6 +20,7 @@ import java.time.LocalDateTime
 class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
     var requesterId: Int? = null
     var other: Artist? = null
+    var fromArtistPage: Boolean = false
     var updated: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,9 +74,9 @@ class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            if (updated)
+            if (updated && !fromArtistPage)
                 setResult(intent.extras?.get("position") as Int, intent);
-            else
+            else if (!fromArtistPage)
                 setResult(-1, intent);
             finish()
             return true
