@@ -60,6 +60,7 @@ class ArtistChatSeenViewHolder(view: View) : ArtistChatViewHolder(view) {
 class ArtistChatNotSeenViewHolder(view: View) : ArtistChatViewHolder(view) {
     private val artistName: TextView = view.findViewById(R.id.artist_name)
     private val image: ImageView = view.findViewById(R.id.artist_image)
+    private val notSeenBox: TextView = view.findViewById(R.id.number_of_not_seen_messages)
 
     override fun render(chatBundle: ChatBundle, position: Int,
                         onClickListener: (ArtistChatViewHolder, ChatBundle, Int) -> Unit) {
@@ -67,9 +68,12 @@ class ArtistChatNotSeenViewHolder(view: View) : ArtistChatViewHolder(view) {
         Glide.with(image.context).load(chatBundle.artist.image).into(image)
         itemView.setOnClickListener { onClickListener(this, chatBundle, position) }
         artistName.setTypeface(null, Typeface.BOLD)
+        notSeenBox.visibility = View.VISIBLE
+        notSeenBox.text = chatBundle.number_of_not_seen.toString()
     }
 
     override fun changeToSeen() {
         artistName.setTypeface(null, Typeface.NORMAL)
+        notSeenBox.visibility = View.INVISIBLE
     }
 }
