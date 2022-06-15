@@ -28,6 +28,10 @@ class SearchPage : AppCompatActivity(), VolleyCallBack<SearchItem> {
         return true
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+            return true
+        }
         if (item.itemId == R.id.action_playback) {
             startActivity(Intent(this, ReproductionPage::class.java))
         }

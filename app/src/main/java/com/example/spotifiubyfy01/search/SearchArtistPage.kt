@@ -4,12 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.MenuItem
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifiubyfy01.Messages.ChatPage
 import com.example.spotifiubyfy01.R
+import com.example.spotifiubyfy01.ReproductionPage
 import com.example.spotifiubyfy01.Spotifiubify
 import com.example.spotifiubyfy01.search.adapter.ArtistSearchRecyclerAdapter
 
@@ -66,5 +68,16 @@ class SearchArtistPage: AppCompatActivity(), VolleyCallBack<Artist> {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         val adapter = recyclerView.adapter as ArtistSearchRecyclerAdapter
         adapter.updateList(list)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+            return true
+        }
+        if (item.itemId == R.id.action_playback) {
+            startActivity(Intent(this, ReproductionPage::class.java))
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
