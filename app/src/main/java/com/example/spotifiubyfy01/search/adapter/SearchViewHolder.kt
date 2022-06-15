@@ -30,6 +30,11 @@ fun createRespectiveHolder(parent: ViewGroup, viewType: Int) : SearchViewHolder{
                     .inflate(R.layout.layout_playlist_search_item, parent, false)
                 PlaylistSearchViewHolder(view)
             }
+            SearchItemEnum.SONG_SEARCH_ITEM -> {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.layout_song_search_item, parent, false)
+                SongSearchViewHolder(view)
+            }
         }
     return holder
 }
