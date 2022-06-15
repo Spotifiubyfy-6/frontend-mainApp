@@ -42,7 +42,7 @@ class ArtistChatViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     fun render(chatBundle: ChatBundle, position: Int,
                onClickListener: (ArtistChatViewHolder, ChatBundle, Int) -> Unit) {
-        artistName.text = chatBundle.artist.username
+        artistName.text = chatBundle.artist.artistName
         Glide.with(image.context).load(chatBundle.artist.image).into(image)
         itemView.setOnClickListener { onClickListener(this, chatBundle, position) }
     }

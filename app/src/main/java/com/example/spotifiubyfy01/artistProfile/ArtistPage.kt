@@ -41,10 +41,10 @@ class ArtistPage: AppCompatActivity(), VolleyCallBack<Album> {
         }
         val artistName = findViewById<TextView>(R.id.artist_name)
         val image = findViewById<ImageView>(R.id.artist_image)
-        artistName.text = artist!!.username //Use !! because at this point artist is not null
+        artistName.text = artist!!.artistName //Use !! because at this point artist is not null
         Glide.with(image.context).load(artist!!.image).into(image)
         initRecyclerView(ArrayList())
-        AlbumDataSource.createAlbumList(this, artist!!.id, artist!!.username,this)
+        AlbumDataSource.createAlbumList(this, artist!!.id, artist!!.artistName,this)
 
         val messageButton = findViewById<Button>(R.id.message_button)
         messageButton.setOnClickListener{
@@ -83,7 +83,7 @@ class ArtistPage: AppCompatActivity(), VolleyCallBack<Album> {
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putString("ArtistId", artist!!.id.toString())
-        outState.putString("ArtistName", artist!!.username)
+        outState.putString("ArtistName", artist!!.artistName)
         outState.putString("ArtistImage", artist!!.image)
         super.onSaveInstanceState(outState)
     }

@@ -1,12 +1,10 @@
 package com.example.spotifiubyfy01.search
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
+import android.util.Log
 import com.android.volley.Request
-import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.example.spotifiubyfy01.MyRequestQueue
-import com.example.spotifiubyfy01.Spotifiubify
 import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.artistProfile.Playlist
 import com.example.spotifiubyfy01.artistProfile.Song
@@ -39,35 +37,59 @@ class DataSource {
                 return
             }
             val synchronizer = SearchListMonitor()
-            fetchArtists(slice, context, callBack, synchronizer)
+            fetchByArtistsAsFilter(slice, context, callBack, synchronizer)
             fetchAlbums(slice, context, callBack, synchronizer)
             fetchPlaylists(slice, context, callBack, synchronizer)
         }
 
         private fun getArtist(jsonArtist: JSONObject): SearchItem {
-            val username = jsonArtist.getString("username")
+            val username = jsonArtist.getString("name")
             val id = jsonArtist.getString("id").toInt()
             return Artist(id, username, image_link)
         }
 
-        private fun fetchArtists(slice: String, context: Context,
+        private fun fetchByArtistsAsFilter(slice: String, context: Context,
                                  callBack: VolleyCallBack<SearchItem>,
                                  synchronizer: SearchListMonitor) {
             val auxList = ArrayList<SearchItem>()
-            val url = "https://spotifiubyfy-users.herokuapp.com/users/information/" + slice +
-                    "?skip=0&limit=10"
+            val url = "https://spotifiubyfy-music.herokuapp.com/search/" + slice
             val getRequest = JsonArrayRequest(
                 Request.Method.GET,
                 url, null,
                 { response ->
+                    Log.d("TAG", "here!")
                     for (i in 0 until response.length())
-                        auxList.add(getArtist(JSONObject(response.get(i).toString())))
+                        insertArtistAlbumsAndSongsToList(auxList, JSONObject(response.get(i).toString()))
                     synchronizer.updateListAndCounterAndCallBackIfNeeded(auxList, callBack)
                 },
                 {
 
                 })
             MyRequestQueue.getInstance(context).addToRequestQueue(getRequest)
+        }
+
+        private fun insertArtistAlbumsAndSongsToList(
+            auxList: ArrayList<SearchItem>,
+            jsonArtistWithSongsNAlbums: JSONObject
+        ) {
+            auxList.add(getArtist(jsonArtistWithSongsNAlbums))
+            addAlbumsToList(auxList, jsonArtistWithSongsNAlbums.get("albums") as JSONArray)
+            //addSongsToList(auxList, jsonArtistWithSongsNAlbums.get("songs") as JSONArray,
+              //  jsonArtistWithSongsNAlbums.get("name") as String)
+        }
+
+        private fun addSongsToList(
+            auxList: java.util.ArrayList<SearchItem>,
+            songsJsonArray: JSONArray,
+            artistName: String
+        ) {
+            //for (i in 0 until songsJsonArray.length())
+               // auxList.add(getSong(artistName, JSONObject(songsJsonArray.get(i).toString())))
+        }
+
+        private fun addAlbumsToList(auxList: ArrayList<SearchItem>, albumsJsonArray: JSONArray) {
+            for (i in 0 until albumsJsonArray.length())
+                auxList.add(getAlbum(JSONObject(albumsJsonArray.get(i).toString())))
         }
 
         private fun fetchPlaylists(slice: String, context: Context,

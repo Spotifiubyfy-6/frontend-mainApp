@@ -48,7 +48,7 @@ class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
 
     private fun initOtherArtistField() {
         val artistBox = findViewById<TextView>(R.id.artist_name)
-        artistBox.setText(other!!.username)
+        artistBox.setText(other!!.artistName)
         val image: ImageView = findViewById(R.id.artist_image)
         Glide.with(image.context).load(other!!.image).into(image)
     }

@@ -3,7 +3,7 @@ import java.io.Serializable
 
 data class Artist(
     var id: Int,
-    var username: String,
+    var artistName: String,
     var image: String
 ) : Serializable, SearchItem() {
 

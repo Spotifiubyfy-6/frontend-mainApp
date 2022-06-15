@@ -64,7 +64,7 @@ class MessagesDataSource {
                 Request.Method.GET,
                 url, null,
                 Response.Listener { jsonArtist ->
-                    val username = jsonArtist.getString("username")
+                    val username = jsonArtist.getString("name")
                     chatList.addArtistWithIdToPositionInList(Artist(artistId, username, image_link),
                                                             position,
                                                             idNSeenTuple.get("seen") as Boolean)

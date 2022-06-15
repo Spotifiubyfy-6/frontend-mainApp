@@ -16,7 +16,7 @@ class ArtistViewHolder(view: View) : SearchViewHolder(view) {
 
     override fun render(item: SearchItem, onClickListener: (SearchItem) -> Unit) {
         val artist = item as Artist
-        artistName.text = artist.username
+        artistName.text = artist.artistName
         Glide.with(image.context).load(artist.image).into(image)
         itemView.setOnClickListener { onClickListener(artist) }
     }
