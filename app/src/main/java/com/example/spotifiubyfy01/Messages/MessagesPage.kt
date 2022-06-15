@@ -1,10 +1,9 @@
 package com.example.spotifiubyfy01.Messages
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
+import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,7 +13,7 @@ import com.example.spotifiubyfy01.Messages.adapter.ArtistChatsRecyclerAdapter
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.ReproductionPage
 import com.example.spotifiubyfy01.Spotifiubify
-import com.example.spotifiubyfy01.search.Artist
+import com.example.spotifiubyfy01.search.SearchArtistPage
 import com.example.spotifiubyfy01.search.VolleyCallBack
 
 class MessagesPage: AppCompatActivity(), VolleyCallBack<ChatBundle> {
@@ -27,6 +26,11 @@ class MessagesPage: AppCompatActivity(), VolleyCallBack<ChatBundle> {
         val app = (this.application as Spotifiubify)
         userId = app.getProfileData("id")!!.toInt()
         MessagesDataSource.getChatsOfArtistWithID(this, userId!!, this)
+        val messageNewArtistButton = findViewById<Button>(R.id.searchArtistToMessageButton)
+        messageNewArtistButton.setOnClickListener {
+            val intent = Intent(this, SearchArtistPage::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun initRecyclerView(chatList: List<ChatBundle>) {
