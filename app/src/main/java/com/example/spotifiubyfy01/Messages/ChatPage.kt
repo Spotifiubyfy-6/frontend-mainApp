@@ -27,6 +27,9 @@ class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
         setContentView(R.layout.activity_chat_page)
         requesterId = intent.extras?.get("requester_id") as Int
         other = intent.extras?.get("other") as Artist
+        val aux = intent.extras?.get("artistPage") as Int?
+        if (aux != null)
+            fromArtistPage = true
         initOtherArtistField()
         initRecyclerView(ArrayList())
         MessagesDataSource.getConversationBetween(this, requesterId!!, other!!.id, this)

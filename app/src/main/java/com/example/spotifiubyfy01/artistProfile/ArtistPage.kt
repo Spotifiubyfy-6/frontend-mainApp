@@ -54,6 +54,7 @@ class ArtistPage: AppCompatActivity(), VolleyCallBack<Album> {
                 intent.putExtra("requester_id",
                     (this.application as Spotifiubify).getProfileData("id")!!.toInt())
                 intent.putExtra("other", artist!!)
+                intent.putExtra("artistPage", 1)
                 startActivity(intent)
             } else {
                 finish()

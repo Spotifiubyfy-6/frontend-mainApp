@@ -57,7 +57,6 @@ class DataSource {
                 Request.Method.GET,
                 url, null,
                 { response ->
-                    Log.d("TAG", "here!")
                     for (i in 0 until response.length())
                         insertArtistAlbumsAndSongsToList(auxList, JSONObject(response.get(i).toString()))
                     synchronizer.updateListAndCounterAndCallBackIfNeeded(auxList, callBack)
