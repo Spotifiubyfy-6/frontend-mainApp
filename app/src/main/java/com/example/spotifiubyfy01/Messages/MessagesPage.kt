@@ -39,7 +39,7 @@ class MessagesPage: AppCompatActivity(), VolleyCallBack<ChatBundle> {
     }
 
     private fun onItemClicked(chatView: ArtistChatViewHolder, chatBundle: ChatBundle, position: Int) {
-        chatBundle.chat_seen = true
+        chatBundle.number_of_not_seen = 0
         chatView.changeToSeen()
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.adapter!!.notifyItemChanged(position)

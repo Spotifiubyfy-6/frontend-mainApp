@@ -29,12 +29,12 @@ class ChatList(
     private val chatList = ArrayList<ChatBundle>()
     init {
         for (i in 0 until numberOfArtist)
-            chatList.add(ChatBundle(Artist(0,"kotfu", "cklin"), true))
+            chatList.add(ChatBundle(Artist(0,"kotfu", "cklin"), 0))
     }
 
-    fun addArtistWithIdToPositionInList(artist: Artist, position: Int, seen: Boolean) {
+    fun addArtistWithIdToPositionInList(artist: Artist, position: Int, numberOfNotSeen: Int) {
         synchronized(this) {
-            chatList.set(position, ChatBundle(artist, seen))
+            chatList.set(position, ChatBundle(artist, numberOfNotSeen))
             artistInserted++
             if (artistInserted == numberOfArtist)
                 callBack.updateData(chatList)
@@ -65,9 +65,12 @@ class MessagesDataSource {
                 url, null,
                 Response.Listener { jsonArtist ->
                     val username = jsonArtist.getString("username")
+                    var numberOfNotSeen = 1
+                    if (idNSeenTuple.get("seen") as Boolean) {
+                        numberOfNotSeen = 0
+                    }
                     chatList.addArtistWithIdToPositionInList(Artist(artistId, username, image_link),
-                                                            position,
-                                                            idNSeenTuple.get("seen") as Boolean)
+                                                            position, numberOfNotSeen)
                 },
                 { error -> val intent = Intent(context, PopUpWindow::class.java).apply {
 //                    val error = errorResponse//.networkResponse.data.decodeToString() //.split('"')[3]
