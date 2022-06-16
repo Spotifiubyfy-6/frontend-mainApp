@@ -1,6 +1,8 @@
 package com.example.spotifiubyfy01
 
+import android.content.Context
 import android.content.Intent
+import android.location.Location
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,6 +11,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.StringRequest
 import org.json.JSONObject
 
 
@@ -90,23 +93,48 @@ class SignInLandingPage : AppCompatActivity() {
 
 
         signInButton.setOnClickListener {
-            val requestBody = JSONObject()
+            var requestBody = JSONObject()
 
             requestBody.put("email", email.text.toString())
             requestBody.put("username", username.text.toString())
             requestBody.put("user_type", "artist")
             requestBody.put("password", password.text.toString())
 
-            val url = "https://spotifiubyfy-users.herokuapp.com/users"
+            var url = "https://spotifiubyfy-users.herokuapp.com/users"
 
             val jsonRequest = JsonObjectRequest(Request.Method.POST, url, requestBody,
-                { response -> val intent = Intent(this, DisplayMessageActivity::class.java).apply {
-                    putExtra("new_password", "Registration successful")
-                }
-                    startActivity(intent)},
+                { response ->
+                    val logInUsername = username.text.toString()
+                    val logInPassword = password.text.toString()
+                    val requestString =
+                        "grant_type=&username=$logInUsername&password=$logInPassword&scope=&client_id=&client_secret="
+                    url = "https://spotifiubyfy-users.herokuapp.com/token"
+                    val stringRequest: StringRequest = object : StringRequest(
+                        Method.POST, url, { response ->
+
+                            val intent = Intent(this, LocationSelection::class.java).apply {
+                                putExtra("nextPage", "genres")
+                                val sharedPref = getSharedPreferences(getString(R.string.token_key), Context.MODE_PRIVATE)
+                                with (sharedPref.edit()) {
+                                    putString(getString(R.string.token_key), response.split('"')[3])
+                                    apply()
+                                }
+                            }
+                            startActivity(intent)},
+                        { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
+//                    val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
+                            putExtra("popuptext", "error failed log in")
+                        }
+                            startActivity(intent)}) {
+                        override fun getBody(): ByteArray {
+                            return requestString.toByteArray(charset("utf-8"))
+                        }
+                    }
+                    MyRequestQueue.getInstance(this).addToRequestQueue(stringRequest)
+                    },
                 { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
-                    val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
-                    putExtra("popuptext", error)
+//                    val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
+                    putExtra("popuptext", "failes sign in")
                 }
                     startActivity(intent)})
 

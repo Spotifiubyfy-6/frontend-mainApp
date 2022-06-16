@@ -27,6 +27,7 @@ class SearchArtistPage: AppCompatActivity(), VolleyCallBack<Artist> {
         val app = (this.application as Spotifiubify)
         userId = app.getProfileData("id")!!.toInt()
         val search = findViewById<EditText>(R.id.search_textfield)
+        search.hint = "Search artists to message..."
         search.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }

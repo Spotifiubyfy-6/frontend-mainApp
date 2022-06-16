@@ -84,32 +84,6 @@ class ProfileEditPage : AppCompatActivity() {
             MyRequestQueue.getInstance(this).addToRequestQueue(namePostRequest)
         }
 
-        val makeArtist = findViewById<Button>(R.id.makeArtistButton)
-        makeArtist.setOnClickListener {
-            val url = "https://spotifiubyfy-users.herokuapp.com/users/user_type/artist"
-
-            val makeArtistRequest: StringRequest = object : StringRequest(
-                Method.POST, url,
-                { response -> val intent = Intent(this, ProfilePage::class.java)
-                    app.setProfileData("user_type", "artist")
-                    startActivity(intent)
-                },
-                { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
-                    val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
-                    putExtra("popuptext", error)
-                }
-                    startActivity(intent)}) {
-                @Throws(AuthFailureError::class)
-                override fun getHeaders(): Map<String, String> {
-                    val params: MutableMap<String, String> = HashMap()
-                    params["Authorization"] = "Bearer " + getSharedPreferences(getString(R.string.token_key), Context.MODE_PRIVATE).getString(getString(R.string.token_key), null)
-                    return params
-                }
-            }
-            MyRequestQueue.getInstance(this).addToRequestQueue(makeArtistRequest)
-        }
-
-
         val oldPassword = findViewById<EditText>(R.id.oldPassword)
         val newPassword = findViewById<EditText>(R.id.newPassword)
         val changePasswordClick = findViewById<Button>(R.id.changePasswordButton)

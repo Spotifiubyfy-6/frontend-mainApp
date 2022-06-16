@@ -1,7 +1,6 @@
 package com.example.spotifiubyfy01
 
 import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
@@ -12,11 +11,8 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import com.android.volley.AuthFailureError
-import com.android.volley.Request
 import com.android.volley.Response
-import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.StringRequest
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -24,7 +20,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.spotifiubyfy01.databinding.ActivityLocationSelectionBinding
-import org.json.JSONObject
 import java.util.HashMap
 
 class LocationSelection : AppCompatActivity(), OnMapReadyCallback {
@@ -99,17 +94,18 @@ class LocationSelection : AppCompatActivity(), OnMapReadyCallback {
 
     // Go to select Genres activity, passing location as
     public fun confirmLocation(view : View) {
-
-
-
         val url = "https://spotifiubyfy-users.herokuapp.com/users/location/${this.currentLng}/${this.currentLtd}"
         val postRequest: StringRequest = object : StringRequest(
             Method.POST, url,
             Response.Listener { response ->
                 Toast.makeText(applicationContext, "Location modified",
-                Toast.LENGTH_LONG).show()
-                val intent = Intent(this, ProfileEditPage::class.java)
-                startActivity(intent)
+                Toast.LENGTH_SHORT).show()
+                var nextPage = Intent(this, ProfileEditPage::class.java)
+                if (intent.getStringExtra("nextPage") == "genres") {
+                    nextPage = Intent(this, PreferencesSelection::class.java)
+
+                }
+                startActivity(nextPage)
             },
             { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
                 Log.d(ContentValues.TAG, "ERROR: $errorResponse")
@@ -122,7 +118,7 @@ class LocationSelection : AppCompatActivity(), OnMapReadyCallback {
             @Throws(AuthFailureError::class)
             override fun getHeaders(): Map<String, String> {
                 val params: MutableMap<String, String> = HashMap()
-                params["Authorization"] = "Bearer " + getSharedPreferences(getString(R.string.token_key), Context.MODE_PRIVATE).getString(getString(R.string.token_key), null)
+                params["Authorization"] = "Bearer " + getSharedPreferences(getString(R.string.token_key), MODE_PRIVATE).getString(getString(R.string.token_key), null)
                 return params
             }
         }

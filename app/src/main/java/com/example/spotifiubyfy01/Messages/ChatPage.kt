@@ -21,16 +21,12 @@ import java.time.LocalDateTime
 class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
     var requesterId: Int? = null
     var other: Artist? = null
-    var fromArtistPage: Boolean = false
     var updated: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_page)
         requesterId = intent.extras?.get("requester_id") as Int
         other = intent.extras?.get("other") as Artist
-        val aux = intent.extras?.get("artistPage") as Int?
-        if (aux != null)
-            fromArtistPage = true
         initOtherArtistField()
         initRecyclerView(ArrayList())
         MessagesDataSource.getConversationBetween(this, requesterId!!, other!!.id, this)
@@ -78,9 +74,9 @@ class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            if (updated && !fromArtistPage)
+            if (updated)
                 setResult(intent.extras?.get("position") as Int, intent);
-            else if (!fromArtistPage)
+            else
                 setResult(-1, intent);
             finish()
             return true

@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -48,13 +49,19 @@ class ArtistPage: AppCompatActivity(), VolleyCallBack<Album> {
 
         val messageButton = findViewById<Button>(R.id.message_button)
         messageButton.setOnClickListener{
+            val app = (this.application as Spotifiubify)
+            if (artist!!.id == (app.getProfileData("id").toString().toInt())) {
+                Toast.makeText(this@ArtistPage, "You cannot text yourself!",
+                    Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             val chatOnStack = (intent.extras?.get("chat_in_stack") as Boolean?)
             if (chatOnStack == null) {
                 val intent = Intent(this, ChatPage::class.java)
                 intent.putExtra("requester_id",
                     (this.application as Spotifiubify).getProfileData("id")!!.toInt())
                 intent.putExtra("other", artist!!)
-                intent.putExtra("artistPage", 1)
+                intent.putExtra("position", 0)
                 startActivity(intent)
             } else {
                 finish()

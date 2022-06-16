@@ -51,6 +51,7 @@
 
     <EditText
         android:id="@+id/songName"
+        android:textColorHint ="#56FFFFFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
@@ -72,6 +73,7 @@
         android:layout_marginTop="28dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:textColorHint ="#56FFFFFF"
         android:hint="@string/song_description_hint"
         android:backgroundTint="#FFFFFF"
         android:textColor="#FFFFFF"
@@ -86,6 +88,7 @@
         android:layout_marginTop="28dp"
         android:ems="10"
         android:backgroundTint="#FFFFFF"
+        android:textColorHint ="#56FFFFFF"
         android:textColor="#FFFFFF"
         android:inputType="textPersonName"
         android:hint="@string/song_path_hint"
