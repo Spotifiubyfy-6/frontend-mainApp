@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
     android:layout_marginVertical="2dp"
-    app:cardBackgroundColor="#121212"
+    app:cardBackgroundColor="@color/black"
     app:cardCornerRadius="2dp"
     app:cardElevation="0dp"
     app:cardPreventCornerOverlap="false">
@@ -14,7 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#121212">
+        android:background="@color/black">
 
         <TextView
             android:singleLine="true"
