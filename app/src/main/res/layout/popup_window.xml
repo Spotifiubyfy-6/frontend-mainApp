@@ -6,7 +6,8 @@
     android:id="@+id/popup_window_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PopUpWindow">
+    tools:context=".PopUpWindow"
+    android:background="@color/black">
 
 
   <androidx.cardview.widget.CardView
@@ -42,7 +43,7 @@
           android:layout_width="250dp"
           android:layout_height="wrap_content"
           android:layout_centerInParent="true"
-          android:background="@color/design_default_color_on_primary"
+          android:background="@color/white"
           android:minHeight="170dp">
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -58,6 +59,7 @@
             android:textAlignment="center"
             android:textSize="12sp"
             android:textStyle="bold"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/popup_window_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

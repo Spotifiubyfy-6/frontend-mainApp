@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".SongCreationPage"
 
-    android:background="#121212">
+    android:background="@color/black">
 
     <LinearLayout
         android:id="@+id/upload_song_title"

@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
         android:text="TextView"
-        android:textColor="#121212"
+        android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="15pt"
         app:layout_constraintEnd_toEndOf="parent"

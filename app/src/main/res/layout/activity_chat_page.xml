@@ -17,14 +17,14 @@
         app:cardElevation="10dp"
         app:cardPreventCornerOverlap="false"
 
-        app:cardBackgroundColor="#121212"
+        app:cardBackgroundColor="@color/black"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="274dp"
             android:layout_height="105dp"
 
-            android:background="#121212">
+            android:background="@color/black">
 
 
             <com.google.android.material.imageview.ShapeableImageView
