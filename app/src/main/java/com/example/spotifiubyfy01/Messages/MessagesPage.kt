@@ -77,7 +77,6 @@ class MessagesPage: AppCompatActivity(), VolleyCallBack<ChatBundle> {
             val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
             (recyclerView.adapter as ArtistChatsRecyclerAdapter).putItemOfPositionOnTop(position)
         } else if (result.resultCode == -10) {
-            Log.d("TAG", "updating list")
             MessagesDataSource.getChatsOfArtistWithID(this, userId!!, this)
         }
     }
