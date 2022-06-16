@@ -44,7 +44,7 @@ class ArtistPage: AppCompatActivity(), VolleyCallBack<Album> {
         val image = findViewById<ImageView>(R.id.artist_image)
         artistName.text = artist!!.artistName //Use !! because at this point artist is not null
         Glide.with(image.context).load(artist!!.image).into(image)
-        initRecyclerView(ArrayList())
+        initAlbumRecyclerView(ArrayList())
         AlbumDataSource.createAlbumList(this, artist!!.id, artist!!.artistName,this)
 
         val messageButton = findViewById<Button>(R.id.message_button)
@@ -69,7 +69,7 @@ class ArtistPage: AppCompatActivity(), VolleyCallBack<Album> {
         }
     }
 
-    private fun initRecyclerView(albumList: List<Album>) {
+    private fun initAlbumRecyclerView(albumList: List<Album>) {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
                                     false)
@@ -80,7 +80,7 @@ class ArtistPage: AppCompatActivity(), VolleyCallBack<Album> {
     }
 
     override fun updateData(list: List<Album>) {
-        initRecyclerView(list)
+        initAlbumRecyclerView(list)
     }
 
     private fun onItemClicked(album: Album) {

@@ -8,7 +8,7 @@ import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.artistProfile.adapter.AlbumViewHolder
 
 class AlbumRecyclerAdapter(
-        private val albumList: List<Album>,
+        val albumList: List<Album>,
         private val onClickListener:(Album) -> Unit
 ): RecyclerView.Adapter<AlbumViewHolder>() {
 

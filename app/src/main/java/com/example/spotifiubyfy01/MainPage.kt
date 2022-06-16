@@ -21,6 +21,7 @@ import com.example.spotifiubyfy01.artistProfile.adapterSongRecyclerAdapter.Album
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.SearchPage
 import com.example.spotifiubyfy01.search.adapter.SearchRecyclerAdapter
+import com.example.spotifiubyfy01.search.image_link
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -50,6 +51,11 @@ class MainPage: AppCompatActivity() {
         val profile = findViewById<Button>(R.id.profile_button)
         profile.setOnClickListener {
             val intent = Intent(this, ProfilePage::class.java)
+            val app = (this.application as Spotifiubify)
+            val artist = Artist(app.getProfileData("id").toString().toInt(),
+                                app.getProfileData("username").toString(),
+                                image_link)
+            intent.putExtra("Artist", artist)
             startActivity(intent)
         }
 

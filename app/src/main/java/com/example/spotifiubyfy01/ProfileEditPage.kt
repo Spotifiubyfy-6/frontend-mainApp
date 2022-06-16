@@ -26,6 +26,17 @@ class ProfileEditPage : AppCompatActivity() {
         findViewById<TextView>(R.id.email).text = app.getProfileData("email")
         findViewById<TextView>(R.id.subscription).text = app.getProfileData("user_suscription")
 
+        val logOutClick = findViewById<Button>(R.id.logOutButton)
+        logOutClick.setOnClickListener {
+            val sharedPref = getSharedPreferences(getString(R.string.token_key), Context.MODE_PRIVATE)
+            with (sharedPref.edit()) {
+                putString(getString(R.string.token_key), "")
+                apply()
+            }
+            val intent = Intent(this, MainLandingPage::class.java)
+            startActivity(intent)
+        }
+
         val email = findViewById<EditText>(R.id.email)
         val artistName = findViewById<EditText>(R.id.artistName)
         val editClick = findViewById<Button>(R.id.editButton)

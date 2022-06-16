@@ -3,18 +3,28 @@ package com.example.spotifiubyfy01
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.artistProfile.Album
+import com.example.spotifiubyfy01.artistProfile.AlbumDataSource
 import com.example.spotifiubyfy01.artistProfile.AlbumDataSource.Companion.createAlbumList
+import com.example.spotifiubyfy01.artistProfile.adapterSongRecyclerAdapter.AlbumRecyclerAdapter
+import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
 
 
 class ProfilePage : AppCompatActivity(), VolleyCallBack<Album> {
+    private var artist: Artist? = null
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.top_bar, menu)
         return true
@@ -31,23 +41,11 @@ class ProfilePage : AppCompatActivity(), VolleyCallBack<Album> {
         setContentView(R.layout.activity_profile_page)
 
         val app = (this.application as Spotifiubify)
-
-        findViewById<TextView>(R.id.artistName).text = app.getProfileData("username")
-        findViewById<TextView>(R.id.email).text = app.getProfileData("email")
-        findViewById<TextView>(R.id.subscription).text = app.getProfileData("user_suscription")
+        artist = intent.extras?.get("Artist") as Artist?
+        findViewById<TextView>(R.id.artist_name).text = artist!!.artistName
 
         if ( !intent.getStringExtra("passwordChangeSuccess").isNullOrEmpty()) {
             Toast.makeText(this, intent.getStringExtra("passwordChangeSuccess"),Toast.LENGTH_LONG).show()
-        }
-        val logOutClick = findViewById<Button>(R.id.logOutButton)
-        logOutClick.setOnClickListener {
-            val sharedPref = getSharedPreferences(getString(R.string.token_key), Context.MODE_PRIVATE)
-            with (sharedPref.edit()) {
-                putString(getString(R.string.token_key), "")
-                apply()
-            }
-            val intent = Intent(this, MainLandingPage::class.java)
-            startActivity(intent)
         }
 
         val editClick = findViewById<Button>(R.id.editButton)
@@ -65,25 +63,47 @@ class ProfilePage : AppCompatActivity(), VolleyCallBack<Album> {
 
         val createSongButton = findViewById<Button>(R.id.createSongButton)
         createSongButton.setOnClickListener {
-            createAlbumList(this, app.getProfileData("id")!!.toInt(),
-                app.getProfileData("username")!!, this)
+            val recyclerView = findViewById<RecyclerView>(R.id.album_recycler_view)
+            val adapter = recyclerView.adapter as AlbumRecyclerAdapter
+            if (adapter.itemCount == 0) {
+                Toast.makeText(this@ProfilePage,
+                    "You do not have any albums. Create an album first.",
+                    Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+            val intent = Intent(this, SongCreationPage::class.java)
+            intent.putExtra("albums", ArrayList(adapter.albumList))
+            startActivity(intent)
         }
 	
-	val tempClick = findViewById<Button>(R.id.createPlaylistButton)
+	    val tempClick = findViewById<Button>(R.id.createPlaylistButton)
         tempClick.setOnClickListener {
             val intent = Intent(this, PlaylistCreationPage::class.java)
             startActivity(intent)
         }
+        val image = findViewById<ImageView>(R.id.artist_image)
+        Glide.with(image.context).load(artist!!.image).into(image)
+        initAlbumRecyclerView(ArrayList())
+        createAlbumList(this, artist!!.id, artist!!.artistName,this)
+    }
+
+    private fun initAlbumRecyclerView(albumList: List<Album>) {
+        val recyclerView = findViewById<RecyclerView>(R.id.album_recycler_view)
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
+            false)
+        recyclerView.adapter =
+            AlbumRecyclerAdapter(albumList) {album ->
+                onItemClicked(album)
+            }
+    }
+
+    private fun onItemClicked(album: Album) {
+        val intent = Intent(this, AlbumPage::class.java)
+        intent.putExtra("Album", album)
+        startActivity(intent)
     }
 
     override fun updateData(list: List<Album>) {
-        if (list.isEmpty()) {
-            Toast.makeText(this, "You do not have any albums. Create an album first.",
-                Toast.LENGTH_LONG).show()
-            return
-        }
-        val intent = Intent(this, SongCreationPage::class.java)
-        intent.putExtra("albums", ArrayList(list))
-        startActivity(intent)
+        initAlbumRecyclerView(list)
     }
 }
