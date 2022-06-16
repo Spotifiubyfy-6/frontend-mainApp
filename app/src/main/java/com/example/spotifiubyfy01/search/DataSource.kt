@@ -78,8 +78,7 @@ class DataSource {
             jsonArtistWithSongsNAlbums: JSONObject
         ) {
             auxList.add(getArtist(jsonArtistWithSongsNAlbums))
-            addAlbumsToList(auxList, jsonArtistWithSongsNAlbums.get("albums") as JSONArray)
-            addSongsToList(auxList, jsonArtistWithSongsNAlbums.get("songs") as JSONArray,
+            addAlbumsNSongsToList(auxList, jsonArtistWithSongsNAlbums.get("albums") as JSONArray,
                 jsonArtistWithSongsNAlbums.get("name") as String)
         }
 
@@ -88,13 +87,23 @@ class DataSource {
             songsJsonArray: JSONArray,
             artistName: String
         ) {
-            for (i in 0 until songsJsonArray.length())
+            var maxNumberOfSongs = songsJsonArray.length()
+            if (maxNumberOfSongs > 2)
+                maxNumberOfSongs = 2
+            for (i in 0 until maxNumberOfSongs)
                 auxList.add(getSong(artistName, JSONObject(songsJsonArray.get(i).toString())))
         }
 
-        private fun addAlbumsToList(auxList: ArrayList<SearchItem>, albumsJsonArray: JSONArray) {
-            for (i in 0 until albumsJsonArray.length())
-                auxList.add(getAlbum(JSONObject(albumsJsonArray.get(i).toString())))
+        private fun addAlbumsNSongsToList(auxList: ArrayList<SearchItem>, albumsJsonArray: JSONArray,
+                                            artistName: String) {
+            var maxNumberOfAlbums = albumsJsonArray.length()
+            if (maxNumberOfAlbums > 2)
+                maxNumberOfAlbums = 2
+            for (i in 0 until maxNumberOfAlbums) {
+                val jsonAlbum = JSONObject(albumsJsonArray.get(i).toString())
+                auxList.add(getAlbum(jsonAlbum))
+                addSongsToList(auxList, jsonAlbum.get("songs") as JSONArray, artistName)
+            }
         }
 
         private fun fetchPlaylistsBySlice(slice: String, context: Context,
