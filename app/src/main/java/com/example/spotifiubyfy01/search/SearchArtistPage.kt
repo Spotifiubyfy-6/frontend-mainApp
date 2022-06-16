@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -60,6 +61,11 @@ class SearchArtistPage: AppCompatActivity(), VolleyCallBack<Artist> {
 
     private fun onItemClicked(artistSearchItem: SearchItem) {
         val artist = artistSearchItem as Artist
+        if (userId!! == artist.id) {
+            Toast.makeText(this, "You cannot text yourself!",
+                Toast.LENGTH_SHORT).show()
+            return
+        }
         val intent = Intent(this, ChatPage::class.java)
         intent.putExtra("requester_id", userId!!)
         intent.putExtra("other", artist)
