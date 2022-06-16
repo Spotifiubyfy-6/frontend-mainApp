@@ -18,9 +18,9 @@ enum class ChatBundleEnum {
 
 data class ChatBundle(
     var artist: Artist,
-    var chat_seen: Boolean): Serializable {
+    var number_of_not_seen: Int): Serializable {
     fun getChatType(): ChatBundleEnum {
-        return if (chat_seen)
+        return if (number_of_not_seen == 0)
             ChatBundleEnum.CHAT_SEEN
         else
             ChatBundleEnum.CHAT_NOT_SEEN

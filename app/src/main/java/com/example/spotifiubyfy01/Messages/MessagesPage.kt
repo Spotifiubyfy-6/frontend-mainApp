@@ -1,10 +1,10 @@
 package com.example.spotifiubyfy01.Messages
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,7 +14,7 @@ import com.example.spotifiubyfy01.Messages.adapter.ArtistChatsRecyclerAdapter
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.ReproductionPage
 import com.example.spotifiubyfy01.Spotifiubify
-import com.example.spotifiubyfy01.search.Artist
+import com.example.spotifiubyfy01.search.SearchArtistPage
 import com.example.spotifiubyfy01.search.VolleyCallBack
 
 class MessagesPage: AppCompatActivity(), VolleyCallBack<ChatBundle> {
@@ -27,6 +27,11 @@ class MessagesPage: AppCompatActivity(), VolleyCallBack<ChatBundle> {
         val app = (this.application as Spotifiubify)
         userId = app.getProfileData("id")!!.toInt()
         MessagesDataSource.getChatsOfArtistWithID(this, userId!!, this)
+        val messageNewArtistButton = findViewById<Button>(R.id.searchArtistToMessageButton)
+        messageNewArtistButton.setOnClickListener {
+            val intent = Intent(this, SearchArtistPage::class.java)
+            resultLauncher.launch(intent)
+        }
     }
 
     private fun initRecyclerView(chatList: List<ChatBundle>) {
@@ -39,7 +44,7 @@ class MessagesPage: AppCompatActivity(), VolleyCallBack<ChatBundle> {
     }
 
     private fun onItemClicked(chatView: ArtistChatViewHolder, chatBundle: ChatBundle, position: Int) {
-        chatBundle.chat_seen = true
+        chatBundle.number_of_not_seen = 0
         chatView.changeToSeen()
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.adapter!!.notifyItemChanged(position)
@@ -65,11 +70,15 @@ class MessagesPage: AppCompatActivity(), VolleyCallBack<ChatBundle> {
         return super.onOptionsItemSelected(item)
     }
 
-    private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+    private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            result ->
         if (result.resultCode > 0) { //chats need to be updated
             val position = result.resultCode
             val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
             (recyclerView.adapter as ArtistChatsRecyclerAdapter).putItemOfPositionOnTop(position)
+        } else if (result.resultCode == -10) {
+            Log.d("TAG", "updating list")
+            MessagesDataSource.getChatsOfArtistWithID(this, userId!!, this)
         }
     }
 

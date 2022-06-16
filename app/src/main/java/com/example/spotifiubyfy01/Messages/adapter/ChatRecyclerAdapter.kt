@@ -7,8 +7,6 @@ import com.example.spotifiubyfy01.Messages.Message
 import com.example.spotifiubyfy01.Messages.MessageItem
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 
 class MessagesRecyclerAdapter(
     private val messageList: ArrayList<MessageItem>,
@@ -34,7 +32,8 @@ class MessagesRecyclerAdapter(
     fun addMessage(message: Message, dateNTime: LocalDateTime) {
         if (messageList.size == 0) {
             messageList.add(DateItem(dateNTime))
-        }else if ((messageList.last() as Message).addMessageIfSameTime(message.messages[0],
+        }else if ((messageList.last() as Message).addMessageIfSameTimeNReceiver(message.receiver_id,
+                message.messages[0],
                 dateNTime)) {
             this.notifyItemChanged(messageList.size - 1)
             return

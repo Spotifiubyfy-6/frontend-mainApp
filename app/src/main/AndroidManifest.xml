@@ -50,6 +50,13 @@
         <activity
             android:name=".PlaylistCreationPage"
             android:exported="false" />
+        <activity android:name=".search.SearchArtistPage"
+            android:exported="false"
+            android:parentActivityName=".Messages.MessagesPage">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Messages.MessagesPage" />
+        </activity>
         <activity
             android:name=".ReproductionPage"
             android:exported="false"

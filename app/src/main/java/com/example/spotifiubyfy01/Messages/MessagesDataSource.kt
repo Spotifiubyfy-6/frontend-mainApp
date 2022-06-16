@@ -16,8 +16,6 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 
 var image_link = "https://he.cecollaboratory.com/public/layouts/images/group-default-logo.png"
 
@@ -29,12 +27,12 @@ class ChatList(
     private val chatList = ArrayList<ChatBundle>()
     init {
         for (i in 0 until numberOfArtist)
-            chatList.add(ChatBundle(Artist(0,"kotfu", "cklin"), true))
+            chatList.add(ChatBundle(Artist(0,"kotfu", "cklin"), 0))
     }
 
-    fun addArtistWithIdToPositionInList(artist: Artist, position: Int, seen: Boolean) {
+    fun addArtistWithIdToPositionInList(artist: Artist, position: Int, numberOfNotSeen: Int) {
         synchronized(this) {
-            chatList.set(position, ChatBundle(artist, seen))
+            chatList.set(position, ChatBundle(artist, numberOfNotSeen))
             artistInserted++
             if (artistInserted == numberOfArtist)
                 callBack.updateData(chatList)
@@ -64,10 +62,13 @@ class MessagesDataSource {
                 Request.Method.GET,
                 url, null,
                 Response.Listener { jsonArtist ->
-                    val username = jsonArtist.getString("name")
+                    val username = jsonArtist.getString("username")
+                    var numberOfNotSeen = 1
+                    if (idNSeenTuple.get("seen") as Boolean) {
+                        numberOfNotSeen = 0
+                    }
                     chatList.addArtistWithIdToPositionInList(Artist(artistId, username, image_link),
-                                                            position,
-                                                            idNSeenTuple.get("seen") as Boolean)
+                                                            position, numberOfNotSeen)
                 },
                 { error -> val intent = Intent(context, PopUpWindow::class.java).apply {
 //                    val error = errorResponse//.networkResponse.data.decodeToString() //.split('"')[3]
@@ -102,21 +103,26 @@ class MessagesDataSource {
             val jsonRequest: StringRequest = object : StringRequest(
                 Method.POST, url, { response ->
                     val jsonArrayMessages = JSONArray(response)
-                    var currentDay = addFirstDateAndMessage(messagesList,
-                                        JSONObject(jsonArrayMessages.get(0).toString()), requesterId)
-                    for (i in (1 until jsonArrayMessages.length()).reversed()) {
-                        val jsonMessage = JSONObject(jsonArrayMessages.get(i).toString())
-                        val dateNTime = obtainDate(jsonMessage.get("time") as String)
-                        if ((messagesList.last() as Message).addMessageIfSameTime(
+                    if (jsonArrayMessages.length() != 0) {
+                        var currentDay = addFirstDateAndMessage(messagesList,
+                                            JSONObject(jsonArrayMessages.
+                                                        get(jsonArrayMessages.length() -1).toString()),
+                                            requesterId)
+                        for (i in (0 until jsonArrayMessages.length() - 1).reversed()) {
+                            val jsonMessage = JSONObject(jsonArrayMessages.get(i).toString())
+                            val dateNTime = obtainDate(jsonMessage.get("time") as String)
+                            if ((messagesList.last() as Message).addMessageIfSameTimeNReceiver(
+                                    jsonMessage.get("receiver") as Int,
                                     jsonMessage.get("message") as String, dateNTime))
-                                continue
-                        val messagedDay = LocalDate.of(dateNTime.year, dateNTime.month, dateNTime.dayOfMonth)
-                        if (messagedDay > currentDay) {
-                            messagesList.add(DateItem(dateNTime))
-                            currentDay = messagedDay
+                                    continue
+                            val messagedDay = LocalDate.of(dateNTime.year, dateNTime.month, dateNTime.dayOfMonth)
+                            if (messagedDay > currentDay) {
+                                messagesList.add(DateItem(dateNTime))
+                                currentDay = messagedDay
+                            }
+                            val message = this.getMessage(requesterId, jsonMessage, dateNTime)
+                            messagesList.add(message)
                         }
-                        val message = this.getMessage(requesterId, jsonMessage, dateNTime)
-                        messagesList.add(message)
                     }
                     callBack.updateData(messagesList) },
                 { errorResponse ->
@@ -147,10 +153,9 @@ class MessagesDataSource {
 
         fun getMessage(requesterId: Int, jsonMessage: JSONObject,
                                dateNTime: LocalDateTime): Message {
-            val senderId = jsonMessage.get("sender").toString().toInt()
-            val receiverId = jsonMessage.get("receiver").toString().toInt()
+            val receiverId = jsonMessage.get("receiver") as Int
             val message = jsonMessage.get("message") as String
-            return Message(requesterId, receiverId, senderId, message, dateNTime)
+            return Message(requesterId, receiverId, message, dateNTime)
         }
 
         fun obtainDate(jsonTime: String): LocalDateTime {

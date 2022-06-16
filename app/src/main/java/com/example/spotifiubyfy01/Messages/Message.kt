@@ -24,7 +24,6 @@ abstract class MessageItem() {
 class Message(
     var requester_id: Int,
     var receiver_id: Int,
-    var sender_id: Int,
     message: String,
     var time: LocalDateTime
 ) : Serializable, MessageItem() {
@@ -40,8 +39,8 @@ class Message(
             return MessageEnum.MESSAGE_SENT
     }
 
-    fun addMessageIfSameTime(message: String, dateNTime: LocalDateTime): Boolean {
-        if ((time.hour == dateNTime.hour) && (time.minute == dateNTime.minute)) {
+    fun addMessageIfSameTimeNReceiver(receiverId: Int, message: String, dateNTime: LocalDateTime): Boolean {
+        if ((receiver_id == receiverId) && (time.hour == dateNTime.hour) && (time.minute == dateNTime.minute)) {
             messages.add(message)
             return true
         }
