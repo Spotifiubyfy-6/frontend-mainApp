@@ -17,6 +17,7 @@
         android:background="#121212">
 
         <TextView
+            android:singleLine="true"
             android:id="@+id/song_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,6 +30,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:singleLine="true"
             android:id="@+id/artist_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

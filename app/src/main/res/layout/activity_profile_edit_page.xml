@@ -110,7 +110,7 @@
         android:hint="@string/oldPassword"
         android:inputType="textPassword"
         android:textColor="#FFFFFF"
-        android:textColorHint ="#56FFFFFF"
+        android:textColorHint="#56FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/changePassword" />
@@ -134,11 +134,11 @@
         android:layout_height="wrap_content"
         android:autofillHints=""
         android:backgroundTint="#FFFFFF"
-        android:textColor="#FFFFFF"
         android:ems="10"
         android:hint="@string/newPassword"
         android:inputType="textPassword"
-        android:textColorHint ="#56FFFFFF"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#56FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/password_restictions"
         app:layout_constraintStart_toStartOf="@+id/password_restictions" />
 
@@ -173,8 +173,8 @@
         android:layout_marginBottom="16dp"
         android:backgroundTint="#1DB954"
         android:text="@string/changePasswordButton"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -192,40 +192,28 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/makeArtistButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="#1DB954"
-        android:text="Make Artist"
-        app:layout_constraintBottom_toTopOf="@+id/changePassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="71dp"
         android:backgroundTint="#1DB954"
         android:onClick="editPreferences"
         android:text="EDIT PREFERENCES"
-        app:layout_constraintBottom_toTopOf="@+id/makeArtistButton"
+        app:layout_constraintBottom_toTopOf="@+id/changePassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/button5" />
 
     <Button
         android:id="@+id/button5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:onClick="editLocation"
+        android:layout_marginEnd="10dp"
         android:backgroundTint="#1DB954"
+        android:onClick="editLocation"
         android:text="EDIT LOCATION"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintBaseline_toBaselineOf="@+id/button4"
+        app:layout_constraintEnd_toStartOf="@+id/button4"
         app:layout_constraintStart_toStartOf="parent" />
 
 

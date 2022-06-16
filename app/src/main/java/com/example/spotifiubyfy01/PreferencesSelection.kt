@@ -75,12 +75,12 @@ class PreferencesSelection : AppCompatActivity(), AdapterView.OnItemClickListene
 
                 view?.setBackgroundColor(Color.BLACK);
                 Toast.makeText(applicationContext, "Genre $options removed from interests",
-                    Toast.LENGTH_LONG).show()
+                    Toast.LENGTH_SHORT).show()
 
             },
             { errorResponse ->
                 Toast.makeText(applicationContext, "Couldnt remove $options from interests",
-                    Toast.LENGTH_LONG).show()
+                    Toast.LENGTH_SHORT).show()
 
             }
         ) {
@@ -103,7 +103,7 @@ class PreferencesSelection : AppCompatActivity(), AdapterView.OnItemClickListene
             Response.Listener { response -> // response
                 val responseJson = JSONObject(response)
                 Toast.makeText(applicationContext, "Added $options",
-                Toast.LENGTH_LONG).show()
+                Toast.LENGTH_SHORT).show()
 
             },
             { errorResponse ->
@@ -169,6 +169,9 @@ class PreferencesSelection : AppCompatActivity(), AdapterView.OnItemClickListene
         MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
     }
 
-
+    fun goBack(view : View) {
+        val intent = Intent(this, MainPage::class.java)
+        startActivity(intent)
+    }
 
 }
