@@ -208,7 +208,7 @@ class MainPage: AppCompatActivity() {
         val id = jsonSong.getString("id").toInt()
         val username = jsonSong.getString("name")
         val artistImage = jsonSong.getString("name")
-        return Artist(id, username  , "image_url")
+        return Artist(id, username  , image_link)
     }
     private fun getListOfAlbums(response: JSONArray): List<Album> {
         val list = ArrayList<Album>()
