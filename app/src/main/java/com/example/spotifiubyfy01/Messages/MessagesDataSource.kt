@@ -62,12 +62,12 @@ class MessagesDataSource {
                 Request.Method.GET,
                 url, null,
                 Response.Listener { jsonArtist ->
-                    val username = jsonArtist.getString("username")
+                    val artistName = jsonArtist.getString("name")
                     var numberOfNotSeen = 1
                     if (idNSeenTuple.get("seen") as Boolean) {
                         numberOfNotSeen = 0
                     }
-                    chatList.addArtistWithIdToPositionInList(Artist(artistId, username, image_link),
+                    chatList.addArtistWithIdToPositionInList(Artist(artistId, artistName, image_link),
                                                             position, numberOfNotSeen)
                 },
                 { error -> val intent = Intent(context, PopUpWindow::class.java).apply {
