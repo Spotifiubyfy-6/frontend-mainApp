@@ -29,7 +29,12 @@ class ProfilePage : AppCompatActivity(), VolleyCallBack<Album> {
         menuInflater.inflate(R.menu.top_bar, menu)
         return true
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+            return true
+        }
         if (item.itemId == R.id.action_playback) {
             startActivity(Intent(this, ReproductionPage::class.java))
         }
@@ -52,7 +57,6 @@ class ProfilePage : AppCompatActivity(), VolleyCallBack<Album> {
         editClick.setOnClickListener {
             val intent = Intent(this, ProfileEditPage::class.java)
             startActivity(intent)
-            finish()
         }
 
         val createAlbumClick = findViewById<Button>(R.id.createAlbumButton)

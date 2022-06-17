@@ -43,6 +43,7 @@ class SongCreationPage : AppCompatActivity(), AdapterView.OnItemClickListener {
             setAdapter(adapter)
             onItemClickListener = this@SongCreationPage
         }
+        dropDownMenu.isFocusable = true
 //      falta hacer esto mas explicativo, que se entienda mejor cuando se dan los permisos y eso
         val requestPermissionLauncher =
             registerForActivityResult(
