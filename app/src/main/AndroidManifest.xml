@@ -16,7 +16,12 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".PreferencesSelection"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".ProfileEditPage">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ProfileEditPage" />
+        </activity>
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -38,7 +43,12 @@
             android:label="@string/title_activity_location_selection" />
         <activity
             android:name=".ListOfPlaylistsPage"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainPage">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".MainPage" />
+        </activity>
         <activity
             android:name=".PlaylistPage"
             android:exported="false"
@@ -49,7 +59,13 @@
         </activity>
         <activity
             android:name=".PlaylistCreationPage"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".artistProfile.ArtistPage">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".artistProfile.ArtistPage" />
+        </activity>
+
         <activity android:name=".search.SearchArtistPage"
             android:exported="false"
             android:parentActivityName=".Messages.MessagesPage">
