@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Spotifiubyfy01"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Wallet"
+            android:exported="false" />
+        <activity
             android:name=".PreferencesSelection"
             android:exported="true" />
         <!--
@@ -30,7 +33,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="${MAPS_API_KEY}"/>
+            android:value="${MAPS_API_KEY}" />
 
         <activity
             android:name=".LocationSelection"
@@ -45,12 +48,13 @@
             android:parentActivityName=".search.SearchPage">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".search.SearchPage"/>
+                android:value=".search.SearchPage" />
         </activity>
         <activity
             android:name=".PlaylistCreationPage"
             android:exported="false" />
-        <activity android:name=".search.SearchArtistPage"
+        <activity
+            android:name=".search.SearchArtistPage"
             android:exported="false"
             android:parentActivityName=".Messages.MessagesPage">
             <meta-data

@@ -81,6 +81,14 @@
             android:layout_marginTop="10dp"
             android:backgroundTint="#1DB954"
             android:text="@string/createPlaylist" />
+
+        <Button
+            android:id="@+id/wallet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#1DB954"
+            android:text="wallet" />
     </LinearLayout>
 
 </ScrollView>

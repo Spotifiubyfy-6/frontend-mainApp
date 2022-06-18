@@ -65,6 +65,12 @@ class ProfilePage : AppCompatActivity(), VolleyCallBack<Album> {
             startActivity(intent)
         }
 
+        val walletClick = findViewById<Button>(R.id.wallet)
+        walletClick.setOnClickListener {
+            val intent = Intent(this, Wallet::class.java)
+            startActivity(intent)
+        }
+
         val createSongButton = findViewById<Button>(R.id.createSongButton)
         createSongButton.setOnClickListener {
             val recyclerView = findViewById<RecyclerView>(R.id.album_recycler_view)
