@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Spotifiubyfy01"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".TippingPage"
+            android:exported="false" />
+        <activity
             android:name=".Wallet"
             android:exported="false" />
         <activity

@@ -12,11 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.spotifiubyfy01.AlbumPage
+import com.example.spotifiubyfy01.*
 import com.example.spotifiubyfy01.Messages.ChatPage
-import com.example.spotifiubyfy01.R
-import com.example.spotifiubyfy01.ReproductionPage
-import com.example.spotifiubyfy01.Spotifiubify
 import com.example.spotifiubyfy01.artistProfile.adapterSongRecyclerAdapter.AlbumRecyclerAdapter
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
@@ -32,6 +29,8 @@ class ArtistPage: AppCompatActivity(), VolleyCallBack<Album> {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_artist_page)
+
+        val tipBtn = findViewById<Button>(R.id.tip_button)
         artist = intent.extras?.get("Artist") as Artist?
         if (artist == null) { //Artist activity has already been created and is in activities stack
             //savedInstanceState needs to exist
@@ -39,7 +38,9 @@ class ArtistPage: AppCompatActivity(), VolleyCallBack<Album> {
            val artistName = savedInstanceState?.getString("ArtistName") as String
            val artistImage = savedInstanceState?.getString("ArtistImage") as String
            artist = Artist(artistId, artistName, artistImage)
+
         }
+
         val artistName = findViewById<TextView>(R.id.artist_name)
         val image = findViewById<ImageView>(R.id.artist_image)
         artistName.text = artist!!.artistName //Use !! because at this point artist is not null
@@ -67,6 +68,13 @@ class ArtistPage: AppCompatActivity(), VolleyCallBack<Album> {
                 finish()
             }
         }
+        tipBtn.setOnClickListener {
+            val intent = Intent(this, TippingPage::class.java).apply {
+                putExtra("artist_id", (savedInstanceState?.getString("ArtistID") as String).toInt())
+            }
+            startActivity(intent)
+        }
+
     }
 
     private fun initAlbumRecyclerView(albumList: List<Album>) {
