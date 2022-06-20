@@ -11,15 +11,15 @@
         android:id="@+id/artistName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="11dp"
+        android:layout_marginStart="7dp"
         android:autofillHints=""
         android:backgroundTint="#FFFFFF"
         android:hint="@string/registration_username"
         android:inputType="text"
         android:text="@string/example"
         android:textColor="#FFFFFF"
-        app:layout_constraintStart_toEndOf="@+id/userInformationText"
-        app:layout_constraintTop_toBottomOf="@+id/userInformationText" />
+        app:layout_constraintStart_toStartOf="@+id/usernameView"
+        app:layout_constraintTop_toBottomOf="@+id/usernameView" />
 
     <TextView
         android:id="@+id/usernameText"
@@ -38,9 +38,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/example"
 
+        android:layout_marginTop="21dp"
+        android:text="@string/example"
         android:textColor="#FFFFFF"
         app:layout_constraintStart_toEndOf="@+id/susbscriptionText"
         app:layout_constraintTop_toBottomOf="@+id/email" />
@@ -50,8 +50,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:text="@string/subscription"
 
+        android:text="@string/subscription"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/subscription"
@@ -61,16 +61,16 @@
         android:id="@+id/email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
 
         android:layout_marginTop="12dp"
+        android:layout_marginEnd="14dp"
         android:autofillHints=""
         android:backgroundTint="#FFFFFF"
         android:hint="@string/registration_email"
         android:inputType="textEmailAddress"
         android:text="@string/example"
         android:textColor="#FFFFFF"
-        app:layout_constraintStart_toEndOf="@+id/emailText"
+        app:layout_constraintEnd_toEndOf="@+id/artistName"
         app:layout_constraintTop_toBottomOf="@+id/artistName" />
 
     <TextView
@@ -78,10 +78,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="20dp"
+
+        android:layout_marginTop="21dp"
         android:text="@string/email"
         android:textColor="#FFFFFF"
-
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/usernameText" />
@@ -90,38 +90,37 @@
         android:id="@+id/userInformationText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
 
+        android:layout_marginStart="16dp"
         android:text="@string/profile"
         android:textColor="#FFFFFF"
         android:textSize="34sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/usernameView"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/oldPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
         android:autofillHints=""
+
         android:backgroundTint="#FFFFFF"
         android:ems="10"
-
         android:hint="@string/oldPassword"
         android:inputType="textPassword"
         android:textColor="#FFFFFF"
         android:textColorHint="#56FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/newPassword"
         app:layout_constraintTop_toBottomOf="@+id/changePassword" />
 
     <TextView
         android:id="@+id/password_restictions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_marginEnd="78dp"
         android:layout_marginBottom="16dp"
-
         android:text="@string/Password_restrictions"
         android:textColor="#FFFFFF"
         android:textSize="12sp"
@@ -146,38 +145,36 @@
         android:id="@+id/changePassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
+        android:layout_marginEnd="12dp"
+
         android:layout_marginBottom="55dp"
         android:text="@string/changePassword"
-
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/newPassword"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/logOutButton" />
 
     <Button
         android:id="@+id/editButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#1DB954"
+        android:layout_marginEnd="25dp"
 
+        android:backgroundTint="#1DB954"
         android:text="@string/button_edit"
-        app:layout_constraintBottom_toTopOf="@+id/logOutButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.922"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usernameText" />
+        app:layout_constraintTop_toTopOf="@+id/subscription" />
 
     <Button
         android:id="@+id/changePasswordButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="#1DB954"
         android:text="@string/changePasswordButton"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/password_restictions" />
 
     <TextView
         android:id="@+id/usernameView"
@@ -193,42 +190,48 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/logOutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="44dp"
+        android:backgroundTint="#1DB954"
+        android:text="@string/button_logOut"
+        app:layout_constraintBottom_toTopOf="@+id/changePassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="71dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="24dp"
         android:backgroundTint="#1DB954"
         android:onClick="editPreferences"
         android:text="EDIT PREFERENCES"
-        app:layout_constraintBottom_toTopOf="@+id/changePassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button5" />
+        app:layout_constraintBottom_toTopOf="@+id/logOutButton"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/button5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginBottom="24dp"
         android:backgroundTint="#1DB954"
         android:onClick="editLocation"
         android:text="EDIT LOCATION"
-        app:layout_constraintBaseline_toBaselineOf="@+id/button4"
-        app:layout_constraintEnd_toStartOf="@+id/button4"
+        app:layout_constraintBottom_toTopOf="@+id/logOutButton"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/logOutButton"
+        android:id="@+id/changePhotoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#1DB954"
-        android:text="@string/button_logOut"
-        app:layout_constraintBottom_toTopOf="@id/button4"
+        android:layout_marginBottom="68dp"
+        android:text="Change profile picture"
+        app:layout_constraintBottom_toTopOf="@+id/button4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/subscription"
-        app:layout_constraintVertical_bias="0.376" />
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

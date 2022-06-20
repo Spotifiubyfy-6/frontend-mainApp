@@ -1,5 +1,6 @@
 package com.example.spotifiubyfy01
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -7,10 +8,12 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
+import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.artistProfile.Playlist
 import com.example.spotifiubyfy01.artistProfile.Song
 import org.json.JSONArray
@@ -18,6 +21,9 @@ import org.json.JSONObject
 import java.io.File
 
 class PlaylistCreationPage : AppCompatActivity() {
+    lateinit var playlistCoverFile: Uri
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_playlist_creation_page)
@@ -26,16 +32,21 @@ class PlaylistCreationPage : AppCompatActivity() {
 
         val playlistName = findViewById<EditText>(R.id.playlistName)
         val playlistDescription = findViewById<EditText>(R.id.playlistDescription)
-        val playlistMediaPath = findViewById<EditText>(R.id.playlistMedia)
+
+        val findImage = findViewById<Button>(R.id.selectImage)
+        findImage.setOnClickListener {
+            var chooseFile = Intent(Intent.ACTION_GET_CONTENT)
+            chooseFile.type = "*/*"
+            chooseFile = Intent.createChooser(chooseFile, "Choose a file")
+            startActivityForResult(chooseFile, 1)
+        }
 
         val createPlaylistButton = findViewById<Button>(R.id.createPlaylistPageButton)
-
         createPlaylistButton.setOnClickListener {
             val requestBody = JSONObject()
 
             requestBody.put("playlist_name", playlistName.text.toString())
             requestBody.put("playlist_description", playlistDescription.text.toString())
-            requestBody.put("playlist_media", playlistMediaPath.text.toString())
             requestBody.put("user_id", app.getProfileData("id"))
 
             val url = "https://spotifiubyfy-music.herokuapp.com/playlists"
@@ -50,8 +61,7 @@ class PlaylistCreationPage : AppCompatActivity() {
 
                         val storageName = "covers/"+response.getString("playlist_media")
                         val coverRef =  app.getStorageReference().child(storageName)
-                        val file = Uri.fromFile(File(playlistMediaPath.text.toString()))
-                        val uploadTask = coverRef.putFile(file)
+                        val uploadTask = coverRef.putFile(playlistCoverFile)
                         uploadTask.addOnFailureListener {
                             Toast.makeText(app, "Cover not uploaded: ERROR", Toast.LENGTH_LONG).show()
                         }.addOnSuccessListener {
@@ -66,6 +76,16 @@ class PlaylistCreationPage : AppCompatActivity() {
                     startActivity(intent)})
 
             MyRequestQueue.getInstance(this).addToRequestQueue(jsonRequest)
+        }
+    }
+    override fun onActivityResult(
+        requestCode: Int, resultCode: Int, resultData: Intent?) {
+        super.onActivityResult(requestCode, resultCode, resultData)
+        if (requestCode == 1
+            && resultCode == Activity.RESULT_OK) {
+            resultData?.data?.also { uri ->
+                this.playlistCoverFile = uri
+            }
         }
     }
 

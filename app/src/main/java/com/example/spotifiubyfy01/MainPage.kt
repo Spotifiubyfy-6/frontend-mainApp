@@ -54,7 +54,7 @@ class MainPage: AppCompatActivity() {
             val app = (this.application as Spotifiubify)
             val artist = Artist(app.getProfileData("id").toString().toInt(),
                                 app.getProfileData("username").toString(),
-                                image_link)
+                                "profilePictures/"+app.getProfileData("username").toString())
             intent.putExtra("Artist", artist)
             startActivity(intent)
         }
@@ -207,8 +207,8 @@ class MainPage: AppCompatActivity() {
 
         val id = jsonSong.getString("id").toInt()
         val username = jsonSong.getString("name")
-        val artistImage = jsonSong.getString("name")
-        return Artist(id, username  , image_link)
+        val artistImage = "profilePictures/"+jsonSong.getString("username").toString()
+        return Artist(id, username  , artistImage)
     }
     private fun getListOfAlbums(response: JSONArray): List<Album> {
         val list = ArrayList<Album>()

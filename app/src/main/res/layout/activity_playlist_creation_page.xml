@@ -13,25 +13,28 @@
         android:id="@+id/createPlaylistPageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="29dp"
         android:backgroundTint="#1DB954"
+
         android:text="@string/createPlaylist"
         app:layout_constraintBottom_toBottomOf="parent"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/playlistMedia" />
+        app:layout_constraintTop_toBottomOf="@+id/selectImage" />
 
     <EditText
         android:id="@+id/playlistName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
         android:ems="15"
         android:hint="@string/playlist_name"
         android:inputType="textPersonName"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#56FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/playlistDescription"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,22 +45,21 @@
         android:ems="15"
         android:hint="@string/playlist_description"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/playlistMedia"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#56FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/selectImage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/playlistName" />
 
-    <EditText
-        android:id="@+id/playlistMedia"
+    <Button
+        android:id="@+id/selectImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="15"
-        android:hint="@string/playlist_media"
-        android:inputType="textPersonName"
+        android:layout_marginBottom="9dp"
+        android:text="Select playlist cover"
         app:layout_constraintBottom_toTopOf="@+id/createPlaylistPageButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/playlistDescription" />
 

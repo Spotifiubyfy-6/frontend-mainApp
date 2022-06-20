@@ -4,44 +4,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AlbumCreationPage"
     android:background="@color/black"
-    >
+    tools:context=".AlbumCreationPage">
 
     <EditText
         android:id="@+id/albumName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginStart="33dp"
+
+        android:layout_marginTop="278dp"
         android:ems="10"
         android:hint="@string/album_name"
-
         android:inputType="textPersonName"
+        android:textColorHint="#56FFFFFF"
+        android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
-        android:textColorHint ="#56FFFFFF"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/albumGenre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:hint="@string/AlbumGenreHint"
+        android:inputType="textPersonName"
+        android:textColorHint="#56FFFFFF"
+        android:textColor="#FFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/albumDescription" />
 
     <EditText
         android:id="@+id/albumDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="33dp"
         android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="@string/albumDescription"
-        android:textColorHint ="#56FFFFFF"
         android:inputType="textPersonName"
+        android:textColorHint="#56FFFFFF"
+        android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/albumName" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/album_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
@@ -54,33 +68,16 @@
         android:text="@string/createAlbum"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/albumGenre"
+    <Button
+        android:id="@+id/selectImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:textColorHint ="#56FFFFFF"
-        android:inputType="textPersonName"
-        android:hint="@string/AlbumGenreHint"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/albumDescription" />
-
-    <EditText
-        android:id="@+id/albumMediaPath"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:textColorHint ="#56FFFFFF"
-        android:inputType="textPersonName"
-        android:hint="@string/enter_album_cover_image_path"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/albumGenre" />
+        android:layout_marginBottom="30dp"
+        android:text="Select image"
+        app:layout_constraintBottom_toTopOf="@+id/albumName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
