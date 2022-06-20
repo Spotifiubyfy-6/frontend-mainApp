@@ -37,6 +37,9 @@ class PlaylistPage : AppCompatActivity() {
 
         val coverRef = app.getStorageReference().child(playlist.playlist_image)
 
+        val inviteBtn = findViewById<Button>(R.id.invite)
+        inviteBtn
+
         coverRef.downloadUrl.addOnSuccessListener { url ->
             Glide.with(image.context).load(url).into(image)
         }.addOnFailureListener {
