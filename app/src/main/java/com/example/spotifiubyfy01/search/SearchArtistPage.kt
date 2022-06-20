@@ -1,9 +1,12 @@
 package com.example.spotifiubyfy01.search
 
+import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.Toast
@@ -11,11 +14,14 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.AuthFailureError
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.StringRequest
+import com.example.spotifiubyfy01.*
 import com.example.spotifiubyfy01.Messages.ChatPage
-import com.example.spotifiubyfy01.Messages.adapter.ArtistChatsRecyclerAdapter
-import com.example.spotifiubyfy01.R
-import com.example.spotifiubyfy01.ReproductionPage
-import com.example.spotifiubyfy01.Spotifiubify
+import com.example.spotifiubyfy01.artistProfile.Playlist
 import com.example.spotifiubyfy01.search.adapter.ArtistSearchRecyclerAdapter
 
 class SearchArtistPage: AppCompatActivity(), VolleyCallBack<Artist> {
@@ -24,7 +30,12 @@ class SearchArtistPage: AppCompatActivity(), VolleyCallBack<Artist> {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_page)
-        initRecyclerView()
+        if(intent.extras?.get("invite") as Boolean) {
+            val playlistId = intent.extras?.get("playlist_id")
+            initRecyclerViewPlaylistInvite(playlistId as String)
+        } else {
+            initRecyclerView()
+        }
         val app = (this.application as Spotifiubify)
         userId = app.getProfileData("id")!!.toInt()
         val search = findViewById<EditText>(R.id.search_textfield)
@@ -58,6 +69,48 @@ class SearchArtistPage: AppCompatActivity(), VolleyCallBack<Artist> {
                 onItemClicked(artist as SearchItem)
             }
     }
+
+    private fun initRecyclerViewPlaylistInvite(playlistId: String) {
+        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter =
+            ArtistSearchRecyclerAdapter(ArrayList()) { artist ->
+                onItemClickedInvite(artist, playlistId)
+            }
+    }
+
+    private fun onItemClickedInvite(artistSearchItem: SearchItem, playlistId: String) {
+        val artist = artistSearchItem as Artist
+        val artistId = artist.id
+        val url = "https://spotifiubyfy-music.herokuapp.com/playlists/$playlistId/collaborators?user_id=$artistId"
+
+
+        val postRequest: StringRequest = object : StringRequest(
+            Method.POST, url,
+            Response.Listener {
+                Toast.makeText(this, "Colaborator added",
+                    Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, MainPage::class.java)
+                startActivity(intent)
+            },
+            {  errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
+                Log.d(ContentValues.TAG, "ERROR: $errorResponse")
+                val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
+                putExtra("popuptext", error)
+                putExtra("tokenValidation", true) }
+                startActivity(intent)
+            }
+        ) {
+            @Throws(AuthFailureError::class)
+            override fun getHeaders(): Map<String, String> {
+                val params: MutableMap<String, String> = HashMap()
+                params["Authorization"] = "Bearer " + getSharedPreferences(getString(R.string.token_key), Context.MODE_PRIVATE).getString(getString(R.string.token_key), null)
+                return params
+            }
+        }
+        MyRequestQueue.getInstance(this).addToRequestQueue(postRequest)
+    }
+
 
     private fun onItemClicked(artistSearchItem: SearchItem) {
         val artist = artistSearchItem as Artist

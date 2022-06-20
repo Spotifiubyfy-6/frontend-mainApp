@@ -117,6 +117,7 @@ class ListOfPlaylistsPage : AppCompatActivity() {
         val playlistName = jsonPlaylist.getString("playlist_name")
         val playlistId = jsonPlaylist.getString("id")
         val storageName = "covers/"+jsonPlaylist.getString("playlist_media")
+        //val userName = jsonPlaylist.getString("user_name")
         return Playlist(
             playlistId,
             playlistName,
@@ -151,8 +152,9 @@ class ListOfPlaylistsPage : AppCompatActivity() {
     }
 
     private fun fetchMyPlaylists() {
-        // Hago fetch de las que empiezan con nombre
-        val url = "https://spotifiubyfy-music.herokuapp.com/playlists?q=a&skip=0&limit=100"
+        val app = (this.application as Spotifiubify)
+        val userId = app.getProfileData("id")
+        val url = "https://spotifiubyfy-music.herokuapp.com/users/$userId/playlists?skip=0&limit=100"
 
         val getRequest = JsonArrayRequest(
             Request.Method.GET,
