@@ -51,7 +51,8 @@ class Wallet : AppCompatActivity() {
             { response ->
                 Toast.makeText(this, "Funds succesfully retired",
                 Toast.LENGTH_SHORT).show()
-                //fetchWalletFunds(walletFunds)
+                val intent = Intent(this, ProfilePage::class.java)
+                startActivity(intent)
             },
             { errorResponse ->
                 val intent = Intent(this, PopUpWindow::class.java).apply {
