@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import org.json.JSONObject
 
@@ -45,9 +46,9 @@ class Wallet : AppCompatActivity() {
         requestBody.put("foundsToRetire", amountToRetire.text.toString())
 
 
-        val postRequest: StringRequest = object : StringRequest(
-            Request.Method.POST, url,
-            Response.Listener { response ->
+        val postRequest: JsonObjectRequest = object : JsonObjectRequest(
+            Request.Method.POST,url,requestBody,
+            { response ->
                 Toast.makeText(this, "Funds succesfully retired",
                 Toast.LENGTH_SHORT).show()
                 //fetchWalletFunds(walletFunds)
@@ -69,14 +70,6 @@ class Wallet : AppCompatActivity() {
                 return params
             }
 
-            override fun getBody(): ByteArray {
-                return requestBody.toString().toByteArray(Charsets.UTF_8)
-
-            }
-
-            override fun getBodyContentType(): String? {
-                return "application/json"
-            }
         }
 
         MyRequestQueue.getInstance(this).addToRequestQueue(postRequest)
