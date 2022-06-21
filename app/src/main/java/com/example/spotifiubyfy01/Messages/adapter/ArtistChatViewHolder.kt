@@ -15,6 +15,7 @@ import com.example.spotifiubyfy01.Spotifiubify
 import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.SearchItem
+import java.util.logging.Logger
 
 fun createRespectiveArtistChatHolder(parent: ViewGroup, viewType: Int) : ArtistChatViewHolder {
     val holder =
@@ -49,7 +50,7 @@ class ArtistChatSeenViewHolder(view: View) : ArtistChatViewHolder(view) {
     override fun render(chatBundle: ChatBundle, position: Int,
                         onClickListener: (ArtistChatViewHolder, ChatBundle, Int) -> Unit) {
         artistName.text = chatBundle.artist.artistName
-        val coverRef = app.getStorageReference().child(chatBundle.artist!!.image)
+        val coverRef = app.getStorageReference().child(chatBundle.artist.image)
         coverRef.downloadUrl.addOnSuccessListener { url ->
             Glide.with(image.context).load(url).into(image)
         }.addOnFailureListener {

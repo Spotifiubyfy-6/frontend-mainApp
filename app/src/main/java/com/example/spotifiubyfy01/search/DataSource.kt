@@ -49,7 +49,8 @@ class DataSource {
         private fun getArtist(jsonArtist: JSONObject): SearchItem {
             val username = jsonArtist.getString("name")
             val id = jsonArtist.getString("id").toInt()
-            return Artist(id, username, image_link)
+            val image = "profilePictures/"+jsonArtist.getString("username")
+            return Artist(id, username, image)
         }
 
         private fun fetchByArtistsAsFilter(slice: String, context: Context,

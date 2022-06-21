@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.Messages.adapter.MessagesRecyclerAdapter
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.ReproductionPage
+import com.example.spotifiubyfy01.Spotifiubify
 import com.example.spotifiubyfy01.artistProfile.ArtistPage
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
@@ -51,6 +52,12 @@ class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
         val artistBox = findViewById<TextView>(R.id.artist_name)
         artistBox.setText(other!!.artistName)
         val image: ImageView = findViewById(R.id.artist_image)
+        val coverRef = (this.application as Spotifiubify).getStorageReference().child(other!!.image)
+        coverRef.downloadUrl.addOnSuccessListener { url ->
+            Glide.with(image.context).load(url).into(image)
+        }.addOnFailureListener {
+            Glide.with(image.context).load(com.example.spotifiubyfy01.artistProfile.adapter.default_album_image).into(image)
+        }
         Glide.with(image.context).load(other!!.image).into(image)
     }
 

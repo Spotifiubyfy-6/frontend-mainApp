@@ -172,6 +172,21 @@ class ProfileEditPage : AppCompatActivity() {
                     Toast.makeText(app, "Profile picture not uploaded, try again later", Toast.LENGTH_LONG).show()
                 }.addOnSuccessListener {
                     Toast.makeText(app, "Profile picture successfully uploaded", Toast.LENGTH_SHORT).show()
+                    val url = "https://spotifiubyfy-users.herokuapp.com/users/photo/"+app.getProfileData("username").toString()
+                    val jsonRequest: JsonObjectRequest = object : JsonObjectRequest(Method.POST, url, null,
+                        {
+                            val intent = Intent(this, ProfilePage::class.java)
+                            startActivity(intent)},
+                        {}) {
+                        @Throws(com.android.volley.AuthFailureError::class)
+                        override fun getHeaders(): Map<String, String> {
+                            val params: MutableMap<String, String> = HashMap()
+                            params["Authorization"] = "Bearer " + getSharedPreferences(getString(R.string.token_key), MODE_PRIVATE).getString(getString(
+                                R.string.token_key), null)
+                            return params
+                        }
+                    }
+                    MyRequestQueue.getInstance(this).addToRequestQueue(jsonRequest)
                 }
             }
         }
