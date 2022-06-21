@@ -53,9 +53,12 @@ class PlaylistCreationPage : AppCompatActivity() {
         createPlaylistButton.setOnClickListener {
             val requestBody = JSONObject()
 
-            requestBody.put("playlist_name", playlistName.text.toString())
+            val playlistNameText = playlistName.text.toString()
+            requestBody.put("playlist_name", playlistNameText)
             requestBody.put("playlist_description", playlistDescription.text.toString())
+            requestBody.put("playlist_media", playlistNameText)
             requestBody.put("user_id", app.getProfileData("id"))
+
 
             val url = "https://spotifiubyfy-music.herokuapp.com/playlists"
 

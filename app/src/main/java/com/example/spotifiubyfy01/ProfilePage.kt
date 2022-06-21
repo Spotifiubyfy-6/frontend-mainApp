@@ -48,6 +48,9 @@ class ProfilePage : AppCompatActivity(), VolleyCallBack<Album> {
 
         val app = (this.application as Spotifiubify)
         artist = intent.extras?.get("Artist") as Artist?
+        if (artist == null) {
+            artist = Artist(app.getProfileData("id")!!.toInt(), app.getProfileData("name")!!, "profilePictures"+app.getProfileData("username"))
+        }
         findViewById<TextView>(R.id.artist_name).text = artist!!.artistName
 
         if ( !intent.getStringExtra("passwordChangeSuccess").isNullOrEmpty()) {
