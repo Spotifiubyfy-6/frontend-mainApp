@@ -30,7 +30,7 @@ class SearchArtistPage: AppCompatActivity(), VolleyCallBack<Artist> {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_page)
-        if(intent.extras?.get("invite") as Boolean) {
+        if(intent.extras?.get("invite") != null) {
             val playlistId = intent.extras?.get("playlist_id")
             initRecyclerViewPlaylistInvite(playlistId as String)
         } else {
