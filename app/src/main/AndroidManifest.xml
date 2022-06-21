@@ -64,7 +64,12 @@
         </activity>
         <activity
             android:name=".ListOfPlaylistsPage"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainPage">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".MainPage" />
+        </activity>
         <activity
             android:name=".PlaylistPage"
             android:exported="false"
@@ -76,8 +81,10 @@
         <activity
             android:name=".PlaylistCreationPage"
             android:exported="false" />
-        <activity
-            android:name=".search.SearchArtistPage"
+
+
+
+        <activity android:name=".search.SearchArtistPage"
             android:exported="false"
             android:parentActivityName=".Messages.MessagesPage">
             <meta-data

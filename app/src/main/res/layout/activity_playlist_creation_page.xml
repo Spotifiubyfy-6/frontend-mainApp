@@ -56,8 +56,13 @@
         android:id="@+id/selectImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_marginBottom="9dp"
         android:text="Select playlist cover"
+        android:ems="15"
+        android:hint="@string/playlist_media"
+        android:inputType="textPersonName"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/createPlaylistPageButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

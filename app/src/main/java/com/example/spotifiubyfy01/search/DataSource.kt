@@ -205,6 +205,7 @@ class DataSource {
             val playlistName = jsonPlaylist.getString("playlist_name")
             val playlistId = jsonPlaylist.getString("id")
             val storageName = "covers/"+jsonPlaylist.getString("playlist_media")
+            //val userName = jsonPlaylist.getString("user_name")
             return Playlist(
                 playlistId,
                 playlistName,

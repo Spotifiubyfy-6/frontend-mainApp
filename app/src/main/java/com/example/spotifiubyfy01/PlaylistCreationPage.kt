@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
@@ -23,6 +24,13 @@ import java.io.File
 class PlaylistCreationPage : AppCompatActivity() {
     lateinit var playlistCoverFile: Uri
 
+
+
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.top_bar, menu)
+        return true
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,19 +62,17 @@ class PlaylistCreationPage : AppCompatActivity() {
             val jsonRequest = JsonObjectRequest(
                 Request.Method.POST, url, requestBody,
                 { response ->
-
+                    val storageName = "covers/"+response.getString("playlist_media")
+                    val coverRef =  app.getStorageReference().child(storageName)
+                    val uploadTask = coverRef.putFile(playlistCoverFile)
+                    uploadTask.addOnFailureListener {
+                        Toast.makeText(app, "Cover not uploaded: ERROR", Toast.LENGTH_LONG).show()
+                    }.addOnSuccessListener {
+                        Toast.makeText(app, "Cover successfully uploaded", Toast.LENGTH_SHORT).show()
+                    }
                     val intent = Intent(this, PlaylistPage::class.java).apply {
                         val pĺaylist : Playlist = getPlaylist("default username" ,response)
                         putExtra("Playlist", pĺaylist)
-
-                        val storageName = "covers/"+response.getString("playlist_media")
-                        val coverRef =  app.getStorageReference().child(storageName)
-                        val uploadTask = coverRef.putFile(playlistCoverFile)
-                        uploadTask.addOnFailureListener {
-                            Toast.makeText(app, "Cover not uploaded: ERROR", Toast.LENGTH_LONG).show()
-                        }.addOnSuccessListener {
-                            Toast.makeText(app, "Cover successfully uploaded", Toast.LENGTH_SHORT).show()
-                        }
                     }
                     startActivity(intent)},
                 { val intent = Intent(this, PopUpWindow::class.java).apply {
@@ -93,6 +99,7 @@ class PlaylistCreationPage : AppCompatActivity() {
         val playlistName = jsonPlaylist.getString("playlist_name")
         val playlistId = jsonPlaylist.getString("id")
         val storageName = "covers/"+jsonPlaylist.getString("playlist_media")
+        //val userName = jsonPlaylist.getString("user_name")
         return Playlist(
             playlistId,
             playlistName,

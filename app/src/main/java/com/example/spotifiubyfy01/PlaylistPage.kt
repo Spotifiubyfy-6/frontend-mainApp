@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -18,6 +19,7 @@ import com.example.spotifiubyfy01.artistProfile.Playlist
 import com.example.spotifiubyfy01.artistProfile.Song
 import com.example.spotifiubyfy01.artistProfile.adapter.SongRecyclerAdapter
 import com.example.spotifiubyfy01.artistProfile.adapter.default_album_image
+import com.example.spotifiubyfy01.search.SearchArtistPage
 
 class PlaylistPage : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -38,6 +40,20 @@ class PlaylistPage : AppCompatActivity() {
         val image = findViewById<ImageView>(R.id.playlist_image)
 
         val coverRef = app.getStorageReference().child(playlist.playlist_image)
+
+        val inviteBtn = findViewById<Button>(R.id.invite)
+        inviteBtn.setOnClickListener {
+            val intent = Intent(this, SearchArtistPage::class.java).apply {
+                putExtra("invite", true)
+                putExtra("playlist_id", playlist.playlist_id)
+            }
+            startActivity(intent)
+        }
+        // Solo puede invitar el owner (falta que playlist devuelva username
+        // del back, por ahora es deafult_username)
+        //if (app.getProfileData("username") != playlist.user_name) {
+        //    inviteBtn.visibility = View.INVISIBLE
+        //}
 
         coverRef.downloadUrl.addOnSuccessListener { url ->
             Glide.with(image.context).load(url).into(image)
