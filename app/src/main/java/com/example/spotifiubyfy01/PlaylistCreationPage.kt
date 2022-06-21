@@ -62,17 +62,20 @@ class PlaylistCreationPage : AppCompatActivity() {
             val jsonRequest = JsonObjectRequest(
                 Request.Method.POST, url, requestBody,
                 { response ->
-                    val storageName = "covers/"+response.getString("playlist_media")
-                    val coverRef =  app.getStorageReference().child(storageName)
-                    val uploadTask = coverRef.putFile(playlistCoverFile)
-                    uploadTask.addOnFailureListener {
-                        Toast.makeText(app, "Cover not uploaded: ERROR", Toast.LENGTH_LONG).show()
-                    }.addOnSuccessListener {
-                        Toast.makeText(app, "Cover successfully uploaded", Toast.LENGTH_SHORT).show()
-                    }
+
+
                     val intent = Intent(this, PlaylistPage::class.java).apply {
                         val pĺaylist : Playlist = getPlaylist("default username" ,response)
                         putExtra("Playlist", pĺaylist)
+
+                        val storageName = "covers/"+response.getString("playlist_media")
+                        val coverRef =  app.getStorageReference().child(storageName)
+                        val uploadTask = coverRef.putFile(playlistCoverFile)
+                        uploadTask.addOnFailureListener {
+                            Toast.makeText(app, "Cover not uploaded: ERROR", Toast.LENGTH_LONG).show()
+                        }.addOnSuccessListener {
+                            Toast.makeText(app, "Cover successfully uploaded", Toast.LENGTH_SHORT).show()
+                        }
                     }
                     startActivity(intent)},
                 { val intent = Intent(this, PopUpWindow::class.java).apply {
