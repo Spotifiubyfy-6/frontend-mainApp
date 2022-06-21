@@ -1,5 +1,6 @@
 package com.example.spotifiubyfy01
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageButton
@@ -25,10 +26,7 @@ class ReproductionPage : AppCompatActivity() {
         val albumImage = findViewById<ImageView>(R.id.albumArt)
         val currentSongTime = findViewById<TextView>(R.id.position)
 
-        findViewById<TextView>(R.id.title).text = song.song_name
-        findViewById<TextView>(R.id.subtitle).text = song.artist
-        findViewById<TextView>(R.id.duration).text = convertToMinutesString(mediaPlayer.duration)
-        currentSongTime.text = convertToMinutesString(mediaPlayer.currentPosition)
+        changeView(song, mediaPlayer)
 
         val coverRef = app.getStorageReference().child(song.album_cover)
         coverRef.downloadUrl.addOnSuccessListener { url ->
@@ -36,9 +34,6 @@ class ReproductionPage : AppCompatActivity() {
         }.addOnFailureListener {
             Glide.with(albumImage.context).load(default_album_image).into(albumImage)
         }
-
-        Glide.with(albumImage.context).load(song.album_cover).into(albumImage)
-
         val timer = Timer()
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
@@ -48,25 +43,13 @@ class ReproductionPage : AppCompatActivity() {
                         }
                     } else {
                         song = app.SongManager.currentSong
-                        findViewById<TextView>(R.id.title).text = song.song_name
-                        findViewById<TextView>(R.id.subtitle).text = song.artist
-                        findViewById<TextView>(R.id.duration).text = convertToMinutesString(mediaPlayer.duration)
-                        currentSongTime.text = convertToMinutesString(mediaPlayer.currentPosition)
+                        changeView(song, mediaPlayer)
                         timer.cancel()
                         timer.purge()
                     }
                     if (song != app.SongManager.currentSong) {
                         song = app.SongManager.currentSong
-                        findViewById<TextView>(R.id.title).text = song.song_name
-                        findViewById<TextView>(R.id.subtitle).text = song.artist
-                        findViewById<TextView>(R.id.duration).text = convertToMinutesString(mediaPlayer.duration)
-                        currentSongTime.text = convertToMinutesString(mediaPlayer.currentPosition)
-                        val coverRef = app.getStorageReference().child(song.album_cover)
-                        coverRef.downloadUrl.addOnSuccessListener { url ->
-                            Glide.with(albumImage.context).load(url).into(albumImage)
-                        }.addOnFailureListener {
-                            Glide.with(albumImage.context).load(default_album_image).into(albumImage)
-                        }
+                        changeView(song, mediaPlayer)
                     }
                 }
             }
@@ -95,12 +78,15 @@ class ReproductionPage : AppCompatActivity() {
 
         nextButton.setOnClickListener {
             if (mediaPlayer.isPlaying) {
-                app.SongManager.next()
+                if (!app.SongManager.next()) {
+                    pauseButton.setImageResource(R.drawable.ic_play_arrow_black_24dp)
+                    changeView(song, mediaPlayer)
+                    Glide.with(albumImage.context).load(default_album_image).into(albumImage)
+                }
             }
         }
 
     }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             finish()
@@ -109,6 +95,12 @@ class ReproductionPage : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun changeView(song: Song, mediaPlayer: MediaPlayer) {
+        findViewById<TextView>(R.id.title).text = song.song_name
+        findViewById<TextView>(R.id.subtitle).text = song.artist
+        findViewById<TextView>(R.id.duration).text = convertToMinutesString(mediaPlayer.duration)
+        findViewById<TextView>(R.id.position).text = convertToMinutesString(mediaPlayer.currentPosition)
+    }
 
     private fun convertToMinutesString(time: Int): String {
         if (time == 5832704) return "-"  //underflow hardcodeado xd
