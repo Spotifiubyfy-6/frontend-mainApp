@@ -4,19 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SongCreationPage"
+    android:background="@color/black"
 
-    android:background="@color/black">
+    tools:context=".SongCreationPage">
 
     <LinearLayout
         android:id="@+id/upload_song_title"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:weightSum="2">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:layout_width="0dp"
@@ -24,46 +25,46 @@
             android:layout_marginStart="28dp"
             android:layout_marginTop="16dp"
 
-            android:textColor="#FFFFFF"
             android:layout_weight="0.5"
             android:text="@string/upload_song_title"
-            android:textSize="16sp"/>
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.5"
             android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="32dp"
+            android:layout_weight="1.5"
             app:boxBackgroundColor="#2F2F2F">
 
             <AutoCompleteTextView
                 android:id="@+id/albums_names"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/black"
-                android:textColor="@color/white"
                 android:layout_margin="0dp"
-                android:text="Album title"
+                android:background="@color/black"
+                android:focusedByDefault="true"
                 android:inputType="none"
-                android:focusedByDefault="true"/>
+                android:text="Album title"
+                android:textColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
     <EditText
         android:id="@+id/songName"
-        android:textColorHint ="#56FFFFFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginTop="28dp"
+        android:backgroundTint="#FFFFFF"
         android:ems="10"
         android:hint="@string/song_name_field"
         android:inputType="textPersonName"
-        android:backgroundTint="#FFFFFF"
         android:textColor="#FFFFFF"
+        android:textColorHint="#56FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/upload_song_title" />
 
@@ -74,41 +75,26 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginTop="28dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textColorHint ="#56FFFFFF"
-        android:hint="@string/song_description_hint"
         android:backgroundTint="#FFFFFF"
+        android:ems="10"
+        android:hint="@string/song_description_hint"
+        android:inputType="textPersonName"
         android:textColor="#FFFFFF"
+        android:textColorHint="#56FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/songName" />
-
-    <EditText
-        android:id="@+id/songPath"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="28dp"
-        android:ems="10"
-        android:backgroundTint="#FFFFFF"
-        android:textColorHint ="#56FFFFFF"
-        android:textColor="#FFFFFF"
-        android:inputType="textPersonName"
-        android:hint="@string/song_path_hint"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/songDescription" />
 
 
     <Button
         android:id="@+id/upload_song_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:text="@string/upload_button"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="37dp"
         android:backgroundTint="#1DB954"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/songPath" />
+        android:text="@string/upload_button"
+        app:layout_constraintStart_toEndOf="@+id/selectSong"
+        app:layout_constraintTop_toBottomOf="@+id/selectSong" />
 
     <Button
         android:id="@+id/finishCreation"
@@ -120,6 +106,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/selectSong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="40dp"
+        android:text="Find song"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/songDescription" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

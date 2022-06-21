@@ -1,5 +1,6 @@
 package com.example.spotifiubyfy01
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -7,13 +8,12 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.AuthFailureError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
+import com.bumptech.glide.Glide
 import org.json.JSONObject
 
 class ProfileEditPage : AppCompatActivity() {
@@ -36,6 +36,14 @@ class ProfileEditPage : AppCompatActivity() {
             }
             val intent = Intent(this, MainLandingPage::class.java)
             startActivity(intent)
+        }
+
+        val changeProfileImage = findViewById<Button>(R.id.changePhotoButton)
+        changeProfileImage.setOnClickListener {
+            var chooseFile = Intent(Intent.ACTION_GET_CONTENT)
+            chooseFile.type = "*/*"
+            chooseFile = Intent.createChooser(chooseFile, "Choose a file")
+            startActivityForResult(chooseFile, 1)
         }
 
         val email = findViewById<EditText>(R.id.email)
@@ -150,7 +158,39 @@ class ProfileEditPage : AppCompatActivity() {
             MyRequestQueue.getInstance(this).addToRequestQueue(jsonRequest)
         }
     }
-
+    override fun onActivityResult(
+        requestCode: Int, resultCode: Int, resultData: Intent?) {
+        super.onActivityResult(requestCode, resultCode, resultData)
+        if (requestCode == 1
+            && resultCode == Activity.RESULT_OK) {
+            resultData?.data?.also { uri ->
+                val app = (this.application as Spotifiubify)
+                val storageName = "profilePictures/"+app.getProfileData("username").toString()
+                val coverRef =  app.getStorageReference().child(storageName)
+                val uploadTask = coverRef.putFile(uri)
+                uploadTask.addOnFailureListener {
+                    Toast.makeText(app, "Profile picture not uploaded, try again later", Toast.LENGTH_LONG).show()
+                }.addOnSuccessListener {
+                    Toast.makeText(app, "Profile picture successfully uploaded", Toast.LENGTH_SHORT).show()
+                    val url = "https://spotifiubyfy-users.herokuapp.com/users/photo/"+app.getProfileData("username").toString()
+                    val jsonRequest: JsonObjectRequest = object : JsonObjectRequest(Method.POST, url, null,
+                        {
+                            val intent = Intent(this, ProfilePage::class.java)
+                            startActivity(intent)},
+                        {}) {
+                        @Throws(com.android.volley.AuthFailureError::class)
+                        override fun getHeaders(): Map<String, String> {
+                            val params: MutableMap<String, String> = HashMap()
+                            params["Authorization"] = "Bearer " + getSharedPreferences(getString(R.string.token_key), MODE_PRIVATE).getString(getString(
+                                R.string.token_key), null)
+                            return params
+                        }
+                    }
+                    MyRequestQueue.getInstance(this).addToRequestQueue(jsonRequest)
+                }
+            }
+        }
+    }
     public fun editPreferences(view : View) {
         val intent = Intent(this, PreferencesSelection::class.java).apply {
             val location = "a place in the World"

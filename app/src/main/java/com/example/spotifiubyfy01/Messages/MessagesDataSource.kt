@@ -61,20 +61,22 @@ class MessagesDataSource {
             val getRequest = JsonObjectRequest(
                 Request.Method.GET,
                 url, null,
-                Response.Listener { jsonArtist ->
+                { jsonArtist ->
                     val artistName = jsonArtist.getString("name")
+                    val artistImage = "profilePictures/"+jsonArtist.getString("photo")
                     var numberOfNotSeen = 1
                     if (idNSeenTuple.get("seen") as Boolean) {
                         numberOfNotSeen = 0
                     }
-                    chatList.addArtistWithIdToPositionInList(Artist(artistId, artistName, image_link),
+                    chatList.addArtistWithIdToPositionInList(Artist(artistId, artistName, artistImage),
                                                             position, numberOfNotSeen)
-                },
-                { error -> val intent = Intent(context, PopUpWindow::class.java).apply {
-//                    val error = errorResponse//.networkResponse.data.decodeToString() //.split('"')[3]
+                }
+            ) { error ->
+                val intent = Intent(context, PopUpWindow::class.java).apply {
                     putExtra("popuptext", error.toString())
                 }
-                    context.startActivity(intent)})
+                context.startActivity(intent)
+            }
             MyRequestQueue.getInstance(context).addToRequestQueue(getRequest)
         }
 
@@ -85,14 +87,15 @@ class MessagesDataSource {
             val getRequest = JsonArrayRequest(
                 Request.Method.GET,
                 url, null,
-                Response.Listener { response ->
+                { response ->
                     this.searchRespectiveArtists(context, response, callBack)
-                },
-                { error -> val intent = Intent(context, PopUpWindow::class.java).apply {
-//                    val error = errorResponse//.networkResponse.data.decodeToString() //.split('"')[3]
+                }
+            ) { error ->
+                val intent = Intent(context, PopUpWindow::class.java).apply {
                     putExtra("popuptext", error.toString())
                 }
-                    context.startActivity(intent)})
+                context.startActivity(intent)
+            }
             MyRequestQueue.getInstance(context).addToRequestQueue(getRequest)
         }
 

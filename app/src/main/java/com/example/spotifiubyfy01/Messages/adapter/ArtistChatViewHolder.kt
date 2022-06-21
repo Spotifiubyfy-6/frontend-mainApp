@@ -15,6 +15,7 @@ import com.example.spotifiubyfy01.Spotifiubify
 import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.SearchItem
+import java.util.logging.Logger
 
 fun createRespectiveArtistChatHolder(parent: ViewGroup, viewType: Int) : ArtistChatViewHolder {
     val holder =
@@ -44,11 +45,17 @@ abstract class ArtistChatViewHolder(view: View) : RecyclerView.ViewHolder(view) 
 class ArtistChatSeenViewHolder(view: View) : ArtistChatViewHolder(view) {
     private val artistName: TextView = view.findViewById(R.id.artist_name)
     private val image: ImageView = view.findViewById(R.id.artist_image)
+    private val app = ((view.context as AppCompatActivity).application as Spotifiubify)
 
     override fun render(chatBundle: ChatBundle, position: Int,
                         onClickListener: (ArtistChatViewHolder, ChatBundle, Int) -> Unit) {
         artistName.text = chatBundle.artist.artistName
-        Glide.with(image.context).load(chatBundle.artist.image).into(image)
+        val coverRef = app.getStorageReference().child(chatBundle.artist.image)
+        coverRef.downloadUrl.addOnSuccessListener { url ->
+            Glide.with(image.context).load(url).into(image)
+        }.addOnFailureListener {
+            Glide.with(image.context).load(com.example.spotifiubyfy01.artistProfile.adapter.default_album_image).into(image)
+        }
         itemView.setOnClickListener { onClickListener(this, chatBundle, position) }
     }
 
@@ -61,11 +68,17 @@ class ArtistChatNotSeenViewHolder(view: View) : ArtistChatViewHolder(view) {
     private val artistName: TextView = view.findViewById(R.id.artist_name)
     private val image: ImageView = view.findViewById(R.id.artist_image)
     private val notSeenBox: TextView = view.findViewById(R.id.number_of_not_seen_messages)
+    private val app = ((view.context as AppCompatActivity).application as Spotifiubify)
 
     override fun render(chatBundle: ChatBundle, position: Int,
                         onClickListener: (ArtistChatViewHolder, ChatBundle, Int) -> Unit) {
         artistName.text = chatBundle.artist.artistName
-        Glide.with(image.context).load(chatBundle.artist.image).into(image)
+        val coverRef = app.getStorageReference().child(chatBundle.artist.image)
+        coverRef.downloadUrl.addOnSuccessListener { url ->
+            Glide.with(image.context).load(url).into(image)
+        }.addOnFailureListener {
+            Glide.with(image.context).load(com.example.spotifiubyfy01.artistProfile.adapter.default_album_image).into(image)
+        }
         itemView.setOnClickListener { onClickListener(this, chatBundle, position) }
         artistName.setTypeface(null, Typeface.BOLD)
         notSeenBox.visibility = View.VISIBLE

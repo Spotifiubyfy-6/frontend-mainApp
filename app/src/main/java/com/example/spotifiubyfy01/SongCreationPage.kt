@@ -1,6 +1,7 @@
 package com.example.spotifiubyfy01
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -13,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
+import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.artistProfile.Album
 import org.json.JSONObject
 import java.io.File
@@ -21,6 +23,7 @@ class SongCreationPage : AppCompatActivity(), AdapterView.OnItemClickListener {
 
     private var albumId: Int? = null
     private var albumList: ArrayList<Album>? = null
+    lateinit var songFile: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,11 +74,18 @@ class SongCreationPage : AppCompatActivity(), AdapterView.OnItemClickListener {
             Toast.makeText(this, intent.getStringExtra("songCreated"),Toast.LENGTH_SHORT).show()
         }
 
+        val findSong = findViewById<Button>(R.id.selectSong)
+        findSong.setOnClickListener {
+            var chooseFile = Intent(Intent.ACTION_GET_CONTENT)
+            chooseFile.type = "*/*"
+            chooseFile = Intent.createChooser(chooseFile, "Choose a file")
+            startActivityForResult(chooseFile, 1)
+        }
+
         val app = (this.application as Spotifiubify)
 
         val songName = findViewById<EditText>(R.id.songName)
         val songDescription = findViewById<EditText>(R.id.songDescription)
-        val songPath = findViewById<EditText>(R.id.songPath)
 
         val uploadSongButton = findViewById<Button>(R.id.upload_song_button)
         uploadSongButton.setOnClickListener {
@@ -97,8 +107,7 @@ class SongCreationPage : AppCompatActivity(), AdapterView.OnItemClickListener {
 
                     val storageName = "songs/"+response.getString("storage_name")
                     val songRef =  app.getStorageReference().child(storageName)
-                    val file = Uri.fromFile(File(songPath.text.toString()))
-                    val uploadTask = songRef.putFile(file)
+                    val uploadTask = songRef.putFile(songFile)
                     uploadTask.addOnFailureListener {
                         Toast.makeText(app, "Song not uploaded: ERROR",Toast.LENGTH_LONG).show()
                     }.addOnSuccessListener {
@@ -117,9 +126,20 @@ class SongCreationPage : AppCompatActivity(), AdapterView.OnItemClickListener {
         finishAlbumCreationButton.setOnClickListener {
             val intent = Intent(this, ProfilePage::class.java)
             startActivity(intent)
+            finish()
         }
     }
 
+    override fun onActivityResult(
+        requestCode: Int, resultCode: Int, resultData: Intent?) {
+        super.onActivityResult(requestCode, resultCode, resultData)
+        if (requestCode == 1
+            && resultCode == Activity.RESULT_OK) {
+            resultData?.data?.also { uri ->
+                this.songFile = uri
+            }
+        }
+    }
     private fun obtainAlbumIdOfPosition(albumList: ArrayList<Album>, position: Int): Int {
         return albumList[position].album_id.toInt()
     }

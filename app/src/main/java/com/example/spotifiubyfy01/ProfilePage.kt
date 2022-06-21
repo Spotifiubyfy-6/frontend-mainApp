@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.artistProfile.AlbumDataSource
 import com.example.spotifiubyfy01.artistProfile.AlbumDataSource.Companion.createAlbumList
+import com.example.spotifiubyfy01.artistProfile.adapter.default_album_image
 import com.example.spotifiubyfy01.artistProfile.adapterSongRecyclerAdapter.AlbumRecyclerAdapter
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
@@ -92,7 +93,12 @@ class ProfilePage : AppCompatActivity(), VolleyCallBack<Album> {
             startActivity(intent)
         }
         val image = findViewById<ImageView>(R.id.artist_image)
-        Glide.with(image.context).load(artist!!.image).into(image)
+        val coverRef = app.getStorageReference().child(artist!!.image)
+        coverRef.downloadUrl.addOnSuccessListener { url ->
+            Glide.with(image.context).load(url).into(image)
+        }.addOnFailureListener {
+            Glide.with(image.context).load(default_album_image).into(image)
+        }
         initAlbumRecyclerView(ArrayList())
         createAlbumList(this, artist!!.id, artist!!.artistName,this)
     }
