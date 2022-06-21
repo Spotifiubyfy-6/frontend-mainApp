@@ -49,9 +49,9 @@ class PlaylistPage : AppCompatActivity() {
         }
         // Solo puede invitar el owner (falta que playlist devuelva username
         // del back, por ahora es deafult_username)
-        if (app.getProfileData("username") != playlist.user_name) {
-            inviteBtn.visibility = View.INVISIBLE
-        }
+        //if (app.getProfileData("username") != playlist.user_name) {
+        //    inviteBtn.visibility = View.INVISIBLE
+        //}
 
         coverRef.downloadUrl.addOnSuccessListener { url ->
             Glide.with(image.context).load(url).into(image)
