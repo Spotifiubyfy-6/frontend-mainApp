@@ -5,21 +5,32 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
+import com.example.spotifiubyfy01.search.Artist
 import org.json.JSONObject
 
 class TippingPage : AppCompatActivity() {
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.top_bar, menu)
+        return true
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tipping_page)
-
-        val artistId = intent.extras?.get("artist_id")
+        val artist = intent.extras?.get("artist") as Artist
+        val artistId = artist.id
 
         val sendTipBtn = findViewById<Button>(R.id.send_tip_btn)
         val amountToTip = findViewById<EditText>(R.id.amount_to_tip)
@@ -30,30 +41,25 @@ class TippingPage : AppCompatActivity() {
     }
 
     private fun sendTip(amount: String, artistId: Any?) {
+
         val url = "https://spotifiubyfy-users.herokuapp.com/users/wallets/sendfounds"
-
-
 
         val requestBody = JSONObject()
         requestBody.put("receiver_id", artistId)
         requestBody.put("foundsToSend", amount)
 
 
-        val postRequest: StringRequest = object : StringRequest(
-            Request.Method.POST, url,
-            Response.Listener { response ->
-                Toast.makeText(this, "Funds succesfully Sent",
+        val postRequest: JsonObjectRequest = object : JsonObjectRequest(
+            Request.Method.POST,url,requestBody,
+            { response ->
+                Toast.makeText(this, "Funds succesfully sent",
                     Toast.LENGTH_SHORT).show()
-                //fetchWalletFunds(walletFunds)
+                val intent = Intent(this, ProfilePage::class.java)
+                startActivity(intent)
             },
             { errorResponse ->
-                val intent = Intent(this, PopUpWindow::class.java).apply {
-                    Log.d(ContentValues.TAG, "ERROR: $errorResponse")
-                    val error = errorResponse.networkResponse.data.decodeToString()
-                    putExtra("popuptext", error)
-                    putExtra("tokenValidation", true)
-                }
-                startActivity(intent)
+                Toast.makeText(this, "Oops, something wrong happened",
+                    Toast.LENGTH_SHORT).show()
             }
         ) {
             @Throws(AuthFailureError::class)
@@ -63,17 +69,20 @@ class TippingPage : AppCompatActivity() {
                 return params
             }
 
-            override fun getBody(): ByteArray {
-                return requestBody.toString().toByteArray(Charsets.UTF_8)
-
-            }
-
-            override fun getBodyContentType(): String? {
-                return "application/json"
-            }
         }
 
         MyRequestQueue.getInstance(this).addToRequestQueue(postRequest)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+            return true
+        }
+        if (item.itemId == R.id.action_playback) {
+            startActivity(Intent(this, ReproductionPage::class.java))
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     }

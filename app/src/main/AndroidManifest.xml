@@ -16,13 +16,28 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".TippingPage"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".artistProfile.ArtistPage">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".artistProfile.ArtistPage" />
+        </activity>
         <activity
             android:name=".Wallet"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ProfilePage">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ProfilePage" />
+        </activity>
         <activity
             android:name=".PreferencesSelection"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".ProfileEditPage">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".ProfileEditPage" />
+        </activity>
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -41,7 +56,12 @@
         <activity
             android:name=".LocationSelection"
             android:exported="true"
-            android:label="@string/title_activity_location_selection" />
+            android:label="@string/title_activity_location_selection"
+            android:parentActivityName=".ProfileEditPage">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ProfileEditPage" />
+        </activity>
         <activity
             android:name=".ListOfPlaylistsPage"
             android:exported="false" />
