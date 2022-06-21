@@ -6,6 +6,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -30,11 +32,11 @@ class PreferencesSelection : AppCompatActivity(), AdapterView.OnItemClickListene
         setContentView(R.layout.activity_preferences_selection)
 
         fetchInterests()
-
-
-
     }
-
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.top_bar, menu)
+        return true
+    }
     public fun fetchInterests() {
         val url = "https://spotifiubyfy-users.herokuapp.com/interests"
 
@@ -172,6 +174,17 @@ class PreferencesSelection : AppCompatActivity(), AdapterView.OnItemClickListene
     fun goBack(view : View) {
         val intent = Intent(this, MainPage::class.java)
         startActivity(intent)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+            return true
+        }
+        if (item.itemId == R.id.action_playback) {
+            startActivity(Intent(this, ReproductionPage::class.java))
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }

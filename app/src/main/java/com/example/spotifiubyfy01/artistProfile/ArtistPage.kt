@@ -70,7 +70,7 @@ class ArtistPage: AppCompatActivity(), VolleyCallBack<Album> {
         }
         tipBtn.setOnClickListener {
             val intent = Intent(this, TippingPage::class.java).apply {
-                putExtra("artist_id", (savedInstanceState?.getString("ArtistID") as String).toInt())
+                putExtra("artist", artist)
             }
             startActivity(intent)
         }

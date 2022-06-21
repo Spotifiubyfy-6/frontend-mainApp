@@ -4,6 +4,8 @@ import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -16,6 +18,13 @@ import com.android.volley.toolbox.StringRequest
 import org.json.JSONObject
 
 class Wallet : AppCompatActivity() {
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.top_bar, menu)
+        return true
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_wallet)
@@ -55,13 +64,8 @@ class Wallet : AppCompatActivity() {
                 startActivity(intent)
             },
             { errorResponse ->
-                val intent = Intent(this, PopUpWindow::class.java).apply {
-                    Log.d(ContentValues.TAG, "ERROR: $errorResponse")
-                    val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
-                    putExtra("popuptext", error)
-                    putExtra("tokenValidation", true)
-                }
-                startActivity(intent)
+                Toast.makeText(this, "Oops, something wrong happened",
+                    Toast.LENGTH_SHORT).show()
             }
         ) {
             @Throws(AuthFailureError::class)
@@ -133,5 +137,16 @@ class Wallet : AppCompatActivity() {
         }
         MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+            return true
+        }
+        if (item.itemId == R.id.action_playback) {
+            startActivity(Intent(this, ReproductionPage::class.java))
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
