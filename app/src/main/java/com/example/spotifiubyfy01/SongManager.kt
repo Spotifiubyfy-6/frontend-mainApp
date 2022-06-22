@@ -61,15 +61,14 @@ class SongManager(app: Spotifiubify) {
         }
     }
 
-    fun next() {
+    fun next(): Boolean{
         try {
             play(playlist.pop())
+            return true
         } catch(e: NoSuchElementException) {
             MediaPlayer.stop()
-//            currentSong = nullSong
-//            if (wifiLock.isHeld) {
-//                wifiLock.release()
-//            }
+            currentSong = nullSong
+            return false
         }
     }
 
