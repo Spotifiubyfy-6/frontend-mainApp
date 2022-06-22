@@ -56,7 +56,7 @@ class DataSource {
         private fun fetchByArtistsAsFilter(slice: String, context: Context,
                                  callBack: VolleyCallBack<SearchItem>,
                                  synchronizer: SearchListMonitor) {
-            val url = "https://spotifiubyfy-music.herokuapp.com/search/" + slice
+            val url = "https://spotifiubyfy-music.herokuapp.com/search/$slice"
             val getRequest = JsonArrayRequest(
                 Request.Method.GET,
                 url, null,
@@ -112,7 +112,7 @@ class DataSource {
                                           synchronizer: SearchListMonitor) {
             val auxList = ArrayList<SearchItem>()
 
-            val url = "https://spotifiubyfy-music.herokuapp.com/playlists?q=24&skip=0&limit=5"
+            val url = "https://spotifiubyfy-music.herokuapp.com/playlists?q=$slice&skip=0&limit=5"
 
             val getRequest = JsonArrayRequest(
                 Request.Method.GET,
