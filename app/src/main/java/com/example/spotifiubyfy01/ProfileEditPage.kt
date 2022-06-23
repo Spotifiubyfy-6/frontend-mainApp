@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
@@ -35,6 +36,12 @@ class ProfileEditPage : AppCompatActivity() {
                 apply()
             }
             val intent = Intent(this, MainLandingPage::class.java)
+            startActivity(intent)
+        }
+
+        val changeSubscriptionBtn = findViewById<Button>(R.id.subscriptionBtn)
+        changeSubscriptionBtn.setOnClickListener {
+            val intent = Intent(this, SubscriptionPage::class.java)
             startActivity(intent)
         }
 
@@ -213,5 +220,10 @@ class ProfileEditPage : AppCompatActivity() {
             startActivity(Intent(this, ReproductionPage::class.java))
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.top_bar, menu)
+        return true
     }
 }

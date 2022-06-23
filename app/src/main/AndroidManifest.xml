@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Spotifiubyfy01"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".SubscriptionPage"
+            android:exported="false" />
+        <activity
             android:name=".TippingPage"
             android:exported="false"
             android:parentActivityName=".artistProfile.ArtistPage">
@@ -34,9 +37,9 @@
             android:name=".PreferencesSelection"
             android:exported="true"
             android:parentActivityName=".ProfileEditPage">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".ProfileEditPage" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ProfileEditPage" />
         </activity>
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
@@ -66,9 +69,9 @@
             android:name=".ListOfPlaylistsPage"
             android:exported="false"
             android:parentActivityName=".MainPage">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".MainPage" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainPage" />
         </activity>
         <activity
             android:name=".PlaylistPage"
@@ -81,10 +84,8 @@
         <activity
             android:name=".PlaylistCreationPage"
             android:exported="false" />
-
-
-
-        <activity android:name=".search.SearchArtistPage"
+        <activity
+            android:name=".search.SearchArtistPage"
             android:exported="false"
             android:parentActivityName=".Messages.MessagesPage">
             <meta-data
