@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.spotifiubyfy01.Messages.albumMessages.AlbumMessagesPage
 import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.artistProfile.Song
 import com.example.spotifiubyfy01.artistProfile.adapter.SongRecyclerAdapter
@@ -53,6 +54,13 @@ class AlbumPage : AppCompatActivity() {
             app.SongManager.playSongList(album.song_list)
             for (song in album.song_list)
                 Log.d(TAG, song.song_name)
+        }
+
+        val commentsButton = findViewById<Button>(R.id.comments_button)
+        commentsButton.setOnClickListener {
+            val intent = Intent(this, AlbumMessagesPage::class.java)
+            intent.putExtra("albumId", album.album_id)
+            startActivity(intent)
         }
     }
 

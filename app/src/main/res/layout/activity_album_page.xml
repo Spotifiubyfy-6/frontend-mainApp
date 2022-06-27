@@ -101,6 +101,12 @@
             android:text="This album is the latest revolution in music. I was inspired by the latest Beatles work and I am glad I am able to share it with you people thanks to Spotifiubyfy. Enjoy it!"
             android:textSize="14sp"/>
 
+        <Button
+            android:id="@+id/comments_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Comments"
+            android:layout_gravity="center"/>
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
