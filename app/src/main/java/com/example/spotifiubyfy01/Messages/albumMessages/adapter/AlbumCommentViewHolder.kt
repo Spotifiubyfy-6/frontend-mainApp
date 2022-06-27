@@ -31,7 +31,7 @@ class AlbumCommentViewHolder(view: View): RecyclerView.ViewHolder(view) {
             Glide.with(image.context).load(com.example.spotifiubyfy01.artistProfile.adapter.default_album_image).into(image)
         }
         comment.text = item.comment
-        date.text = "8d ago"
+        date.text = item.getTimeAgo()
         itemView.setOnClickListener { onClickListener(item) }
     }
 }
