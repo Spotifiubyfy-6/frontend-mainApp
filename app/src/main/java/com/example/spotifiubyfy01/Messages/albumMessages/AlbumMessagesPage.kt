@@ -28,8 +28,9 @@ class AlbumMessagesPage : AppCompatActivity(), VolleyCallBack<Comment> {
         setContentView(R.layout.activity_album_comments)
         val app = (this.application as Spotifiubify)
         val albumId = (intent.extras!!.get("albumId") as String).toInt()
+        val authorId = (intent.extras!!.get("authorId") as String).toInt()
         initRecyclerView(ArrayList())
-        CommentsDataSource.getCommentsOfAlbum(this, albumId, this)
+        CommentsDataSource.getCommentsOfAlbum(this, albumId, authorId, this)
 
         val commentTextBox = findViewById<EditText>(R.id.comment_text)
         val myId = (app.getProfileData("id") as String).toInt()
@@ -39,7 +40,7 @@ class AlbumMessagesPage : AppCompatActivity(), VolleyCallBack<Comment> {
 
         sendButton.setOnClickListener{
             CommentsDataSender.makeComment(this, myArtist, albumId, commentTextBox.text.toString(),
-                                            this::addComment)
+                                            this::addComment, authorId == myId)
             commentTextBox.text.clear()
         }
     }
