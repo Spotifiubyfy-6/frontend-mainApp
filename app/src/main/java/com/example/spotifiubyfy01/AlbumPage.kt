@@ -60,6 +60,7 @@ class AlbumPage : AppCompatActivity() {
         commentsButton.setOnClickListener {
             val intent = Intent(this, AlbumMessagesPage::class.java)
             intent.putExtra("albumId", album.album_id)
+            intent.putExtra("authorId", album.author_id)
             startActivity(intent)
         }
     }
