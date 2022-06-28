@@ -6,7 +6,7 @@ import com.example.spotifiubyfy01.search.Artist
 import java.time.*
 
 data class Comment(
-    val artist: Artist,
+    var artist: Artist,
     val comment: String,
     val time: LocalDateTime
 ) : Serializable {
