@@ -20,6 +20,7 @@ class AlbumCommentViewHolder(view: View): RecyclerView.ViewHolder(view) {
     private val image: ImageView = view.findViewById(R.id.artist_image)
     private val comment: TextView = view.findViewById(R.id.comment)
     private val date: TextView = view.findViewById(R.id.date_ago)
+    private val authorTag: TextView = view.findViewById(R.id.authorTag)
 
     fun render(item: Comment, onClickListener: (Comment) -> Unit) {
         val artist = item.artist
@@ -33,5 +34,7 @@ class AlbumCommentViewHolder(view: View): RecyclerView.ViewHolder(view) {
         comment.text = item.comment
         date.text = item.getTimeAgo()
         itemView.setOnClickListener { onClickListener(item) }
+        if (item.isAuthor)
+            authorTag.visibility = View.VISIBLE
     }
 }
