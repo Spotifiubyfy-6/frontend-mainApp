@@ -19,9 +19,9 @@ fun toDuration(duration: Long): String {
         val current: Long = times.get(i)
         val temp = duration / current
         if (temp > 0) {
-            res.append(temp).append(" ").append(timesString.get(i)).append(" ago")
+            res.append(temp).append(timesString.get(i)).append(" ago")
             break
         }
     }
-    return if ("" == res.toString()) "0 seconds ago" else res.toString()
+    return if ("" == res.toString()) "0s ago" else res.toString()
 }

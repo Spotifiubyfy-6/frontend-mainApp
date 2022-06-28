@@ -51,7 +51,7 @@
                 <TextView
                     android:id="@+id/artist_name"
                     android:layout_width="0dp"
-                    android:layout_weight="8"
+                    android:layout_weight="7.5"
                     android:layout_height="wrap_content"
                     android:text="The Name of an Artist"
                     android:textColor="@color/purple_200"
@@ -73,7 +73,7 @@
                 <TextView
                     android:id="@+id/date_ago"
                     android:layout_width="0dp"
-                    android:layout_weight="2"
+                    android:layout_weight="2.5"
                     android:layout_height="wrap_content"
                     android:text="2d ago"
                     android:textColor="@color/purple_200"
@@ -89,6 +89,7 @@
                 android:id="@+id/comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="top"
                 android:text="This is a message on an album. I am commenting an album. Wiii"
                 android:textColor="@color/white"
                 android:textSize="12sp"/>
