@@ -32,7 +32,8 @@ class AlbumCommentViewHolder(view: View): RecyclerView.ViewHolder(view) {
             Glide.with(image.context).load(com.example.spotifiubyfy01.artistProfile.adapter.default_album_image).into(image)
         }
         comment.text = item.comment
-        date.text = item.getTimeAgo()
+        val dateText = "•" + item.getTimeAgo()
+        date.text = dateText
         itemView.setOnClickListener { onClickListener(item) }
         if (item.isAuthor)
             authorTag.visibility = View.VISIBLE
