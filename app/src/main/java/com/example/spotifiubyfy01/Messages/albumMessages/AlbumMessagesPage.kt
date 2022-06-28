@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifiubyfy01.Messages.albumMessages.adapter.AlbumCommentsRecyclerAdapter
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.ReproductionPage
+import com.example.spotifiubyfy01.artistProfile.ArtistPage
+import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
 
 class AlbumMessagesPage : AppCompatActivity(), VolleyCallBack<Comment> {
@@ -36,7 +38,9 @@ class AlbumMessagesPage : AppCompatActivity(), VolleyCallBack<Comment> {
     }
 
     private fun onItemClicked(comment: Comment) {
-        Log.d("TAG", "Comment clicked!")
+        val intent = Intent(this, ArtistPage::class.java)
+        intent.putExtra("Artist", comment.artist)
+        startActivity(intent)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
