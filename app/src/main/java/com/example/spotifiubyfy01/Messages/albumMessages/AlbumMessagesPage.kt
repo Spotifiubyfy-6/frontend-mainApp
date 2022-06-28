@@ -2,15 +2,17 @@ package com.example.spotifiubyfy01.Messages.albumMessages
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifiubyfy01.Messages.albumMessages.adapter.AlbumCommentsRecyclerAdapter
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.ReproductionPage
+import com.example.spotifiubyfy01.Spotifiubify
 import com.example.spotifiubyfy01.artistProfile.ArtistPage
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
@@ -24,12 +26,25 @@ class AlbumMessagesPage : AppCompatActivity(), VolleyCallBack<Comment> {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_album_comments)
+        val app = (this.application as Spotifiubify)
         val albumId = (intent.extras!!.get("albumId") as String).toInt()
         initRecyclerView(ArrayList())
         CommentsDataSource.getCommentsOfAlbum(this, albumId, this)
+
+        val commentTextBox = findViewById<EditText>(R.id.comment_text)
+        val myId = (app.getProfileData("id") as String).toInt()
+        val myArtist = Artist(myId, (app.getProfileData("name") as String),
+                "profilePictures/"+app.getProfileData("username").toString())
+        val sendButton = findViewById<Button>(R.id.comment_button)
+
+        sendButton.setOnClickListener{
+            CommentsDataSender.makeComment(this, myArtist, albumId, commentTextBox.text.toString(),
+                                            this::addComment)
+            commentTextBox.text.clear()
+        }
     }
 
-    private fun initRecyclerView(commentsList: List<Comment>) {
+    private fun initRecyclerView(commentsList: ArrayList<Comment>) {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = AlbumCommentsRecyclerAdapter(commentsList) { comment: Comment ->
@@ -54,7 +69,15 @@ class AlbumMessagesPage : AppCompatActivity(), VolleyCallBack<Comment> {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun addComment(comment: Comment) {
+        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
+        val adapter =(recyclerView.adapter as AlbumCommentsRecyclerAdapter)
+        adapter.addComment(comment)
+        recyclerView.smoothScrollToPosition(0)
+    }
+
     override fun updateData(list: List<Comment>) {
-        initRecyclerView(list)
+        val arrayList = ArrayList<Comment>(list)
+        initRecyclerView(arrayList)
     }
 }
