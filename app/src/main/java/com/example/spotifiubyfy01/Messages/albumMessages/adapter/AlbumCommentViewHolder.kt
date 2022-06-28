@@ -36,5 +36,7 @@ class AlbumCommentViewHolder(view: View): RecyclerView.ViewHolder(view) {
         itemView.setOnClickListener { onClickListener(item) }
         if (item.isAuthor)
             authorTag.visibility = View.VISIBLE
+        else
+            authorTag.visibility = View.GONE
     }
 }
