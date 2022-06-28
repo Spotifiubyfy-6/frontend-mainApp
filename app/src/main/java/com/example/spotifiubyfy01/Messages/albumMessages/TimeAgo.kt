@@ -23,5 +23,5 @@ fun toDuration(duration: Long): String {
             break
         }
     }
-    return if ("" == res.toString()) "0s ago" else res.toString()
+    return if (res.contains("s")) "just now" else res.toString()
 }
