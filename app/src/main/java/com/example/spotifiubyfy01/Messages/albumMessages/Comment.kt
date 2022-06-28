@@ -8,7 +8,8 @@ import java.time.*
 data class Comment(
     var artist: Artist,
     val comment: String,
-    val time: LocalDateTime
+    val time: LocalDateTime,
+    val isAuthor: Boolean
 ) : Serializable {
 
     fun getTimeAgo(): String {
