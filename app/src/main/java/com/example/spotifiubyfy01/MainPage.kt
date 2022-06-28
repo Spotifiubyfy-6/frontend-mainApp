@@ -225,6 +225,7 @@ class MainPage: AppCompatActivity() {
         val description = jsonAlbum.getString("album_description")
         val genre = jsonAlbum.getString("album_genre")
         var artistName = "default artist name"
+        val authorId = jsonAlbum.getString("artist_id")
         if (songs.length() > 0) {
             val song = songs.getJSONObject(0)
             artistName = song.getString("artist_name")
@@ -232,7 +233,6 @@ class MainPage: AppCompatActivity() {
         return Album(albumId, albumName, storageName, artistName,
             getListOfSongs(
                 JSONArray(jsonAlbum.getString("songs").toString())
-            ), description, genre
-        )
+            ), description, genre, authorId)
     }
 }
