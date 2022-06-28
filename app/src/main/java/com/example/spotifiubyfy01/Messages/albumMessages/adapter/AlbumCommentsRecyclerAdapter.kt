@@ -10,7 +10,7 @@ import com.example.spotifiubyfy01.search.SearchItem
 import com.example.spotifiubyfy01.search.adapter.ArtistViewHolder
 
 class AlbumCommentsRecyclerAdapter(
-    private var commentsList: List<Comment>,
+    private var commentsList: MutableList<Comment>,
     private val onClickListener:(Comment) -> Unit
 ): RecyclerView.Adapter<AlbumCommentViewHolder>() {
 
@@ -27,5 +27,10 @@ class AlbumCommentsRecyclerAdapter(
 
     override fun getItemCount(): Int {
         return commentsList.size
+    }
+
+    fun addComment(comment: Comment) {
+        commentsList.add(0, comment)
+        this.notifyItemInserted(0)
     }
 }
