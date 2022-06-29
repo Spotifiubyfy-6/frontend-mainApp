@@ -5,9 +5,8 @@ import android.util.Log
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.StringRequest
-import com.example.spotifiubyfy01.Messages.MessagesDataSource
-import com.example.spotifiubyfy01.Messages.albumMessages.Comment
 import org.json.JSONObject
+import kotlin.reflect.KFunction1
 
 class RatingDataSource {
     companion object {
@@ -42,10 +41,18 @@ class RatingDataSource {
             MyRequestQueue.getInstance(context).addToRequestQueue(getRequest)
         }
 
-        fun postReview(context: Context, rating: Int, albumId: Int, userId: Int) {
+        fun postReview(
+            context: Context,
+            rating: Float,
+            albumId: Int,
+            userId: Int,
+            changeAverageRating: KFunction1<Float, Unit>
+        ) {
             val url = "http://spotifiubyfy-music.herokuapp.com/reviews"
             val jsonRequest: StringRequest = object : StringRequest(
-                Method.POST, url, {},
+                Method.POST, url, {response ->
+                    changeAverageRating(rating)
+                },
                 { errorResponse ->
                     Log.d("TAG", errorResponse.toString())
                 }) {
@@ -57,7 +64,7 @@ class RatingDataSource {
                     val params2 = HashMap<String, String>()
                     params2["user_id"] = userId.toString()
                     params2["album_id"] = albumId.toString()
-                    params2["quantitative_review"] = rating.toString()
+                    params2["quantitative_review"] = rating.toInt().toString()
                     return JSONObject(params2 as Map<String, String>).toString().toByteArray()
                 }
             }

@@ -16,8 +16,8 @@ class StarRatingHandler(private val starBar: RatingBar, val averageRating: TextV
 
     private fun watchNUpdateRating() {
         starBar.setOnRatingBarChangeListener { _, rating, _ ->
-            RatingDataSource.postReview(context, rating.toInt(), albumId, userId)
-            changeAverageRating(rating)
+            RatingDataSource.postReview(context, rating, albumId, userId,
+                this::changeAverageRating)
         }
     }
 
