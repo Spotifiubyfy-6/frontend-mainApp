@@ -65,10 +65,7 @@ class AlbumPage : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val rBar = findViewById<RatingBar>(R.id.rBar)
-        rBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
-            Log.d("TAG", rating.toString())
-        }
+        StarRatingHandler(findViewById<RatingBar>(R.id.rBar))
     }
 
     private fun initRecyclerView(songList: List<Song>) {
