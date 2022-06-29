@@ -119,7 +119,7 @@
                 android:id="@+id/rBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:stepSize="0.5"
+                android:stepSize="1"
                 android:theme="@style/Widget.AppCompat.RatingBar"
                 android:progressTint="#FF9800"
                 android:progressBackgroundTint="#2F2F2F"
