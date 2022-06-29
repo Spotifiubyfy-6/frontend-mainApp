@@ -7,8 +7,9 @@ import android.widget.TextView
 
 class StarRatingHandler(private val starBar: RatingBar, val averageRating: TextView,
                         val albumId: Int, val userId: Int, val context: Context) {
-    private var userHadRated = false
-
+    private var userCurrentReview = -1
+    private var reviewSum = 0
+    private var numberOfReviews = 0
     init {
         RatingDataSource.getReviewsAverage(context, albumId, userId, this::setAlbumAverage)
     }
@@ -21,23 +22,34 @@ class StarRatingHandler(private val starBar: RatingBar, val averageRating: TextV
     }
 
     private fun changeAverageRating(rating: Float) {
-        if (!userHadRated) {
-            if (averageRating.text.contains("NR")) { //first review
-                val averageString = "%.1f".format(rating) + "/5"
-                averageRating.text = averageString
-                return
-            }
+        if (averageRating.text.contains("NR")) { //first review
+            val averageString = "%.1f".format(rating) + "/5"
+            averageRating.text = averageString
+            return
         }
 
+        val ratingInt = rating.toInt()
+        if (userCurrentReview != -1) {  //user has rated
+            reviewSum = reviewSum - userCurrentReview + ratingInt
+        } else {//user has not rated
+            reviewSum += ratingInt
+            numberOfReviews++
+        }
+        userCurrentReview = ratingInt
+        val averageString = "%.1f".format((reviewSum / numberOfReviews).toFloat()) + "/5"
+        averageRating.text = averageString
     }
 
     private fun setAlbumAverage(reviewSum: Int, numberOfReviews: Int, userReview: Int) {
-        if (userReview >= 0) {
+        this.numberOfReviews = numberOfReviews
+        this.userCurrentReview = userReview
+        this.reviewSum = reviewSum
+
+        if (userCurrentReview >= 0)
             starBar.rating = userReview.toFloat()
-            userHadRated = true
-        } else {
+        else
             starBar.rating = 0F
-        }
+
         val averageString = StringBuffer()
         if (numberOfReviews == 0)
             averageString.append("NR")
