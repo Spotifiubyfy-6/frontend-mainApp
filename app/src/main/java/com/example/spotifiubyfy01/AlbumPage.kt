@@ -63,9 +63,8 @@ class AlbumPage : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val rateHandler = StarRatingHandler(findViewById(R.id.rBar), findViewById(R.id.averageRating),
+        StarRatingHandler(findViewById(R.id.rBar), findViewById(R.id.averageRating),
                             album.album_id.toInt(), app.getProfileData("id")!!.toInt(), this)
-        rateHandler.watchNUpdateRating()
     }
 
     private fun initRecyclerView(songList: List<Song>) {
