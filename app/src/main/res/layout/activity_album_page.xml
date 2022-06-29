@@ -100,12 +100,34 @@
             android:textColor="@color/white"
             android:text="This album is the latest revolution in music. I was inspired by the latest Beatles work and I am glad I am able to share it with you people thanks to Spotifiubyfy. Enjoy it!"
             android:textSize="14sp"/>
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:text="Rate:  "
+                android:textColor="@color/white"
+                android:textSize="24sp"/>
+            <RatingBar
+                android:id="@+id/rBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:stepSize="0.5"
+                android:theme="@style/Widget.AppCompat.RatingBar"
+                android:background="#2F2F2F"
+                android:numStars="5"/>
+        </LinearLayout>
         <Button
             android:id="@+id/comments_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Comments"
+            android:text="Comment"
             android:layout_gravity="center"/>
     </LinearLayout>
 
