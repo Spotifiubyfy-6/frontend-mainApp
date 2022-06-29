@@ -6,33 +6,49 @@ import android.widget.RatingBar
 import android.widget.TextView
 
 class StarRatingHandler(private val starBar: RatingBar, val averageRating: TextView,
-                        val albumId: Int, userId: Int, val context: Context) {
-    private var userHasRated = false
+                        val albumId: Int, val userId: Int, val context: Context) {
+    private var userHadRated = false
+
     init {
         RatingDataSource.getReviewsAverage(context, albumId, userId, this::setAlbumAverage)
     }
-    fun watchNUpdateRating() {
 
+    private fun watchNUpdateRating() {
         starBar.setOnRatingBarChangeListener { _, rating, _ ->
-            Log.d("TAG", rating.toString())
+            RatingDataSource.postReview(context, rating.toInt(), albumId, userId)
+            changeAverageRating(rating)
         }
+    }
+
+    private fun changeAverageRating(rating: Float) {
+        if (!userHadRated) {
+            if (averageRating.text.contains("NR")) { //first review
+                val averageString = "%.1f".format(rating) + "/5"
+                averageRating.text = averageString
+                return
+            }
+        }
+
     }
 
     private fun setAlbumAverage(reviewSum: Int, numberOfReviews: Int, userReview: Int) {
         if (userReview >= 0) {
             starBar.rating = userReview.toFloat()
-            userHasRated = true
+            userHadRated = true
         } else {
             starBar.rating = 0F
         }
         val averageString = StringBuffer()
         if (numberOfReviews == 0)
-            averageString.append("NF")
+            averageString.append("NR")
         else {
-            val average = reviewSum / numberOfReviews
-            averageString.append(average.toString())
+            Log.d("TAG", reviewSum.toString())
+            Log.d("TAG", numberOfReviews.toString())
+            val average = "%.1f".format((reviewSum / numberOfReviews).toFloat())
+            averageString.append(average)
         }
         averageString.append("/5")
         averageRating.text = averageString
+        this.watchNUpdateRating()
     }
 }
