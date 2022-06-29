@@ -36,7 +36,7 @@ class StarRatingHandler(private val starBar: RatingBar, val averageRating: TextV
             numberOfReviews++
         }
         userCurrentReview = ratingInt
-        val averageString = "%.1f".format((reviewSum / numberOfReviews).toFloat()) + "/5"
+        val averageString = "%.1f".format((reviewSum.toFloat() / numberOfReviews.toFloat())) + "/5"
         averageRating.text = averageString
     }
 
@@ -56,7 +56,7 @@ class StarRatingHandler(private val starBar: RatingBar, val averageRating: TextV
         else {
             Log.d("TAG", reviewSum.toString())
             Log.d("TAG", numberOfReviews.toString())
-            val average = "%.1f".format((reviewSum / numberOfReviews).toFloat())
+            val average = "%.1f".format((reviewSum.toFloat() / numberOfReviews.toFloat()))
             averageString.append(average)
         }
         averageString.append("/5")
