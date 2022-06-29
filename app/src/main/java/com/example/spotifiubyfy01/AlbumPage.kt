@@ -8,7 +8,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.RatingBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -51,7 +50,6 @@ class AlbumPage : AppCompatActivity() {
         val play_button = findViewById<Button>(R.id.playButton)
         play_button.setOnClickListener {
             //play album! obtain album songs using album.song_list
-            val app = (this.application as Spotifiubify)
             app.SongManager.playSongList(album.song_list)
             for (song in album.song_list)
                 Log.d(TAG, song.song_name)
@@ -65,7 +63,9 @@ class AlbumPage : AppCompatActivity() {
             startActivity(intent)
         }
 
-        StarRatingHandler(findViewById<RatingBar>(R.id.rBar))
+        val rateHandler = StarRatingHandler(findViewById(R.id.rBar), findViewById(R.id.averageRating),
+                            app.getProfileData("id")!!.toInt())
+        rateHandler.watchNUpdateRating()
     }
 
     private fun initRecyclerView(songList: List<Song>) {
