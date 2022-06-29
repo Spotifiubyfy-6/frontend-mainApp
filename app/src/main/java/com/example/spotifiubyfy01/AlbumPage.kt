@@ -64,7 +64,7 @@ class AlbumPage : AppCompatActivity() {
         }
 
         val rateHandler = StarRatingHandler(findViewById(R.id.rBar), findViewById(R.id.averageRating),
-                            app.getProfileData("id")!!.toInt())
+                            album.album_id.toInt(), app.getProfileData("id")!!.toInt(), this)
         rateHandler.watchNUpdateRating()
     }
 
