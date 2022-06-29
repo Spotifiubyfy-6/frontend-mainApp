@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -62,6 +63,11 @@ class AlbumPage : AppCompatActivity() {
             intent.putExtra("albumId", album.album_id)
             intent.putExtra("authorId", album.author_id)
             startActivity(intent)
+        }
+
+        val rBar = findViewById<RatingBar>(R.id.rBar)
+        rBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+            Log.d("TAG", rating.toString())
         }
     }
 
