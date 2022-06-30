@@ -1,12 +1,17 @@
 package com.example.spotifiubyfy01
 
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.AuthFailureError
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -14,6 +19,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import java.util.HashMap
 
 
 class MainLandingPage : AppCompatActivity() {
@@ -71,10 +77,9 @@ class MainLandingPage : AppCompatActivity() {
                 val account = completedTask.getResult(ApiException::class.java)
                 val idToken = account.idToken
                 // ENVIAR TOKEN AL BACKEND PARA VALIDAR
-                //https://developers.google.com/identity/sign-in/android/backend-auth
                 // Signed in successfully, show authenticated UI.
-                val intent = Intent(this, MainPage::class.java)
-                startActivity(intent)
+                validateToken(idToken)
+
             } catch (e: ApiException) {
                 // The ApiException status code indicates the detailed failure reason.
                 // Please refer to the GoogleSignInStatusCodes class reference for more information.
@@ -96,6 +101,31 @@ class MainLandingPage : AppCompatActivity() {
             handleSignInResult(task)
         }
     }
+    private fun validateToken(token : String?) {
+        val url = "https://spotifiubyfy-users.herokuapp.com/users/google_login/$token"
+        val postRequest: StringRequest = object : StringRequest(
+            Method.POST, url,
+            Response.Listener { response -> // response
+                // ################################
+                // TODO: la respuesta es el token que tengo que guardar para poder hacer las requests
+                //################################
 
+                val intent = Intent(this, MainPage::class.java)
+                startActivity(intent)
 
+            },
+            { errorResponse ->
+                Toast.makeText(applicationContext, "Couldnt Login",
+                    Toast.LENGTH_LONG).show()
+            }
+        ) {
+            @Throws(AuthFailureError::class)
+            override fun getHeaders(): Map<String, String> {
+                val params: MutableMap<String, String> = HashMap()
+                params["Authorization"] = "Bearer " + getSharedPreferences(getString(R.string.token_key), Context.MODE_PRIVATE).getString(getString(R.string.token_key), null)
+                return params
+            }
+        }
+        MyRequestQueue.getInstance(this).addToRequestQueue(postRequest)
+    }
 }
