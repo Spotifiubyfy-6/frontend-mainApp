@@ -10,11 +10,17 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         if (remoteMessage.data.isNotEmpty()){
-            val title = "Message from " + (remoteMessage.data["name"] as String)
+            val idSender = remoteMessage.data["idSender"] as String
             val message = remoteMessage.data["message"] as String
+            val name = remoteMessage.data["name"] as String
+            val image = remoteMessage.data["image"] as String
+            val date = remoteMessage.data["date"] as String
             val localMessage = Intent(CURRENT_ACTIVITY_ACTION)
-            localMessage.putExtra("title", title)
+            localMessage.putExtra("idSender", idSender)
             localMessage.putExtra("message", message)
+            localMessage.putExtra("name", name)
+            localMessage.putExtra("image", image)
+            localMessage.putExtra("date", date)
             LocalBroadcastManager.getInstance(this).sendBroadcast(localMessage)
         }
         super.onMessageReceived(remoteMessage)
