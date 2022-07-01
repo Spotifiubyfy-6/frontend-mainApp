@@ -17,8 +17,12 @@ import androidx.core.app.NotificationManagerCompat
 const val CURRENT_ACTIVITY_ACTION = "current.activity.action";
 val CURRENT_ACTIVITY_RECEIVER_FILTER = IntentFilter(CURRENT_ACTIVITY_ACTION);
 
+
+
 class CurrentActivityReceiver(private val receivingActivity: Activity): BroadcastReceiver() {
+
     override fun onReceive(sender: Context, intent: Intent) {
+        Log.d("TAG", "class " + getClassName(receivingActivity) + " is running!")
         val title = intent.extras!!.get("title") as String
         val message = intent.extras!!.get("message") as String
 
@@ -32,6 +36,10 @@ class CurrentActivityReceiver(private val receivingActivity: Activity): Broadcas
             .setContentTitle(title).setContentText(message).setAutoCancel(true)
             .setSmallIcon(R.drawable.ic_launcher_background).setAutoCancel(true)
         NotificationManagerCompat.from(receivingActivity).notify(1, notification.build())
+    }
+
+    private fun getClassName(activity: Activity): String {
+        return activity.localClassName.substringAfterLast('.')
     }
 }
 
