@@ -20,7 +20,7 @@ val CURRENT_ACTIVITY_RECEIVER_FILTER = IntentFilter(CURRENT_ACTIVITY_ACTION);
 class CurrentActivityReceiver(private val receivingActivity: Activity): BroadcastReceiver() {
     override fun onReceive(sender: Context, intent: Intent) {
         val title = intent.extras!!.get("title") as String
-        val message = intent.extras!!.get("title") as String
+        val message = intent.extras!!.get("message") as String
 
        /* val CHANNEL_ID = "HEADS_UP_NOTIFICATION"
         val channel = NotificationChannel(CHANNEL_ID, "Heads Up Notification",
@@ -33,7 +33,7 @@ class CurrentActivityReceiver(private val receivingActivity: Activity): Broadcas
             .setSmallIcon(R.drawable.ic_launcher_background).setAutoCancel(true)
         NotificationManagerCompat.from(receivingActivity).notify(1, notification.build())
     }
-}  
+}
 
 open class NotificationReceiverActivity : AppCompatActivity() {
     private var currentActivityReceiver: BroadcastReceiver? = null

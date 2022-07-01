@@ -11,13 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifiubyfy01.Messages.adapter.ArtistChatViewHolder
 import com.example.spotifiubyfy01.Messages.adapter.ArtistChatsRecyclerAdapter
+import com.example.spotifiubyfy01.NotificationReceiverActivity
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.ReproductionPage
 import com.example.spotifiubyfy01.Spotifiubify
 import com.example.spotifiubyfy01.search.SearchArtistPage
 import com.example.spotifiubyfy01.search.VolleyCallBack
 
-class MessagesPage: AppCompatActivity(), VolleyCallBack<ChatBundle> {
+class MessagesPage: NotificationReceiverActivity(), VolleyCallBack<ChatBundle> {
     var userId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -24,7 +24,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 
-class ListOfPlaylistsPage : AppCompatActivity() {
+class ListOfPlaylistsPage : NotificationReceiverActivity() {
 
 
 

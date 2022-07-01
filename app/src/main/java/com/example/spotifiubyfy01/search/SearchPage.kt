@@ -20,7 +20,7 @@ import com.example.spotifiubyfy01.artistProfile.Playlist
 import com.example.spotifiubyfy01.artistProfile.Song
 import com.example.spotifiubyfy01.search.adapter.SearchRecyclerAdapter
 
-class SearchPage : AppCompatActivity(), VolleyCallBack<SearchItem> {
+class SearchPage : NotificationReceiverActivity(), VolleyCallBack<SearchItem> {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.top_bar, menu)
         return true

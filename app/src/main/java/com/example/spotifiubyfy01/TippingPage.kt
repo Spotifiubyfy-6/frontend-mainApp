@@ -18,7 +18,7 @@ import com.android.volley.toolbox.StringRequest
 import com.example.spotifiubyfy01.search.Artist
 import org.json.JSONObject
 
-class TippingPage : AppCompatActivity() {
+class TippingPage : NotificationReceiverActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.top_bar, menu)

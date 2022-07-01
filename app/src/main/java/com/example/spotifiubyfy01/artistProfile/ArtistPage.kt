@@ -18,7 +18,7 @@ import com.example.spotifiubyfy01.artistProfile.adapterSongRecyclerAdapter.Album
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
 
-class ArtistPage: AppCompatActivity(), VolleyCallBack<Album> {
+class ArtistPage: NotificationReceiverActivity(), VolleyCallBack<Album> {
     private var artist: Artist? = null
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

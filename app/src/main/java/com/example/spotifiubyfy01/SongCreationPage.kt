@@ -19,7 +19,7 @@ import com.example.spotifiubyfy01.artistProfile.Album
 import org.json.JSONObject
 import java.io.File
 
-class SongCreationPage : AppCompatActivity(), AdapterView.OnItemClickListener {
+class SongCreationPage : NotificationReceiverActivity(), AdapterView.OnItemClickListener {
 
     private var albumId: Int? = null
     private var albumList: ArrayList<Album>? = null

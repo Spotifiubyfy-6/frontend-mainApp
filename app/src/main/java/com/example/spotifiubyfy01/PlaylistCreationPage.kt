@@ -21,7 +21,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
 
-class PlaylistCreationPage : AppCompatActivity() {
+class PlaylistCreationPage : NotificationReceiverActivity() {
     lateinit var playlistCoverFile: Uri
 
 

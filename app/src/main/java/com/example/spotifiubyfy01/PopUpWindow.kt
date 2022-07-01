@@ -18,7 +18,7 @@ import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.graphics.ColorUtils
 
-class PopUpWindow : AppCompatActivity() {
+class PopUpWindow : NotificationReceiverActivity() {
     private var popupTitle = ""
     private var popupText = ""
     private var popupButton = ""

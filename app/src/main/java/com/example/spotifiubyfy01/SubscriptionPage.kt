@@ -22,7 +22,7 @@ import com.android.volley.toolbox.StringRequest
 import org.json.JSONObject
 import java.util.HashMap
 
-class SubscriptionPage : AppCompatActivity(), AdapterView.OnItemClickListener {
+class SubscriptionPage : NotificationReceiverActivity(), AdapterView.OnItemClickListener {
 
 
     private var items = arrayOf("")

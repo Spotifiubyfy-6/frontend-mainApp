@@ -17,7 +17,7 @@ import org.json.JSONObject
 import java.io.File
 
 
-class AlbumCreationPage : AppCompatActivity() {
+class AlbumCreationPage : NotificationReceiverActivity() {
     lateinit var albumMediaFile: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {

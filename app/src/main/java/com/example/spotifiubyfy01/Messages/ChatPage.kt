@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.Messages.adapter.MessagesRecyclerAdapter
+import com.example.spotifiubyfy01.NotificationReceiverActivity
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.ReproductionPage
 import com.example.spotifiubyfy01.Spotifiubify
@@ -19,7 +20,7 @@ import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
 import java.time.LocalDateTime
 
-class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
+class ChatPage: NotificationReceiverActivity(), VolleyCallBack<MessageItem> {
     var requesterId: Int? = null
     var other: Artist? = null
     var updated: Boolean = false

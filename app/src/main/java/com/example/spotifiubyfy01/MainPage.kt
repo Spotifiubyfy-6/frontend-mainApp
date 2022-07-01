@@ -28,7 +28,7 @@ import org.json.JSONObject
 
 
 
-class MainPage: AppCompatActivity() {
+class MainPage: NotificationReceiverActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.top_bar, menu)

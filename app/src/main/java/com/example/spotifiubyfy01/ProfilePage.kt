@@ -23,7 +23,7 @@ import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
 
 
-class ProfilePage : AppCompatActivity(), VolleyCallBack<Album> {
+class ProfilePage : NotificationReceiverActivity(), VolleyCallBack<Album> {
     private var artist: Artist? = null
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -21,7 +21,7 @@ import com.example.spotifiubyfy01.artistProfile.adapter.SongRecyclerAdapter
 import com.example.spotifiubyfy01.artistProfile.adapter.default_album_image
 import com.example.spotifiubyfy01.search.SearchArtistPage
 
-class PlaylistPage : AppCompatActivity() {
+class PlaylistPage : NotificationReceiverActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.top_bar, menu)
         return true

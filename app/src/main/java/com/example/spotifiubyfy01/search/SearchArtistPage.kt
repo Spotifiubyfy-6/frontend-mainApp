@@ -24,7 +24,7 @@ import com.example.spotifiubyfy01.Messages.ChatPage
 import com.example.spotifiubyfy01.artistProfile.Playlist
 import com.example.spotifiubyfy01.search.adapter.ArtistSearchRecyclerAdapter
 
-class SearchArtistPage: AppCompatActivity(), VolleyCallBack<Artist> {
+class SearchArtistPage: NotificationReceiverActivity(), VolleyCallBack<Artist> {
     var userId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
