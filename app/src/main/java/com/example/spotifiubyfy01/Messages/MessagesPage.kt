@@ -26,7 +26,7 @@ class MessagesPage: NotificationReceiverActivity(), VolleyCallBack<ChatBundle> {
         setContentView(R.layout.activity_messages_page)
         initRecyclerView(ArrayList())
         val app = (this.application as Spotifiubify)
-        userId = app.getProfileData("id")!!.toInt()
+        userId = app.getProfileData("id")!!.toString().toInt()
         MessagesDataSource.getChatsOfArtistWithID(this, userId!!, this)
         val messageNewArtistButton = findViewById<Button>(R.id.searchArtistToMessageButton)
         messageNewArtistButton.setOnClickListener {
