@@ -69,7 +69,7 @@ class ChatPage: NotificationReceiverActivity(), VolleyCallBack<MessageItem> {
         recyclerView.smoothScrollToPosition((recyclerView.adapter as MessagesRecyclerAdapter).itemCount)
     }
 
-    private fun addMessage(message: Message, date: LocalDateTime) {
+    fun addMessage(message: Message, date: LocalDateTime) {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         (recyclerView.adapter as MessagesRecyclerAdapter).addMessage(message, date)
         recyclerView.smoothScrollToPosition((recyclerView.adapter as MessagesRecyclerAdapter).itemCount)
@@ -94,4 +94,5 @@ class ChatPage: NotificationReceiverActivity(), VolleyCallBack<MessageItem> {
         }
         return super.onOptionsItemSelected(item)
     }
+
 }
