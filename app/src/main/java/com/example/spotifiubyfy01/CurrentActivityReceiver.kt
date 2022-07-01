@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationManagerCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.spotifiubyfy01.Messages.ChatPage
+import com.example.spotifiubyfy01.Messages.Message
+import com.example.spotifiubyfy01.Messages.MessagesDataSource.Companion.obtainDate
 import com.example.spotifiubyfy01.search.Artist
 
 
@@ -26,16 +28,22 @@ class CurrentActivityReceiver(private val receivingActivity: Activity): Broadcas
 
     override fun onReceive(context: Context, intent: Intent) {
         Log.d("TAG", "class " + getClassName(receivingActivity) + " is running!")
-        val idSender = (intent.extras!!.get("idSender") as String).toInt()
+        val userId = (receivingActivity.application as Spotifiubify).getProfileData("id")!!.toInt()
         val message = intent.extras!!.get("message") as String
+        val dateString = intent.extras!!.get("date") as String
+        val date = obtainDate(dateString)
+        if (getClassName(receivingActivity) == "ChatPage") {
+            val messageReceived = Message(userId, userId, message, date)
+            (receivingActivity as ChatPage).addMessage(messageReceived, date)
+            return
+        }
+        val idSender = (intent.extras!!.get("idSender") as String).toInt()
         val artistName = intent.extras!!.get("name") as String
         val image = intent.extras!!.get("image") as String
-        val date = intent.extras!!.get("date") as String
         val artist = Artist(idSender, artistName, image)
         val myIntent = Intent(context, ChatPage::class.java)
         myIntent.putExtra("other", artist)
-        myIntent.putExtra("requester_id",
-            (receivingActivity.application as Spotifiubify).getProfileData("id")!!.toInt())
+        myIntent.putExtra("requester_id", userId)
         val pendingIntent = PendingIntent.getActivity(context,0, myIntent,
                                                     FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE)
 
