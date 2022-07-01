@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.spotifiubyfy01.Messages.albumMessages.AlbumMessagesPage
 import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.artistProfile.Song
 import com.example.spotifiubyfy01.artistProfile.adapter.SongRecyclerAdapter
@@ -49,11 +50,21 @@ class AlbumPage : AppCompatActivity() {
         val play_button = findViewById<Button>(R.id.playButton)
         play_button.setOnClickListener {
             //play album! obtain album songs using album.song_list
-            val app = (this.application as Spotifiubify)
             app.SongManager.playSongList(album.song_list)
             for (song in album.song_list)
                 Log.d(TAG, song.song_name)
         }
+
+        val commentsButton = findViewById<Button>(R.id.comments_button)
+        commentsButton.setOnClickListener {
+            val intent = Intent(this, AlbumMessagesPage::class.java)
+            intent.putExtra("albumId", album.album_id)
+            intent.putExtra("authorId", album.author_id)
+            startActivity(intent)
+        }
+
+        StarRatingHandler(findViewById(R.id.rBar), findViewById(R.id.averageRating),
+                            album.album_id.toInt(), app.getProfileData("id")!!.toInt(), this)
     }
 
     private fun initRecyclerView(songList: List<Song>) {

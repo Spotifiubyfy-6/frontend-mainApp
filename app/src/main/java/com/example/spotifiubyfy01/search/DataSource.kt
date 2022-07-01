@@ -190,15 +190,15 @@ class DataSource {
             }
             val description = jsonAlbum.getString("album_description")
             val genre = jsonAlbum.getString("album_genre")
-                return Album(
+            val authorId = jsonAlbum.getString("artist_id")
+            return Album(
                     albumId,
                     albumName,
                     storageName, artistName,
                     getListOfSongs(
                         artistName,
                         JSONArray(jsonAlbum.getString("songs").toString())
-                    ), description, genre
-                )
+                    ), description, genre, authorId)
         }
 
         private fun getPlaylist(userName: String, jsonPlaylist: JSONObject): SearchItem {

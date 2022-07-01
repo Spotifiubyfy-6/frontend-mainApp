@@ -210,6 +210,14 @@
                 android:value=".Messages.MessagesPage" />
         </activity>
         <activity
+            android:name=".Messages.albumMessages.AlbumMessagesPage"
+            android:exported="false"
+            android:parentActivityName=".AlbumPage">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".AlbumPage" />
+        </activity>
+        <activity
             android:name=".DisplayMessageActivity"
             android:parentActivityName=".SignInLandingPage">
 
