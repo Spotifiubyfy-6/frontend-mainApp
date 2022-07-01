@@ -17,6 +17,7 @@ import com.example.spotifiubyfy01.Messages.ChatPage
 import com.example.spotifiubyfy01.Messages.Message
 import com.example.spotifiubyfy01.Messages.MessagesDataSource.Companion.obtainDate
 import com.example.spotifiubyfy01.search.Artist
+import java.time.LocalDateTime
 
 
 const val CURRENT_ACTIVITY_ACTION = "current.activity.action";
@@ -31,7 +32,7 @@ class CurrentActivityReceiver(private val receivingActivity: Activity): Broadcas
         val userId = (receivingActivity.application as Spotifiubify).getProfileData("id")!!.toInt()
         val message = intent.extras!!.get("message") as String
         val dateString = intent.extras!!.get("date") as String
-        val date = obtainDate(dateString)
+        val date = obtainDateWithoutT(dateString)
         if (getClassName(receivingActivity) == "ChatPage") {
             val messageReceived = Message(userId, userId, message, date)
             (receivingActivity as ChatPage).addMessage(messageReceived, date)
@@ -58,6 +59,15 @@ class CurrentActivityReceiver(private val receivingActivity: Activity): Broadcas
             .setAutoCancel(true).setSmallIcon(R.drawable.ic_launcher_background).setAutoCancel(true)
             .setContentIntent(pendingIntent)
         NotificationManagerCompat.from(receivingActivity).notify(1, notification.build())
+    }
+
+    private fun obtainDateWithoutT(dateString: String): LocalDateTime {
+        val year = dateString.substringBefore("-")
+        val month = dateString.substringAfter("$year-").substringBefore("-")
+        val day = dateString.substringAfter("$year-$month-").substringBefore(" ")
+        val hour = dateString.substringAfter("$year-$month-$day ").substringBefore(":")
+        val minute = dateString.substringAfter(" $hour:").substringBefore(":")
+        return LocalDateTime.of(year.toInt(), month.toInt(), day.toInt(), hour.toInt(), minute.toInt())
     }
 
     private fun getClassName(activity: Activity): String {
