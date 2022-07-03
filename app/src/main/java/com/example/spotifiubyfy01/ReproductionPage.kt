@@ -1,5 +1,6 @@
 package com.example.spotifiubyfy01
 
+import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.MenuItem
@@ -87,12 +88,14 @@ class ReproductionPage : AppCompatActivity() {
         }
 
     }
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-            return true
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.home -> {
+            startActivity(Intent(this, MainPage::class.java))
+            true
         }
-        return super.onOptionsItemSelected(item)
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
     }
 
     private fun changeView(song: Song, mediaPlayer: MediaPlayer) {
