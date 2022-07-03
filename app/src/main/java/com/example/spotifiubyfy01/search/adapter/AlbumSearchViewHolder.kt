@@ -1,7 +1,5 @@
 package com.example.spotifiubyfy01.search.adapter
 
-import android.content.ContentValues
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -11,7 +9,6 @@ import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.Spotifiubify
 import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.artistProfile.adapter.default_album_image
-import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.SearchItem
 
 var default_album_image = "https://i.pinimg.com/originals/33/58/0c/33580cd023504630a4ea63fe0a1650f6.jpg"

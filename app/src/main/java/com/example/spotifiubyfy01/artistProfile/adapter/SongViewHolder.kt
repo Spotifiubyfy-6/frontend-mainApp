@@ -1,19 +1,12 @@
 package com.example.spotifiubyfy01.artistProfile.adapter
 
-import android.content.ContentValues
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.android.volley.Request
-import com.android.volley.toolbox.JsonArrayRequest
-import com.android.volley.toolbox.JsonObjectRequest
-import com.bumptech.glide.Glide
-import com.example.spotifiubyfy01.*
+import com.example.spotifiubyfy01.ListOfPlaylistsPage
+import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.artistProfile.Song
 
 class SongViewHolder(view: View) : RecyclerView.ViewHolder(view) {

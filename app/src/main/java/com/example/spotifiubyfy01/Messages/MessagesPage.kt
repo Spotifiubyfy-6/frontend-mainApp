@@ -2,7 +2,6 @@ package com.example.spotifiubyfy01.Messages
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
@@ -18,7 +17,7 @@ import com.example.spotifiubyfy01.search.SearchArtistPage
 import com.example.spotifiubyfy01.search.VolleyCallBack
 
 class MessagesPage: AppCompatActivity(), VolleyCallBack<ChatBundle> {
-    var userId: Int? = null
+    private var userId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

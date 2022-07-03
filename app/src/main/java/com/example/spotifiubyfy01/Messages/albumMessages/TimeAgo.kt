@@ -1,9 +1,8 @@
 package com.example.spotifiubyfy01.Messages.albumMessages
 
-import java.util.*
 import java.util.concurrent.TimeUnit
 
-val times: List<Long> = Arrays.asList(
+val times: List<Long> = listOf(
     TimeUnit.DAYS.toMillis(365),
     TimeUnit.DAYS.toMillis(30),
     TimeUnit.DAYS.toMillis(1),
@@ -11,15 +10,15 @@ val times: List<Long> = Arrays.asList(
     TimeUnit.MINUTES.toMillis(1),
     TimeUnit.SECONDS.toMillis(1)
 )
-val timesString: List<String> = Arrays.asList("y", "mo", "d", "h", "min", "s")
+val timesString: List<String> = listOf("y", "mo", "d", "h", "min", "s")
 
 fun toDuration(duration: Long): String {
     val res = StringBuffer()
     for (i in times.indices) {
-        val current: Long = times.get(i)
+        val current: Long = times[i]
         val temp = duration / current
         if (temp > 0) {
-            res.append(temp).append(timesString.get(i)).append(" ago")
+            res.append(temp).append(timesString[i]).append(" ago")
             break
         }
     }

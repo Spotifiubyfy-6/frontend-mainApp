@@ -1,10 +1,8 @@
 package com.example.spotifiubyfy01.Messages.albumMessages
 
-import android.text.format.DateUtils.getRelativeTimeSpanString
-import android.util.Log
-import java.io.Serializable
 import com.example.spotifiubyfy01.search.Artist
-import java.time.*
+import java.io.Serializable
+import java.time.LocalDateTime
 import java.time.ZoneOffset.UTC
 
 data class Comment(

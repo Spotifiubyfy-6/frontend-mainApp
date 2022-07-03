@@ -1,15 +1,12 @@
-package com.example.spotifiubyfy01.search.adapter
+package com.example.spotifiubyfy01
 
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.example.spotifiubyfy01.R
-import com.example.spotifiubyfy01.Spotifiubify
-import com.example.spotifiubyfy01.artistProfile.Playlist
-import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.SearchItem
+import com.example.spotifiubyfy01.search.adapter.SearchViewHolder
 
 var default_playlist_image = "https://ladydanville.files.wordpress.com/2012/03/blankart.png"
 

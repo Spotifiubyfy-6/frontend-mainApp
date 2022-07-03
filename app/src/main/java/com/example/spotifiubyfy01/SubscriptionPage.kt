@@ -1,12 +1,9 @@
 package com.example.spotifiubyfy01
 
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -14,6 +11,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
@@ -21,7 +19,6 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import org.json.JSONObject
 import java.io.UnsupportedEncodingException
-import java.util.HashMap
 
 class SubscriptionPage : AppCompatActivity(), AdapterView.OnItemClickListener {
 
@@ -98,7 +95,7 @@ class SubscriptionPage : AppCompatActivity(), AdapterView.OnItemClickListener {
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         val options : String = parent?.getItemAtPosition(position) as String
-        view?.setBackgroundColor(Color.GREEN);
+        view?.setBackgroundColor(Color.GREEN)
         val type = options.split(":")[0]
         val url = "https://spotifiubyfy-users.herokuapp.com/users/user_subscription/$type"
         val postRequest: StringRequest = object : StringRequest(

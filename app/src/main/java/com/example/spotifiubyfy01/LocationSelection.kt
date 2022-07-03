@@ -4,26 +4,26 @@ import android.content.ContentValues
 import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
+import com.example.spotifiubyfy01.databinding.ActivityLocationSelectionBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.example.spotifiubyfy01.databinding.ActivityLocationSelectionBinding
 import java.io.UnsupportedEncodingException
-import java.util.HashMap
 
 class LocationSelection : AppCompatActivity(), OnMapReadyCallback {
 
@@ -33,19 +33,22 @@ class LocationSelection : AppCompatActivity(), OnMapReadyCallback {
     private var currentLng : Int = 151
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        val app = (this.application as Spotifiubify)
-
-
         super.onCreate(savedInstanceState)
-
         binding = ActivityLocationSelectionBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        val confirm = findViewById<Button>(R.id.ConfirmLocation)
+        confirm.setOnClickListener {
+            confirmLocation()
+        }
+        val skip = findViewById<Button>(R.id.Skip)
+        skip.setOnClickListener {
+            skip()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -83,28 +86,25 @@ class LocationSelection : AppCompatActivity(), OnMapReadyCallback {
 
         // Set text to button with current location
         val textView = findViewById<TextView>(R.id.textView)
-        textView.setText("Australia, Sydney")
+        textView.text = "Australia, Sydney"
 
         // onClick, clears map and adds a marker on click location. Updates camera position
-        mMap.setOnMapClickListener(object :GoogleMap.OnMapClickListener {
-            override fun onMapClick(latlng :LatLng) {
-                mMap.clear()
-                setCountry(latlng)
-                val location = LatLng(latlng.latitude,latlng.longitude)
-                mMap.addMarker(MarkerOptions().position(location))
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(location))
-
-            }
-        })
+        mMap.setOnMapClickListener { latlng ->
+            mMap.clear()
+            setCountry(latlng)
+            val location = LatLng(latlng.latitude, latlng.longitude)
+            mMap.addMarker(MarkerOptions().position(location))
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(location))
+        }
     }
     // receives lat and lng, returns country and city name
-    fun setCountry(latlng : LatLng) {
+    private fun setCountry(latlng : LatLng) {
         val gcd = Geocoder(this)
         val addresses: List<Address> = gcd.getFromLocation(latlng.latitude, latlng.longitude, 1)
         if (addresses.isNotEmpty()) {
             this.currentLng = latlng.longitude.toInt()
             this.currentLtd = latlng.latitude.toInt()
-            val countryName: String = addresses[0].getCountryName()
+            val countryName: String = addresses[0].countryName
             val textView = findViewById<TextView>(R.id.textView)
             textView.text = countryName
         }

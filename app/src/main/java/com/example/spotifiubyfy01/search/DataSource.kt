@@ -2,22 +2,20 @@ package com.example.spotifiubyfy01.search
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.core.content.ContextCompat.startActivity
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonArrayRequest
 import com.example.spotifiubyfy01.MyRequestQueue
 import com.example.spotifiubyfy01.PopUpWindow
 import com.example.spotifiubyfy01.artistProfile.Album
-import com.example.spotifiubyfy01.artistProfile.Playlist
+import com.example.spotifiubyfy01.Playlist
 import com.example.spotifiubyfy01.artistProfile.Song
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.UnsupportedEncodingException
 
-var image_link = "https://he.cecollaboratory.com/public/layouts/images/group-default-logo.png"
 
-class SearchListMonitor(val countTo: Int) {
+class SearchListMonitor(private val countTo: Int) {
     private val listToBeSent = ArrayList<SearchItem>()
     private var sharedCounter: Int = 0
 
@@ -150,10 +148,10 @@ class DataSource {
         ) {
             val auxList = ArrayList<SearchItem>()
             val url: String
-            if (sliceForGender) {
-                url = "http://spotifiubyfy-music.herokuapp.com/albums?genre=" + slice + "&skip=0&limit=100"
+            url = if (sliceForGender) {
+                "http://spotifiubyfy-music.herokuapp.com/albums?genre=" + slice + "&skip=0&limit=100"
             } else {
-                url = "https://spotifiubyfy-music.herokuapp.com/albums?q=" + slice +
+                "https://spotifiubyfy-music.herokuapp.com/albums?q=" + slice +
                         "&skip=0&limit=100"
             }
             val getRequest = JsonArrayRequest(

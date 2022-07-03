@@ -217,15 +217,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".AlbumPage" />
         </activity>
-        <activity
-            android:name=".DisplayMessageActivity"
-            android:parentActivityName=".SignInLandingPage">
-
-            <!-- The meta-data tag is required if you support API level 15 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".SignInLandingPage" />
-        </activity>
         <activity android:name=".PopUpWindow" />
     </application>
 

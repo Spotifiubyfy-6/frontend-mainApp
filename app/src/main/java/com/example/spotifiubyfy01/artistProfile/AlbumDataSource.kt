@@ -3,7 +3,6 @@ package com.example.spotifiubyfy01.artistProfile
 import android.content.Context
 import android.content.Intent
 import com.android.volley.Request
-import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.example.spotifiubyfy01.MyRequestQueue
 import com.example.spotifiubyfy01.PopUpWindow

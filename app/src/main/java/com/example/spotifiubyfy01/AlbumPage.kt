@@ -47,10 +47,10 @@ class AlbumPage : AppCompatActivity() {
         }
 
         initRecyclerView(album.song_list)
-        val play_button = findViewById<Button>(R.id.playButton)
-        play_button.setOnClickListener {
+        val playButton = findViewById<Button>(R.id.playButton)
+        playButton.setOnClickListener {
             //play album! obtain album songs using album.song_list
-            app.SongManager.playSongList(album.song_list)
+            app.songManager.playSongList(album.song_list)
             for (song in album.song_list)
                 Log.d(TAG, song.song_name)
         }
@@ -78,7 +78,7 @@ class AlbumPage : AppCompatActivity() {
     private fun onItemClicked(song: Song) {
         //Do something with the Song
         val app = (this.application as Spotifiubify)
-        app.SongManager.play(song)
+        app.songManager.play(song)
         Log.d(TAG, song.song_name +" with id " + song.id.toString() + " made by " + song.artist)
     }
 

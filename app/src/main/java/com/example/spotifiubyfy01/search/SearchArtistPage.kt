@@ -12,22 +12,18 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.AuthFailureError
-import com.android.volley.Request
 import com.android.volley.Response
-import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.example.spotifiubyfy01.*
 import com.example.spotifiubyfy01.Messages.ChatPage
-import com.example.spotifiubyfy01.artistProfile.Playlist
 import com.example.spotifiubyfy01.search.adapter.ArtistSearchRecyclerAdapter
 import java.io.UnsupportedEncodingException
 
 class SearchArtistPage: AppCompatActivity(), VolleyCallBack<Artist> {
-    var userId: Int? = null
+    private var userId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +64,7 @@ class SearchArtistPage: AppCompatActivity(), VolleyCallBack<Artist> {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter =
             ArtistSearchRecyclerAdapter(ArrayList()) { artist ->
-                onItemClicked(artist as SearchItem)
+                onItemClicked(artist)
             }
     }
 

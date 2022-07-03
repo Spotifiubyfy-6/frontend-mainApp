@@ -16,8 +16,6 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.time.LocalDateTime
 
-var image_link = "https://he.cecollaboratory.com/public/layouts/images/group-default-logo.png"
-
 class CommentList(
     private val numberOfComments: Int,
     private val callBack: VolleyCallBack<Comment>
@@ -32,7 +30,7 @@ class CommentList(
 
     fun addArtistCommentWithIdToPositionInList(position: Int, comment: Comment) {
         synchronized(this) {
-            commentList.set(position, comment)
+            commentList[position] = comment
             commentInserted++
             if (commentInserted == numberOfComments)
                 callBack.updateData(commentList)
@@ -98,7 +96,7 @@ class IdToListOfPositionNCommentMap(
     }
 
     private fun fetchArtist(artistId: Int) {
-        val url = "https://spotifiubyfy-users.herokuapp.com/users/user_by_id/" + artistId
+        val url = "https://spotifiubyfy-users.herokuapp.com/users/user_by_id/$artistId"
         val getRequest = JsonObjectRequest(
             Request.Method.GET,
             url, null,
@@ -121,8 +119,8 @@ class CommentsDataSource {
 
     companion object {
 
-        fun searchRespectiveArtists(context: Context, commentArray: JSONArray, authorId: Int,
-                                    callBack: VolleyCallBack<Comment>) {
+        private fun searchRespectiveArtists(context: Context, commentArray: JSONArray, authorId: Int,
+                                            callBack: VolleyCallBack<Comment>) {
             val map = IdToListOfPositionNCommentMap(context, commentArray, callBack)
             map.fillMapWithComments(authorId)
         }
@@ -130,7 +128,8 @@ class CommentsDataSource {
         fun getCommentsOfAlbum(context: Context, albumId: Int, authorId: Int,
                                callBack: VolleyCallBack<Comment>
         ) {
-            val url = "https://spotifiubyfy-messages.herokuapp.com/comments/" + albumId + "?skip=0&limit=100"
+            val url =
+                "https://spotifiubyfy-messages.herokuapp.com/comments/$albumId?skip=0&limit=100"
             val getRequest = JsonArrayRequest(
                 Request.Method.GET,
                 url, null,

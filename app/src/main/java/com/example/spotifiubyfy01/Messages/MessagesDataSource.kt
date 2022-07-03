@@ -5,7 +5,6 @@ import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import com.android.volley.Request
-import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
@@ -17,8 +16,6 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.time.LocalDate
 import java.time.LocalDateTime
-
-var image_link = "https://he.cecollaboratory.com/public/layouts/images/group-default-logo.png"
 
 class ChatList(
     private val numberOfArtist: Int,
@@ -33,7 +30,7 @@ class ChatList(
 
     fun addArtistWithIdToPositionInList(artist: Artist, position: Int, numberOfNotSeen: Int) {
         synchronized(this) {
-            chatList.set(position, ChatBundle(artist, numberOfNotSeen))
+            chatList[position] = ChatBundle(artist, numberOfNotSeen)
             artistInserted++
             if (artistInserted == numberOfArtist)
                 callBack.updateData(chatList)
@@ -58,7 +55,7 @@ class MessagesDataSource {
         private fun searchArtist(context: Context, chatList: ChatList, idNSeenTuple: JSONObject,
                                  position: Int) {
             val artistId = idNSeenTuple.get("id") as Int
-            val url = "https://spotifiubyfy-users.herokuapp.com/users/user_by_id/" + artistId
+            val url = "https://spotifiubyfy-users.herokuapp.com/users/user_by_id/$artistId"
             val getRequest = JsonObjectRequest(
                 Request.Method.GET,
                 url, null,

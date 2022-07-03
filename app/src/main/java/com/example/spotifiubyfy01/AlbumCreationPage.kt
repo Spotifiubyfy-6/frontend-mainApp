@@ -14,12 +14,11 @@ import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.bumptech.glide.Glide
 import org.json.JSONObject
-import java.io.File
 import java.io.UnsupportedEncodingException
 
 
 class AlbumCreationPage : AppCompatActivity() {
-    lateinit var albumMediaFile: Uri
+    private lateinit var albumMediaFile: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

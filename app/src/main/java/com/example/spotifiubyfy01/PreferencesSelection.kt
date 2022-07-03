@@ -26,7 +26,7 @@ class PreferencesSelection : AppCompatActivity(), AdapterView.OnItemClickListene
 
     private var items = arrayOf("")
 
-    private var myInterests = mutableListOf<String>("")
+    private var myInterests = mutableListOf("")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +38,7 @@ class PreferencesSelection : AppCompatActivity(), AdapterView.OnItemClickListene
         menuInflater.inflate(R.menu.top_bar, menu)
         return true
     }
-    public fun fetchInterests() {
+    private fun fetchInterests() {
         val url = "https://spotifiubyfy-users.herokuapp.com/interests"
 
         val getRequest = JsonArrayRequest(
@@ -70,13 +70,13 @@ class PreferencesSelection : AppCompatActivity(), AdapterView.OnItemClickListene
 
 
     fun deleteInterest(view: View?, options: String) {
-        view?.setBackgroundColor(Color.GREEN);
+        view?.setBackgroundColor(Color.GREEN)
         val url = "https://spotifiubyfy-users.herokuapp.com/interest/$options"
         val postRequest: StringRequest = object : StringRequest(
             Method.DELETE, url,
             Response.Listener { response -> // response
 
-                view?.setBackgroundColor(Color.BLACK);
+                view?.setBackgroundColor(Color.BLACK)
                 Toast.makeText(applicationContext, "Genre $options removed from interests",
                     Toast.LENGTH_SHORT).show()
 
@@ -97,7 +97,7 @@ class PreferencesSelection : AppCompatActivity(), AdapterView.OnItemClickListene
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         val options : String = parent?.getItemAtPosition(position) as String
-        view?.setBackgroundColor(Color.GREEN);
+        view?.setBackgroundColor(Color.GREEN)
         val url = "https://spotifiubyfy-users.herokuapp.com/users/interests/$options"
         val postRequest: StringRequest = object : StringRequest(
             Method.POST, url,
@@ -137,7 +137,7 @@ class PreferencesSelection : AppCompatActivity(), AdapterView.OnItemClickListene
                     Log.d(ContentValues.TAG, "INTEREST ADDED: $genre")
 
                 }
-                val lstView : ListView = findViewById<ListView>(R.id.dynamic_list)
+                val lstView : ListView = findViewById(R.id.dynamic_list)
                 val childCount : Int = lstView.childCount - 1
                 Log.d(ContentValues.TAG, "LISTAN DE CHILD: $childCount")
 

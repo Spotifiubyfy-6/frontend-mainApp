@@ -9,13 +9,11 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.spotifiubyfy01.Messages.*
+import com.example.spotifiubyfy01.Messages.ChatBundle
+import com.example.spotifiubyfy01.Messages.ChatBundleEnum
+import com.example.spotifiubyfy01.Messages.convertIntToChatBundleEnum
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.Spotifiubify
-import com.example.spotifiubyfy01.artistProfile.Album
-import com.example.spotifiubyfy01.search.Artist
-import com.example.spotifiubyfy01.search.SearchItem
-import java.util.logging.Logger
 
 fun createRespectiveArtistChatHolder(parent: ViewGroup, viewType: Int) : ArtistChatViewHolder {
     val holder =

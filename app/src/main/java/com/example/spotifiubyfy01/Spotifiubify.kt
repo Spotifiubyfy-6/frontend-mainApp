@@ -11,21 +11,19 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import org.json.JSONObject
-import java.util.*
-import com.example.spotifiubyfy01.SongManager
-import com.example.spotifiubyfy01.artistProfile.Song
 import java.io.UnsupportedEncodingException
+import java.util.*
 
 
 class Spotifiubify : Application() {
     var profileData: Hashtable<String, String> = Hashtable<String, String>()
     private lateinit var storage: FirebaseStorage
-    lateinit var SongManager: SongManager
+    lateinit var songManager: SongManager
 
     override fun onCreate() {
         super.onCreate()
         storage = Firebase.storage
-        SongManager = SongManager(this)
+        songManager = SongManager(this)
     }
 
     fun setProfile() {

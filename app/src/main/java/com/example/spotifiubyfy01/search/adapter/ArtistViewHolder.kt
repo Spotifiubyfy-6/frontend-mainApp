@@ -4,7 +4,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.Spotifiubify
@@ -20,7 +19,7 @@ class ArtistViewHolder(view: View) : SearchViewHolder(view) {
     override fun render(item: SearchItem, onClickListener: (SearchItem) -> Unit) {
         val artist = item as Artist
         artistName.text = artist.artistName
-        val coverRef = app.getStorageReference().child(artist!!.image)
+        val coverRef = app.getStorageReference().child(artist.image)
         coverRef.downloadUrl.addOnSuccessListener { url ->
             Glide.with(image.context).load(url).into(image)
         }.addOnFailureListener {

@@ -21,8 +21,8 @@ class ReproductionPage : AppCompatActivity() {
         setContentView(R.layout.activity_reproduction_page)
 
         val app = (this.application as Spotifiubify)
-        var song: Song = app.SongManager.currentSong
-        val mediaPlayer = app.SongManager.MediaPlayer
+        var song: Song = app.songManager.currentSong
+        val mediaPlayer = app.songManager.mediaPlayer
         val albumImage = findViewById<ImageView>(R.id.albumArt)
         val currentSongTime = findViewById<TextView>(R.id.position)
 
@@ -38,17 +38,17 @@ class ReproductionPage : AppCompatActivity() {
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
                 runOnUiThread {
-                    if (app.SongManager.isPlaying()) {
+                    if (app.songManager.isPlaying()) {
                         currentSongTime.post { currentSongTime.text = convertToMinutesString(mediaPlayer.currentPosition)
                         }
                     } else {
-                        song = app.SongManager.currentSong
+                        song = app.songManager.currentSong
                         changeView(song, mediaPlayer)
                         timer.cancel()
                         timer.purge()
                     }
-                    if (song != app.SongManager.currentSong) {
-                        song = app.SongManager.currentSong
+                    if (song != app.songManager.currentSong) {
+                        song = app.songManager.currentSong
                         changeView(song, mediaPlayer)
                     }
                 }
@@ -78,7 +78,7 @@ class ReproductionPage : AppCompatActivity() {
 
         nextButton.setOnClickListener {
             if (mediaPlayer.isPlaying) {
-                if (!app.SongManager.next()) {
+                if (!app.songManager.next()) {
                     pauseButton.setImageResource(R.drawable.ic_play_arrow_black_24dp)
                     changeView(song, mediaPlayer)
                     Glide.with(albumImage.context).load(default_album_image).into(albumImage)

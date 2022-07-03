@@ -9,10 +9,6 @@ import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.Messages.albumMessages.Comment
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.Spotifiubify
-import com.example.spotifiubyfy01.search.Artist
-import com.example.spotifiubyfy01.search.SearchItem
-import com.example.spotifiubyfy01.search.adapter.SearchViewHolder
-import org.w3c.dom.Text
 
 class AlbumCommentViewHolder(view: View): RecyclerView.ViewHolder(view) {
     private val app = ((view.context as AppCompatActivity).application as Spotifiubify)
@@ -25,7 +21,7 @@ class AlbumCommentViewHolder(view: View): RecyclerView.ViewHolder(view) {
     fun render(item: Comment, onClickListener: (Comment) -> Unit) {
         val artist = item.artist
         artistName.text = artist.artistName
-        val coverRef = app.getStorageReference().child(artist!!.image)
+        val coverRef = app.getStorageReference().child(artist.image)
         coverRef.downloadUrl.addOnSuccessListener { url ->
             Glide.with(image.context).load(url).into(image)
         }.addOnFailureListener {

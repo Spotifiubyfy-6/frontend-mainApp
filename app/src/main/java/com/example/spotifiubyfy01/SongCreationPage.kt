@@ -5,26 +5,24 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
-import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.artistProfile.Album
 import org.json.JSONObject
-import java.io.File
 import java.io.UnsupportedEncodingException
 
 class SongCreationPage : AppCompatActivity(), AdapterView.OnItemClickListener {
 
     private var albumId: Int? = null
     private var albumList: ArrayList<Album>? = null
-    lateinit var songFile: Uri
+    private lateinit var songFile: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -168,7 +166,7 @@ class SongCreationPage : AppCompatActivity(), AdapterView.OnItemClickListener {
 
     private fun obtainAlbumIdOfAlbumWithName(albumList: ArrayList<Album>, albumName: String): Int {
         for (album in albumList) {
-            if (album.album_name.equals(albumName))
+            if (album.album_name == albumName)
                 return album.album_id.toInt()
         }
         return 0 //should not happen

@@ -7,18 +7,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
-import com.example.spotifiubyfy01.artistProfile.Album
-import com.example.spotifiubyfy01.artistProfile.Playlist
 import com.example.spotifiubyfy01.artistProfile.Song
-import com.example.spotifiubyfy01.search.Artist
-import com.example.spotifiubyfy01.search.DataSource
-import com.example.spotifiubyfy01.search.SearchItem
 import com.example.spotifiubyfy01.search.adapter.SearchRecyclerAdapter
 import org.json.JSONArray
 import org.json.JSONObject
@@ -61,7 +55,7 @@ class ListOfPlaylistsPage : AppCompatActivity() {
         val playlistID = playlist.playlist_id
 
         val url = "https://spotifiubyfy-music.herokuapp.com/playlists/$playlistID/tracks?song_id=$songID"
-        Log.d(ContentValues.TAG, "EL URL" +url)
+        Log.d(ContentValues.TAG, "EL URL$url")
 
         val getRequest = JsonObjectRequest(
             Request.Method.POST,url,null,
@@ -144,10 +138,10 @@ class ListOfPlaylistsPage : AppCompatActivity() {
 
 
 
-                val pĺaylist : Playlist = getPlaylist("default username" ,response)
+                val playlist : Playlist = getPlaylist("default username" ,response)
 
                 val intent = Intent(this, PlaylistPage::class.java).apply {
-                    putExtra("Playlist", pĺaylist)
+                    putExtra("Playlist", playlist)
                 }
                 startActivity(intent)
             },

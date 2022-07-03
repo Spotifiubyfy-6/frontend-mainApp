@@ -9,21 +9,16 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.Toast
 import com.android.volley.Request
-import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
-import com.bumptech.glide.Glide
-import com.example.spotifiubyfy01.artistProfile.Playlist
 import com.example.spotifiubyfy01.artistProfile.Song
 import org.json.JSONArray
 import org.json.JSONObject
-import java.io.File
 import java.io.UnsupportedEncodingException
 
 class PlaylistCreationPage : AppCompatActivity() {
-    lateinit var playlistCoverFile: Uri
+    private lateinit var playlistCoverFile: Uri
 
 
 
@@ -69,8 +64,8 @@ class PlaylistCreationPage : AppCompatActivity() {
 
 
                     val intent = Intent(this, PlaylistPage::class.java).apply {
-                        val pĺaylist : Playlist = getPlaylist("default username" ,response)
-                        putExtra("Playlist", pĺaylist)
+                        val playlist : Playlist = getPlaylist("default username" ,response)
+                        putExtra("Playlist", playlist)
 
                         val storageName = "covers/"+response.getString("playlist_media")
                         val coverRef =  app.getStorageReference().child(storageName)

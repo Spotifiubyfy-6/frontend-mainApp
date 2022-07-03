@@ -2,9 +2,11 @@ package com.example.spotifiubyfy01.Messages
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,9 +22,9 @@ import com.example.spotifiubyfy01.search.VolleyCallBack
 import java.time.LocalDateTime
 
 class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
-    var requesterId: Int? = null
-    var other: Artist? = null
-    var updated: Boolean = false
+    private var requesterId: Int? = null
+    private var other: Artist? = null
+    private var updated: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_page)
@@ -50,7 +52,7 @@ class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
 
     private fun initOtherArtistField() {
         val artistBox = findViewById<TextView>(R.id.artist_name)
-        artistBox.setText(other!!.artistName)
+        artistBox.text = other!!.artistName
         val image: ImageView = findViewById(R.id.artist_image)
         val coverRef = (this.application as Spotifiubify).getStorageReference().child(other!!.image)
         coverRef.downloadUrl.addOnSuccessListener { url ->
@@ -82,9 +84,9 @@ class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             if (updated)
-                setResult(intent.extras?.get("position") as Int, intent);
+                setResult(intent.extras?.get("position") as Int, intent)
             else
-                setResult(-1, intent);
+                setResult(-1, intent)
             finish()
             return true
         }

@@ -2,7 +2,6 @@ package com.example.spotifiubyfy01
 
 import android.content.Context
 import android.content.Intent
-import android.location.Location
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -94,7 +93,7 @@ class SignInLandingPage : AppCompatActivity() {
 
 
         signInButton.setOnClickListener {
-            var requestBody = JSONObject()
+            val requestBody = JSONObject()
 
             requestBody.put("email", email.text.toString())
             requestBody.put("username", username.text.toString())

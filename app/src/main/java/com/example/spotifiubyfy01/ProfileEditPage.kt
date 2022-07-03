@@ -9,12 +9,14 @@ import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.AuthFailureError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
-import com.bumptech.glide.Glide
 import org.json.JSONObject
 
 class ProfileEditPage : AppCompatActivity() {
@@ -198,7 +200,7 @@ class ProfileEditPage : AppCompatActivity() {
             }
         }
     }
-    public fun editPreferences(view : View) {
+    fun editPreferences(view : View) {
         val intent = Intent(this, PreferencesSelection::class.java).apply {
             val location = "a place in the World"
             putExtra("Location", location)
@@ -206,7 +208,7 @@ class ProfileEditPage : AppCompatActivity() {
         startActivity(intent)
     }
 
-    public fun editLocation(view : View) {
+    fun editLocation(view : View) {
         val intent = Intent(this, LocationSelection::class.java)
         startActivity(intent)
     }

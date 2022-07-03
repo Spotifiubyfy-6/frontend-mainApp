@@ -18,11 +18,10 @@ import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.artistProfile.ArtistPage
 import com.example.spotifiubyfy01.artistProfile.Song
 import com.example.spotifiubyfy01.artistProfile.adapter.SongRecyclerAdapter
-import com.example.spotifiubyfy01.artistProfile.adapterSongRecyclerAdapter.AlbumRecyclerAdapter
+import com.example.spotifiubyfy01.artistProfile.adapter.AlbumRecyclerAdapter
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.SearchPage
 import com.example.spotifiubyfy01.search.adapter.SearchRecyclerAdapter
-import com.example.spotifiubyfy01.search.image_link
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -116,7 +115,7 @@ class MainPage: AppCompatActivity() {
 
     private fun onSongClicked(song: Song) {
         val app = (this.application as Spotifiubify)
-        app.SongManager.play(song)
+        app.songManager.play(song)
         Log.d(ContentValues.TAG, song.song_name +" with id " + song.id.toString() + " made by " + song.artist)
     }
 
