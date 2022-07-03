@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.*
 import com.example.spotifiubyfy01.Messages.ChatPage
+import com.example.spotifiubyfy01.artistProfile.adapter.default_album_image
 import com.example.spotifiubyfy01.artistProfile.adapterSongRecyclerAdapter.AlbumRecyclerAdapter
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
@@ -35,8 +36,8 @@ class ArtistPage: AppCompatActivity(), VolleyCallBack<Album> {
         if (artist == null) { //Artist activity has already been created and is in activities stack
             //savedInstanceState needs to exist
            val artistId =  (savedInstanceState?.getString("ArtistID") as String).toInt()
-           val artistName = savedInstanceState?.getString("ArtistName") as String
-           val artistImage = savedInstanceState?.getString("ArtistImage") as String
+           val artistName = savedInstanceState.getString("ArtistName") as String
+           val artistImage = savedInstanceState.getString("ArtistImage") as String  //puede ser aca
            artist = Artist(artistId, artistName, artistImage)
 
         }
@@ -44,7 +45,13 @@ class ArtistPage: AppCompatActivity(), VolleyCallBack<Album> {
         val artistName = findViewById<TextView>(R.id.artist_name)
         val image = findViewById<ImageView>(R.id.artist_image)
         artistName.text = artist!!.artistName //Use !! because at this point artist is not null
-        Glide.with(image.context).load(artist!!.image).into(image)
+//        Glide.with(image.context).load(artist!!.image).into(image)
+        val coverRef = (this.application as Spotifiubify).getStorageReference().child(artist!!.image)
+        coverRef.downloadUrl.addOnSuccessListener { url ->
+            Glide.with(image.context).load(url).into(image)
+        }.addOnFailureListener {
+            Glide.with(image.context).load(default_album_image).into(image)
+        }
         initAlbumRecyclerView(ArrayList())
         AlbumDataSource.createAlbumList(this, artist!!.id, artist!!.artistName,this)
 
