@@ -109,7 +109,11 @@ class MainLandingPage : AppCompatActivity() {
                 // ################################
                 // TODO: la respuesta es el token que tengo que guardar para poder hacer las requests
                 //################################
-
+                val sharedPref = getSharedPreferences(getString(R.string.token_key), Context.MODE_PRIVATE)
+                with (sharedPref.edit()) {
+                    putString(getString(R.string.token_key), response.split('"')[3])
+                    apply()
+                }
                 val intent = Intent(this, MainPage::class.java)
                 startActivity(intent)
 
