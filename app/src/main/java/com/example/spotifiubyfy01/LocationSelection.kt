@@ -156,4 +156,7 @@ class LocationSelection : AppCompatActivity(), OnMapReadyCallback {
         val intent = Intent(this, ProfileEditPage::class.java)
         startActivity(intent)
     }
+
+    fun confirmLocation(view: View) {}
+    fun skip(view: View) {}
 }

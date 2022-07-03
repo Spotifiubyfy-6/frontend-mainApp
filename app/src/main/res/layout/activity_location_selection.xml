@@ -27,7 +27,7 @@
         android:onClick="confirmLocation"
         android:text="Confirm Location"
         android:backgroundTint="#1DB954"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintBottom_toTopOf="@+id/Skip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
