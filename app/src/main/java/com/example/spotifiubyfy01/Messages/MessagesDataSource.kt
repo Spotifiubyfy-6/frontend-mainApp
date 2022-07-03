@@ -3,6 +3,7 @@ package com.example.spotifiubyfy01.Messages
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
@@ -71,11 +72,8 @@ class MessagesDataSource {
                     chatList.addArtistWithIdToPositionInList(Artist(artistId, artistName, artistImage),
                                                             position, numberOfNotSeen)
                 }
-            ) { error ->
-                val intent = Intent(context, PopUpWindow::class.java).apply {
-                    putExtra("popuptext", error.toString())
-                }
-                context.startActivity(intent)
+            ) {
+                Toast.makeText(context, "Cant find user", Toast.LENGTH_SHORT).show()
             }
             MyRequestQueue.getInstance(context).addToRequestQueue(getRequest)
         }

@@ -20,6 +20,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import org.json.JSONObject
+import java.io.UnsupportedEncodingException
 import java.util.HashMap
 
 class SubscriptionPage : AppCompatActivity(), AdapterView.OnItemClickListener {
@@ -79,9 +80,18 @@ class SubscriptionPage : AppCompatActivity(), AdapterView.OnItemClickListener {
 
 
             },
-            { errorResponse ->
-                print(errorResponse)
-            })
+            { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
+                var body = "undefined error"
+                if (errorResponse.networkResponse.data != null) {
+                    try {
+                        body = String(errorResponse.networkResponse.data, Charsets.UTF_8)
+                    } catch (e: UnsupportedEncodingException) {
+                        e.printStackTrace()
+                    }
+                }
+                putExtra("popuptext", body)
+            }
+                startActivity(intent)})
         MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
     }
 

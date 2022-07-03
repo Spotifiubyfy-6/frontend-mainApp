@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.AuthFailureError
@@ -23,6 +24,7 @@ import com.example.spotifiubyfy01.*
 import com.example.spotifiubyfy01.Messages.ChatPage
 import com.example.spotifiubyfy01.artistProfile.Playlist
 import com.example.spotifiubyfy01.search.adapter.ArtistSearchRecyclerAdapter
+import java.io.UnsupportedEncodingException
 
 class SearchArtistPage: AppCompatActivity(), VolleyCallBack<Artist> {
     var userId: Int? = null
@@ -93,11 +95,19 @@ class SearchArtistPage: AppCompatActivity(), VolleyCallBack<Artist> {
                 val intent = Intent(this, MainPage::class.java)
                 startActivity(intent)
             },
-            {  errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
+            { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
                 Log.d(ContentValues.TAG, "ERROR: $errorResponse")
-                val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
-                putExtra("popuptext", error)
-                putExtra("tokenValidation", true) }
+                var body = "undefined error"
+                if (errorResponse.networkResponse.data != null) {
+                    try {
+                        body = String(errorResponse.networkResponse.data, Charsets.UTF_8)
+                    } catch (e: UnsupportedEncodingException) {
+                        e.printStackTrace()
+                    }
+                }
+                putExtra("popuptext", body)
+                putExtra("tokenValidation", true)
+            }
                 startActivity(intent)
             }
         ) {

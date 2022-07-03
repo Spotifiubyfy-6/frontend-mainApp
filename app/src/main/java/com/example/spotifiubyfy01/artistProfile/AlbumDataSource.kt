@@ -10,6 +10,7 @@ import com.example.spotifiubyfy01.PopUpWindow
 import com.example.spotifiubyfy01.search.VolleyCallBack
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.UnsupportedEncodingException
 
 class AlbumDataSource {
     companion object {
@@ -20,12 +21,19 @@ class AlbumDataSource {
             val getRequest = JsonArrayRequest(
                 Request.Method.GET,
                 url, null,
-                Response.Listener { response ->
+                { response ->
                     callBack.updateData(getListOfAlbums(artist_name, response))
                 },
-                { val intent = Intent(context, PopUpWindow::class.java).apply {
-//                    val error = errorResponse//.networkResponse.data.decodeToString() //.split('"')[3]
-                    putExtra("popuptext", "cant create album right now")
+                { errorResponse -> val intent = Intent(context, PopUpWindow::class.java).apply {
+                    var body = "undefined error"
+                    if (errorResponse.networkResponse.data != null) {
+                        try {
+                            body = String(errorResponse.networkResponse.data, Charsets.UTF_8)
+                        } catch (e: UnsupportedEncodingException) {
+                            e.printStackTrace()
+                        }
+                    }
+                    putExtra("popuptext", body)
                 }
                     context.startActivity(intent)})
             MyRequestQueue.getInstance(context).addToRequestQueue(getRequest)

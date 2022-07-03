@@ -56,7 +56,7 @@ class Wallet : AppCompatActivity() {
 
 
         val postRequest: JsonObjectRequest = object : JsonObjectRequest(
-            Request.Method.POST,url,requestBody,
+            Method.POST,url,requestBody,
             { response ->
                 Toast.makeText(this, "Funds succesfully retired",
                 Toast.LENGTH_SHORT).show()

@@ -1,11 +1,14 @@
 package com.example.spotifiubyfy01
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
+import androidx.core.content.ContextCompat.startActivity
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.StringRequest
 import org.json.JSONObject
+import java.io.UnsupportedEncodingException
 import kotlin.reflect.KFunction1
 
 class RatingDataSource {
@@ -35,9 +38,20 @@ class RatingDataSource {
                     }
                     callBack(reviewSum, numberOfReviews, userReview)
                 },
-                {
-
-                })
+                { errorResponse -> val intent = Intent(context, PopUpWindow::class.java).apply {
+                    var body = "undefined error"
+                    if (errorResponse.networkResponse.data != null) {
+                        try {
+                            body = String(errorResponse.networkResponse.data, Charsets.UTF_8)
+                        } catch (e: UnsupportedEncodingException) {
+                            e.printStackTrace()
+                        }
+                    }
+                    putExtra("popuptext", body)
+                }
+                    startActivity(context, intent, null)
+                }
+            )
             MyRequestQueue.getInstance(context).addToRequestQueue(getRequest)
         }
 

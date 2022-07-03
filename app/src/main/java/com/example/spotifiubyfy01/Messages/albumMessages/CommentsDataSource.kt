@@ -3,6 +3,7 @@ package com.example.spotifiubyfy01.Messages.albumMessages
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
@@ -107,11 +108,8 @@ class IdToListOfPositionNCommentMap(
                 Log.d("TAG", artistName)
                 replaceWithRightArtist(Artist(artistId, artistName, artistImage))
             }
-        ) { error ->
-            val intent = Intent(context, PopUpWindow::class.java).apply {
-                putExtra("popuptext", error.toString())
-            }
-            context.startActivity(intent)
+        ) {
+            Toast.makeText(context, "Cant find user", Toast.LENGTH_SHORT).show()
         }
         MyRequestQueue.getInstance(context).addToRequestQueue(getRequest)
     }

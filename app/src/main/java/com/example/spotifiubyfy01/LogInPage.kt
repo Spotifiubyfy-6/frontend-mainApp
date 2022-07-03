@@ -3,10 +3,12 @@ package com.example.spotifiubyfy01
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.toolbox.StringRequest
+import java.io.UnsupportedEncodingException
 
 
 class LogInPage : AppCompatActivity() {
@@ -35,8 +37,15 @@ class LogInPage : AppCompatActivity() {
                 }
                     startActivity(intent)},
                 { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
-//                    val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
-                    putExtra("popuptext", "error failed log in")
+                    var body = "undefined error"
+                    if (errorResponse.networkResponse.data != null) {
+                        try {
+                            body = String(errorResponse.networkResponse.data, Charsets.UTF_8)
+                        } catch (e: UnsupportedEncodingException) {
+                            e.printStackTrace()
+                        }
+                    }
+                    putExtra("popuptext", body)
                 }
                     startActivity(intent)}) {
                 override fun getBody(): ByteArray {

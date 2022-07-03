@@ -1,11 +1,16 @@
 package com.example.spotifiubyfy01.Messages
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.android.volley.toolbox.StringRequest
 import com.example.spotifiubyfy01.MyRequestQueue
+import com.example.spotifiubyfy01.PopUpWindow
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.UnsupportedEncodingException
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -32,8 +37,18 @@ class MessagesDataSender {
                         MessagesDataSource.obtainDate(jsonMessage.get("time") as String)
                     val messageItem = MessagesDataSource.getMessage(senderId, jsonMessage, dateNTime)
                     addMessage(messageItem, dateNTime) },
-                { errorResponse ->
-                    Log.d("TAG", errorResponse.toString())
+                { errorResponse -> val intent = Intent(context, PopUpWindow::class.java).apply {
+                    var body = "undefined error"
+                    if (errorResponse.networkResponse.data != null) {
+                        try {
+                            body = String(errorResponse.networkResponse.data, Charsets.UTF_8)
+                        } catch (e: UnsupportedEncodingException) {
+                            e.printStackTrace()
+                        }
+                    }
+                    putExtra("popuptext", body)
+                }
+                    ContextCompat.startActivity(context, intent, null)
                 }) {
                 override fun getBodyContentType(): String {
                     return "application/json"

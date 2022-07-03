@@ -14,6 +14,7 @@ import org.json.JSONObject
 import java.util.*
 import com.example.spotifiubyfy01.SongManager
 import com.example.spotifiubyfy01.artistProfile.Song
+import java.io.UnsupportedEncodingException
 
 
 class Spotifiubify : Application() {
@@ -44,12 +45,18 @@ class Spotifiubify : Application() {
 
             },
             { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
-                val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
-                putExtra("popuptext", error)
-                putExtra("tokenValidation", true) }
-                //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent)
-            }
+                var body = "undefined error"
+                if (errorResponse.networkResponse.data != null) {
+                    try {
+                        body = String(errorResponse.networkResponse.data, Charsets.UTF_8)
+                    } catch (e: UnsupportedEncodingException) {
+                        e.printStackTrace()
+                    }
+                }
+                putExtra("popuptext", body)
+                putExtra("tokenValidation", true)
+                }
+                    startActivity(intent)}
         ) {
             @Throws(AuthFailureError::class)
             override fun getHeaders(): Map<String, String> {

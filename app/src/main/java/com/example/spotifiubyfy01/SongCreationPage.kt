@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.artistProfile.Album
 import org.json.JSONObject
 import java.io.File
+import java.io.UnsupportedEncodingException
 
 class SongCreationPage : AppCompatActivity(), AdapterView.OnItemClickListener {
 
@@ -115,11 +116,19 @@ class SongCreationPage : AppCompatActivity(), AdapterView.OnItemClickListener {
                     }
                 }
                     startActivity(intent)},
-                { val intent = Intent(this, PopUpWindow::class.java).apply {
-                    putExtra("popuptext", "cant create album right now")
+                { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
+                    var body = "undefined error"
+                    if (errorResponse.networkResponse.data != null) {
+                        try {
+                            body = String(errorResponse.networkResponse.data, Charsets.UTF_8)
+                        } catch (e: UnsupportedEncodingException) {
+                            e.printStackTrace()
+                        }
+                    }
+                    putExtra("popuptext", body)
                 }
-                    startActivity(intent)})
-
+                    startActivity(intent)}
+            )
             MyRequestQueue.getInstance(this).addToRequestQueue(jsonRequest)
         }
         val finishAlbumCreationButton = findViewById<Button>(R.id.finishCreation)
@@ -176,5 +185,3 @@ class SongCreationPage : AppCompatActivity(), AdapterView.OnItemClickListener {
         return super.onOptionsItemSelected(item)
     }
 }
-
-//  /sdcard/Download/shrek.mp3  para la demo

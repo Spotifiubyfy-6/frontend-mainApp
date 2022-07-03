@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -138,8 +139,8 @@ class MainPage: AppCompatActivity() {
             { response ->
                 initRecyclerViewArtist(getListOfArtist(response))
             },
-            { errorResponse ->
-                print(errorResponse)
+            {
+                Toast.makeText(this, "Cant fetch artists right now", Toast.LENGTH_SHORT).show()
             })
         MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
     }
@@ -156,8 +157,8 @@ class MainPage: AppCompatActivity() {
             { response ->
                 initRecyclerViewSongs(getListOfSongs(response))
             },
-            { errorResponse ->
-                print(errorResponse)
+            {
+                Toast.makeText(this, "Cant fetch songs right now", Toast.LENGTH_SHORT).show()
             })
         MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
     }
@@ -172,8 +173,8 @@ class MainPage: AppCompatActivity() {
             { response ->
                 initRecyclerViewAlbum(getListOfAlbums(response))
             },
-            { errorResponse ->
-                print(errorResponse)
+            {
+                Toast.makeText(this, "Cant fetch albums right now", Toast.LENGTH_SHORT).show()
             })
         MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
     }

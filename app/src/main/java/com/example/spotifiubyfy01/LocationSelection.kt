@@ -22,6 +22,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.spotifiubyfy01.databinding.ActivityLocationSelectionBinding
+import java.io.UnsupportedEncodingException
 import java.util.HashMap
 
 class LocationSelection : AppCompatActivity(), OnMapReadyCallback {
@@ -105,13 +106,13 @@ class LocationSelection : AppCompatActivity(), OnMapReadyCallback {
             this.currentLtd = latlng.latitude.toInt()
             val countryName: String = addresses[0].getCountryName()
             val textView = findViewById<TextView>(R.id.textView)
-            textView.setText(countryName)
+            textView.text = countryName
         }
 
     }
 
     // Go to select Genres activity, passing location as
-    public fun confirmLocation(view : View) {
+    fun confirmLocation() {
         val url = "https://spotifiubyfy-users.herokuapp.com/users/location/${this.currentLng}/${this.currentLtd}"
         val postRequest: StringRequest = object : StringRequest(
             Method.POST, url,
@@ -125,10 +126,17 @@ class LocationSelection : AppCompatActivity(), OnMapReadyCallback {
                 }
                 startActivity(nextPage)
             },
+
             { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
+                var body = "undefined error"
                 Log.d(ContentValues.TAG, "ERROR: $errorResponse")
-                val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
-                putExtra("popuptext", error)
+                if (errorResponse.networkResponse.data != null) {
+                    try {
+                        body = String(errorResponse.networkResponse.data, Charsets.UTF_8)
+                    } catch (e: UnsupportedEncodingException) {
+                        e.printStackTrace()
+                    }}
+                putExtra("popuptext", body)
                 putExtra("tokenValidation", true) }
                 startActivity(intent)
             }
@@ -144,7 +152,7 @@ class LocationSelection : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
-    public fun skip(view : View) {
+    fun skip() {
         val intent = Intent(this, ProfileEditPage::class.java)
         startActivity(intent)
     }

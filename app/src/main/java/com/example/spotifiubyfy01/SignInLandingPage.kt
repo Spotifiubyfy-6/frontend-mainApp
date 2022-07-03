@@ -13,6 +13,7 @@ import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import org.json.JSONObject
+import java.io.UnsupportedEncodingException
 
 
 class SignInLandingPage : AppCompatActivity() {
@@ -122,10 +123,18 @@ class SignInLandingPage : AppCompatActivity() {
                             }
                             startActivity(intent)},
                         { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
-//                    val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
-                            putExtra("popuptext", "error failed log in")
+                            var body = "undefined error"
+                            if (errorResponse.networkResponse.data != null) {
+                                try {
+                                    body = String(errorResponse.networkResponse.data, Charsets.UTF_8)
+                                } catch (e: UnsupportedEncodingException) {
+                                    e.printStackTrace()
+                                }
+                            }
+                            putExtra("popuptext", body)
                         }
-                            startActivity(intent)}) {
+                            startActivity(intent)}
+                    ) {
                         override fun getBody(): ByteArray {
                             return requestString.toByteArray(charset("utf-8"))
                         }
@@ -133,11 +142,18 @@ class SignInLandingPage : AppCompatActivity() {
                     MyRequestQueue.getInstance(this).addToRequestQueue(stringRequest)
                     },
                 { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
-//                    val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
-                    putExtra("popuptext", "failes sign in")
+                    var body = "undefined error"
+                    if (errorResponse.networkResponse.data != null) {
+                        try {
+                            body = String(errorResponse.networkResponse.data, Charsets.UTF_8)
+                        } catch (e: UnsupportedEncodingException) {
+                            e.printStackTrace()
+                        }
+                    }
+                    putExtra("popuptext", body)
                 }
-                    startActivity(intent)})
-
+                    startActivity(intent)}
+            )
             MyRequestQueue.getInstance(this).addToRequestQueue(jsonRequest)
         }
     }

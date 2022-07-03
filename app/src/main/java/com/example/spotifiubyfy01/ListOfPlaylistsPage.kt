@@ -22,6 +22,7 @@ import com.example.spotifiubyfy01.search.SearchItem
 import com.example.spotifiubyfy01.search.adapter.SearchRecyclerAdapter
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.UnsupportedEncodingException
 
 
 class ListOfPlaylistsPage : AppCompatActivity() {
@@ -69,15 +70,20 @@ class ListOfPlaylistsPage : AppCompatActivity() {
                 fetchPlaylistById(playlistID)
 
             },
-            { errorResponse ->
-                print(errorResponse)
+
+            { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
+                var body = "undefined error"
                 Log.d(ContentValues.TAG, "AGREGADO ERRONEO: $errorResponse")
-                val intent = Intent(this, PopUpWindow::class.java).apply {
-//                    val error = errorResponse//.networkResponse.data.decodeToString() //.split('"')[3]
-                    putExtra("popuptext", "song already in playlist")
+                if (errorResponse.networkResponse.data != null) {
+                    try {
+                        body = String(errorResponse.networkResponse.data, Charsets.UTF_8)
+                    } catch (e: UnsupportedEncodingException) {
+                        e.printStackTrace()
+                    }
                 }
-                startActivity(intent)
-            })
+                putExtra("popuptext", body)
+            }
+                startActivity(intent)})
         MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
     }
 

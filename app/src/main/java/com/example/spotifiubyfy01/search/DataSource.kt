@@ -1,15 +1,19 @@
 package com.example.spotifiubyfy01.search
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
+import androidx.core.content.ContextCompat.startActivity
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonArrayRequest
 import com.example.spotifiubyfy01.MyRequestQueue
+import com.example.spotifiubyfy01.PopUpWindow
 import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.artistProfile.Playlist
 import com.example.spotifiubyfy01.artistProfile.Song
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.UnsupportedEncodingException
 
 var image_link = "https://he.cecollaboratory.com/public/layouts/images/group-default-logo.png"
 
@@ -68,8 +72,18 @@ class DataSource {
                     }
                     synchronizer.updateCounterAndCallBackIfNeeded(callBack)
                 },
-                {
-
+                { errorResponse -> val intent = Intent(context, PopUpWindow::class.java).apply {
+                    var body = "undefined error"
+                    if (errorResponse.networkResponse.data != null) {
+                        try {
+                            body = String(errorResponse.networkResponse.data, Charsets.UTF_8)
+                        } catch (e: UnsupportedEncodingException) {
+                            e.printStackTrace()
+                        }
+                    }
+                    putExtra("popuptext", body)
+                }
+                    startActivity(context, intent, null)
                 })
             MyRequestQueue.getInstance(context).addToRequestQueue(getRequest)
         }
