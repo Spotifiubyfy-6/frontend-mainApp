@@ -47,6 +47,7 @@ class Spotifiubify : Application() {
                 val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
                 putExtra("popuptext", error)
                 putExtra("tokenValidation", true) }
+                //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent)
             }
         ) {
