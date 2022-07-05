@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.AuthFailureError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
+import com.example.spotifiubyfy01.search.Artist
 import org.json.JSONObject
 
 class ProfileEditPage : AppCompatActivity() {
@@ -57,8 +58,8 @@ class ProfileEditPage : AppCompatActivity() {
 
         val email = findViewById<EditText>(R.id.email)
         val artistName = findViewById<EditText>(R.id.artistName)
-        val editClick = findViewById<Button>(R.id.editButton)
-        editClick.setOnClickListener {
+        val editEmailClick = findViewById<Button>(R.id.editEmailButton)
+        editEmailClick.setOnClickListener {
 
             var url = "https://spotifiubyfy-users.herokuapp.com/users/email/"+email.text.toString()
 
@@ -68,6 +69,10 @@ class ProfileEditPage : AppCompatActivity() {
                         val responseJson = JSONObject(response)
                         val email = responseJson.getString("email")
                         app.setProfileData("email", email)
+                        val artist = Artist(app.getProfileData("id").toString().toInt(),
+                            app.getProfileData("username").toString(),
+                            "profilePictures/"+app.getProfileData("username").toString())
+                        intent.putExtra("Artist", artist)
                     }
                     startActivity(intent)
                 },
@@ -85,8 +90,11 @@ class ProfileEditPage : AppCompatActivity() {
             }
 
             MyRequestQueue.getInstance(this).addToRequestQueue(postRequest)
+        }
 
-            url = "https://spotifiubyfy-users.herokuapp.com/users/name/"+artistName.text.toString()
+        val editArtistNameClick = findViewById<Button>(R.id.editArtistNameButton)
+        editArtistNameClick.setOnClickListener {
+            val url = "https://spotifiubyfy-users.herokuapp.com/users/name/"+artistName.text.toString()
 
             val namePostRequest: StringRequest = object : StringRequest(
                 Method.POST, url,
@@ -109,7 +117,6 @@ class ProfileEditPage : AppCompatActivity() {
                     return params
                 }
             }
-
             MyRequestQueue.getInstance(this).addToRequestQueue(namePostRequest)
         }
 
