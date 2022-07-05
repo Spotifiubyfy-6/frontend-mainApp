@@ -346,8 +346,8 @@ class MainPage: AppCompatActivity() {
         val playlistDescription = jsonPlaylist.getString("playlist_description")
         val playlistImage = "covers/"+jsonPlaylist.getString("playlist_media").toString()
         val playlistId = jsonPlaylist.getString("id")
-
-        return Playlist(playlistId, playlistName,playlistImage,"default_username",
+        val artistUsername = jsonPlaylist.getString("artist_username")
+        return Playlist(playlistId, playlistName,playlistImage,artistUsername,
             getListOfSongs(
                 JSONArray(jsonPlaylist.getString("songs").toString())
             ))

@@ -93,9 +93,10 @@ class ListOfPlaylistsPage : AppCompatActivity() {
         val playlistID = jsonPlaylist.getString("id")
         val playlistName = jsonPlaylist.getString("playlist_name")
         val storageName = "covers/"+jsonPlaylist.getString("playlist_media")
+        val userName = (this.application as Spotifiubify).getProfileData("username") as String
         val songs = ArrayList<Song>()
 
-        return Playlist(playlistID, playlistName, storageName, "user_name", songs
+        return Playlist(playlistID, playlistName, storageName, userName, songs
         )
     }
 
@@ -118,7 +119,7 @@ class ListOfPlaylistsPage : AppCompatActivity() {
         val playlistName = jsonPlaylist.getString("playlist_name")
         val playlistId = jsonPlaylist.getString("id")
         val storageName = "covers/"+jsonPlaylist.getString("playlist_media")
-        //val userName = jsonPlaylist.getString("user_name")
+        val userName = jsonPlaylist.getString("artist_username")
         return Playlist(
             playlistId,
             playlistName,
