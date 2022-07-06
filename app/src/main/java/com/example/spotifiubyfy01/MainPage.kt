@@ -332,11 +332,11 @@ class MainPage: AppCompatActivity() {
         return Song(songName, artistName, albumId, id, storageName, albumCover)
     }
 
-    private fun getArtist( jsonSong: JSONObject): Artist {
+    private fun getArtist( jsonArtist: JSONObject): Artist {
 
-        val id = jsonSong.getString("id").toInt()
-        val username = jsonSong.getString("name")
-        val artistImage = "profilePictures/"+jsonSong.getString("username").toString()
+        val id = jsonArtist.getString("id").toInt()
+        val username = jsonArtist.getString("name")
+        val artistImage = "profilePictures/"+jsonArtist.getString("username").toString()
         return Artist(id, username  , artistImage)
     }
 
