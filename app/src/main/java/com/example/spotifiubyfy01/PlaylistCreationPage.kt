@@ -64,7 +64,7 @@ class PlaylistCreationPage : AppCompatActivity() {
 
 
                     val intent = Intent(this, PlaylistPage::class.java).apply {
-                        val playlist : Playlist = getPlaylist("default username" ,response)
+                        val playlist : Playlist = getPlaylist(response)
                         putExtra("Playlist", playlist)
 
                         val storageName = "covers/"+response.getString("playlist_media")
@@ -104,11 +104,11 @@ class PlaylistCreationPage : AppCompatActivity() {
         }
     }
 
-    private fun getPlaylist(userName: String, jsonPlaylist: JSONObject): Playlist {
+    private fun getPlaylist(jsonPlaylist: JSONObject): Playlist {
         val playlistName = jsonPlaylist.getString("playlist_name")
         val playlistId = jsonPlaylist.getString("id")
         val storageName = "covers/"+jsonPlaylist.getString("playlist_media")
-        //val userName = jsonPlaylist.getString("user_name")
+        val userName = (this.application as Spotifiubify).getProfileData("username") as String
         return Playlist(
             playlistId,
             playlistName,

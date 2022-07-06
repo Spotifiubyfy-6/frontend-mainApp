@@ -104,6 +104,12 @@ class ProfilePage : AppCompatActivity(), VolleyCallBack<Album> {
         }
         initAlbumRecyclerView(ArrayList())
         createAlbumList(this, artist!!.id, artist!!.artistName,this)
+
+        val followingBtn = findViewById<Button>(R.id.following)
+        followingBtn.setOnClickListener {
+            val intent = Intent(this, Following::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun initAlbumRecyclerView(albumList: List<Album>) {
