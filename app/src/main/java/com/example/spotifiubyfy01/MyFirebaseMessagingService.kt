@@ -25,9 +25,8 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
             localMessage.putExtra("name", name)
             localMessage.putExtra("image", image)
             localMessage.putExtra("date", date)
-//            LocalBroadcastManager.getInstance(this).sendBroadcast(localMessage)
-            NotificationCreator().createNotificationWithIntent(this, this, localMessage)
-
+            LocalBroadcastManager.getInstance(this).sendBroadcast(localMessage)
+            //NotificationCreator().createNotificationWithIntent(this, localMessage)
         }
         super.onMessageReceived(remoteMessage)
     }

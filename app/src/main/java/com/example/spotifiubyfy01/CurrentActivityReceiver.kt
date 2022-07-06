@@ -32,15 +32,19 @@ class CurrentActivityReceiver(private val receivingActivity: Activity): Broadcas
         //val userId = (receivingActivity.application as Spotifiubify).getProfileData("id")!!.toInt()
         //intent.putExtra("user")
         if (getClassName(receivingActivity) == "ChatPage") {
-            val userId = intent.extras!!.get("idUser") as Int
-            val message = intent.extras!!.get("message") as String
-            val dateString = intent.extras!!.get("date") as String
-            val date = obtainDateWithoutT(dateString)
-            val messageReceived = Message(userId, userId, message, date)
-            (receivingActivity as ChatPage).addMessage(messageReceived, date)
+            updateChat(intent)
             return
         }
-        NotificationCreator().createNotificationWithIntent(receivingActivity, context, intent)
+        NotificationCreator().createNotificationWithIntent(context, intent)
+    }
+
+    private fun updateChat(intent: Intent) {
+        val userId = intent.extras!!.get("idUser") as Int
+        val message = intent.extras!!.get("message") as String
+        val dateString = intent.extras!!.get("date") as String
+        val date = obtainDateWithoutT(dateString)
+        val messageReceived = Message(userId, userId, message, date)
+        (receivingActivity as ChatPage).addMessage(messageReceived, date)
     }
 
     private fun obtainDateWithoutT(dateString: String): LocalDateTime {

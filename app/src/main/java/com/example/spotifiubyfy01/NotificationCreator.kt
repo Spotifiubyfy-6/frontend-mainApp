@@ -17,7 +17,7 @@ class NotificationCreator {
         (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).createNotificationChannel(channel)*/
     }
 
-    fun createNotificationWithIntent(receivingActivity: Activity, context: Context, intent: Intent) {
+    fun createNotificationWithIntent(context: Context, intent: Intent) {
         val message = intent.extras!!.get("message") as String
         val dateString = intent.extras!!.get("date") as String
         val idSender = (intent.extras!!.get("idSender") as String).toInt()
@@ -33,10 +33,10 @@ class NotificationCreator {
         )
 
         val CHANNEL_ID = "HEADS_UP_NOTIFICATION"
-        val notification = Notification.Builder(receivingActivity, CHANNEL_ID)
+        val notification = Notification.Builder(context, CHANNEL_ID)
             .setContentTitle("New message from: " + artistName).setContentText(message)
             .setAutoCancel(true).setSmallIcon(R.drawable.ic_launcher_background).setAutoCancel(true)
             .setContentIntent(pendingIntent)
-        NotificationManagerCompat.from(receivingActivity).notify(1, notification.build())
+        NotificationManagerCompat.from(context).notify(1, notification.build())
     }
 }
