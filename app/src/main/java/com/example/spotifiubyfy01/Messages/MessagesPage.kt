@@ -85,6 +85,8 @@ class MessagesPage: NotificationReceiverActivity(), VolleyCallBack<ChatBundle> {
             val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
             (recyclerView.adapter as ArtistChatsRecyclerAdapter).putItemOfPositionOnTop(position)
         } else if (result.resultCode == -10) {
+            val progressBar = findViewById<ProgressBar>(R.id.progressBar1)
+            progressBar.visibility = VISIBLE
             MessagesDataSource.getChatsOfArtistWithID(this, userId!!, this)
         }
     }
