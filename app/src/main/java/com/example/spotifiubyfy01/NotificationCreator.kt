@@ -28,6 +28,7 @@ class NotificationCreator {
         val myIntent = Intent(context, ChatPage::class.java)
         myIntent.putExtra("other", artist)
         myIntent.putExtra("requester_id", userId)
+        myIntent.putExtra("fromNotifications", true)
         val pendingIntent = PendingIntent.getActivity(context,0, myIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )

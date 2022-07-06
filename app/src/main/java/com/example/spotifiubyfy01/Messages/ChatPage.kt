@@ -24,11 +24,15 @@ class ChatPage: NotificationReceiverActivity(), VolleyCallBack<MessageItem> {
     var requesterId: Int? = null
     var other: Artist? = null
     var updated: Boolean = false
+    var fromNotification: Boolean? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_page)
         requesterId = intent.extras?.get("requester_id") as Int
         other = intent.extras?.get("other") as Artist
+        fromNotification = intent.extras?.get("fromNotifications") as Boolean?
+
         initOtherArtistField()
         initRecyclerView(ArrayList())
         MessagesDataSource.getConversationBetween(this, requesterId!!, other!!.id, this)
@@ -82,10 +86,12 @@ class ChatPage: NotificationReceiverActivity(), VolleyCallBack<MessageItem> {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            if (updated)
-                setResult(intent.extras?.get("position") as Int, intent);
-            else
-                setResult(-1, intent);
+            if (fromNotification == null) {
+                if (updated)
+                    setResult(intent.extras?.get("position") as Int, intent);
+                else
+                    setResult(-1, intent);
+            }
             finish()
             return true
         }
