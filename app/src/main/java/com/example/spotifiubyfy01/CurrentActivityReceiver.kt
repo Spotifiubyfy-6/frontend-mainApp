@@ -16,6 +16,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.spotifiubyfy01.Messages.ChatPage
 import com.example.spotifiubyfy01.Messages.Message
 import com.example.spotifiubyfy01.Messages.MessagesDataSource.Companion.obtainDate
+import com.example.spotifiubyfy01.Messages.MessagesPage
 import com.example.spotifiubyfy01.search.Artist
 import java.time.LocalDateTime
 
@@ -28,9 +29,12 @@ val CURRENT_ACTIVITY_RECEIVER_FILTER = IntentFilter(CURRENT_ACTIVITY_ACTION);
 class CurrentActivityReceiver(private val receivingActivity: Activity): BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        Log.d("TAG", "class " + getClassName(receivingActivity) + " is running!")
-        if (getClassName(receivingActivity) == "ChatPage") {
+        val currentActivityName = getClassName(receivingActivity)
+        if (currentActivityName == "ChatPage") {
             updateChat(intent)
+            return
+        } else if (currentActivityName == "MessagesPage") {
+            (receivingActivity as MessagesPage).refreshChats()
             return
         }
         NotificationCreator().createNotificationWithIntent(context, intent)
