@@ -12,14 +12,25 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import org.json.JSONObject
 import java.util.*
-import com.example.spotifiubyfy01.SongManager
-import com.example.spotifiubyfy01.artistProfile.Song
 
 
 class Spotifiubify : Application() {
     var profileData: Hashtable<String, String> = Hashtable<String, String>()
     private lateinit var storage: FirebaseStorage
     lateinit var SongManager: SongManager
+    private var activityVisible = false
+
+    fun isActivityVisible(): Boolean {
+        return activityVisible
+    }
+
+    fun activityResumed() {
+        activityVisible = true
+    }
+
+    fun activityPaused() {
+        activityVisible = false
+    }
 
     override fun onCreate() {
         super.onCreate()
