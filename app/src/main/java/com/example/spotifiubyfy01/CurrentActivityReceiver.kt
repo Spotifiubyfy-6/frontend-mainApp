@@ -29,36 +29,18 @@ class CurrentActivityReceiver(private val receivingActivity: Activity): Broadcas
 
     override fun onReceive(context: Context, intent: Intent) {
         Log.d("TAG", "class " + getClassName(receivingActivity) + " is running!")
-        val userId = (receivingActivity.application as Spotifiubify).getProfileData("id")!!.toInt()
-        val message = intent.extras!!.get("message") as String
-        val dateString = intent.extras!!.get("date") as String
-        val date = obtainDateWithoutT(dateString)
+        //val userId = (receivingActivity.application as Spotifiubify).getProfileData("id")!!.toInt()
+        //intent.putExtra("user")
         if (getClassName(receivingActivity) == "ChatPage") {
+            val userId = intent.extras!!.get("idUser") as Int
+            val message = intent.extras!!.get("message") as String
+            val dateString = intent.extras!!.get("date") as String
+            val date = obtainDateWithoutT(dateString)
             val messageReceived = Message(userId, userId, message, date)
             (receivingActivity as ChatPage).addMessage(messageReceived, date)
             return
         }
-        val idSender = (intent.extras!!.get("idSender") as String).toInt()
-        val artistName = intent.extras!!.get("name") as String
-        val image = intent.extras!!.get("image") as String
-        val artist = Artist(idSender, artistName, image)
-        val myIntent = Intent(context, ChatPage::class.java)
-        myIntent.putExtra("other", artist)
-        myIntent.putExtra("requester_id", userId)
-        val pendingIntent = PendingIntent.getActivity(context,0, myIntent,
-                                                    FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE)
-
-       /* val CHANNEL_ID = "HEADS_UP_NOTIFICATION"
-        val channel = NotificationChannel(CHANNEL_ID, "Heads Up Notification",
-                                     NotificationManager.IMPORTANCE_HIGH)
-        (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).createNotificationChannel(channel)
-        */
-        val CHANNEL_ID = "HEADS_UP_NOTIFICATION"
-        val notification = Notification.Builder(receivingActivity, CHANNEL_ID)
-            .setContentTitle("New message from: " + artistName).setContentText(message)
-            .setAutoCancel(true).setSmallIcon(R.drawable.ic_launcher_background).setAutoCancel(true)
-            .setContentIntent(pendingIntent)
-        NotificationManagerCompat.from(receivingActivity).notify(1, notification.build())
+        NotificationCreator().createNotificationWithIntent(receivingActivity, context, intent)
     }
 
     private fun obtainDateWithoutT(dateString: String): LocalDateTime {
