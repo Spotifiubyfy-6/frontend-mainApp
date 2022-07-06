@@ -66,6 +66,7 @@ open class NotificationReceiverActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        (this.application as Spotifiubify).activityResumed()
         currentActivityReceiver = CurrentActivityReceiver(this)
         LocalBroadcastManager.getInstance(this).registerReceiver(
             currentActivityReceiver!!,
@@ -74,6 +75,7 @@ open class NotificationReceiverActivity : AppCompatActivity() {
     }
 
     override fun onPause() {
+        (this.application as Spotifiubify).activityPaused()
         LocalBroadcastManager.getInstance(this).unregisterReceiver(currentActivityReceiver!!)
         currentActivityReceiver = null
         super.onPause()
