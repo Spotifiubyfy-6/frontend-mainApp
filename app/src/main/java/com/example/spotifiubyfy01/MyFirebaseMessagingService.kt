@@ -16,7 +16,8 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
             val name = remoteMessage.data["name"] as String
             val image = remoteMessage.data["image"] as String
             val date = remoteMessage.data["time"] as String
-            val userId = (this.application as Spotifiubify).getProfileData("id")!!.toInt()
+            val app = (this.application as Spotifiubify)
+            val userId = app.getProfileData("id")!!.toInt()
             Log.d("TAG", date)
             val localMessage = Intent(CURRENT_ACTIVITY_ACTION)
             localMessage.putExtra("idUser", userId)
@@ -25,8 +26,10 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
             localMessage.putExtra("name", name)
             localMessage.putExtra("image", image)
             localMessage.putExtra("date", date)
-            LocalBroadcastManager.getInstance(this).sendBroadcast(localMessage)
-            //NotificationCreator().createNotificationWithIntent(this, localMessage)
+            if (app.isActivityVisible())
+                LocalBroadcastManager.getInstance(this).sendBroadcast(localMessage)
+            else
+                NotificationCreator().createNotificationWithIntent(this, localMessage)
         }
         super.onMessageReceived(remoteMessage)
     }

@@ -29,8 +29,6 @@ class CurrentActivityReceiver(private val receivingActivity: Activity): Broadcas
 
     override fun onReceive(context: Context, intent: Intent) {
         Log.d("TAG", "class " + getClassName(receivingActivity) + " is running!")
-        //val userId = (receivingActivity.application as Spotifiubify).getProfileData("id")!!.toInt()
-        //intent.putExtra("user")
         if (getClassName(receivingActivity) == "ChatPage") {
             updateChat(intent)
             return
