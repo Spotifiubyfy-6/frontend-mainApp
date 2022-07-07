@@ -11,14 +11,18 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Request
+import com.android.volley.toolbox.JsonArrayRequest
 import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.artistProfile.AlbumDataSource.Companion.createAlbumList
+import com.example.spotifiubyfy01.artistProfile.Song
 import com.example.spotifiubyfy01.artistProfile.adapter.default_album_image
 import com.example.spotifiubyfy01.artistProfile.adapter.AlbumRecyclerAdapter
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
-
+import org.json.JSONArray
+import org.json.JSONObject
 
 class ProfilePage : AppCompatActivity(), VolleyCallBack<Album> {
     private var artist: Artist? = null
@@ -110,6 +114,8 @@ class ProfilePage : AppCompatActivity(), VolleyCallBack<Album> {
             val intent = Intent(this, Following::class.java)
             startActivity(intent)
         }
+
+        fetchMyPlaylists()
     }
 
     private fun initAlbumRecyclerView(albumList: List<Album>) {
@@ -122,6 +128,7 @@ class ProfilePage : AppCompatActivity(), VolleyCallBack<Album> {
             }
     }
 
+
     private fun onItemClicked(album: Album) {
         val intent = Intent(this, AlbumPage::class.java)
         intent.putExtra("Album", album)
@@ -131,4 +138,77 @@ class ProfilePage : AppCompatActivity(), VolleyCallBack<Album> {
     override fun updateData(list: List<Album>) {
         initAlbumRecyclerView(list)
     }
+
+    private fun fetchMyPlaylists() {
+        val app = (this.application as Spotifiubify)
+        val userId = app.getProfileData("id")
+        val url = "https://spotifiubyfy-music.herokuapp.com/users/$userId/playlists?skip=0&limit=100"
+
+        val getRequest = JsonArrayRequest(
+            Request.Method.GET,
+            url,
+            null,
+            { response ->
+                initRecyclerViewPlaylists(getListOfPlaylists(response))
+            },
+            { errorResponse ->
+                print(errorResponse)
+            })
+        MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
+    }
+
+    private fun initRecyclerViewPlaylists(listOfPlaylists: List<Playlist>) {
+        val recyclerViewPlaylist = findViewById<RecyclerView>(R.id.playlist_recycler_view)
+        recyclerViewPlaylist.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
+            false)
+        recyclerViewPlaylist.adapter = PlaylistRecyclerAdapter(listOfPlaylists) { playlist ->
+            onPlaylistClicked(playlist)
+        }
+    }
+
+    private fun onPlaylistClicked(playlist : Playlist) {
+        val intent = Intent(this, PlaylistPage::class.java)
+        intent.putExtra("Playlist", playlist)
+        startActivity(intent)
+    }
+
+    private fun getListOfPlaylists(jsonSongs: JSONArray): List<Playlist> {
+        val playlists = ArrayList<Playlist>()
+        for (i in 0 until jsonSongs.length())
+            playlists.add(getPlaylist(JSONObject(jsonSongs.get(i).toString())))
+        return playlists
+    }
+
+    private fun getPlaylist( jsonPlaylist: JSONObject): Playlist {
+
+        val playlistName = jsonPlaylist.getString("playlist_name")
+        val playlistDescription = jsonPlaylist.getString("playlist_description")
+        val playlistImage = "covers/"+jsonPlaylist.getString("playlist_media").toString()
+        val playlistId = jsonPlaylist.getString("id")
+        val artistUsername = jsonPlaylist.getString("artist_username")
+        return Playlist(playlistId, playlistName,playlistImage,artistUsername,
+            getListOfSongs(
+                JSONArray(jsonPlaylist.getString("songs").toString())
+            ))
+    }
+
+    private fun getListOfSongs(jsonSongs: JSONArray): List<Song> {
+        val songs = ArrayList<Song>()
+        for (i in 0 until jsonSongs.length())
+            songs.add(getSong(JSONObject(jsonSongs.get(i).toString())))
+        return songs
+    }
+
+    private fun getSong( jsonSong: JSONObject): Song {
+        val songName = jsonSong.getString("song_name")
+        val albumId = jsonSong.getString("album_id").toInt()
+        val id = jsonSong.getString("id").toInt()
+        val storageName = jsonSong.getString("storage_name")
+        val artistName = jsonSong.getString("artist_name")
+        val albumCover = "covers/"+jsonSong.getString("album_media")
+
+        return Song(songName, artistName, albumId, id, storageName, albumCover)
+    }
+
+
 }
