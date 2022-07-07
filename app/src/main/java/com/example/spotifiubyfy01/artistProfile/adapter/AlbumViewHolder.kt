@@ -6,6 +6,7 @@ import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -21,6 +22,7 @@ class AlbumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val albumImage: ImageView = view.findViewById(R.id.album_image)
     private val app = ((view.context as AppCompatActivity).application as Spotifiubify)
     private val deleteButton: Button = view.findViewById<Button>(R.id.delete_album)
+    private val context = view.context
 
     fun render(album: Album, onClickListener: (Album) -> Unit) {
         albumName.text = album.album_name
@@ -33,9 +35,19 @@ class AlbumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         if (album.forUsersProfile) {
             deleteButton.visibility = VISIBLE
             deleteButton.setOnClickListener {
-                Log.d("TAG", "deleted")
+                val alertDialogBuilder = AlertDialog.Builder(context)
+                alertDialogBuilder.setTitle("Do you want to delete this album?")
+                alertDialogBuilder.setMessage("This action is irreversible.")
+                alertDialogBuilder.setNegativeButton("yes") { _, _ ->
+                    Log.d("TAG", "Deleting " + album.album_id + "!!")
+                }
+                alertDialogBuilder.setPositiveButton("no") {_, _ ->
+                }
+                alertDialogBuilder.show()
             }
         }
         itemView.setOnClickListener { onClickListener(album) }
     }
+
+
 }
