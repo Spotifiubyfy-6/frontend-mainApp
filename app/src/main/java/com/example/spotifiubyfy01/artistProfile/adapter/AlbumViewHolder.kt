@@ -24,7 +24,11 @@ class AlbumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val deleteButton: Button = view.findViewById<Button>(R.id.delete_album)
     private val context = view.context
 
-    fun render(album: Album, onClickListener: (Album) -> Unit) {
+    fun render(
+        album: Album,
+        onClickListener: (Album) -> Unit,
+        onDeleteButtonListener: ((Album) -> Unit)?
+    ) {
         albumName.text = album.album_name
         val coverRef = app.getStorageReference().child(album.album_image)
         coverRef.downloadUrl.addOnSuccessListener { url ->
@@ -35,15 +39,9 @@ class AlbumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         if (album.forUsersProfile) {
             deleteButton.visibility = VISIBLE
             deleteButton.setOnClickListener {
-                val alertDialogBuilder = AlertDialog.Builder(context)
-                alertDialogBuilder.setTitle("Do you want to delete this album?")
-                alertDialogBuilder.setMessage("This action is irreversible.")
-                alertDialogBuilder.setNegativeButton("yes") { _, _ ->
-                    Log.d("TAG", "Deleting " + album.album_id + "!!")
+                if (onDeleteButtonListener != null) {
+                    onDeleteButtonListener(album)
                 }
-                alertDialogBuilder.setPositiveButton("no") {_, _ ->
-                }
-                alertDialogBuilder.show()
             }
         }
         itemView.setOnClickListener { onClickListener(album) }

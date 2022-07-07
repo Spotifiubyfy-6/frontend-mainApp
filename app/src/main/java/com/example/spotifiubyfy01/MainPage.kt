@@ -77,18 +77,18 @@ class MainPage: BaseActivity() {
         val recyclerViewAlbums = findViewById<RecyclerView>(R.id.recycler_view_album)
         recyclerViewAlbums.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
             false)
-        recyclerViewAlbums.adapter = AlbumRecyclerAdapter(listOfAlbums) { album ->
+        recyclerViewAlbums.adapter = AlbumRecyclerAdapter(listOfAlbums, { album ->
             onAlbumClicked(album)
-        }
+        }, null)
     }
 
     private fun initRecyclerViewAlbumRecGeo(listOfAlbums: List<Album>) {
         val recyclerViewAlbums = findViewById<RecyclerView>(R.id.recycler_view_album_rec_geo)
         recyclerViewAlbums.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
             false)
-        recyclerViewAlbums.adapter = AlbumRecyclerAdapter(listOfAlbums) { album ->
+        recyclerViewAlbums.adapter = AlbumRecyclerAdapter(listOfAlbums, { album ->
             onAlbumClicked(album)
-        }
+        }, null)
     }
 
     private fun initRecyclerViewArtist(listOfArtist:  List<Artist>) {
@@ -123,9 +123,9 @@ class MainPage: BaseActivity() {
         val recyclerViewAlbums = findViewById<RecyclerView>(R.id.recycler_view_album_rec_genre)
         recyclerViewAlbums.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
             false)
-        recyclerViewAlbums.adapter = AlbumRecyclerAdapter(listOfAlbums) { album ->
+        recyclerViewAlbums.adapter = AlbumRecyclerAdapter(listOfAlbums, { album ->
             onAlbumClicked(album)
-        }
+        }, null)
     }
 
     private fun onArtistClicked(artist: Artist) {

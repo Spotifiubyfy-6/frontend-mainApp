@@ -2,10 +2,12 @@ package com.example.spotifiubyfy01
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
@@ -101,11 +103,20 @@ class ProfilePage : BaseActivity(), VolleyCallBack<Album> {
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
             false)
         recyclerView.adapter =
-            AlbumRecyclerAdapter(albumList) {album ->
-                onItemClicked(album)
-            }
+            AlbumRecyclerAdapter(albumList, this::onItemClicked, this::onDeleteButtonClicked)
+
     }
 
+    private fun onDeleteButtonClicked(album: Album) {
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder.setTitle("Do you want to delete this album?")
+        alertDialogBuilder.setMessage("This action is irreversible.")
+        alertDialogBuilder.setNegativeButton("yes") { _, _ ->
+            Log.d("TAG", "Deleting " + album.album_id + "!!")
+        }
+        alertDialogBuilder.setPositiveButton("no", null)
+        alertDialogBuilder.show()
+    }
 
     private fun onItemClicked(album: Album) {
         val intent = Intent(this, AlbumPage::class.java)

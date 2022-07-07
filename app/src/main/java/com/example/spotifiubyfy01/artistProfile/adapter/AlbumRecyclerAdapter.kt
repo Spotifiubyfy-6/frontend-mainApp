@@ -7,8 +7,9 @@ import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.artistProfile.Album
 
 class AlbumRecyclerAdapter(
-        val albumList: List<Album>,
-        private val onClickListener:(Album) -> Unit
+    val albumList: List<Album>,
+    private val onClickListener: (Album) -> Unit,
+    private val onDeleteButtonListener: ((Album) -> Unit)?
 ): RecyclerView.Adapter<AlbumViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumViewHolder {
@@ -19,7 +20,7 @@ class AlbumRecyclerAdapter(
 
     override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
         val item = albumList[position]
-        holder.render(item, onClickListener)
+        holder.render(item, onClickListener, onDeleteButtonListener)
     }
 
     override fun getItemCount(): Int {
