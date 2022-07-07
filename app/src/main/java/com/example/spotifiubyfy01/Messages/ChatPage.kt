@@ -21,6 +21,7 @@ import com.example.spotifiubyfy01.artistProfile.ArtistPage
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
 import java.time.LocalDateTime
+import java.time.ZonedDateTime
 
 class ChatPage: NotificationReceiverActivity(), VolleyCallBack<MessageItem> {
     var requesterId: Int? = null
@@ -75,7 +76,7 @@ class ChatPage: NotificationReceiverActivity(), VolleyCallBack<MessageItem> {
         recyclerView.smoothScrollToPosition((recyclerView.adapter as MessagesRecyclerAdapter).itemCount)
     }
 
-    fun addMessage(message: Message, date: LocalDateTime) {
+    fun addMessage(message: Message, date: ZonedDateTime) {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         (recyclerView.adapter as MessagesRecyclerAdapter).addMessage(message, date)
         recyclerView.smoothScrollToPosition((recyclerView.adapter as MessagesRecyclerAdapter).itemCount)

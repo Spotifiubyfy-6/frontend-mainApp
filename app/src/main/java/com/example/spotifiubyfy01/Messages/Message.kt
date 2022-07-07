@@ -1,6 +1,9 @@
 package com.example.spotifiubyfy01.Messages
+import android.util.Log
 import java.io.Serializable
 import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZonedDateTime
 
 fun convertIntToMessageEnum(value: Int): MessageEnum {
     return when(value) {
@@ -23,7 +26,7 @@ class Message(
     private var requester_id: Int,
     var receiver_id: Int,
     message: String,
-    var time: LocalDateTime
+    val time: ZonedDateTime
 ) : Serializable, MessageItem() {
     val messages: ArrayList<String> = ArrayList()
     init{
@@ -37,7 +40,7 @@ class Message(
             MessageEnum.MESSAGE_SENT
     }
 
-    fun addMessageIfSameTimeNReceiver(receiverId: Int, message: String, dateNTime: LocalDateTime): Boolean {
+    fun addMessageIfSameTimeNReceiver(receiverId: Int, message: String, dateNTime: ZonedDateTime): Boolean {
         if ((receiver_id == receiverId) && (time.hour == dateNTime.hour) && (time.minute == dateNTime.minute)) {
             messages.add(message)
             return true

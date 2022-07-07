@@ -9,6 +9,7 @@ import com.example.spotifiubyfy01.PopUpWindow
 import org.json.JSONObject
 import java.io.UnsupportedEncodingException
 import java.time.LocalDateTime
+import java.time.ZonedDateTime
 
 class MessagesDataSender {
 
@@ -18,7 +19,7 @@ class MessagesDataSender {
             senderId: Int,
             receiverId: Int,
             message: String,
-            addMessage: (Message, LocalDateTime) -> Unit
+            addMessage: (Message, ZonedDateTime) -> Unit
         ) {
             if (message.isEmpty())
                 return

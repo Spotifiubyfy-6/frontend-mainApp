@@ -7,6 +7,7 @@ import com.example.spotifiubyfy01.Messages.Message
 import com.example.spotifiubyfy01.Messages.MessageItem
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.ZonedDateTime
 
 class MessagesRecyclerAdapter(
     private val messageList: ArrayList<MessageItem>,
@@ -31,7 +32,7 @@ class MessagesRecyclerAdapter(
         }
     }
 
-    fun addMessage(message: Message, dateNTime: LocalDateTime) {
+    fun addMessage(message: Message, dateNTime: ZonedDateTime) {
         synchronized(this) {
             if (messageList.size == 0) {
                 messageList.add(DateItem(dateNTime))
@@ -48,7 +49,7 @@ class MessagesRecyclerAdapter(
         }
     }
 
-    private fun addDateIfNeeded(dateNTime: LocalDateTime) {
+    private fun addDateIfNeeded(dateNTime: ZonedDateTime) {
         //last item is always a message
         val lastMessageDateNTime = (messageList.last() as Message).time
         val lastMessageDay = LocalDate.of(lastMessageDateNTime.year, lastMessageDateNTime.month,

@@ -16,6 +16,9 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZoneOffset.UTC
+import java.time.ZonedDateTime
 
 class ChatList(
     private val numberOfArtist: Int,
@@ -150,19 +153,20 @@ class MessagesDataSource {
         }
 
         fun getMessage(requesterId: Int, jsonMessage: JSONObject,
-                               dateNTime: LocalDateTime): Message {
+                               dateNTime: ZonedDateTime): Message {
             val receiverId = jsonMessage.get("receiver") as Int
             val message = jsonMessage.get("message") as String
             return Message(requesterId, receiverId, message, dateNTime)
         }
 
-        fun obtainDate(jsonTime: String): LocalDateTime {
+        fun obtainDate(jsonTime: String): ZonedDateTime {
             val year = jsonTime.substringBefore("-")
             val month = jsonTime.substringAfter("$year-").substringBefore("-")
             val day = jsonTime.substringAfter("$year-$month-").substringBefore("T")
             val hour = jsonTime.substringAfter("T").substringBefore(":")
             val minute = jsonTime.substringAfter("T$hour:").substringBefore(":")
-            return LocalDateTime.of(year.toInt(), month.toInt(), day.toInt(), hour.toInt(), minute.toInt())
+            return LocalDateTime.of(year.toInt(), month.toInt(), day.toInt(), hour.toInt(), minute.toInt()).atZone(UTC).withZoneSameInstant(
+                ZoneId.systemDefault())
         }
     }
 }

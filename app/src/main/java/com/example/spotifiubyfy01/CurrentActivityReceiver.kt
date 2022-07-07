@@ -19,6 +19,9 @@ import com.example.spotifiubyfy01.Messages.MessagesDataSource.Companion.obtainDa
 import com.example.spotifiubyfy01.Messages.MessagesPage
 import com.example.spotifiubyfy01.search.Artist
 import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZoneOffset.UTC
+import java.time.ZonedDateTime
 
 
 const val CURRENT_ACTIVITY_ACTION = "current.activity.action";
@@ -49,13 +52,14 @@ class CurrentActivityReceiver(private val receivingActivity: Activity): Broadcas
         (receivingActivity as ChatPage).addMessage(messageReceived, date)
     }
 
-    private fun obtainDateWithoutT(dateString: String): LocalDateTime {
+    private fun obtainDateWithoutT(dateString: String): ZonedDateTime {
         val year = dateString.substringBefore("-")
         val month = dateString.substringAfter("$year-").substringBefore("-")
         val day = dateString.substringAfter("$year-$month-").substringBefore(" ")
         val hour = dateString.substringAfter("$year-$month-$day ").substringBefore(":")
         val minute = dateString.substringAfter(" $hour:").substringBefore(":")
-        return LocalDateTime.of(year.toInt(), month.toInt(), day.toInt(), hour.toInt(), minute.toInt())
+        return LocalDateTime.of(year.toInt(), month.toInt(), day.toInt(), hour.toInt(), minute.toInt()).atZone(UTC).withZoneSameInstant(
+            ZoneId.systemDefault())
     }
 
     private fun getClassName(activity: Activity): String {

@@ -4,16 +4,17 @@ import com.example.spotifiubyfy01.search.Artist
 import java.io.Serializable
 import java.time.LocalDateTime
 import java.time.ZoneOffset.UTC
+import java.time.ZonedDateTime
 
 data class Comment(
     var artist: Artist,
     val comment: String,
-    val time: LocalDateTime,
+    val time: ZonedDateTime,
     val isAuthor: Boolean
 ) : Serializable {
 
     fun getTimeAgo(): String {
-        val dif = System.currentTimeMillis()- time.atZone(UTC).toInstant().toEpochMilli()
+        val dif = System.currentTimeMillis() - time.withZoneSameInstant(UTC).toInstant().toEpochMilli()
         return toDuration(dif)
     }
 }

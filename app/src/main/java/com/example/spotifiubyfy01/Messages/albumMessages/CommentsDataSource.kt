@@ -15,6 +15,7 @@ import com.example.spotifiubyfy01.search.VolleyCallBack
 import org.json.JSONArray
 import org.json.JSONObject
 import java.time.LocalDateTime
+import java.time.ZoneOffset.UTC
 
 class CommentList(
     private val numberOfComments: Int,
@@ -23,7 +24,7 @@ class CommentList(
     private var commentInserted = 0
     private val commentList = ArrayList<Comment>()
     init {
-        val localDate = LocalDateTime.now()
+        val localDate = LocalDateTime.now().atZone(UTC)
         for (i in 0 until numberOfComments)
             commentList.add(Comment(Artist(0,"kotfu", "cklin"), "hateyou", localDate, false))
     }
