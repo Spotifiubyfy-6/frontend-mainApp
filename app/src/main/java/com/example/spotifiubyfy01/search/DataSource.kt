@@ -41,10 +41,11 @@ class DataSource {
                 callBack.updateData(ArrayList())
                 return
             }
-            val synchronizer = SearchListMonitor(4)
+            val synchronizer = SearchListMonitor(5)
             fetchByArtistsAsFilter(slice, context, callBack, synchronizer)
-            fetchAlbumsBySlice(slice, context, callBack, synchronizer, false)
-            fetchAlbumsBySlice(slice, context, callBack, synchronizer, true)
+            fetchAlbumsBySlice(slice, context, callBack, synchronizer, 0)
+            fetchAlbumsBySlice(slice, context, callBack, synchronizer, 1)
+            fetchAlbumsBySlice(slice, context, callBack, synchronizer, 2)
             fetchPlaylistsBySlice(slice, context, callBack, synchronizer)
         }
 
@@ -144,14 +145,17 @@ class DataSource {
         private fun fetchAlbumsBySlice(
             slice: String, context: Context,
             callBack: VolleyCallBack<SearchItem>, synchronizer: SearchListMonitor,
-            sliceForGender: Boolean
+            field: Int
         ) {
             val auxList = ArrayList<SearchItem>()
             val url: String
-            url = if (sliceForGender) {
+            url = if (field == 0) {
                 "http://spotifiubyfy-music.herokuapp.com/albums?genre=" + slice + "&skip=0&limit=100"
-            } else {
+            } else if (field == 1){
                 "https://spotifiubyfy-music.herokuapp.com/albums?q=" + slice +
+                        "&skip=0&limit=100"
+            } else {
+                "https://spotifiubyfy-music.herokuapp.com/albums?suscription=" + slice +
                         "&skip=0&limit=100"
             }
             val getRequest = JsonArrayRequest(
