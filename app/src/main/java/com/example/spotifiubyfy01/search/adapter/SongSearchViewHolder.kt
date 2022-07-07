@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.Spotifiubify
-import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.artistProfile.Song
 import com.example.spotifiubyfy01.search.SearchItem
 

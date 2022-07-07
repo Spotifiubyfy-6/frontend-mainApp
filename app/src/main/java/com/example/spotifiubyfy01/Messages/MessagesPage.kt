@@ -2,7 +2,6 @@ package com.example.spotifiubyfy01.Messages
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View.GONE
 import android.view.View.VISIBLE

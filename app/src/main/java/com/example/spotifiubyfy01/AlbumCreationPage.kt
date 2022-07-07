@@ -14,7 +14,7 @@ import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.bumptech.glide.Glide
 import org.json.JSONObject
-import java.io.File
+import java.io.UnsupportedEncodingException
 
 
 class AlbumCreationPage : NotificationReceiverActivity() {
@@ -69,12 +69,20 @@ class AlbumCreationPage : NotificationReceiverActivity() {
                     }
                 }
                     startActivity(intent)},
-                { val intent = Intent(this, PopUpWindow::class.java).apply {
-//                    val error = errorResponse//.networkResponse.data.decodeToString() //.split('"')[3]
-                    putExtra("popuptext", "cant create album right now")
+                { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
+                    var body = "undefined error"
+                    if (errorResponse.networkResponse.data != null) {
+                        try {
+                            body = String(errorResponse.networkResponse.data, Charsets.UTF_8)
+                        } catch (e: UnsupportedEncodingException) {
+                            e.printStackTrace()
+                        }
+                    }
+                    putExtra("popuptext", body)
+                    }
+                    startActivity(intent)
                 }
-                    startActivity(intent)})
-
+            )
             MyRequestQueue.getInstance(this).addToRequestQueue(jsonRequest)
         }
     }
@@ -91,14 +99,17 @@ class AlbumCreationPage : NotificationReceiverActivity() {
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-            return true
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.home -> {
+            startActivity(Intent(this, MainPage::class.java))
+            true
         }
-        if (item.itemId == R.id.action_playback) {
+        R.id.action_playback -> {
             startActivity(Intent(this, ReproductionPage::class.java))
+            true
         }
-        return super.onOptionsItemSelected(item)
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
     }
 }

@@ -1,12 +1,9 @@
 package com.example.spotifiubyfy01.search
 
-import android.content.ContentValues
 import android.content.Intent
-import android.nfc.Tag
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
@@ -16,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifiubyfy01.*
 import com.example.spotifiubyfy01.artistProfile.ArtistPage
 import com.example.spotifiubyfy01.artistProfile.Album
-import com.example.spotifiubyfy01.artistProfile.Playlist
+import com.example.spotifiubyfy01.Playlist
 import com.example.spotifiubyfy01.artistProfile.Song
 import com.example.spotifiubyfy01.search.adapter.SearchRecyclerAdapter
 
@@ -25,15 +22,18 @@ class SearchPage : NotificationReceiverActivity(), VolleyCallBack<SearchItem> {
         menuInflater.inflate(R.menu.top_bar, menu)
         return true
     }
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-            return true
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.home -> {
+            startActivity(Intent(this, MainPage::class.java))
+            true
         }
-        if (item.itemId == R.id.action_playback) {
+        R.id.action_playback -> {
             startActivity(Intent(this, ReproductionPage::class.java))
+            true
         }
-        return super.onOptionsItemSelected(item)
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -91,7 +91,7 @@ class SearchPage : NotificationReceiverActivity(), VolleyCallBack<SearchItem> {
             SearchItemEnum.SONG_SEARCH_ITEM -> {
                 val app = (this.application as Spotifiubify)
                 val song = searchItem as Song
-                app.SongManager.play(song)
+                app.songManager.play(song)
             }
         }
     }

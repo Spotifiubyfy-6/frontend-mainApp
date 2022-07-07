@@ -69,6 +69,20 @@
             android:layout_weight="1"
             android:text="Tip" />
 
+        <TextView
+            android:id="@+id/followers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:text="Followers" />
+
+        <Button
+            android:id="@+id/follow_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#1DB954"
+            android:text="Follow" />
+
     </LinearLayout>
 
 </ScrollView>

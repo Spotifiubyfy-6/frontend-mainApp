@@ -5,25 +5,24 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
-import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.artistProfile.Album
 import org.json.JSONObject
-import java.io.File
+import java.io.UnsupportedEncodingException
 
 class SongCreationPage : NotificationReceiverActivity(), AdapterView.OnItemClickListener {
 
     private var albumId: Int? = null
     private var albumList: ArrayList<Album>? = null
-    lateinit var songFile: Uri
+    private lateinit var songFile: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -115,11 +114,19 @@ class SongCreationPage : NotificationReceiverActivity(), AdapterView.OnItemClick
                     }
                 }
                     startActivity(intent)},
-                { val intent = Intent(this, PopUpWindow::class.java).apply {
-                    putExtra("popuptext", "cant create album right now")
+                { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
+                    var body = "undefined error"
+                    if (errorResponse.networkResponse.data != null) {
+                        try {
+                            body = String(errorResponse.networkResponse.data, Charsets.UTF_8)
+                        } catch (e: UnsupportedEncodingException) {
+                            e.printStackTrace()
+                        }
+                    }
+                    putExtra("popuptext", body)
                 }
-                    startActivity(intent)})
-
+                    startActivity(intent)}
+            )
             MyRequestQueue.getInstance(this).addToRequestQueue(jsonRequest)
         }
         val finishAlbumCreationButton = findViewById<Button>(R.id.finishCreation)
@@ -159,22 +166,23 @@ class SongCreationPage : NotificationReceiverActivity(), AdapterView.OnItemClick
 
     private fun obtainAlbumIdOfAlbumWithName(albumList: ArrayList<Album>, albumName: String): Int {
         for (album in albumList) {
-            if (album.album_name.equals(albumName))
+            if (album.album_name == albumName)
                 return album.album_id.toInt()
         }
         return 0 //should not happen
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-            return true
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.home -> {
+            startActivity(Intent(this, MainPage::class.java))
+            true
         }
-        if (item.itemId == R.id.action_playback) {
+        R.id.action_playback -> {
             startActivity(Intent(this, ReproductionPage::class.java))
+            true
         }
-        return super.onOptionsItemSelected(item)
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
     }
 }
-
-//  /sdcard/Download/shrek.mp3  para la demo

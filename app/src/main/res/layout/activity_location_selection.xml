@@ -20,19 +20,19 @@
 
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/ConfirmLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"
         android:onClick="confirmLocation"
         android:text="Confirm Location"
         android:backgroundTint="#1DB954"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintBottom_toTopOf="@+id/Skip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/Skip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="39dp"

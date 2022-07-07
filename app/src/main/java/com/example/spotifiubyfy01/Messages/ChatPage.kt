@@ -2,9 +2,11 @@ package com.example.spotifiubyfy01.Messages
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -55,7 +57,7 @@ class ChatPage: NotificationReceiverActivity(), VolleyCallBack<MessageItem> {
 
     private fun initOtherArtistField() {
         val artistBox = findViewById<TextView>(R.id.artist_name)
-        artistBox.setText(other!!.artistName)
+        artistBox.text = other!!.artistName
         val image: ImageView = findViewById(R.id.artist_image)
         val coverRef = (this.application as Spotifiubify).getStorageReference().child(other!!.image)
         coverRef.downloadUrl.addOnSuccessListener { url ->

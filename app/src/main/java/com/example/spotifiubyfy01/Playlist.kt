@@ -1,5 +1,6 @@
-package com.example.spotifiubyfy01.artistProfile
+package com.example.spotifiubyfy01
 
+import com.example.spotifiubyfy01.artistProfile.Song
 import com.example.spotifiubyfy01.search.SearchItem
 import com.example.spotifiubyfy01.search.SearchItemEnum
 import java.io.Serializable

@@ -18,6 +18,7 @@ import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.StringRequest
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.UnsupportedEncodingException
 import java.util.*
 
 
@@ -25,7 +26,7 @@ class PreferencesSelection : NotificationReceiverActivity(), AdapterView.OnItemC
 
     private var items = arrayOf("")
 
-    private var myInterests = mutableListOf<String>("")
+    private var myInterests = mutableListOf("")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +38,7 @@ class PreferencesSelection : NotificationReceiverActivity(), AdapterView.OnItemC
         menuInflater.inflate(R.menu.top_bar, menu)
         return true
     }
-    public fun fetchInterests() {
+    private fun fetchInterests() {
         val url = "https://spotifiubyfy-users.herokuapp.com/interests"
 
         val getRequest = JsonArrayRequest(
@@ -60,8 +61,8 @@ class PreferencesSelection : NotificationReceiverActivity(), AdapterView.OnItemC
 
                 fetchMyInterests()
             },
-            { errorResponse ->
-                print(errorResponse)
+            {
+                Toast.makeText(this, "Cant change interests right now", Toast.LENGTH_SHORT).show()
             })
         MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
     }
@@ -69,21 +70,19 @@ class PreferencesSelection : NotificationReceiverActivity(), AdapterView.OnItemC
 
 
     fun deleteInterest(view: View?, options: String) {
-        view?.setBackgroundColor(Color.GREEN);
+        view?.setBackgroundColor(Color.GREEN)
         val url = "https://spotifiubyfy-users.herokuapp.com/interest/$options"
         val postRequest: StringRequest = object : StringRequest(
             Method.DELETE, url,
             Response.Listener { response -> // response
 
-                view?.setBackgroundColor(Color.BLACK);
+                view?.setBackgroundColor(Color.BLACK)
                 Toast.makeText(applicationContext, "Genre $options removed from interests",
                     Toast.LENGTH_SHORT).show()
 
             },
-            { errorResponse ->
-                Toast.makeText(applicationContext, "Couldnt remove $options from interests",
-                    Toast.LENGTH_SHORT).show()
-
+            {
+                Toast.makeText(applicationContext, "Couldnt remove $options from interests", Toast.LENGTH_SHORT).show()
             }
         ) {
             @Throws(AuthFailureError::class)
@@ -98,7 +97,7 @@ class PreferencesSelection : NotificationReceiverActivity(), AdapterView.OnItemC
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         val options : String = parent?.getItemAtPosition(position) as String
-        view?.setBackgroundColor(Color.GREEN);
+        view?.setBackgroundColor(Color.GREEN)
         val url = "https://spotifiubyfy-users.herokuapp.com/users/interests/$options"
         val postRequest: StringRequest = object : StringRequest(
             Method.POST, url,
@@ -138,7 +137,7 @@ class PreferencesSelection : NotificationReceiverActivity(), AdapterView.OnItemC
                     Log.d(ContentValues.TAG, "INTEREST ADDED: $genre")
 
                 }
-                val lstView : ListView = findViewById<ListView>(R.id.dynamic_list)
+                val lstView : ListView = findViewById(R.id.dynamic_list)
                 val childCount : Int = lstView.childCount - 1
                 Log.d(ContentValues.TAG, "LISTAN DE CHILD: $childCount")
 
@@ -155,11 +154,17 @@ class PreferencesSelection : NotificationReceiverActivity(), AdapterView.OnItemC
 
             },
             { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
-                val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
-                putExtra("popuptext", error)
-                putExtra("tokenValidation", true) }
-                startActivity(intent)
+                var body = "undefined error"
+                if (errorResponse.networkResponse.data != null) {
+                    try {
+                        body = String(errorResponse.networkResponse.data, Charsets.UTF_8)
+                    } catch (e: UnsupportedEncodingException) {
+                        e.printStackTrace()
+                    }
+                }
+                putExtra("popuptext", body)
             }
+                startActivity(intent)}
         ) {
             @Throws(AuthFailureError::class)
             override fun getHeaders(): Map<String, String> {
@@ -176,15 +181,18 @@ class PreferencesSelection : NotificationReceiverActivity(), AdapterView.OnItemC
         startActivity(intent)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-            return true
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.home -> {
+            startActivity(Intent(this, MainPage::class.java))
+            true
         }
-        if (item.itemId == R.id.action_playback) {
+        R.id.action_playback -> {
             startActivity(Intent(this, ReproductionPage::class.java))
+            true
         }
-        return super.onOptionsItemSelected(item)
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
     }
 
 }

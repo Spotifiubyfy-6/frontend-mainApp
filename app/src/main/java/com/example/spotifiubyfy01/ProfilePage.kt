@@ -1,9 +1,7 @@
 package com.example.spotifiubyfy01
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
@@ -15,10 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.artistProfile.Album
-import com.example.spotifiubyfy01.artistProfile.AlbumDataSource
 import com.example.spotifiubyfy01.artistProfile.AlbumDataSource.Companion.createAlbumList
 import com.example.spotifiubyfy01.artistProfile.adapter.default_album_image
-import com.example.spotifiubyfy01.artistProfile.adapterSongRecyclerAdapter.AlbumRecyclerAdapter
+import com.example.spotifiubyfy01.artistProfile.adapter.AlbumRecyclerAdapter
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
 
@@ -31,15 +28,18 @@ class ProfilePage : NotificationReceiverActivity(), VolleyCallBack<Album> {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-            return true
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.home -> {
+            startActivity(Intent(this, MainPage::class.java))
+            true
         }
-        if (item.itemId == R.id.action_playback) {
+        R.id.action_playback -> {
             startActivity(Intent(this, ReproductionPage::class.java))
+            true
         }
-        return super.onOptionsItemSelected(item)
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -104,6 +104,12 @@ class ProfilePage : NotificationReceiverActivity(), VolleyCallBack<Album> {
         }
         initAlbumRecyclerView(ArrayList())
         createAlbumList(this, artist!!.id, artist!!.artistName,this)
+
+        val followingBtn = findViewById<Button>(R.id.following)
+        followingBtn.setOnClickListener {
+            val intent = Intent(this, Following::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun initAlbumRecyclerView(albumList: List<Album>) {

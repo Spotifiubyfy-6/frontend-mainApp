@@ -1,12 +1,11 @@
 package com.example.spotifiubyfy01
 
 import android.content.Context
-import android.util.Log
 import android.widget.RatingBar
 import android.widget.TextView
 
-class StarRatingHandler(private val starBar: RatingBar, val averageRating: TextView,
-                        val albumId: Int, val userId: Int, val context: Context) {
+class StarRatingHandler(private val starBar: RatingBar, private val averageRating: TextView,
+                        val albumId: Int, private val userId: Int, val context: Context) {
     private var userCurrentReview = -1
     private var reviewSum = 0
     private var numberOfReviews = 0

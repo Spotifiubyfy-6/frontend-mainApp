@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,11 +18,12 @@ import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.artistProfile.ArtistPage
 import com.example.spotifiubyfy01.artistProfile.Song
 import com.example.spotifiubyfy01.artistProfile.adapter.SongRecyclerAdapter
-import com.example.spotifiubyfy01.artistProfile.adapterSongRecyclerAdapter.AlbumRecyclerAdapter
+import com.example.spotifiubyfy01.artistProfile.adapter.AlbumRecyclerAdapter
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.SearchPage
 import com.example.spotifiubyfy01.search.adapter.SearchRecyclerAdapter
-import com.example.spotifiubyfy01.search.image_link
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.delay
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -74,6 +76,8 @@ class MainPage: NotificationReceiverActivity() {
         fetchSongs()
         fetchAlbums()
         fetchArtist()
+        fetchPlaylists()
+
 
     }
     private fun initRecyclerViewSongs(listOfSong: List<Song>) {
@@ -95,6 +99,15 @@ class MainPage: NotificationReceiverActivity() {
         }
     }
 
+    private fun initRecyclerViewAlbumRecGeo(listOfAlbums: List<Album>) {
+        val recyclerViewAlbums = findViewById<RecyclerView>(R.id.recycler_view_album_rec_geo)
+        recyclerViewAlbums.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
+            false)
+        recyclerViewAlbums.adapter = AlbumRecyclerAdapter(listOfAlbums) { album ->
+            onAlbumClicked(album)
+        }
+    }
+
     private fun initRecyclerViewArtist(listOfArtist:  List<Artist>) {
         val recyclerViewArtist= findViewById<RecyclerView>(R.id.recycler_view_artist)
         recyclerViewArtist.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
@@ -104,6 +117,33 @@ class MainPage: NotificationReceiverActivity() {
         }
     }
 
+    private fun initRecyclerViewArtistNearYou(listOfArtist: List<Artist>) {
+        val recyclerViewArtist= findViewById<RecyclerView>(R.id.recycler_view_rec_artist_geo)
+        recyclerViewArtist.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
+            false)
+        recyclerViewArtist.adapter = SearchRecyclerAdapter(listOfArtist) { artist ->
+            onArtistClicked(artist as Artist)
+        }
+    }
+
+    private fun initRecyclerViewPLaylist(listOfPlaylists: List<Playlist>) {
+        val recyclerViewPlaylist = findViewById<RecyclerView>(R.id.recycler_view_playlist)
+        recyclerViewPlaylist.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
+            false)
+        recyclerViewPlaylist.adapter = PlaylistRecyclerAdapter(listOfPlaylists) { playlist ->
+            onPlaylistClicked(playlist)
+        }
+    }
+
+
+    private fun initRecyclerViewAlbumRecGenre(listOfAlbums: List<Album>) {
+        val recyclerViewAlbums = findViewById<RecyclerView>(R.id.recycler_view_album_rec_genre)
+        recyclerViewAlbums.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
+            false)
+        recyclerViewAlbums.adapter = AlbumRecyclerAdapter(listOfAlbums) { album ->
+            onAlbumClicked(album)
+        }
+    }
 
     private fun onArtistClicked(artist: Artist) {
         val intent = Intent(this, ArtistPage::class.java)
@@ -111,11 +151,15 @@ class MainPage: NotificationReceiverActivity() {
         startActivity(intent)
     }
 
-
+    private fun onPlaylistClicked(playlist : Playlist) {
+        val intent = Intent(this, PlaylistPage::class.java)
+        intent.putExtra("Playlist", playlist)
+        startActivity(intent)
+    }
 
     private fun onSongClicked(song: Song) {
         val app = (this.application as Spotifiubify)
-        app.SongManager.play(song)
+        app.songManager.play(song)
         Log.d(ContentValues.TAG, song.song_name +" with id " + song.id.toString() + " made by " + song.artist)
     }
 
@@ -138,12 +182,27 @@ class MainPage: NotificationReceiverActivity() {
             { response ->
                 initRecyclerViewArtist(getListOfArtist(response))
             },
-            { errorResponse ->
-                print(errorResponse)
+            {
+                Toast.makeText(this, "Cant fetch artists right now", Toast.LENGTH_SHORT).show()
             })
         MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
     }
 
+    private fun fetchPlaylists() {
+        val url = "https://spotifiubyfy-music.herokuapp.com/playlists?skip=0&limit=10"
+
+        val getRequest = JsonArrayRequest(
+            Request.Method.GET,
+            url,
+            null,
+            { response ->
+                initRecyclerViewPLaylist(getListOfPlaylists(response))
+            },
+            {
+                Toast.makeText(this, "Cant fetch playlists right now", Toast.LENGTH_SHORT).show()
+            })
+        MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
+    }
 
 
     private fun fetchSongs() {
@@ -156,8 +215,8 @@ class MainPage: NotificationReceiverActivity() {
             { response ->
                 initRecyclerViewSongs(getListOfSongs(response))
             },
-            { errorResponse ->
-                print(errorResponse)
+            {
+                Toast.makeText(this, "Cant fetch songs right now", Toast.LENGTH_SHORT).show()
             })
         MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
     }
@@ -171,14 +230,75 @@ class MainPage: NotificationReceiverActivity() {
             null,
             { response ->
                 initRecyclerViewAlbum(getListOfAlbums(response))
+                fetchAlbumsRecGeo()
+
             },
-            { errorResponse ->
-                print(errorResponse)
+            {
+                Toast.makeText(this, "Cant fetch albums right now", Toast.LENGTH_SHORT).show()
             })
         MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
     }
 
-     private fun getListOfSongs(jsonSongs: JSONArray): List<Song> {
+    private fun fetchAlbumsRecGeo() {
+
+        val userId = (this.application as Spotifiubify).profileData["id"]
+
+        val url = "https://spotifiubyfy-users.herokuapp.com/users/$userId/recommendations/geo?km=500"
+
+        val getRequest = JsonArrayRequest(
+            Request.Method.GET,
+            url,
+            null,
+            { response ->
+                initRecyclerViewAlbumRecGeo(getListOfAlbums(response))
+                fetchAlbumsRecGenre()
+            },
+            {
+                Toast.makeText(this, "Cant fetch albums geo right now", Toast.LENGTH_SHORT).show()
+            })
+        MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
+    }
+
+    private fun fetchAlbumsRecGenre() {
+        val userId = (this.application as Spotifiubify).profileData["id"]
+        val url = "https://spotifiubyfy-users.herokuapp.com/users/$userId/recommendations/genre"
+
+        val getRequest = JsonArrayRequest(
+            Request.Method.GET,
+            url,
+            null,
+            { response ->
+                initRecyclerViewAlbumRecGenre(getListOfAlbums(response))
+
+                fetchArtistsNearYou()
+            },
+            {
+                Toast.makeText(this, "Cant fetch albums genre right now", Toast.LENGTH_SHORT).show()
+            })
+        MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
+    }
+
+    private fun fetchArtistsNearYou() {
+        val userId = (this.application as Spotifiubify).profileData["id"]
+        val url = "https://spotifiubyfy-users.herokuapp.com/users/$userId/near_artists?km=5000&skip=0&limit=100"
+
+        val getRequest = JsonArrayRequest(
+            Request.Method.GET,
+            url,
+            null,
+            { response ->
+                initRecyclerViewArtistNearYou(getListOfArtist(response))
+            },
+            {
+                Toast.makeText(this, "Cant fetch artists right now", Toast.LENGTH_SHORT).show()
+            })
+        MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
+    }
+
+
+
+
+    private fun getListOfSongs(jsonSongs: JSONArray): List<Song> {
         val songs = ArrayList<Song>()
         for (i in 0 until jsonSongs.length())
             songs.add(getSong(JSONObject(jsonSongs.get(i).toString())))
@@ -192,6 +312,12 @@ class MainPage: NotificationReceiverActivity() {
         return artists
     }
 
+    private fun getListOfPlaylists(jsonSongs: JSONArray): List<Playlist> {
+        val playlists = ArrayList<Playlist>()
+        for (i in 0 until jsonSongs.length())
+            playlists.add(getPlaylist(JSONObject(jsonSongs.get(i).toString())))
+        return playlists
+    }
     private fun getSong( jsonSong: JSONObject): Song {
         val songName = jsonSong.getString("song_name")
         val albumId = jsonSong.getString("album_id").toInt()
@@ -203,12 +329,25 @@ class MainPage: NotificationReceiverActivity() {
         return Song(songName, artistName, albumId, id, storageName, albumCover)
     }
 
-    private fun getArtist( jsonSong: JSONObject): Artist {
+    private fun getArtist( jsonArtist: JSONObject): Artist {
 
-        val id = jsonSong.getString("id").toInt()
-        val username = jsonSong.getString("name")
-        val artistImage = "profilePictures/"+jsonSong.getString("username").toString()
+        val id = jsonArtist.getString("id").toInt()
+        val username = jsonArtist.getString("name")
+        val artistImage = "profilePictures/"+jsonArtist.getString("username").toString()
         return Artist(id, username  , artistImage)
+    }
+
+    private fun getPlaylist( jsonPlaylist: JSONObject): Playlist {
+
+        val playlistName = jsonPlaylist.getString("playlist_name")
+        val playlistDescription = jsonPlaylist.getString("playlist_description")
+        val playlistImage = "covers/"+jsonPlaylist.getString("playlist_media").toString()
+        val playlistId = jsonPlaylist.getString("id")
+        val artistUsername = jsonPlaylist.getString("artist_username")
+        return Playlist(playlistId, playlistName,playlistImage,artistUsername,
+            getListOfSongs(
+                JSONArray(jsonPlaylist.getString("songs").toString())
+            ))
     }
     private fun getListOfAlbums(response: JSONArray): List<Album> {
         val list = ArrayList<Album>()

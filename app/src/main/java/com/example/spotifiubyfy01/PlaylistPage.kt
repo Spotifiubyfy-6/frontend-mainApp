@@ -14,8 +14,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.spotifiubyfy01.artistProfile.Album
-import com.example.spotifiubyfy01.artistProfile.Playlist
 import com.example.spotifiubyfy01.artistProfile.Song
 import com.example.spotifiubyfy01.artistProfile.adapter.SongRecyclerAdapter
 import com.example.spotifiubyfy01.artistProfile.adapter.default_album_image
@@ -51,9 +49,9 @@ class PlaylistPage : NotificationReceiverActivity() {
         }
         // Solo puede invitar el owner (falta que playlist devuelva username
         // del back, por ahora es deafult_username)
-        //if (app.getProfileData("username") != playlist.user_name) {
-        //    inviteBtn.visibility = View.INVISIBLE
-        //}
+        if (app.getProfileData("username") != playlist.user_name) {
+            inviteBtn.visibility = View.INVISIBLE
+        }
 
         coverRef.downloadUrl.addOnSuccessListener { url ->
             Glide.with(image.context).load(url).into(image)
@@ -61,11 +59,11 @@ class PlaylistPage : NotificationReceiverActivity() {
             Glide.with(image.context).load(default_album_image).into(image)
         }
         initRecyclerView(playlist.song_list)
-        val play_button = findViewById<Button>(R.id.playButton)
-        play_button.setOnClickListener {
+        val playButton = findViewById<Button>(R.id.playButton)
+        playButton.setOnClickListener {
             //play album! obtain album songs using album.song_list
             val app = (this.application as Spotifiubify)
-            app.SongManager.playSongList(playlist.song_list)
+            app.songManager.playSongList(playlist.song_list)
             for (song in playlist.song_list)
                 Log.d(ContentValues.TAG, song.song_name)
         }
@@ -82,18 +80,21 @@ class PlaylistPage : NotificationReceiverActivity() {
     private fun onItemClicked(song: Song) {
         //Do something with the Song
         val app = (this.application as Spotifiubify)
-        app.SongManager.play(song)
+        app.songManager.play(song)
         Log.d(ContentValues.TAG, song.song_name +" with id " + song.id.toString() + " made by " + song.artist)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-            return true
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.home -> {
+            startActivity(Intent(this, MainPage::class.java))
+            true
         }
-        if (item.itemId == R.id.action_playback) {
+        R.id.action_playback -> {
             startActivity(Intent(this, ReproductionPage::class.java))
+            true
         }
-        return super.onOptionsItemSelected(item)
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
     }
 }

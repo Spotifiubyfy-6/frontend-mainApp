@@ -11,7 +11,7 @@
         android:id="@+id/artistName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="7dp"
+        android:layout_marginStart="6dp"
         android:autofillHints=""
         android:backgroundTint="#FFFFFF"
         android:hint="@string/registration_username"
@@ -26,35 +26,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="17dp"
+        android:layout_marginBottom="9dp"
         android:text="@string/artistName"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userInformationText" />
+        app:layout_constraintBottom_toBottomOf="@+id/artistName"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/subscription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
 
-        android:layout_marginTop="21dp"
+        android:layout_marginStart="3dp"
         android:text="@string/example"
         android:textColor="#FFFFFF"
-        app:layout_constraintStart_toEndOf="@+id/susbscriptionText"
-        app:layout_constraintTop_toBottomOf="@+id/email" />
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/susbscriptionText"
+        app:layout_constraintStart_toEndOf="@+id/susbscriptionText" />
 
     <TextView
         android:id="@+id/susbscriptionText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
 
+        android:layout_marginStart="27dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/subscription"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@+id/subscription"
+        app:layout_constraintBottom_toTopOf="@+id/subscriptionBtn"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
@@ -62,8 +63,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="14dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="4dp"
         android:autofillHints=""
         android:backgroundTint="#FFFFFF"
         android:hint="@string/registration_email"
@@ -77,34 +78,23 @@
         android:id="@+id/emailText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
 
-        android:layout_marginTop="21dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="22dp"
         android:text="@string/email"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/usernameText" />
 
-    <TextView
-        android:id="@+id/userInformationText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_marginStart="16dp"
-        android:text="@string/profile"
-        android:textColor="#FFFFFF"
-        android:textSize="34sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/usernameView"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <EditText
         android:id="@+id/oldPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:autofillHints=""
 
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:autofillHints=""
         android:backgroundTint="#FFFFFF"
         android:ems="10"
         android:hint="@string/oldPassword"
@@ -145,24 +135,36 @@
         android:id="@+id/changePassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
 
-        android:layout_marginBottom="55dp"
+        android:layout_marginStart="37dp"
+        android:layout_marginTop="48dp"
         android:text="@string/changePassword"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/newPassword"
-        app:layout_constraintEnd_toStartOf="@+id/logOutButton" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logOutButton" />
 
     <Button
-        android:id="@+id/editButton"
+        android:id="@+id/editArtistNameButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="25dp"
 
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="#1DB954"
+        android:text="@string/button_edit"
+        app:layout_constraintBottom_toTopOf="@+id/editEmailButton"
+        app:layout_constraintEnd_toEndOf="@+id/editEmailButton" />
+
+    <Button
+        android:id="@+id/editEmailButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginEnd="24dp"
         android:backgroundTint="#1DB954"
         android:text="@string/button_edit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/subscription" />
+        app:layout_constraintTop_toTopOf="@+id/email" />
 
     <Button
         android:id="@+id/changePasswordButton"
@@ -180,7 +182,6 @@
         android:id="@+id/usernameView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
         android:layout_marginTop="16dp"
         android:text="TextView"
         android:textColor="#FFFFFF"
@@ -189,62 +190,77 @@
         app:layout_constraintStart_toEndOf="@+id/userInformationText"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/userInformationText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="16dp"
+        android:text="@string/profile"
+        android:textColor="#FFFFFF"
+        android:textSize="34sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/usernameView"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <Button
         android:id="@+id/logOutButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="44dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="#1DB954"
         android:text="@string/button_logOut"
-        app:layout_constraintBottom_toTopOf="@+id/changePassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.529"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/changePassword"
+        app:layout_constraintTop_toBottomOf="@+id/button5" />
 
     <Button
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginTop="234dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="234dp"
         android:backgroundTint="#1DB954"
         android:onClick="editPreferences"
         android:text="EDIT PREFERENCES"
-        app:layout_constraintBottom_toTopOf="@+id/logOutButton"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/newPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editEmailButton" />
 
     <Button
         android:id="@+id/button5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginBottom="24dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="14dp"
         android:backgroundTint="#1DB954"
         android:onClick="editLocation"
         android:text="EDIT LOCATION"
-        app:layout_constraintBottom_toTopOf="@+id/logOutButton"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/button4"
+        app:layout_constraintEnd_toStartOf="@+id/button4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button4" />
 
     <Button
         android:id="@+id/changePhotoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:backgroundTint="#1DB954"
-        android:layout_marginBottom="68dp"
         android:text="Change profile picture"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/button5"
+        app:layout_constraintEnd_toEndOf="@+id/subscriptionBtn" />
 
     <Button
         android:id="@+id/subscriptionBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Change Subscription"
+        android:layout_width="237dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="67dp"
+        android:layout_marginBottom="68dp"
         android:backgroundTint="#1DB954"
+        android:text="Change Subscription"
+        app:layout_constraintBottom_toTopOf="@+id/button5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/changePhotoButton" />
+        app:layout_constraintTop_toBottomOf="@+id/email" />
 </androidx.constraintlayout.widget.ConstraintLayout>

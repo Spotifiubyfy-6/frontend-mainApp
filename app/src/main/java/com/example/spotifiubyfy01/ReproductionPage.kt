@@ -1,5 +1,6 @@
 package com.example.spotifiubyfy01
 
+import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.MenuItem
@@ -21,8 +22,8 @@ class ReproductionPage : NotificationReceiverActivity() {
         setContentView(R.layout.activity_reproduction_page)
 
         val app = (this.application as Spotifiubify)
-        var song: Song = app.SongManager.currentSong
-        val mediaPlayer = app.SongManager.MediaPlayer
+        var song: Song = app.songManager.currentSong
+        val mediaPlayer = app.songManager.mediaPlayer
         val albumImage = findViewById<ImageView>(R.id.albumArt)
         val currentSongTime = findViewById<TextView>(R.id.position)
 
@@ -38,17 +39,17 @@ class ReproductionPage : NotificationReceiverActivity() {
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
                 runOnUiThread {
-                    if (app.SongManager.isPlaying()) {
+                    if (app.songManager.isPlaying()) {
                         currentSongTime.post { currentSongTime.text = convertToMinutesString(mediaPlayer.currentPosition)
                         }
                     } else {
-                        song = app.SongManager.currentSong
+                        song = app.songManager.currentSong
                         changeView(song, mediaPlayer)
                         timer.cancel()
                         timer.purge()
                     }
-                    if (song != app.SongManager.currentSong) {
-                        song = app.SongManager.currentSong
+                    if (song != app.songManager.currentSong) {
+                        song = app.songManager.currentSong
                         changeView(song, mediaPlayer)
                     }
                 }
@@ -78,7 +79,7 @@ class ReproductionPage : NotificationReceiverActivity() {
 
         nextButton.setOnClickListener {
             if (mediaPlayer.isPlaying) {
-                if (!app.SongManager.next()) {
+                if (!app.songManager.next()) {
                     pauseButton.setImageResource(R.drawable.ic_play_arrow_black_24dp)
                     changeView(song, mediaPlayer)
                     Glide.with(albumImage.context).load(default_album_image).into(albumImage)
@@ -87,12 +88,14 @@ class ReproductionPage : NotificationReceiverActivity() {
         }
 
     }
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-            return true
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.home -> {
+            startActivity(Intent(this, MainPage::class.java))
+            true
         }
-        return super.onOptionsItemSelected(item)
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
     }
 
     private fun changeView(song: Song, mediaPlayer: MediaPlayer) {

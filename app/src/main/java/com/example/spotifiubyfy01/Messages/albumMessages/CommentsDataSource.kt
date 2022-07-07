@@ -3,6 +3,7 @@ package com.example.spotifiubyfy01.Messages.albumMessages
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
@@ -14,8 +15,6 @@ import com.example.spotifiubyfy01.search.VolleyCallBack
 import org.json.JSONArray
 import org.json.JSONObject
 import java.time.LocalDateTime
-
-var image_link = "https://he.cecollaboratory.com/public/layouts/images/group-default-logo.png"
 
 class CommentList(
     private val numberOfComments: Int,
@@ -31,7 +30,7 @@ class CommentList(
 
     fun addArtistCommentWithIdToPositionInList(position: Int, comment: Comment) {
         synchronized(this) {
-            commentList.set(position, comment)
+            commentList[position] = comment
             commentInserted++
             if (commentInserted == numberOfComments)
                 callBack.updateData(commentList)
@@ -97,7 +96,7 @@ class IdToListOfPositionNCommentMap(
     }
 
     private fun fetchArtist(artistId: Int) {
-        val url = "https://spotifiubyfy-users.herokuapp.com/users/user_by_id/" + artistId
+        val url = "https://spotifiubyfy-users.herokuapp.com/users/user_by_id/$artistId"
         val getRequest = JsonObjectRequest(
             Request.Method.GET,
             url, null,
@@ -107,11 +106,8 @@ class IdToListOfPositionNCommentMap(
                 Log.d("TAG", artistName)
                 replaceWithRightArtist(Artist(artistId, artistName, artistImage))
             }
-        ) { error ->
-            val intent = Intent(context, PopUpWindow::class.java).apply {
-                putExtra("popuptext", error.toString())
-            }
-            context.startActivity(intent)
+        ) {
+            Toast.makeText(context, "Cant find user", Toast.LENGTH_SHORT).show()
         }
         MyRequestQueue.getInstance(context).addToRequestQueue(getRequest)
     }
@@ -123,8 +119,8 @@ class CommentsDataSource {
 
     companion object {
 
-        fun searchRespectiveArtists(context: Context, commentArray: JSONArray, authorId: Int,
-                                    callBack: VolleyCallBack<Comment>) {
+        private fun searchRespectiveArtists(context: Context, commentArray: JSONArray, authorId: Int,
+                                            callBack: VolleyCallBack<Comment>) {
             val map = IdToListOfPositionNCommentMap(context, commentArray, callBack)
             map.fillMapWithComments(authorId)
         }
@@ -132,7 +128,8 @@ class CommentsDataSource {
         fun getCommentsOfAlbum(context: Context, albumId: Int, authorId: Int,
                                callBack: VolleyCallBack<Comment>
         ) {
-            val url = "https://spotifiubyfy-messages.herokuapp.com/comments/" + albumId + "?skip=0&limit=100"
+            val url =
+                "https://spotifiubyfy-messages.herokuapp.com/comments/$albumId?skip=0&limit=100"
             val getRequest = JsonArrayRequest(
                 Request.Method.GET,
                 url, null,

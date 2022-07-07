@@ -11,13 +11,14 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import org.json.JSONObject
+import java.io.UnsupportedEncodingException
 import java.util.*
 
 
 class Spotifiubify : Application() {
     var profileData: Hashtable<String, String> = Hashtable<String, String>()
     private lateinit var storage: FirebaseStorage
-    lateinit var SongManager: SongManager
+    lateinit var songManager: SongManager
     private var activityVisible = false
 
     fun isActivityVisible(): Boolean {
@@ -35,7 +36,7 @@ class Spotifiubify : Application() {
     override fun onCreate() {
         super.onCreate()
         storage = Firebase.storage
-        SongManager = SongManager(this)
+        songManager = SongManager(this)
     }
 
     fun setProfile() {
@@ -55,11 +56,18 @@ class Spotifiubify : Application() {
 
             },
             { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
-                val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
-                putExtra("popuptext", error)
-                putExtra("tokenValidation", true) }
-                startActivity(intent)
-            }
+                var body = "undefined error"
+                if (errorResponse.networkResponse.data != null) {
+                    try {
+                        body = String(errorResponse.networkResponse.data, Charsets.UTF_8)
+                    } catch (e: UnsupportedEncodingException) {
+                        e.printStackTrace()
+                    }
+                }
+                putExtra("popuptext", body)
+                putExtra("tokenValidation", true)
+                }
+                    startActivity(intent)}
         ) {
             @Throws(AuthFailureError::class)
             override fun getHeaders(): Map<String, String> {

@@ -1,13 +1,11 @@
 package com.example.spotifiubyfy01.search.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.spotifiubyfy01.PlaylistPage
+import com.example.spotifiubyfy01.PlaylistSearchViewHolder
 import com.example.spotifiubyfy01.R
-import com.example.spotifiubyfy01.artistProfile.Playlist
 import com.example.spotifiubyfy01.search.SearchItem
 import com.example.spotifiubyfy01.search.SearchItemEnum
 import com.example.spotifiubyfy01.search.convertIntToSearchEnum

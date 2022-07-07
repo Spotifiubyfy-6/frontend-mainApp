@@ -2,7 +2,6 @@ package com.example.spotifiubyfy01
 
 import android.content.Context
 import android.content.Intent
-import android.location.Location
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -13,6 +12,7 @@ import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import org.json.JSONObject
+import java.io.UnsupportedEncodingException
 
 
 class SignInLandingPage : NotificationReceiverActivity() {
@@ -93,7 +93,7 @@ class SignInLandingPage : NotificationReceiverActivity() {
 
 
         signInButton.setOnClickListener {
-            var requestBody = JSONObject()
+            val requestBody = JSONObject()
 
             requestBody.put("email", email.text.toString())
             requestBody.put("username", username.text.toString())
@@ -122,10 +122,18 @@ class SignInLandingPage : NotificationReceiverActivity() {
                             }
                             startActivity(intent)},
                         { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
-//                    val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
-                            putExtra("popuptext", "error failed log in")
+                            var body = "undefined error"
+                            if (errorResponse.networkResponse.data != null) {
+                                try {
+                                    body = String(errorResponse.networkResponse.data, Charsets.UTF_8)
+                                } catch (e: UnsupportedEncodingException) {
+                                    e.printStackTrace()
+                                }
+                            }
+                            putExtra("popuptext", body)
                         }
-                            startActivity(intent)}) {
+                            startActivity(intent)}
+                    ) {
                         override fun getBody(): ByteArray {
                             return requestString.toByteArray(charset("utf-8"))
                         }
@@ -133,13 +141,19 @@ class SignInLandingPage : NotificationReceiverActivity() {
                     MyRequestQueue.getInstance(this).addToRequestQueue(stringRequest)
                     },
                 { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
-//                    val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
-                    putExtra("popuptext", "failes sign in")
+                    var body = "undefined error"
+                    if (errorResponse.networkResponse.data != null) {
+                        try {
+                            body = String(errorResponse.networkResponse.data, Charsets.UTF_8)
+                        } catch (e: UnsupportedEncodingException) {
+                            e.printStackTrace()
+                        }
+                    }
+                    putExtra("popuptext", body)
                 }
-                    startActivity(intent)})
-
+                    startActivity(intent)}
+            )
             MyRequestQueue.getInstance(this).addToRequestQueue(jsonRequest)
         }
     }
 }
-

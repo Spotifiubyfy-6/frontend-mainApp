@@ -7,21 +7,16 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
-import com.example.spotifiubyfy01.artistProfile.Album
-import com.example.spotifiubyfy01.artistProfile.Playlist
 import com.example.spotifiubyfy01.artistProfile.Song
-import com.example.spotifiubyfy01.search.Artist
-import com.example.spotifiubyfy01.search.DataSource
-import com.example.spotifiubyfy01.search.SearchItem
 import com.example.spotifiubyfy01.search.adapter.SearchRecyclerAdapter
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.UnsupportedEncodingException
 
 
 class ListOfPlaylistsPage : NotificationReceiverActivity() {
@@ -60,7 +55,7 @@ class ListOfPlaylistsPage : NotificationReceiverActivity() {
         val playlistID = playlist.playlist_id
 
         val url = "https://spotifiubyfy-music.herokuapp.com/playlists/$playlistID/tracks?song_id=$songID"
-        Log.d(ContentValues.TAG, "EL URL" +url)
+        Log.d(ContentValues.TAG, "EL URL$url")
 
         val getRequest = JsonObjectRequest(
             Request.Method.POST,url,null,
@@ -69,15 +64,20 @@ class ListOfPlaylistsPage : NotificationReceiverActivity() {
                 fetchPlaylistById(playlistID)
 
             },
-            { errorResponse ->
-                print(errorResponse)
+
+            { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
+                var body = "undefined error"
                 Log.d(ContentValues.TAG, "AGREGADO ERRONEO: $errorResponse")
-                val intent = Intent(this, PopUpWindow::class.java).apply {
-//                    val error = errorResponse//.networkResponse.data.decodeToString() //.split('"')[3]
-                    putExtra("popuptext", "song already in playlist")
+                if (errorResponse.networkResponse.data != null) {
+                    try {
+                        body = String(errorResponse.networkResponse.data, Charsets.UTF_8)
+                    } catch (e: UnsupportedEncodingException) {
+                        e.printStackTrace()
+                    }
                 }
-                startActivity(intent)
-            })
+                putExtra("popuptext", body)
+            }
+                startActivity(intent)})
         MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
     }
 
@@ -93,9 +93,10 @@ class ListOfPlaylistsPage : NotificationReceiverActivity() {
         val playlistID = jsonPlaylist.getString("id")
         val playlistName = jsonPlaylist.getString("playlist_name")
         val storageName = "covers/"+jsonPlaylist.getString("playlist_media")
+        val userName = (this.application as Spotifiubify).getProfileData("username") as String
         val songs = ArrayList<Song>()
 
-        return Playlist(playlistID, playlistName, storageName, "user_name", songs
+        return Playlist(playlistID, playlistName, storageName, userName, songs
         )
     }
 
@@ -118,7 +119,7 @@ class ListOfPlaylistsPage : NotificationReceiverActivity() {
         val playlistName = jsonPlaylist.getString("playlist_name")
         val playlistId = jsonPlaylist.getString("id")
         val storageName = "covers/"+jsonPlaylist.getString("playlist_media")
-        //val userName = jsonPlaylist.getString("user_name")
+        val userName = jsonPlaylist.getString("artist_username")
         return Playlist(
             playlistId,
             playlistName,
@@ -138,10 +139,10 @@ class ListOfPlaylistsPage : NotificationReceiverActivity() {
 
 
 
-                val pĺaylist : Playlist = getPlaylist("default username" ,response)
+                val playlist : Playlist = getPlaylist("default username" ,response)
 
                 val intent = Intent(this, PlaylistPage::class.java).apply {
-                    putExtra("Playlist", pĺaylist)
+                    putExtra("Playlist", playlist)
                 }
                 startActivity(intent)
             },

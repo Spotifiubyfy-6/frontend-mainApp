@@ -55,4 +55,8 @@
     <string name="defaultImage">https://i.pinimg.com/originals/33/58/0c/33580cd023504630a4ea63fe0a1650f6.jpg</string>
     <string name="artistName">"Artist name: "</string>
     <string name="title_activity_location_selection">LocationSelection</string>
+    <string name="playlist">Playlists</string>
+    <string name="album_rec_geo">Albums near you</string>
+    <string name="album_rec_genre">Based on your preferences</string>
+    <string name="artists_rec_geo">Artists near you</string>
 </resources>

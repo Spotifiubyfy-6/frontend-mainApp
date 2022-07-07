@@ -15,14 +15,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.AuthFailureError
-import com.android.volley.Request
 import com.android.volley.Response
-import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.example.spotifiubyfy01.*
 import com.example.spotifiubyfy01.Messages.ChatPage
-import com.example.spotifiubyfy01.artistProfile.Playlist
 import com.example.spotifiubyfy01.search.adapter.ArtistSearchRecyclerAdapter
+import java.io.UnsupportedEncodingException
 
 class SearchArtistPage: NotificationReceiverActivity(), VolleyCallBack<Artist> {
     var userId: Int? = null
@@ -66,7 +64,7 @@ class SearchArtistPage: NotificationReceiverActivity(), VolleyCallBack<Artist> {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter =
             ArtistSearchRecyclerAdapter(ArrayList()) { artist ->
-                onItemClicked(artist as SearchItem)
+                onItemClicked(artist)
             }
     }
 
@@ -93,11 +91,19 @@ class SearchArtistPage: NotificationReceiverActivity(), VolleyCallBack<Artist> {
                 val intent = Intent(this, MainPage::class.java)
                 startActivity(intent)
             },
-            {  errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
+            { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
                 Log.d(ContentValues.TAG, "ERROR: $errorResponse")
-                val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
-                putExtra("popuptext", error)
-                putExtra("tokenValidation", true) }
+                var body = "undefined error"
+                if (errorResponse.networkResponse.data != null) {
+                    try {
+                        body = String(errorResponse.networkResponse.data, Charsets.UTF_8)
+                    } catch (e: UnsupportedEncodingException) {
+                        e.printStackTrace()
+                    }
+                }
+                putExtra("popuptext", body)
+                putExtra("tokenValidation", true)
+            }
                 startActivity(intent)
             }
         ) {
@@ -132,15 +138,18 @@ class SearchArtistPage: NotificationReceiverActivity(), VolleyCallBack<Artist> {
         adapter.updateList(list)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-            return true
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.home -> {
+            startActivity(Intent(this, MainPage::class.java))
+            true
         }
-        if (item.itemId == R.id.action_playback) {
+        R.id.action_playback -> {
             startActivity(Intent(this, ReproductionPage::class.java))
+            true
         }
-        return super.onOptionsItemSelected(item)
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
     }
 
     private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {

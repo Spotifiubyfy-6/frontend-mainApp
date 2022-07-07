@@ -12,7 +12,7 @@ import kotlin.NoSuchElementException
 
 
 class SongManager(app: Spotifiubify) {
-    val MediaPlayer = MediaPlayer()
+    val mediaPlayer = MediaPlayer()
     val playlist = LinkedList<Song>()
     var currentSong: Song
     private var wifiLock:  WifiLock
@@ -20,7 +20,7 @@ class SongManager(app: Spotifiubify) {
     private val nullSong =  Song("songName", "artist_name", 1,1, "storageName", "https://i.pinimg.com/originals/33/58/0c/33580cd023504630a4ea63fe0a1650f6.jpg")
 
     init {
-        MediaPlayer.setWakeMode(app, PowerManager.PARTIAL_WAKE_LOCK)
+        mediaPlayer.setWakeMode(app, PowerManager.PARTIAL_WAKE_LOCK)
         val wifiManager = app.applicationContext.getSystemService(WIFI_SERVICE) as WifiManager
         wifiLock = wifiManager.createWifiLock(WifiManager.WIFI_MODE_FULL_HIGH_PERF, "wifi_lock")
         this.app = app
@@ -33,7 +33,7 @@ class SongManager(app: Spotifiubify) {
         val storageName = "songs/"+currentSong.storage_name
         val songRef = app.getStorageReference().child(storageName)
         songRef.downloadUrl.addOnSuccessListener { url ->
-            MediaPlayer.apply {
+            mediaPlayer.apply {
                 reset()
                 setAudioAttributes(
                     AudioAttributes.Builder()
@@ -62,13 +62,13 @@ class SongManager(app: Spotifiubify) {
     }
 
     fun next(): Boolean{
-        try {
+        return try {
             play(playlist.pop())
-            return true
+            true
         } catch(e: NoSuchElementException) {
-            MediaPlayer.stop()
+            mediaPlayer.stop()
             currentSong = nullSong
-            return false
+            false
         }
     }
 

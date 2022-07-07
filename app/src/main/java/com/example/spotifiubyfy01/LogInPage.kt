@@ -13,7 +13,7 @@ import com.android.volley.toolbox.StringRequest
 import com.google.firebase.messaging.FirebaseMessaging
 import org.json.JSONObject
 import kotlin.reflect.KFunction1
-
+import java.io.UnsupportedEncodingException
 
 class LogInPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,8 +43,15 @@ class LogInPage : AppCompatActivity() {
                     getId(this::setNotification)
                     startActivity(intent)},
                 { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
-//                    val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
-                    putExtra("popuptext", "error failed log in")
+                    var body = "undefined error"
+                    if (errorResponse.networkResponse.data != null) {
+                        try {
+                            body = String(errorResponse.networkResponse.data, Charsets.UTF_8)
+                        } catch (e: UnsupportedEncodingException) {
+                            e.printStackTrace()
+                        }
+                    }
+                    putExtra("popuptext", body)
                 }
                     startActivity(intent)}) {
                 override fun getBody(): ByteArray {

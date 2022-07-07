@@ -9,12 +9,15 @@ import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.AuthFailureError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
-import com.bumptech.glide.Glide
+import com.example.spotifiubyfy01.search.Artist
 import org.json.JSONObject
 
 class ProfileEditPage : NotificationReceiverActivity() {
@@ -55,8 +58,8 @@ class ProfileEditPage : NotificationReceiverActivity() {
 
         val email = findViewById<EditText>(R.id.email)
         val artistName = findViewById<EditText>(R.id.artistName)
-        val editClick = findViewById<Button>(R.id.editButton)
-        editClick.setOnClickListener {
+        val editEmailClick = findViewById<Button>(R.id.editEmailButton)
+        editEmailClick.setOnClickListener {
 
             var url = "https://spotifiubyfy-users.herokuapp.com/users/email/"+email.text.toString()
 
@@ -66,6 +69,10 @@ class ProfileEditPage : NotificationReceiverActivity() {
                         val responseJson = JSONObject(response)
                         val email = responseJson.getString("email")
                         app.setProfileData("email", email)
+                        val artist = Artist(app.getProfileData("id").toString().toInt(),
+                            app.getProfileData("username").toString(),
+                            "profilePictures/"+app.getProfileData("username").toString())
+                        intent.putExtra("Artist", artist)
                     }
                     startActivity(intent)
                 },
@@ -83,8 +90,11 @@ class ProfileEditPage : NotificationReceiverActivity() {
             }
 
             MyRequestQueue.getInstance(this).addToRequestQueue(postRequest)
+        }
 
-            url = "https://spotifiubyfy-users.herokuapp.com/users/name/"+artistName.text.toString()
+        val editArtistNameClick = findViewById<Button>(R.id.editArtistNameButton)
+        editArtistNameClick.setOnClickListener {
+            val url = "https://spotifiubyfy-users.herokuapp.com/users/name/"+artistName.text.toString()
 
             val namePostRequest: StringRequest = object : StringRequest(
                 Method.POST, url,
@@ -107,7 +117,6 @@ class ProfileEditPage : NotificationReceiverActivity() {
                     return params
                 }
             }
-
             MyRequestQueue.getInstance(this).addToRequestQueue(namePostRequest)
         }
 
@@ -198,7 +207,7 @@ class ProfileEditPage : NotificationReceiverActivity() {
             }
         }
     }
-    public fun editPreferences(view : View) {
+    fun editPreferences(view : View) {
         val intent = Intent(this, PreferencesSelection::class.java).apply {
             val location = "a place in the World"
             putExtra("Location", location)
@@ -206,20 +215,23 @@ class ProfileEditPage : NotificationReceiverActivity() {
         startActivity(intent)
     }
 
-    public fun editLocation(view : View) {
+    fun editLocation(view : View) {
         val intent = Intent(this, LocationSelection::class.java)
         startActivity(intent)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-            return true
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.home -> {
+            startActivity(Intent(this, MainPage::class.java))
+            true
         }
-        if (item.itemId == R.id.action_playback) {
+        R.id.action_playback -> {
             startActivity(Intent(this, ReproductionPage::class.java))
+            true
         }
-        return super.onOptionsItemSelected(item)
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

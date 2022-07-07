@@ -5,9 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifiubyfy01.Messages.albumMessages.Comment
 import com.example.spotifiubyfy01.R
-import com.example.spotifiubyfy01.search.Artist
-import com.example.spotifiubyfy01.search.SearchItem
-import com.example.spotifiubyfy01.search.adapter.ArtistViewHolder
 
 class AlbumCommentsRecyclerAdapter(
     private var commentsList: MutableList<Comment>,

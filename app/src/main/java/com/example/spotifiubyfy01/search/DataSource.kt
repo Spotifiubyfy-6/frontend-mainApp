@@ -1,19 +1,21 @@
 package com.example.spotifiubyfy01.search
 
 import android.content.Context
-import android.util.Log
+import android.content.Intent
+import androidx.core.content.ContextCompat.startActivity
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonArrayRequest
 import com.example.spotifiubyfy01.MyRequestQueue
+import com.example.spotifiubyfy01.PopUpWindow
 import com.example.spotifiubyfy01.artistProfile.Album
-import com.example.spotifiubyfy01.artistProfile.Playlist
+import com.example.spotifiubyfy01.Playlist
 import com.example.spotifiubyfy01.artistProfile.Song
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.UnsupportedEncodingException
 
-var image_link = "https://he.cecollaboratory.com/public/layouts/images/group-default-logo.png"
 
-class SearchListMonitor(val countTo: Int) {
+class SearchListMonitor(private val countTo: Int) {
     private val listToBeSent = ArrayList<SearchItem>()
     private var sharedCounter: Int = 0
 
@@ -68,8 +70,18 @@ class DataSource {
                     }
                     synchronizer.updateCounterAndCallBackIfNeeded(callBack)
                 },
-                {
-
+                { errorResponse -> val intent = Intent(context, PopUpWindow::class.java).apply {
+                    var body = "undefined error"
+                    if (errorResponse.networkResponse.data != null) {
+                        try {
+                            body = String(errorResponse.networkResponse.data, Charsets.UTF_8)
+                        } catch (e: UnsupportedEncodingException) {
+                            e.printStackTrace()
+                        }
+                    }
+                    putExtra("popuptext", body)
+                }
+                    startActivity(context, intent, null)
                 })
             MyRequestQueue.getInstance(context).addToRequestQueue(getRequest)
         }
@@ -136,10 +148,10 @@ class DataSource {
         ) {
             val auxList = ArrayList<SearchItem>()
             val url: String
-            if (sliceForGender) {
-                url = "http://spotifiubyfy-music.herokuapp.com/albums?genre=" + slice + "&skip=0&limit=100"
+            url = if (sliceForGender) {
+                "http://spotifiubyfy-music.herokuapp.com/albums?genre=" + slice + "&skip=0&limit=100"
             } else {
-                url = "https://spotifiubyfy-music.herokuapp.com/albums?q=" + slice +
+                "https://spotifiubyfy-music.herokuapp.com/albums?q=" + slice +
                         "&skip=0&limit=100"
             }
             val getRequest = JsonArrayRequest(
@@ -162,8 +174,8 @@ class DataSource {
             val id = jsonSong.getString("id").toInt()
             val storageName = jsonSong.getString("storage_name")
             val albumCover = "covers/"+jsonSong.getString("album_media")
-
-            return Song(songName, artist_name, albumId, id, storageName, albumCover)
+            val artistName = jsonSong.getString("artist_name")
+            return Song(songName, artistName, albumId, id, storageName, albumCover)
         }
 
         private fun getListOfSongs(artist_name: String, jsonSongs: JSONArray): List<Song> {
@@ -205,7 +217,7 @@ class DataSource {
             val playlistName = jsonPlaylist.getString("playlist_name")
             val playlistId = jsonPlaylist.getString("id")
             val storageName = "covers/"+jsonPlaylist.getString("playlist_media")
-            //val userName = jsonPlaylist.getString("user_name")
+            val userName = jsonPlaylist.getString("artist_username")
             return Playlist(
                 playlistId,
                 playlistName,

@@ -9,17 +9,13 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.Toast
 import com.android.volley.Request
-import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
-import com.bumptech.glide.Glide
-import com.example.spotifiubyfy01.artistProfile.Playlist
 import com.example.spotifiubyfy01.artistProfile.Song
 import org.json.JSONArray
 import org.json.JSONObject
-import java.io.File
+import java.io.UnsupportedEncodingException
 
 class PlaylistCreationPage : NotificationReceiverActivity() {
     lateinit var playlistCoverFile: Uri
@@ -68,8 +64,8 @@ class PlaylistCreationPage : NotificationReceiverActivity() {
 
 
                     val intent = Intent(this, PlaylistPage::class.java).apply {
-                        val pĺaylist : Playlist = getPlaylist("default username" ,response)
-                        putExtra("Playlist", pĺaylist)
+                        val playlist : Playlist = getPlaylist(response)
+                        putExtra("Playlist", playlist)
 
                         val storageName = "covers/"+response.getString("playlist_media")
                         val coverRef =  app.getStorageReference().child(storageName)
@@ -81,12 +77,19 @@ class PlaylistCreationPage : NotificationReceiverActivity() {
                         }
                     }
                     startActivity(intent)},
-                { val intent = Intent(this, PopUpWindow::class.java).apply {
-//                    val error = errorResponse//.networkResponse.data.decodeToString() //.split('"')[3]
-                    putExtra("popuptext", "cant create playlist right now")
+                { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
+                    var body = "undefined error"
+                    if (errorResponse.networkResponse.data != null) {
+                        try {
+                            body = String(errorResponse.networkResponse.data, Charsets.UTF_8)
+                        } catch (e: UnsupportedEncodingException) {
+                            e.printStackTrace()
+                        }
+                    }
+                    putExtra("popuptext", body)
                 }
-                    startActivity(intent)})
-
+                    startActivity(intent)}
+            )
             MyRequestQueue.getInstance(this).addToRequestQueue(jsonRequest)
         }
     }
@@ -101,11 +104,11 @@ class PlaylistCreationPage : NotificationReceiverActivity() {
         }
     }
 
-    private fun getPlaylist(userName: String, jsonPlaylist: JSONObject): Playlist {
+    private fun getPlaylist(jsonPlaylist: JSONObject): Playlist {
         val playlistName = jsonPlaylist.getString("playlist_name")
         val playlistId = jsonPlaylist.getString("id")
         val storageName = "covers/"+jsonPlaylist.getString("playlist_media")
-        //val userName = jsonPlaylist.getString("user_name")
+        val userName = (this.application as Spotifiubify).getProfileData("username") as String
         return Playlist(
             playlistId,
             playlistName,
@@ -133,14 +136,17 @@ class PlaylistCreationPage : NotificationReceiverActivity() {
         return songs
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-            return true
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.home -> {
+            startActivity(Intent(this, MainPage::class.java))
+            true
         }
-        if (item.itemId == R.id.action_playback) {
+        R.id.action_playback -> {
             startActivity(Intent(this, ReproductionPage::class.java))
+            true
         }
-        return super.onOptionsItemSelected(item)
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
     }
 }
