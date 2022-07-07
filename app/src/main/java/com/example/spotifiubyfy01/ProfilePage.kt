@@ -111,12 +111,15 @@ class ProfilePage : BaseActivity(), VolleyCallBack<Album> {
         alertDialogBuilder.setTitle("Do you want to delete this album?")
         alertDialogBuilder.setMessage("This action is irreversible.")
         alertDialogBuilder.setNegativeButton("yes") { _, _ ->
-            Log.d("TAG", "Deleting " + album.album_id + " of position " + position)
-            val recyclerView = findViewById<RecyclerView>(R.id.album_recycler_view)
-            (recyclerView.adapter as AlbumRecyclerAdapter).deleteItemOfPosition(position)
+            DeleteSender.deleteAlbum(this, album.album_id, position, this::onDeletion)
         }
         alertDialogBuilder.setPositiveButton("no", null)
         alertDialogBuilder.show()
+    }
+
+    private fun onDeletion(position: Int) {
+        val recyclerView = findViewById<RecyclerView>(R.id.album_recycler_view)
+        (recyclerView.adapter as AlbumRecyclerAdapter).deleteItemOfPosition(position)
     }
 
     private fun onItemClicked(album: Album) {
