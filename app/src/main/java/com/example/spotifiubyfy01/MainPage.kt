@@ -77,9 +77,8 @@ class MainPage: AppCompatActivity() {
         }
 
         fetchSongs()
-        fetchAlbums()
         fetchArtist()
-        fetchPlaylists()
+
 
 
     }
@@ -184,6 +183,8 @@ class MainPage: AppCompatActivity() {
             null,
             { response ->
                 initRecyclerViewArtist(getListOfArtist(response))
+                fetchAlbums()
+
             },
             {
                 Toast.makeText(this, "Cant fetch artists right now", Toast.LENGTH_SHORT).show()
@@ -200,6 +201,8 @@ class MainPage: AppCompatActivity() {
             null,
             { response ->
                 initRecyclerViewPLaylist(getListOfPlaylists(response))
+
+                fetchAlbumsRecGeo()
             },
             {
                 Toast.makeText(this, "Cant fetch playlists right now", Toast.LENGTH_SHORT).show()
@@ -233,7 +236,8 @@ class MainPage: AppCompatActivity() {
             null,
             { response ->
                 initRecyclerViewAlbum(getListOfAlbums(response))
-                fetchAlbumsRecGeo()
+
+                fetchPlaylists()
 
             },
             {

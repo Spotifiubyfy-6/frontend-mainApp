@@ -88,13 +88,8 @@ class Wallet : AppCompatActivity() {
                 walletFunds.text = "Funds: $response"
             },
             { errorResponse ->
-                val intent = Intent(this, PopUpWindow::class.java).apply {
-                    Log.d(ContentValues.TAG, "ERROR: $errorResponse")
-                    val error = errorResponse.networkResponse.data.decodeToString().split('"')[3]
-                    putExtra("popuptext", error)
-                    putExtra("tokenValidation", true)
-                }
-                startActivity(intent)
+                Toast.makeText(this, "Oops, something wrong happened",
+                    Toast.LENGTH_SHORT).show()
             }
         ) {
             @Throws(AuthFailureError::class)
@@ -148,6 +143,7 @@ class Wallet : AppCompatActivity() {
             true
         }
         else -> {
+            finish()
             super.onOptionsItemSelected(item)
         }
     }
