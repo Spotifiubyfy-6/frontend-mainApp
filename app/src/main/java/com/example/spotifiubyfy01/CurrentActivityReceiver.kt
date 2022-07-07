@@ -37,7 +37,7 @@ class CurrentActivityReceiver(private val receivingActivity: Activity): Broadcas
             (receivingActivity as MessagesPage).refreshChats()
             return
         }
-        NotificationCreator().createNotificationWithIntent(context, intent)
+        NotificationCreator().createNotificationForNewMessageWithIntent(context, intent)
     }
 
     private fun updateChat(intent: Intent) {
