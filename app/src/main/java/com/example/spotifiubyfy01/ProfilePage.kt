@@ -98,21 +98,22 @@ class ProfilePage : BaseActivity(), VolleyCallBack<Album> {
         fetchMyPlaylists()
     }
 
-    private fun initAlbumRecyclerView(albumList: List<Album>) {
+    private fun initAlbumRecyclerView(albumList: MutableList<Album>) {
         val recyclerView = findViewById<RecyclerView>(R.id.album_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
             false)
         recyclerView.adapter =
             AlbumRecyclerAdapter(albumList, this::onItemClicked, this::onDeleteButtonClicked)
-
     }
 
-    private fun onDeleteButtonClicked(album: Album) {
+    private fun onDeleteButtonClicked(album: Album, position: Int) {
         val alertDialogBuilder = AlertDialog.Builder(this)
         alertDialogBuilder.setTitle("Do you want to delete this album?")
         alertDialogBuilder.setMessage("This action is irreversible.")
         alertDialogBuilder.setNegativeButton("yes") { _, _ ->
-            Log.d("TAG", "Deleting " + album.album_id + "!!")
+            Log.d("TAG", "Deleting " + album.album_id + " of position " + position)
+            val recyclerView = findViewById<RecyclerView>(R.id.album_recycler_view)
+            (recyclerView.adapter as AlbumRecyclerAdapter).deleteItemOfPosition(position)
         }
         alertDialogBuilder.setPositiveButton("no", null)
         alertDialogBuilder.show()
@@ -125,7 +126,7 @@ class ProfilePage : BaseActivity(), VolleyCallBack<Album> {
     }
 
     override fun updateData(list: List<Album>) {
-        initAlbumRecyclerView(list)
+        initAlbumRecyclerView(list as MutableList<Album>)
     }
 
     private fun fetchMyPlaylists() {

@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.Spotifiubify
 import com.example.spotifiubyfy01.artistProfile.Album
+import kotlin.reflect.KFunction2
 
 var default_album_image = "https://i.pinimg.com/originals/33/58/0c/33580cd023504630a4ea63fe0a1650f6.jpg"
 
@@ -26,8 +27,9 @@ class AlbumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     fun render(
         album: Album,
+        position: Int,
         onClickListener: (Album) -> Unit,
-        onDeleteButtonListener: ((Album) -> Unit)?
+        onDeleteButtonListener: KFunction2<Album, Int, Unit>?
     ) {
         albumName.text = album.album_name
         val coverRef = app.getStorageReference().child(album.album_image)
@@ -40,7 +42,7 @@ class AlbumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             deleteButton.visibility = VISIBLE
             deleteButton.setOnClickListener {
                 if (onDeleteButtonListener != null) {
-                    onDeleteButtonListener(album)
+                    onDeleteButtonListener(album, position)
                 }
             }
         }
