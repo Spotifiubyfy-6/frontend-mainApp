@@ -106,8 +106,7 @@ class PlaylistCreationPage : BaseActivity() {
             storageName, userName,
             getListOfSongs(
                 JSONArray(jsonPlaylist.getString("songs").toString())
-            )
-        )
+            ), false)
     }
 
     private fun getSong( jsonSong: JSONObject): Song {

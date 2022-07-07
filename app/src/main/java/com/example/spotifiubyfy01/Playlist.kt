@@ -10,7 +10,8 @@ data class Playlist (
     var playlist_name: String,
     var playlist_image: String,
     var user_name: String,
-    var song_list: List<Song>
+    var song_list: List<Song>,
+    val forUsersProfile: Boolean
 ) : Serializable, SearchItem() {
 
     override fun getSearchItemType(): SearchItemEnum {

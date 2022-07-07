@@ -330,7 +330,7 @@ class MainPage: BaseActivity() {
         return Playlist(playlistId, playlistName,playlistImage,artistUsername,
             getListOfSongs(
                 JSONArray(jsonPlaylist.getString("songs").toString())
-            ))
+            ), false)
     }
     private fun getListOfAlbums(response: JSONArray): List<Album> {
         val list = ArrayList<Album>()

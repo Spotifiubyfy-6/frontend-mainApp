@@ -182,7 +182,7 @@ class ProfilePage : BaseActivity(), VolleyCallBack<Album> {
         return Playlist(playlistId, playlistName,playlistImage,artistUsername,
             getListOfSongs(
                 JSONArray(jsonPlaylist.getString("songs").toString())
-            ))
+            ), true)
     }
 
     private fun getListOfSongs(jsonSongs: JSONArray): List<Song> {

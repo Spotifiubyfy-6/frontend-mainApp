@@ -229,8 +229,7 @@ class DataSource {
                 getListOfSongs(
                     userName,
                     JSONArray(jsonPlaylist.getString("songs").toString())
-                )
-            )
+                ), false)
         }
 
         fun updateDataSetOfArtist(context: Context, slice: String, callBack: VolleyCallBack<Artist>) {
