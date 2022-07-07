@@ -31,25 +31,6 @@ class SubscriptionPage : NotificationReceiverActivity(), AdapterView.OnItemClick
         fetchSubscriptionTypes()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.top_bar, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.home -> {
-            startActivity(Intent(this, MainPage::class.java))
-            true
-        }
-        R.id.action_playback -> {
-            startActivity(Intent(this, ReproductionPage::class.java))
-            true
-        }
-        else -> {
-            super.onOptionsItemSelected(item)
-        }
-    }
-
 
     private fun fetchSubscriptionTypes() {
         val url = "https://spotifiubyfy-users.herokuapp.com/users/user_subscription"

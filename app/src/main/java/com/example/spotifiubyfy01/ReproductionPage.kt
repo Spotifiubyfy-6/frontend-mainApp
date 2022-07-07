@@ -88,15 +88,6 @@ class ReproductionPage : NotificationReceiverActivity() {
         }
 
     }
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.home -> {
-            startActivity(Intent(this, MainPage::class.java))
-            true
-        }
-        else -> {
-            super.onOptionsItemSelected(item)
-        }
-    }
 
     private fun changeView(song: Song, mediaPlayer: MediaPlayer) {
         findViewById<TextView>(R.id.title).text = song.song_name

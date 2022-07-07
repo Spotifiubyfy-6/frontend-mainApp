@@ -138,20 +138,6 @@ class SearchArtistPage: NotificationReceiverActivity(), VolleyCallBack<Artist> {
         adapter.updateList(list)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.home -> {
-            startActivity(Intent(this, MainPage::class.java))
-            true
-        }
-        R.id.action_playback -> {
-            startActivity(Intent(this, ReproductionPage::class.java))
-            true
-        }
-        else -> {
-            super.onOptionsItemSelected(item)
-        }
-    }
-
     private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             result ->
         if (result.resultCode == 0) { //chats need to be updated

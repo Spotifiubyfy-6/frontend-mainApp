@@ -22,12 +22,6 @@ class PlaylistCreationPage : NotificationReceiverActivity() {
 
 
 
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.top_bar, menu)
-        return true
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_playlist_creation_page)
@@ -136,17 +130,4 @@ class PlaylistCreationPage : NotificationReceiverActivity() {
         return songs
     }
 
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.home -> {
-            startActivity(Intent(this, MainPage::class.java))
-            true
-        }
-        R.id.action_playback -> {
-            startActivity(Intent(this, ReproductionPage::class.java))
-            true
-        }
-        else -> {
-            super.onOptionsItemSelected(item)
-        }
-    }
 }

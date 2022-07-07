@@ -34,12 +34,6 @@ class ListOfPlaylistsPage : NotificationReceiverActivity() {
         fetchMyPlaylists()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.top_bar, menu)
-        return true
-    }
-
-
     private fun initRecyclerViewPlaylists(listOfPlaylists:  List<Playlist>) {
         val recyclerViewPlaylist = findViewById<RecyclerView>(R.id.recycler_view_playlist)
         recyclerViewPlaylist.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,
@@ -169,16 +163,5 @@ class ListOfPlaylistsPage : NotificationReceiverActivity() {
                 print(errorResponse)
             })
         MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-            return true
-        }
-        if (item.itemId == R.id.action_playback) {
-            startActivity(Intent(this, ReproductionPage::class.java))
-        }
-        return super.onOptionsItemSelected(item)
     }
 }

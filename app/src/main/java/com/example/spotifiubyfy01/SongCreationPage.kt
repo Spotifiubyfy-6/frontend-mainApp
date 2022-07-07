@@ -171,18 +171,4 @@ class SongCreationPage : NotificationReceiverActivity(), AdapterView.OnItemClick
         }
         return 0 //should not happen
     }
-
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.home -> {
-            startActivity(Intent(this, MainPage::class.java))
-            true
-        }
-        R.id.action_playback -> {
-            startActivity(Intent(this, ReproductionPage::class.java))
-            true
-        }
-        else -> {
-            super.onOptionsItemSelected(item)
-        }
-    }
 }

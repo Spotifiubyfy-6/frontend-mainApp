@@ -34,10 +34,7 @@ class PreferencesSelection : NotificationReceiverActivity(), AdapterView.OnItemC
 
         fetchInterests()
     }
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.top_bar, menu)
-        return true
-    }
+
     private fun fetchInterests() {
         val url = "https://spotifiubyfy-users.herokuapp.com/interests"
 
@@ -179,20 +176,6 @@ class PreferencesSelection : NotificationReceiverActivity(), AdapterView.OnItemC
     fun goBack(view : View) {
         val intent = Intent(this, MainPage::class.java)
         startActivity(intent)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.home -> {
-            startActivity(Intent(this, MainPage::class.java))
-            true
-        }
-        R.id.action_playback -> {
-            startActivity(Intent(this, ReproductionPage::class.java))
-            true
-        }
-        else -> {
-            super.onOptionsItemSelected(item)
-        }
     }
 
 }

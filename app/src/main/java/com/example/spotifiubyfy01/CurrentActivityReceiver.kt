@@ -10,6 +10,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationManagerCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -85,5 +87,28 @@ open class NotificationReceiverActivity : AppCompatActivity() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(currentActivityReceiver!!)
         currentActivityReceiver = null
         super.onPause()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.top_bar, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        android.R.id.home -> {
+            finish()
+            true
+        }
+        R.id.action_playback -> {
+            startActivity(Intent(this, ReproductionPage::class.java))
+            true
+        }
+        R.id.main_page -> {
+            startActivity(Intent(this, MainPage::class.java))
+            true
+        }
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
     }
 }

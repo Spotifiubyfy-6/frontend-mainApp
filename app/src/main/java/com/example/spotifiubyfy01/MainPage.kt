@@ -32,18 +32,6 @@ import org.json.JSONObject
 
 class MainPage: NotificationReceiverActivity() {
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.top_bar, menu)
-        return true
-    }
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_playback) {
-            startActivity(Intent(this, ReproductionPage::class.java))
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_page)

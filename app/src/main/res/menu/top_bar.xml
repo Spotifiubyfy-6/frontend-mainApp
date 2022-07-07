@@ -7,7 +7,7 @@
         android:title="@string/action_playback_page"
         app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/home"
+        android:id="@+id/main_page"
         android:icon="@drawable/homebtn"
         android:title="@string/action_playback_page"
         app:showAsAction="ifRoom"/>

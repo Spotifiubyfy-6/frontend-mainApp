@@ -21,11 +21,6 @@ import com.example.spotifiubyfy01.artistProfile.adapter.default_album_image
 
 class AlbumPage : NotificationReceiverActivity() {
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.top_bar, menu)
-        return true
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         val app = (this.application as Spotifiubify)
         super.onCreate(savedInstanceState)
@@ -80,20 +75,6 @@ class AlbumPage : NotificationReceiverActivity() {
         val app = (this.application as Spotifiubify)
         app.songManager.play(song)
         Log.d(TAG, song.song_name +" with id " + song.id.toString() + " made by " + song.artist)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.home -> {
-            startActivity(Intent(this, MainPage::class.java))
-            true
-        }
-        R.id.action_playback -> {
-            startActivity(Intent(this, ReproductionPage::class.java))
-            true
-        }
-        else -> {
-            super.onOptionsItemSelected(item)
-        }
     }
 
 }
