@@ -10,27 +10,37 @@ import com.google.firebase.messaging.RemoteMessage
 class MyFirebaseMessagingService: FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
+
         if (remoteMessage.data.isNotEmpty()){
-            val idSender = remoteMessage.data["idSender"] as String
-            val message = remoteMessage.data["message"] as String
-            val name = remoteMessage.data["name"] as String
-            val image = remoteMessage.data["image"] as String
-            val date = remoteMessage.data["time"] as String
             val app = (this.application as Spotifiubify)
-            val userId = app.getProfileData("id")!!.toInt()
-            Log.d("TAG", date)
-            val localMessage = Intent(CURRENT_ACTIVITY_ACTION)
-            localMessage.putExtra("idUser", userId)
-            localMessage.putExtra("idSender", idSender)
-            localMessage.putExtra("message", message)
-            localMessage.putExtra("name", name)
-            localMessage.putExtra("image", image)
-            localMessage.putExtra("date", date)
-            if (app.isActivityVisible())
-                LocalBroadcastManager.getInstance(this).sendBroadcast(localMessage)
-            else
-                NotificationCreator().createNotificationWithIntent(this, localMessage)
+            val title = remoteMessage.data["title"] as String
+            if (title == "song") {
+                NotificationCreator().createNotificationForNewSongWithRemoteMessage(this, remoteMessage)
+            } else if (title == "message") {
+                val intent = createIntentForNewMessageNotification(remoteMessage, app.getProfileData("id")!!.toInt())
+                if (app.isActivityVisible())
+                    LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
+                else
+                    NotificationCreator().createNotificationForNewMessageWithIntent(this, intent)
+            }
         }
         super.onMessageReceived(remoteMessage)
     }
+
+    private fun createIntentForNewMessageNotification(remoteMessage: RemoteMessage, userId: Int): Intent {
+        val idSender = remoteMessage.data["idSender"] as String
+        val message = remoteMessage.data["message"] as String
+        val name = remoteMessage.data["name"] as String
+        val image = remoteMessage.data["image"] as String
+        val date = remoteMessage.data["time"] as String
+        val localMessage = Intent(CURRENT_ACTIVITY_ACTION)
+        localMessage.putExtra("idUser", userId)
+        localMessage.putExtra("idSender", idSender)
+        localMessage.putExtra("message", message)
+        localMessage.putExtra("name", name)
+        localMessage.putExtra("image", image)
+        localMessage.putExtra("date", date)
+        return localMessage
+    }
+
 }
