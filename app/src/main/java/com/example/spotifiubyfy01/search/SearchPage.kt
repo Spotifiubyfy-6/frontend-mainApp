@@ -4,10 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifiubyfy01.*
@@ -17,7 +14,7 @@ import com.example.spotifiubyfy01.Playlist
 import com.example.spotifiubyfy01.artistProfile.Song
 import com.example.spotifiubyfy01.search.adapter.SearchRecyclerAdapter
 
-class SearchPage : NotificationReceiverActivity(), VolleyCallBack<SearchItem> {
+class SearchPage : BaseActivity(), VolleyCallBack<SearchItem> {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

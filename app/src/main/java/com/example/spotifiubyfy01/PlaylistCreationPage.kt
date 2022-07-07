@@ -3,10 +3,7 @@ package com.example.spotifiubyfy01
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -17,7 +14,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.UnsupportedEncodingException
 
-class PlaylistCreationPage : NotificationReceiverActivity() {
+class PlaylistCreationPage : BaseActivity() {
     lateinit var playlistCoverFile: Uri
 
 

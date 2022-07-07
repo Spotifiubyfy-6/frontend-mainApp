@@ -2,11 +2,8 @@ package com.example.spotifiubyfy01
 
 import android.content.ContentValues
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
@@ -19,7 +16,7 @@ import org.json.JSONObject
 import java.io.UnsupportedEncodingException
 
 
-class ListOfPlaylistsPage : NotificationReceiverActivity() {
+class ListOfPlaylistsPage : BaseActivity() {
 
 
 

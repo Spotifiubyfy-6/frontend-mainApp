@@ -6,11 +6,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
@@ -18,7 +16,7 @@ import com.example.spotifiubyfy01.artistProfile.Album
 import org.json.JSONObject
 import java.io.UnsupportedEncodingException
 
-class SongCreationPage : NotificationReceiverActivity(), AdapterView.OnItemClickListener {
+class SongCreationPage : BaseActivity(), AdapterView.OnItemClickListener {
 
     private var albumId: Int? = null
     private var albumList: ArrayList<Album>? = null

@@ -6,11 +6,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifiubyfy01.Messages.albumMessages.adapter.AlbumCommentsRecyclerAdapter
-import com.example.spotifiubyfy01.NotificationReceiverActivity
+import com.example.spotifiubyfy01.BaseActivity
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.ReproductionPage
 import com.example.spotifiubyfy01.Spotifiubify
@@ -18,7 +17,7 @@ import com.example.spotifiubyfy01.artistProfile.ArtistPage
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
 
-class AlbumMessagesPage : NotificationReceiverActivity(), VolleyCallBack<Comment> {
+class AlbumMessagesPage : BaseActivity(), VolleyCallBack<Comment> {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.top_bar, menu)
         return true

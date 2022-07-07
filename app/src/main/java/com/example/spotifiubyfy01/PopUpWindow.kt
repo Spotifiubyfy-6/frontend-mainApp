@@ -12,13 +12,12 @@ import android.os.Bundle
 import android.view.WindowManager
 import android.view.animation.DecelerateInterpolator
 import android.widget.Button
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.graphics.ColorUtils
 
-class PopUpWindow : NotificationReceiverActivity() {
+class PopUpWindow : BaseActivity() {
     private var popupTitle = ""
     private var popupText = ""
     private var popupButton = ""

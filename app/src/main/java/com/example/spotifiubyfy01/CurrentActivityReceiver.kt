@@ -69,7 +69,7 @@ class CurrentActivityReceiver(private val receivingActivity: Activity): Broadcas
     }
 }
 
-open class NotificationReceiverActivity : AppCompatActivity() {
+open class BaseActivity : AppCompatActivity() {
     private var currentActivityReceiver: BroadcastReceiver? = null
 
     override fun onResume() {

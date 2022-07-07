@@ -2,13 +2,10 @@ package com.example.spotifiubyfy01
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -20,7 +17,7 @@ import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
 
 
-class ProfilePage : NotificationReceiverActivity(), VolleyCallBack<Album> {
+class ProfilePage : BaseActivity(), VolleyCallBack<Album> {
     private var artist: Artist? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

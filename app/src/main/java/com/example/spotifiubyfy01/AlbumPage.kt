@@ -4,12 +4,9 @@ import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -19,7 +16,7 @@ import com.example.spotifiubyfy01.artistProfile.Song
 import com.example.spotifiubyfy01.artistProfile.adapter.SongRecyclerAdapter
 import com.example.spotifiubyfy01.artistProfile.adapter.default_album_image
 
-class AlbumPage : NotificationReceiverActivity() {
+class AlbumPage : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val app = (this.application as Spotifiubify)

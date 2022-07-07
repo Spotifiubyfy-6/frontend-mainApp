@@ -4,11 +4,8 @@ import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.Button
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
@@ -22,15 +19,13 @@ import com.example.spotifiubyfy01.artistProfile.adapter.AlbumRecyclerAdapter
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.SearchPage
 import com.example.spotifiubyfy01.search.adapter.SearchRecyclerAdapter
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.delay
 import org.json.JSONArray
 import org.json.JSONObject
 
 
 
 
-class MainPage: NotificationReceiverActivity() {
+class MainPage: BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

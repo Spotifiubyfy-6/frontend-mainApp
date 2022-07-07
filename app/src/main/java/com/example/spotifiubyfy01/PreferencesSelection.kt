@@ -22,7 +22,7 @@ import java.io.UnsupportedEncodingException
 import java.util.*
 
 
-class PreferencesSelection : NotificationReceiverActivity(), AdapterView.OnItemClickListener{
+class PreferencesSelection : BaseActivity(), AdapterView.OnItemClickListener{
 
     private var items = arrayOf("")
 

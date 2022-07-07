@@ -7,11 +7,9 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.MenuItem
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.AuthFailureError
@@ -22,7 +20,7 @@ import com.example.spotifiubyfy01.Messages.ChatPage
 import com.example.spotifiubyfy01.search.adapter.ArtistSearchRecyclerAdapter
 import java.io.UnsupportedEncodingException
 
-class SearchArtistPage: NotificationReceiverActivity(), VolleyCallBack<Artist> {
+class SearchArtistPage: BaseActivity(), VolleyCallBack<Artist> {
     var userId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

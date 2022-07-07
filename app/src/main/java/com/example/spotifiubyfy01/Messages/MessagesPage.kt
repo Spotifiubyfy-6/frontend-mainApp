@@ -2,25 +2,22 @@ package com.example.spotifiubyfy01.Messages
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.ProgressBar
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifiubyfy01.Messages.adapter.ArtistChatViewHolder
 import com.example.spotifiubyfy01.Messages.adapter.ArtistChatsRecyclerAdapter
-import com.example.spotifiubyfy01.NotificationReceiverActivity
+import com.example.spotifiubyfy01.BaseActivity
 import com.example.spotifiubyfy01.R
-import com.example.spotifiubyfy01.ReproductionPage
 import com.example.spotifiubyfy01.Spotifiubify
 import com.example.spotifiubyfy01.search.SearchArtistPage
 import com.example.spotifiubyfy01.search.VolleyCallBack
 
-class MessagesPage: NotificationReceiverActivity(), VolleyCallBack<ChatBundle> {
+class MessagesPage: BaseActivity(), VolleyCallBack<ChatBundle> {
     var userId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

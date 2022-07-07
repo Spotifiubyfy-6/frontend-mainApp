@@ -2,18 +2,15 @@ package com.example.spotifiubyfy01
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.AuthFailureError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.example.spotifiubyfy01.search.Artist
 import org.json.JSONObject
 
-class TippingPage : NotificationReceiverActivity() {
+class TippingPage : BaseActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

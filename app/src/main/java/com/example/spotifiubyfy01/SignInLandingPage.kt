@@ -7,7 +7,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
@@ -15,7 +14,7 @@ import org.json.JSONObject
 import java.io.UnsupportedEncodingException
 
 
-class SignInLandingPage : NotificationReceiverActivity() {
+class SignInLandingPage : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signin_landing_page)

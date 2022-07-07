@@ -7,23 +7,21 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.Messages.adapter.MessagesRecyclerAdapter
-import com.example.spotifiubyfy01.NotificationReceiverActivity
+import com.example.spotifiubyfy01.BaseActivity
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.ReproductionPage
 import com.example.spotifiubyfy01.Spotifiubify
 import com.example.spotifiubyfy01.artistProfile.ArtistPage
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
-import java.time.LocalDateTime
 import java.time.ZonedDateTime
 
-class ChatPage: NotificationReceiverActivity(), VolleyCallBack<MessageItem> {
+class ChatPage: BaseActivity(), VolleyCallBack<MessageItem> {
     var requesterId: Int? = null
     var other: Artist? = null
     var updated: Boolean = false

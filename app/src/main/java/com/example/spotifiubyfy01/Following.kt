@@ -1,11 +1,7 @@
 package com.example.spotifiubyfy01
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.widget.Button
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,10 +10,9 @@ import com.android.volley.toolbox.JsonArrayRequest
 import com.example.spotifiubyfy01.artistProfile.ArtistPage
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.adapter.SearchRecyclerAdapter
-import org.json.JSONArray
 import org.json.JSONObject
 
-class Following : NotificationReceiverActivity() {
+class Following : BaseActivity() {
 
     private var followings = mutableListOf<Artist>()
 
