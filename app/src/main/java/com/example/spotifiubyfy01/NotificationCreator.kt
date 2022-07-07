@@ -14,6 +14,7 @@ import com.google.firebase.messaging.RemoteMessage
 class NotificationCreator {
     val messageNotification = 1
     val newSongNotification = 2
+    val newFollowersNotification = 3
 
     fun setChannels(context: Context) {
         val CHANNEL_ID = "HEADS_UP_NOTIFICATION"
@@ -40,7 +41,7 @@ class NotificationCreator {
         val CHANNEL_ID = "HEADS_UP_NOTIFICATION"
         val notification = Notification.Builder(context, CHANNEL_ID)
             .setContentTitle("New message from: " + artistName).setContentText(message)
-            .setAutoCancel(true).setSmallIcon(R.drawable.ic_launcher_background).setAutoCancel(true)
+            .setAutoCancel(true).setSmallIcon(R.drawable.ic_launcher_background)
             .setContentIntent(pendingIntent)
         NotificationManagerCompat.from(context).notify(messageNotification, notification.build())
     }
@@ -50,6 +51,7 @@ class NotificationCreator {
         val name = remoteMessage.data["name"] as String
         val image = remoteMessage.data["image"] as String
         val songName = remoteMessage.data["song"] as String
+
         val myIntent = Intent(context, ArtistPage::class.java)
         val artist = Artist(idSender, name, image)
         myIntent.putExtra("Artist", artist)
@@ -59,8 +61,28 @@ class NotificationCreator {
         val CHANNEL_ID = "HEADS_UP_NOTIFICATION"
         val notification = Notification.Builder(context, CHANNEL_ID)
             .setContentTitle("New song from: " + name).setContentText("Listen to " + songName + " now!")
-            .setAutoCancel(true).setSmallIcon(R.drawable.ic_launcher_background).setAutoCancel(true)
+            .setAutoCancel(true).setSmallIcon(R.drawable.ic_launcher_background)
             .setContentIntent(pendingIntent)
         NotificationManagerCompat.from(context).notify(newSongNotification, notification.build())
+    }
+
+    fun createNotificationForFollowersMilestoneWithRemoteMessage(context: Context, remoteMessage: RemoteMessage) {
+        val idSender = (remoteMessage.data["idSender"] as String).toInt()
+        val name = remoteMessage.data["name"] as String
+        val image = remoteMessage.data["image"] as String
+        val followers = remoteMessage.data["followers"] as String
+
+        val myIntent = Intent(context, ProfilePage::class.java)
+        val artist = Artist(idSender, name, image)
+        myIntent.putExtra("Artist", artist)
+        val pendingIntent = PendingIntent.getActivity(context,0, myIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        val CHANNEL_ID = "HEADS_UP_NOTIFICATION"
+        val notification = Notification.Builder(context, CHANNEL_ID)
+            .setContentTitle("Congratulations, " + name).setContentText("You've hit the milestone of " + followers + " followers!")
+            .setAutoCancel(true).setSmallIcon(R.drawable.ic_launcher_background)
+            .setContentIntent(pendingIntent)
+        NotificationManagerCompat.from(context).notify(newFollowersNotification, notification.build())
     }
 }

@@ -22,6 +22,8 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
                     LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
                 else
                     NotificationCreator().createNotificationForNewMessageWithIntent(this, intent)
+            } else if (title == "followers") {
+                NotificationCreator().createNotificationForFollowersMilestoneWithRemoteMessage(this, remoteMessage)
             }
         }
         super.onMessageReceived(remoteMessage)
@@ -42,5 +44,4 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         localMessage.putExtra("date", date)
         return localMessage
     }
-
 }
