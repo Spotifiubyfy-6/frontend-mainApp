@@ -24,27 +24,8 @@ import com.example.spotifiubyfy01.search.VolleyCallBack
 import org.json.JSONArray
 import org.json.JSONObject
 
-class ProfilePage : AppCompatActivity(), VolleyCallBack<Album> {
+class ProfilePage : NotificationReceiverActivity(), VolleyCallBack<Album> {
     private var artist: Artist? = null
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.top_bar, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.home -> {
-            startActivity(Intent(this, MainPage::class.java))
-            true
-        }
-        R.id.action_playback -> {
-            startActivity(Intent(this, ReproductionPage::class.java))
-            true
-        }
-        else -> {
-            super.onOptionsItemSelected(item)
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

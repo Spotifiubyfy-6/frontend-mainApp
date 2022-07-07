@@ -28,6 +28,16 @@
             android:text="message"/>
     </LinearLayout>
 
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:indeterminate="false"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="#DF1DB954" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"

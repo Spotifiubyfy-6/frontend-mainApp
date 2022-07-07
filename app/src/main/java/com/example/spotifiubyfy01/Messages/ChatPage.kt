@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.Messages.adapter.MessagesRecyclerAdapter
+import com.example.spotifiubyfy01.NotificationReceiverActivity
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.ReproductionPage
 import com.example.spotifiubyfy01.Spotifiubify
@@ -21,15 +22,19 @@ import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
 import java.time.LocalDateTime
 
-class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
-    private var requesterId: Int? = null
-    private var other: Artist? = null
-    private var updated: Boolean = false
+class ChatPage: NotificationReceiverActivity(), VolleyCallBack<MessageItem> {
+    var requesterId: Int? = null
+    var other: Artist? = null
+    var updated: Boolean = false
+    var fromNotification: Boolean? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_page)
         requesterId = intent.extras?.get("requester_id") as Int
         other = intent.extras?.get("other") as Artist
+        fromNotification = intent.extras?.get("fromNotifications") as Boolean?
+
         initOtherArtistField()
         initRecyclerView(ArrayList())
         MessagesDataSource.getConversationBetween(this, requesterId!!, other!!.id, this)
@@ -70,7 +75,7 @@ class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
         recyclerView.smoothScrollToPosition((recyclerView.adapter as MessagesRecyclerAdapter).itemCount)
     }
 
-    private fun addMessage(message: Message, date: LocalDateTime) {
+    fun addMessage(message: Message, date: LocalDateTime) {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         (recyclerView.adapter as MessagesRecyclerAdapter).addMessage(message, date)
         recyclerView.smoothScrollToPosition((recyclerView.adapter as MessagesRecyclerAdapter).itemCount)
@@ -83,10 +88,12 @@ class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            if (updated)
-                setResult(intent.extras?.get("position") as Int, intent)
-            else
-                setResult(-1, intent)
+            if (fromNotification == null) {
+                if (updated)
+                    setResult(intent.extras?.get("position") as Int, intent);
+                else
+                    setResult(-1, intent);
+            }
             finish()
             return true
         }
@@ -95,4 +102,5 @@ class ChatPage: AppCompatActivity(), VolleyCallBack<MessageItem> {
         }
         return super.onOptionsItemSelected(item)
     }
+
 }

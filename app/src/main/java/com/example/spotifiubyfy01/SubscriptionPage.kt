@@ -20,7 +20,7 @@ import com.android.volley.toolbox.StringRequest
 import org.json.JSONObject
 import java.io.UnsupportedEncodingException
 
-class SubscriptionPage : AppCompatActivity(), AdapterView.OnItemClickListener {
+class SubscriptionPage : NotificationReceiverActivity(), AdapterView.OnItemClickListener {
 
 
     private var items = arrayOf("")

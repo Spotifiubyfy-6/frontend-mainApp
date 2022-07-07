@@ -30,7 +30,7 @@ import org.json.JSONObject
 
 
 
-class MainPage: AppCompatActivity() {
+class MainPage: NotificationReceiverActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.top_bar, menu)
@@ -47,11 +47,8 @@ class MainPage: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_page)
-
-        val app = (this.application as Spotifiubify)
-        app.setProfile()
-
-
+        NotificationCreator().setChannels(this)
+        (this.application as Spotifiubify).setProfile()
 
         val profile = findViewById<Button>(R.id.profile_button)
         profile.setOnClickListener {

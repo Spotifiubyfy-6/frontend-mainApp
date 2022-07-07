@@ -15,7 +15,7 @@ import com.example.spotifiubyfy01.artistProfile.adapter.default_album_image
 import java.util.*
 
 
-class ReproductionPage : AppCompatActivity() {
+class ReproductionPage : NotificationReceiverActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

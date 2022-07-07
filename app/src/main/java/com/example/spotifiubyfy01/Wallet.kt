@@ -16,7 +16,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import org.json.JSONObject
 
-class Wallet : AppCompatActivity() {
+class Wallet : NotificationReceiverActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.top_bar, menu)
