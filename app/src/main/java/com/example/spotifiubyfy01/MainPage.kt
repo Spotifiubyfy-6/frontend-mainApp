@@ -45,7 +45,7 @@ class MainPage: NotificationReceiverActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_page)
-
+        NotificationCreator().setChannels(this)
         (this.application as Spotifiubify).setProfile()
 
         val profile = findViewById<Button>(R.id.profile_button)
