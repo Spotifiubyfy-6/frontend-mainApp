@@ -214,7 +214,7 @@ class DataSource {
                     getListOfSongs(
                         artistName,
                         JSONArray(jsonAlbum.getString("songs").toString())
-                    ), description, genre, authorId)
+                    ), description, genre, authorId, false)
         }
 
         private fun getPlaylist(userName: String, jsonPlaylist: JSONObject): SearchItem {

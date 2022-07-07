@@ -355,6 +355,6 @@ class MainPage: BaseActivity() {
         return Album(albumId, albumName, storageName, artistName,
             getListOfSongs(
                 JSONArray(jsonAlbum.getString("songs").toString())
-            ), description, genre, authorId)
+            ), description, genre, authorId, false)
     }
 }

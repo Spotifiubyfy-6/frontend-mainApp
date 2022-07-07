@@ -54,7 +54,7 @@ class ArtistPage: BaseActivity(), VolleyCallBack<Album> {
             Glide.with(image.context).load(default_album_image).into(image)
         }
         initAlbumRecyclerView(ArrayList())
-        AlbumDataSource.createAlbumList(this, artist!!.id, artist!!.artistName, this)
+        AlbumDataSource.createAlbumList(this, artist!!.id, artist!!.artistName, false, this)
 
         val messageButton = findViewById<Button>(R.id.message_button)
         messageButton.setOnClickListener {

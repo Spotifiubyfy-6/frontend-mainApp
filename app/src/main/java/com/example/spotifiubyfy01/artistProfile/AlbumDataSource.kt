@@ -14,14 +14,14 @@ import java.io.UnsupportedEncodingException
 class AlbumDataSource {
     companion object {
         fun createAlbumList(context: Context, artist_id: Int, artist_name: String,
-                            callBack: VolleyCallBack<Album>) {
+                            forUsersProfile: Boolean, callBack: VolleyCallBack<Album>) {
             val url = "https://spotifiubyfy-music.herokuapp.com/artists/" + artist_id +
                     "/albums?skip=0&limit=100"
             val getRequest = JsonArrayRequest(
                 Request.Method.GET,
                 url, null,
                 { response ->
-                    callBack.updateData(getListOfAlbums(artist_name, response))
+                    callBack.updateData(getListOfAlbums(artist_name, response, forUsersProfile))
                 },
                 { errorResponse -> val intent = Intent(context, PopUpWindow::class.java).apply {
                     var body = "undefined error"
@@ -55,7 +55,7 @@ class AlbumDataSource {
             return songs
         }
 
-        private fun getAlbum(artist_name: String, jsonAlbum: JSONObject): Album {
+        private fun getAlbum(artist_name: String, jsonAlbum: JSONObject, forUsersProfile: Boolean): Album {
             val albumName = jsonAlbum.getString("album_name")
             val albumId = jsonAlbum.getString("id")
 	        val storageName = "covers/"+jsonAlbum.getString("album_media")
@@ -64,13 +64,17 @@ class AlbumDataSource {
             val authorId = jsonAlbum.getString("artist_id")
             return Album(albumId, albumName, storageName, artist_name,
                 getListOfSongs(artist_name, JSONArray(jsonAlbum.getString("songs").toString())),
-                description, genre, authorId)
+                description, genre, authorId, forUsersProfile)
         }
 
-        private fun getListOfAlbums(artist_name: String, response: JSONArray): List<Album> {
+        private fun getListOfAlbums(
+            artist_name: String,
+            response: JSONArray,
+            forUsersProfile: Boolean
+        ): List<Album> {
             val list = ArrayList<Album>()
             for (i in 0 until response.length())
-                list.add(getAlbum(artist_name, JSONObject(response.get(i).toString())))
+                list.add(getAlbum(artist_name, JSONObject(response.get(i).toString()), forUsersProfile))
             return list
         }
     }

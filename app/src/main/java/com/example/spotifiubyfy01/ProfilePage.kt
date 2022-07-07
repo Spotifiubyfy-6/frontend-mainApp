@@ -85,7 +85,7 @@ class ProfilePage : BaseActivity(), VolleyCallBack<Album> {
             Glide.with(image.context).load(default_album_image).into(image)
         }
         initAlbumRecyclerView(ArrayList())
-        createAlbumList(this, artist!!.id, artist!!.artistName,this)
+        createAlbumList(this, artist!!.id, artist!!.artistName, true,this)
 
         val followingBtn = findViewById<Button>(R.id.following)
         followingBtn.setOnClickListener {
