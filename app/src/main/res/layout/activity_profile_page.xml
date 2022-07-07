@@ -66,6 +66,27 @@
             android:orientation="horizontal"
             android:background="@color/black"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+            <TextView
+                android:id="@+id/playlists_keyword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Playlists"
+                android:textColor="#FFFFFF"
+                android:textSize="25sp" />
+
+            <Button
+                android:id="@+id/createPlaylistButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:backgroundTint="#1DB954"
+                android:text="@string/createPlaylist" />
+        </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/playlist_recycler_view"
             android:layout_width="match_parent"
@@ -79,14 +100,6 @@
             android:layout_marginBottom="10dp"
             android:backgroundTint="#1DB954"
             android:text="@string/createSong" />
-
-        <Button
-            android:id="@+id/createPlaylistButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#1DB954"
-            android:text="@string/createPlaylist" />
 
         <Button
             android:id="@+id/wallet"
