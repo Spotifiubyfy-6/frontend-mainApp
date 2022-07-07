@@ -24,7 +24,7 @@ import com.example.spotifiubyfy01.search.VolleyCallBack
 import org.json.JSONArray
 import org.json.JSONObject
 
-class ProfilePage : AppCompatActivity(), VolleyCallBack<Album> {
+class ProfilePage : NotificationReceiverActivity(), VolleyCallBack<Album> {
     private var artist: Artist? = null
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

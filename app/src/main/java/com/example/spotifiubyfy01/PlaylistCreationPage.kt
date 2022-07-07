@@ -17,8 +17,8 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.UnsupportedEncodingException
 
-class PlaylistCreationPage : AppCompatActivity() {
-    private lateinit var playlistCoverFile: Uri
+class PlaylistCreationPage : NotificationReceiverActivity() {
+    lateinit var playlistCoverFile: Uri
 
 
 

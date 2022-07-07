@@ -20,7 +20,7 @@ import com.android.volley.toolbox.StringRequest
 import com.example.spotifiubyfy01.search.Artist
 import org.json.JSONObject
 
-class ProfileEditPage : AppCompatActivity() {
+class ProfileEditPage : NotificationReceiverActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_edit_page)

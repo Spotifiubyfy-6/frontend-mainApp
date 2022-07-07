@@ -17,8 +17,8 @@ import org.json.JSONObject
 import java.io.UnsupportedEncodingException
 
 
-class AlbumCreationPage : AppCompatActivity() {
-    private lateinit var albumMediaFile: Uri
+class AlbumCreationPage : NotificationReceiverActivity() {
+    lateinit var albumMediaFile: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

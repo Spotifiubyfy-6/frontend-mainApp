@@ -19,7 +19,7 @@ import org.json.JSONObject
 import java.io.UnsupportedEncodingException
 
 
-class ListOfPlaylistsPage : AppCompatActivity() {
+class ListOfPlaylistsPage : NotificationReceiverActivity() {
 
 
 

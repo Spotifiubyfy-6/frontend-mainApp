@@ -3,29 +3,35 @@ package com.example.spotifiubyfy01.Messages
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Button
+import android.widget.ProgressBar
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifiubyfy01.Messages.adapter.ArtistChatViewHolder
 import com.example.spotifiubyfy01.Messages.adapter.ArtistChatsRecyclerAdapter
+import com.example.spotifiubyfy01.NotificationReceiverActivity
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.ReproductionPage
 import com.example.spotifiubyfy01.Spotifiubify
 import com.example.spotifiubyfy01.search.SearchArtistPage
 import com.example.spotifiubyfy01.search.VolleyCallBack
 
-class MessagesPage: AppCompatActivity(), VolleyCallBack<ChatBundle> {
-    private var userId: Int? = null
+class MessagesPage: NotificationReceiverActivity(), VolleyCallBack<ChatBundle> {
+    var userId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_messages_page)
         initRecyclerView(ArrayList())
         val app = (this.application as Spotifiubify)
-        userId = app.getProfileData("id")!!.toInt()
+        userId = app.getProfileData("id")!!.toString().toInt()
         MessagesDataSource.getChatsOfArtistWithID(this, userId!!, this)
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar1)
+        progressBar.visibility = VISIBLE
         val messageNewArtistButton = findViewById<Button>(R.id.searchArtistToMessageButton)
         messageNewArtistButton.setOnClickListener {
             val intent = Intent(this, SearchArtistPage::class.java)
@@ -34,6 +40,8 @@ class MessagesPage: AppCompatActivity(), VolleyCallBack<ChatBundle> {
     }
 
     private fun initRecyclerView(chatList: List<ChatBundle>) {
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar1)
+        progressBar.visibility = GONE
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter =
@@ -69,6 +77,12 @@ class MessagesPage: AppCompatActivity(), VolleyCallBack<ChatBundle> {
         return super.onOptionsItemSelected(item)
     }
 
+    fun refreshChats() {
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar1)
+        progressBar.visibility = VISIBLE
+        MessagesDataSource.getChatsOfArtistWithID(this, userId!!, this)
+    }
+
     private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             result ->
         if (result.resultCode > 0) { //chats need to be updated
@@ -76,7 +90,7 @@ class MessagesPage: AppCompatActivity(), VolleyCallBack<ChatBundle> {
             val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
             (recyclerView.adapter as ArtistChatsRecyclerAdapter).putItemOfPositionOnTop(position)
         } else if (result.resultCode == -10) {
-            MessagesDataSource.getChatsOfArtistWithID(this, userId!!, this)
+            refreshChats()
         }
     }
 

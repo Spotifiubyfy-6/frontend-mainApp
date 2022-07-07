@@ -19,6 +19,19 @@ class Spotifiubify : Application() {
     var profileData: Hashtable<String, String> = Hashtable<String, String>()
     private lateinit var storage: FirebaseStorage
     lateinit var songManager: SongManager
+    private var activityVisible = false
+
+    fun isActivityVisible(): Boolean {
+        return activityVisible
+    }
+
+    fun activityResumed() {
+        activityVisible = true
+    }
+
+    fun activityPaused() {
+        activityVisible = false
+    }
 
     override fun onCreate() {
         super.onCreate()

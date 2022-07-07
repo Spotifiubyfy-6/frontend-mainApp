@@ -15,7 +15,7 @@ import org.json.JSONObject
 import java.io.UnsupportedEncodingException
 
 
-class SignInLandingPage : AppCompatActivity() {
+class SignInLandingPage : NotificationReceiverActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signin_landing_page)

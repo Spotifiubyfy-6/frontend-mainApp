@@ -26,22 +26,26 @@ class MessagesRecyclerAdapter(
     }
 
     override fun getItemCount(): Int {
-        return messageList.size
+        synchronized(this) {
+            return messageList.size
+        }
     }
 
     fun addMessage(message: Message, dateNTime: LocalDateTime) {
-        if (messageList.size == 0) {
-            messageList.add(DateItem(dateNTime))
-        }else if ((messageList.last() as Message).addMessageIfSameTimeNReceiver(message.receiver_id,
-                message.messages[0],
-                dateNTime)) {
-            this.notifyItemChanged(messageList.size - 1)
-            return
-        } else {
-            addDateIfNeeded(dateNTime)
+        synchronized(this) {
+            if (messageList.size == 0) {
+                messageList.add(DateItem(dateNTime))
+            }else if ((messageList.last() as Message).addMessageIfSameTimeNReceiver(message.receiver_id,
+                    message.messages[0],
+                    dateNTime)) {
+                this.notifyItemChanged(messageList.size - 1)
+                return
+            } else {
+                addDateIfNeeded(dateNTime)
+            }
+            messageList.add(message)
+            this.notifyItemInserted(messageList.size - 1)
         }
-        messageList.add(message)
-        this.notifyItemInserted(messageList.size - 1)
     }
 
     private fun addDateIfNeeded(dateNTime: LocalDateTime) {
