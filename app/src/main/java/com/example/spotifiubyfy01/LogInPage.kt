@@ -40,7 +40,6 @@ class LogInPage : AppCompatActivity() {
                     }
 
                 }
-                    Log.d("TAG", "logging in")
                     getId(this::setNotification)
                     startActivity(intent)},
                 { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
@@ -78,13 +77,12 @@ class LogInPage : AppCompatActivity() {
     }
 
     private fun setNotification(id: String) {
-        Log.d("TAG", "User with id: " + id)
         FirebaseMessaging.getInstance().token.addOnCompleteListener {
             val token = it.result
             val url = "https://spotifiubyfy-messages.herokuapp.com/messages/set_notification_token"
             val jsonRequest: StringRequest = object : StringRequest(
                 Method.POST, url, { response ->
-                    Log.d("TAG", "Token set")
+                    MyFirebaseMessagingService().onNewToken(token)
                                   },
                 { errorResponse ->
                     Log.d("TAG", errorResponse.toString())
