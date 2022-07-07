@@ -113,9 +113,7 @@ class MainPage: BaseActivity() {
         val recyclerViewPlaylist = findViewById<RecyclerView>(R.id.recycler_view_playlist)
         recyclerViewPlaylist.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
             false)
-        recyclerViewPlaylist.adapter = PlaylistRecyclerAdapter(listOfPlaylists) { playlist ->
-            onPlaylistClicked(playlist)
-        }
+        recyclerViewPlaylist.adapter = PlaylistRecyclerAdapter(listOfPlaylists, this::onPlaylistClicked, null)
     }
 
 

@@ -3,14 +3,13 @@ package com.example.spotifiubyfy01
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.spotifiubyfy01.R
-import com.example.spotifiubyfy01.Playlist
 
-import com.example.spotifiubyfy01.PlaylistViewHolder
+import kotlin.reflect.KFunction2
 
 class PlaylistRecyclerAdapter(
-    val playlistList: List<Playlist>,
-    private val onClickListener:(Playlist) -> Unit
+    private val playlistList: List<Playlist>,
+    private val onClickListener:(Playlist) -> Unit,
+    private val onDeleteButtonListener: KFunction2<Playlist, Int, Unit>?
 ): RecyclerView.Adapter<PlaylistViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaylistViewHolder {
@@ -21,7 +20,7 @@ class PlaylistRecyclerAdapter(
 
     override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int) {
         val item = playlistList[position]
-        holder.render(item, onClickListener)
+        holder.render(item, position, onClickListener, onDeleteButtonListener)
     }
 
     override fun getItemCount(): Int {

@@ -111,13 +111,13 @@ class ProfilePage : BaseActivity(), VolleyCallBack<Album> {
         alertDialogBuilder.setTitle("Do you want to delete this album?")
         alertDialogBuilder.setMessage("This action is irreversible.")
         alertDialogBuilder.setNegativeButton("yes") { _, _ ->
-            DeleteSender.deleteAlbum(this, album.album_id, position, this::onDeletion)
+            DeleteSender.deleteAlbum(this, album.album_id, position, this::onAlbumDeletion)
         }
         alertDialogBuilder.setPositiveButton("no", null)
         alertDialogBuilder.show()
     }
 
-    private fun onDeletion(position: Int) {
+    private fun onAlbumDeletion(position: Int) {
         val recyclerView = findViewById<RecyclerView>(R.id.album_recycler_view)
         (recyclerView.adapter as AlbumRecyclerAdapter).deleteItemOfPosition(position)
     }
@@ -154,9 +154,19 @@ class ProfilePage : BaseActivity(), VolleyCallBack<Album> {
         val recyclerViewPlaylist = findViewById<RecyclerView>(R.id.playlist_recycler_view)
         recyclerViewPlaylist.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
             false)
-        recyclerViewPlaylist.adapter = PlaylistRecyclerAdapter(listOfPlaylists) { playlist ->
-            onPlaylistClicked(playlist)
+        recyclerViewPlaylist.adapter = PlaylistRecyclerAdapter(listOfPlaylists, this::onPlaylistClicked, this::onDeleteButtonClicked)
+    }
+
+    private fun onDeleteButtonClicked(playlist: Playlist, position: Int) {
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder.setTitle("Do you want to delete this playlist?")
+        alertDialogBuilder.setMessage("This action is irreversible.")
+        alertDialogBuilder.setNegativeButton("yes") { _, _ ->
+            //DeleteSender.deleteAlbum(this, playlist.playlist_id, position, this::onPlaylistDeletion)
+            Log.d("TAG", "Playlist deleted" + playlist.playlist_id + "of position " + position)
         }
+        alertDialogBuilder.setPositiveButton("no", null)
+        alertDialogBuilder.show()
     }
 
     private fun onPlaylistClicked(playlist : Playlist) {
