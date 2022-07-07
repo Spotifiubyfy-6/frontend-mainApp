@@ -1,6 +1,7 @@
 package com.example.spotifiubyfy01
 
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +15,7 @@ class PlaylistViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val playlistName: TextView = view.findViewById(R.id.album_name)
     private val playlistImage: ImageView = view.findViewById(R.id.album_image)
     private val app = ((view.context as AppCompatActivity).application as Spotifiubify)
+    private val deleteButton: Button = view.findViewById<Button>(R.id.delete_album)
 
     fun render(playlist: Playlist, onClickListener: (Playlist) -> Unit) {
         playlistName.text = playlist.playlist_name
@@ -22,6 +24,14 @@ class PlaylistViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             Glide.with(playlistImage.context).load(url).into(playlistImage)
         }.addOnFailureListener {
             Glide.with(playlistImage.context).load(default_album_image).into(playlistImage)
+        }
+        if (playlist.forUsersProfile) {
+            deleteButton.visibility = View.VISIBLE
+            /*deleteButton.setOnClickListener {
+                if (onDeleteButtonListener != null) {
+                    onDeleteButtonListener(album, position)
+                }
+            }*/
         }
         itemView.setOnClickListener { onClickListener(playlist) }
     }

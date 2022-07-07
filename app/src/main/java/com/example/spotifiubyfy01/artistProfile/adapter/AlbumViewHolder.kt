@@ -23,7 +23,6 @@ class AlbumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val albumImage: ImageView = view.findViewById(R.id.album_image)
     private val app = ((view.context as AppCompatActivity).application as Spotifiubify)
     private val deleteButton: Button = view.findViewById<Button>(R.id.delete_album)
-    private val context = view.context
 
     fun render(
         album: Album,
