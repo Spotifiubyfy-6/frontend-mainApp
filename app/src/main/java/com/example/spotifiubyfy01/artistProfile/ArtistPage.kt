@@ -292,7 +292,7 @@ class ArtistPage: BaseActivity(), VolleyCallBack<Album> {
         val playlistName = jsonPlaylist.getString("playlist_name")
         val playlistDescription = jsonPlaylist.getString("playlist_description")
         val storageName = "covers/"+jsonPlaylist.getString("playlist_media")
-        val userName = jsonPlaylist.getString("artist_username")
+        val userName = jsonPlaylist.getString("artist_name")
 
         return Playlist(playlistID, playlistName, playlistDescription, storageName,
             userName, getListOfSongs(
@@ -307,7 +307,9 @@ class ArtistPage: BaseActivity(), VolleyCallBack<Album> {
         val storageName = jsonSong.getString("storage_name")
         val artistName = jsonSong.getString("artist_name")
         val albumCover = jsonSong.getString("album_media")
-        return Song(songName, artistName, albumId, id, storageName, albumCover, false)
+
+        val songSuscription = jsonSong.getString("album_suscription")
+        return Song(songName, artistName, albumId, id, storageName, albumCover, false, songSuscription)
     }
     private fun getListOfSongs(jsonSongs: JSONArray): List<Song> {
         val songs = ArrayList<Song>()

@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifiubyfy01.*
@@ -75,7 +76,18 @@ class SearchPage : BaseActivity(), VolleyCallBack<SearchItem> {
             SearchItemEnum.SONG_SEARCH_ITEM -> {
                 val app = (this.application as Spotifiubify)
                 val song = searchItem as Song
-                app.songManager.play(song)
+
+                val userSuscription = app.getProfileData("user_suscription")
+                val songSuscription = song.album_suscription
+
+                if ((userSuscription == "free" && (songSuscription == "platinum" || songSuscription == "gold")) ||
+                    (userSuscription == "gold" && songSuscription == "platinum")
+                ) {
+                    Toast.makeText(app, "Change your suscrption to $songSuscription to listen to this song",
+                        Toast.LENGTH_LONG).show()
+                } else {
+                    app.songManager.play(song)
+                }
             }
         }
     }

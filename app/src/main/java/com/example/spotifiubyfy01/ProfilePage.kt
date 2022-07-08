@@ -253,7 +253,8 @@ class ProfilePage : BaseActivity(), VolleyCallBack<Album> {
         val artistName = jsonSong.getString("artist_name")
         val albumCover = "covers/"+jsonSong.getString("album_media")
 
-        return Song(songName, artistName, albumId, id, storageName, albumCover, false)
+        val songSuscription = jsonSong.getString("album_suscription")
+        return Song(songName, artistName, albumId, id, storageName, albumCover, false, songSuscription)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
