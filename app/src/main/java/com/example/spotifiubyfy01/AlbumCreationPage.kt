@@ -45,7 +45,7 @@ class AlbumCreationPage : BaseActivity(), AdapterView.OnItemClickListener {
             requestBody.put("album_name", albumName.text.toString())
             requestBody.put("album_description", albumDescription.text.toString())
             requestBody.put("album_genre", albumGenre.text.toString())
-            requestBody.put("suscription", "free")
+            requestBody.put("suscription", albumSuscription!!)
             requestBody.put("artist_id", app.getProfileData("id"))
 
             val url = "http://spotifiubyfy-music.herokuapp.com/albums"
@@ -94,6 +94,7 @@ class AlbumCreationPage : BaseActivity(), AdapterView.OnItemClickListener {
             onItemClickListener = this@AlbumCreationPage
         }
         dropDownMenu.isFocusable = true
+        albumSuscription = suscriptionList[0]
     }
 
     override fun onActivityResult(
