@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -27,7 +28,18 @@ class PlaylistPage : BaseActivity() {
         findViewById<TextView>(R.id.playlistName).text = playlist.playlist_name
         findViewById<TextView>(R.id.userName).text = playlist.user_name
         val image = findViewById<ImageView>(R.id.playlist_image)
-
+        val owned = intent.extras?.get("owned") as Boolean?
+        if (owned != null) {
+            val editButton = findViewById<Button>(R.id.editPlaylist)
+            editButton.visibility = VISIBLE
+            editButton.setOnClickListener {
+                val intent = Intent(this, PlaylistCreationPage::class.java)
+                intent.putExtra("id", playlist.playlist_id)
+                intent.putExtra("image", playlist.playlist_image)
+                intent.putExtra("name", playlist.playlist_name)
+                startActivity(intent)
+            }
+        }
         val coverRef = app.getStorageReference().child(playlist.playlist_image)
 
         val inviteBtn = findViewById<Button>(R.id.invite)

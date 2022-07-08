@@ -171,7 +171,7 @@ class ProfilePage : BaseActivity(), VolleyCallBack<Album> {
         val recyclerViewPlaylist = findViewById<RecyclerView>(R.id.playlist_recycler_view)
         recyclerViewPlaylist.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
             false)
-        recyclerViewPlaylist.adapter = PlaylistRecyclerAdapter(ownedPlaylists, this::onPlaylistClicked, this::onDeleteButtonClicked)
+        recyclerViewPlaylist.adapter = PlaylistRecyclerAdapter(ownedPlaylists, this::onOwnedPlaylistClicked, this::onDeleteButtonClicked)
 
         if (collaboratingPlaylists.isEmpty()) {
             val text: TextView = findViewById(R.id.collaborationPlaylistInformationText)
@@ -198,6 +198,13 @@ class ProfilePage : BaseActivity(), VolleyCallBack<Album> {
         val recyclerView = findViewById<RecyclerView>(R.id.playlist_recycler_view)
         (recyclerView.adapter as PlaylistRecyclerAdapter).deleteItemOfPosition(position)
         itemDeleted = true
+    }
+
+    private fun onOwnedPlaylistClicked(playlist: Playlist) {
+        val intent = Intent(this, PlaylistPage::class.java)
+        intent.putExtra("Playlist", playlist)
+        intent.putExtra("owned", true)
+        startActivity(intent)
     }
 
     private fun onPlaylistClicked(playlist : Playlist) {
