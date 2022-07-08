@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlin.reflect.KFunction2
 
 class PlaylistRecyclerAdapter(
-    private val playlistList: List<Playlist>,
+    private val playlistList: MutableList<Playlist>,
     private val onClickListener:(Playlist) -> Unit,
     private val onDeleteButtonListener: KFunction2<Playlist, Int, Unit>?
 ): RecyclerView.Adapter<PlaylistViewHolder>() {
@@ -25,5 +25,11 @@ class PlaylistRecyclerAdapter(
 
     override fun getItemCount(): Int {
         return playlistList.size
+    }
+
+    fun deleteItemOfPosition(position: Int) {
+        playlistList.removeAt(position)
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, playlistList.size);
     }
 }

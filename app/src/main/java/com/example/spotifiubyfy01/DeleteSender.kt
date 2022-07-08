@@ -27,7 +27,24 @@ class DeleteSender {
                     onDeletion(position)
                                     },
                 { errorResponse ->
-                    Toast.makeText(context, "Toast!", Toast.LENGTH_SHORT)
+                    Toast.makeText(context, "An error occured. Please retry again.", Toast.LENGTH_SHORT)
+                }){}
+            MyRequestQueue.getInstance(context).addToRequestQueue(jsonRequest)
+        }
+
+        fun deletePlaylist(
+            context: Context,
+            playlistId: String,
+            position: Int,
+            onDeletion: KFunction1<Int, Unit>
+        ) {
+            val url = "http://spotifiubyfy-music.herokuapp.com/albums/" + playlistId
+            val jsonRequest: StringRequest = object : StringRequest(
+                Method.DELETE, url, {
+                    onDeletion(position)
+                },
+                { errorResponse ->
+                    Toast.makeText(context, "An error occured. Please retry again.", Toast.LENGTH_SHORT)
                 }){}
             MyRequestQueue.getInstance(context).addToRequestQueue(jsonRequest)
         }
