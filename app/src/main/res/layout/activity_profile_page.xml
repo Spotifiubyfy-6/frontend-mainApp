@@ -48,6 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Albums"
+                android:layout_gravity="center_vertical"
                 android:textColor="#FFFFFF"
                 android:textSize="25sp" />
             <Button
@@ -57,6 +58,13 @@
                 android:layout_marginLeft="10dp"
                 android:backgroundTint="#1DB954"
                 android:text="@string/createAlbum" />
+            <Button
+                android:id="@+id/createSongButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:backgroundTint="#1DB954"
+                android:text="@string/createSong" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -75,6 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Playlists"
+                android:layout_gravity="center_vertical"
                 android:textColor="#FFFFFF"
                 android:textSize="25sp" />
 
@@ -93,13 +102,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:background="@color/black"/>
-        <Button
-            android:id="@+id/createSongButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:backgroundTint="#1DB954"
-            android:text="@string/createSong" />
 
         <Button
             android:id="@+id/wallet"

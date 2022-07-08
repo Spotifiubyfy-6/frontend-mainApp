@@ -30,12 +30,6 @@
                 android:adjustViewBounds="true"
                 android:contentDescription="album image"
                 android:scaleType="fitXY" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/black" />
         </androidx.cardview.widget.CardView>
 
         <Button
@@ -78,6 +72,12 @@
             android:text="TextView"
             android:textColor="#FFFFFF"
             android:textSize="15sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black" />
 
         <LinearLayout
             android:layout_width="match_parent"
