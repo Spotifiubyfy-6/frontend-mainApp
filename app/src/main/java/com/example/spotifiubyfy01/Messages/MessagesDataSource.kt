@@ -86,6 +86,10 @@ class MessagesDataSource {
                 Request.Method.GET,
                 url, null,
                 { response ->
+                    if (response.length() == 0) {
+                        callBack.updateData(ArrayList())
+                        return@JsonArrayRequest
+                    }
                     this.searchRespectiveArtists(context, response, callBack)
                 }
             ) { error ->
