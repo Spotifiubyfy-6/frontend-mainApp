@@ -74,8 +74,7 @@ class AlbumPage : BaseActivity() {
         alertDialogBuilder.setTitle("Do you want to delete this song?")
         alertDialogBuilder.setMessage("This action is irreversible.")
         alertDialogBuilder.setNegativeButton("yes") { _, _ ->
-            //DeleteSender.deletePlaylist(this, playlist.playlist_id, position, this::onPlaylistDeletion)
-            onSongDeletion(position)
+            DeleteSender.deleteSong(this, song.id, position, this::onSongDeletion)
         }
         alertDialogBuilder.setPositiveButton("no", null)
         alertDialogBuilder.show()
