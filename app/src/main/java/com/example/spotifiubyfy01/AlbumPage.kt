@@ -45,7 +45,8 @@ class AlbumPage : BaseActivity() {
                 intent.putExtra("name", album.album_name)
                 intent.putExtra("description", album.album_description)
                 intent.putExtra("genre", album.album_genre)
-                //intent.putExtra("suscription", album.)
+                intent.putExtra("suscription", album.album_suscription)
+                intent.putExtra("image", album.album_image)
                 startActivity(intent)
             }
         }
