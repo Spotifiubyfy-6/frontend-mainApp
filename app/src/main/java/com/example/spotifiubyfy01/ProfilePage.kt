@@ -2,7 +2,6 @@ package com.example.spotifiubyfy01
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View.VISIBLE
 import android.widget.Button
@@ -150,7 +149,10 @@ class ProfilePage : BaseActivity(), VolleyCallBack<Album> {
             url,
             null,
             { response ->
-                initRecyclerViewPlaylists(getListOfPlaylists(response))
+                val ownedPlaylists = ArrayList<Playlist>()
+                val collaboratingPlaylists = ArrayList<Playlist>()
+                getListOfPlaylists(ownedPlaylists, collaboratingPlaylists, response)
+                initRecyclerViewPlaylists(ownedPlaylists, collaboratingPlaylists)
             },
             { errorResponse ->
                 print(errorResponse)
@@ -158,15 +160,27 @@ class ProfilePage : BaseActivity(), VolleyCallBack<Album> {
         MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
     }
 
-    private fun initRecyclerViewPlaylists(listOfPlaylists: List<Playlist>) {
-        if (listOfPlaylists.isEmpty()) {
+    private fun initRecyclerViewPlaylists(
+        ownedPlaylists: List<Playlist>,
+        collaboratingPlaylists: List<Playlist>
+    ) {
+        if (ownedPlaylists.isEmpty()) {
             val text: TextView = findViewById(R.id.playlistInformationText)
             text.visibility = VISIBLE
         }
         val recyclerViewPlaylist = findViewById<RecyclerView>(R.id.playlist_recycler_view)
         recyclerViewPlaylist.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
             false)
-        recyclerViewPlaylist.adapter = PlaylistRecyclerAdapter(listOfPlaylists, this::onPlaylistClicked, this::onDeleteButtonClicked)
+        recyclerViewPlaylist.adapter = PlaylistRecyclerAdapter(ownedPlaylists, this::onPlaylistClicked, this::onDeleteButtonClicked)
+
+        if (collaboratingPlaylists.isEmpty()) {
+            val text: TextView = findViewById(R.id.collaborationPlaylistInformationText)
+            text.visibility = VISIBLE
+        }
+        val recyclerViewPlaylist2 = findViewById<RecyclerView>(R.id.playlist_collaborator_recycler_view)
+        recyclerViewPlaylist2.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
+            false)
+        recyclerViewPlaylist2.adapter = PlaylistRecyclerAdapter(collaboratingPlaylists, this::onPlaylistClicked, this::onDeleteButtonClicked)
     }
 
     private fun onDeleteButtonClicked(playlist: Playlist, position: Int) {
@@ -192,11 +206,15 @@ class ProfilePage : BaseActivity(), VolleyCallBack<Album> {
         startActivity(intent)
     }
 
-    private fun getListOfPlaylists(jsonSongs: JSONArray): List<Playlist> {
-        val playlists = ArrayList<Playlist>()
-        for (i in 0 until jsonSongs.length())
-            playlists.add(getPlaylist(JSONObject(jsonSongs.get(i).toString())))
-        return playlists
+    private fun getListOfPlaylists(owned: ArrayList<Playlist>, collaborating: ArrayList<Playlist>,
+                                   jsonSongs: JSONArray) {
+        for (i in 0 until jsonSongs.length()) {
+            val jsonPlaylist = JSONObject(jsonSongs.get(i).toString())
+            if (jsonPlaylist.get("type").equals("owned"))
+                owned.add(getPlaylist(jsonPlaylist))
+            else
+                collaborating.add(getPlaylist(jsonPlaylist))
+        }
     }
 
     private fun getPlaylist( jsonPlaylist: JSONObject): Playlist {

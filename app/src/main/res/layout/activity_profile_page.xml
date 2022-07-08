@@ -93,7 +93,7 @@
                 android:id="@+id/playlists_keyword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Playlists"
+                android:text="Your Playlists"
                 android:layout_gravity="center_vertical"
                 android:textColor="#FFFFFF"
                 android:textSize="25sp" />
@@ -113,11 +113,37 @@
             android:layout_marginTop="10dp"
             android:paddingHorizontal="10dp"
             android:textSize="25dp"
-            android:text="You do not own a playlist or collaborate on one. Create one so you can start saving songs you like!"
+            android:text="You do not own a playlist. Create one so you can start saving songs you like!"
             android:textColor="#7AFFFFFF"
             android:visibility="gone"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/playlist_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/black"/>
+
+        <TextView
+            android:id="@+id/playlists_collaborator_keyword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Collaborating in"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/collaborationPlaylistInformationText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingHorizontal="10dp"
+            android:textSize="25dp"
+            android:text="You have not been invited to collaborate on other playlists."
+            android:textColor="#7AFFFFFF"
+            android:visibility="gone"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/playlist_collaborator_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
