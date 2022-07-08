@@ -16,8 +16,7 @@ class CommentsDataSender {
             albumId: Int,
             comment: String,
             addComment: (Comment) -> Unit,
-            isAuthor: Boolean,
-            ownAlbum: Boolean
+            isAuthor: Boolean
         ) {
             if (comment.isEmpty())
                 return
@@ -28,7 +27,7 @@ class CommentsDataSender {
                     val dateNTime =
                         MessagesDataSource.obtainDate(jsonComment.get("time") as String)
                     val commentId = (jsonComment.get("id") as Int).toString()
-                    val commentItem = Comment(artist, commentId, jsonComment.get("comment") as String, dateNTime, isAuthor, ownAlbum)
+                    val commentItem = Comment(artist, commentId, jsonComment.get("comment") as String, dateNTime, isAuthor, true)
                     addComment(commentItem) },
                 { errorResponse ->
                     Log.d("TAG", errorResponse.toString())

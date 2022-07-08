@@ -2,7 +2,6 @@ package com.example.spotifiubyfy01.Messages.albumMessages
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonArrayRequest
@@ -50,7 +49,7 @@ class IdToListOfPositionNCommentMap(
     private var artistCounter = 0
     private var numberOfArtist = 0
 
-    fun fillMapWithComments(authorId: Int, ownAlbum: Boolean) {
+    fun fillMapWithComments(authorId: Int, ownAlbum: Boolean, id: Int) {
         synchronized(shared) {
             for (i in 0 until commentArray.length()) {
                 val commentObject = JSONObject(commentArray.get(i).toString())
@@ -60,7 +59,7 @@ class IdToListOfPositionNCommentMap(
                     Artist(userId, "", ""), commentId,
                     commentObject.get("comment") as String,
                     MessagesDataSource.obtainDate(commentObject.get("time") as String),
-                            userId == authorId, ownAlbum
+                            userId == authorId, ownAlbum || (id == userId)
                 )
                 this.addCommentNPositionToUserWithId(userId, i, comment)
             }
@@ -124,14 +123,15 @@ class CommentsDataSource {
         private fun searchRespectiveArtists(
             context: Context, commentArray: JSONArray, authorId: Int,
             callBack: VolleyCallBack<Comment>,
-            ownAlbum: Boolean
+            ownAlbum: Boolean,
+            userId: Int
         ) {
             val map = IdToListOfPositionNCommentMap(context, commentArray, callBack)
-            map.fillMapWithComments(authorId, ownAlbum)
+            map.fillMapWithComments(authorId, ownAlbum, userId)
         }
 
-        fun getCommentsOfAlbum(context: Context, albumId: Int, authorId: Int, ownAlbum: Boolean,
-                               callBack: VolleyCallBack<Comment>
+        fun getCommentsOfAlbum(context: Context, albumId: Int, authorId: Int, userId: Int,
+                               ownAlbum: Boolean, callBack: VolleyCallBack<Comment>
         ) {
             val url =
                 "https://spotifiubyfy-messages.herokuapp.com/comments/$albumId?skip=0&limit=100"
@@ -139,7 +139,7 @@ class CommentsDataSource {
                 Request.Method.GET,
                 url, null,
                 { response ->
-                    this.searchRespectiveArtists(context, response, authorId, callBack, ownAlbum)
+                    this.searchRespectiveArtists(context, response, authorId, callBack, ownAlbum, userId)
                 }
             ) { error ->
                 val intent = Intent(context, PopUpWindow::class.java).apply {
