@@ -154,7 +154,7 @@ class ProfilePage : BaseActivity(), VolleyCallBack<Album> {
         val recyclerViewPlaylist = findViewById<RecyclerView>(R.id.playlist_recycler_view)
         recyclerViewPlaylist.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
             false)
-        recyclerViewPlaylist.adapter = PlaylistRecyclerAdapter(listOfPlaylists as MutableList<Playlist>, this::onPlaylistClicked, this::onDeleteButtonClicked)
+        recyclerViewPlaylist.adapter = PlaylistRecyclerAdapter(listOfPlaylists, this::onPlaylistClicked, this::onDeleteButtonClicked)
     }
 
     private fun onDeleteButtonClicked(playlist: Playlist, position: Int) {

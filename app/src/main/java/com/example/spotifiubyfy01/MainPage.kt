@@ -113,7 +113,7 @@ class MainPage: BaseActivity() {
         val recyclerViewPlaylist = findViewById<RecyclerView>(R.id.recycler_view_playlist)
         recyclerViewPlaylist.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
             false)
-        recyclerViewPlaylist.adapter = PlaylistRecyclerAdapter(listOfPlaylists as MutableList<Playlist>, this::onPlaylistClicked, null)
+        recyclerViewPlaylist.adapter = PlaylistRecyclerAdapter(listOfPlaylists, this::onPlaylistClicked, null)
     }
 
 
