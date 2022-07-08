@@ -12,6 +12,7 @@ data class Album (
     var song_list: List<Song>,
     var album_description: String,
     var album_genre: String,
+    var album_suscription: String,
     var author_id: String,
     val forUsersProfile: Boolean
 ) : Serializable, SearchItem() {

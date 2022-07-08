@@ -346,6 +346,7 @@ class MainPage: BaseActivity() {
         val genre = jsonAlbum.getString("album_genre")
         var artistName = "default artist name"
         val authorId = jsonAlbum.getString("artist_id")
+        val suscription = jsonAlbum.getString("suscription")
         if (songs.length() > 0) {
             val song = songs.getJSONObject(0)
             artistName = song.getString("artist_name")
@@ -353,6 +354,6 @@ class MainPage: BaseActivity() {
         return Album(albumId, albumName, storageName, artistName,
             getListOfSongs(
                 JSONArray(jsonAlbum.getString("songs").toString())
-            ), description, genre, authorId, false)
+            ), description, genre, suscription, authorId, false)
     }
 }
