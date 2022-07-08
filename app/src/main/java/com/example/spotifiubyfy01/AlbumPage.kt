@@ -34,6 +34,8 @@ class AlbumPage : BaseActivity() {
         findViewById<TextView>(R.id.artistName).text = album.artist_name
         findViewById<TextView>(R.id.album_genre).text = album.album_genre
         findViewById<TextView>(R.id.album_description).text = album.album_description
+        findViewById<TextView>(R.id.album_suscription).text = album.album_suscription
+
         val editButton = findViewById<Button>(R.id.editAlbum)
         if (ownAlbum != null) {
             editButton.visibility = VISIBLE
