@@ -6,6 +6,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,7 +24,6 @@ class MessagesPage: BaseActivity(), VolleyCallBack<ChatBundle> {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_messages_page)
-        initRecyclerView(ArrayList())
         val app = (this.application as Spotifiubify)
         userId = app.getProfileData("id")!!.toString().toInt()
         MessagesDataSource.getChatsOfArtistWithID(this, userId!!, this)
@@ -39,6 +39,8 @@ class MessagesPage: BaseActivity(), VolleyCallBack<ChatBundle> {
     private fun initRecyclerView(chatList: List<ChatBundle>) {
         val progressBar = findViewById<ProgressBar>(R.id.progressBar1)
         progressBar.visibility = GONE
+        if (chatList.isEmpty())
+            findViewById<TextView>(R.id.informationText).visibility = VISIBLE
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter =

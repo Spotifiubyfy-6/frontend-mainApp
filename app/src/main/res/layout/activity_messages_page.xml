@@ -39,6 +39,17 @@
         android:indeterminateTintMode="src_atop"
         android:indeterminateTint="#DF1DB954" />
 
+    <TextView
+        android:id="@+id/informationText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingHorizontal="10dp"
+        android:textSize="25dp"
+        android:text="You have no conversations. Find an artist to chat with by clicking the message button."
+        android:textColor="#7AFFFFFF"
+        android:visibility="gone"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
