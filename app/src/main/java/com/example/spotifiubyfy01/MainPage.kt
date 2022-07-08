@@ -346,7 +346,7 @@ class MainPage: BaseActivity() {
         val playlistImage = "covers/"+jsonPlaylist.getString("playlist_media").toString()
         val playlistId = jsonPlaylist.getString("id")
         val artistUsername = jsonPlaylist.getString("artist_username")
-        return Playlist(playlistId, playlistName,playlistImage,artistUsername,
+        return Playlist(playlistId, playlistName, playlistDescription, playlistImage, artistUsername,
             getListOfSongs(
                 JSONArray(jsonPlaylist.getString("songs").toString())
             ), "not applicable" ,false)

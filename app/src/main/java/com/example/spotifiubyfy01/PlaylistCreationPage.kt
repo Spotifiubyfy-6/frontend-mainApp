@@ -97,11 +97,12 @@ class PlaylistCreationPage : BaseActivity() {
     private fun getPlaylist(jsonPlaylist: JSONObject): Playlist {
         val playlistName = jsonPlaylist.getString("playlist_name")
         val playlistId = jsonPlaylist.getString("id")
+        val playlistDescription = jsonPlaylist.getString("playlist_description")
         val storageName = "covers/"+jsonPlaylist.getString("playlist_media")
         val userName = (this.application as Spotifiubify).getProfileData("username") as String
         return Playlist(
             playlistId,
-            playlistName,
+            playlistName, playlistDescription,
             storageName, userName,
             getListOfSongs(
                 JSONArray(jsonPlaylist.getString("songs").toString())

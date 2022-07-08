@@ -83,11 +83,12 @@ class ListOfPlaylistsPage : BaseActivity() {
     private fun getPlaylist(jsonPlaylist: JSONObject): Playlist {
         val playlistID = jsonPlaylist.getString("id")
         val playlistName = jsonPlaylist.getString("playlist_name")
+        val description = jsonPlaylist.getString("playlist_description")
         val storageName = "covers/"+jsonPlaylist.getString("playlist_media")
         val userName = (this.application as Spotifiubify).getProfileData("username") as String
         val songs = ArrayList<Song>()
 
-        return Playlist(playlistID, playlistName, storageName, userName, songs, "not applicable",false)
+        return Playlist(playlistID, playlistName, description, storageName, userName, songs, "not applicable",false)
     }
 
     private fun getSong( jsonSong: JSONObject): Song {
@@ -109,11 +110,12 @@ class ListOfPlaylistsPage : BaseActivity() {
         val playlistName = jsonPlaylist.getString("playlist_name")
         val playlistId = jsonPlaylist.getString("id")
         val storageName = "covers/"+jsonPlaylist.getString("playlist_media")
-        val userName = jsonPlaylist.getString("artist_username")
+        val realUserName = jsonPlaylist.getString("artist_username")
+        val description = jsonPlaylist.getString("playlist_description")
         return Playlist(
             playlistId,
-            playlistName,
-            storageName, userName,
+            playlistName, description,
+            storageName, realUserName,
             getListOfSongs(
                 JSONArray(jsonPlaylist.getString("songs").toString())
             ), "not applicable", false)

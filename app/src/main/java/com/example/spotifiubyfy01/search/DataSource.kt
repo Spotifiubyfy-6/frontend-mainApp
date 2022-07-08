@@ -2,8 +2,6 @@ package com.example.spotifiubyfy01.search
 
 import android.content.Context
 import android.content.Intent
-import android.widget.ArrayAdapter
-import android.widget.ListView
 import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import com.android.volley.Request
@@ -12,7 +10,6 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.example.spotifiubyfy01.MyRequestQueue
 import com.example.spotifiubyfy01.Playlist
 import com.example.spotifiubyfy01.PopUpWindow
-import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.artistProfile.Song
 import org.json.JSONArray
@@ -138,7 +135,7 @@ class DataSource {
                 url, null,
                 { response ->
                     for (i in 0 until response.length())
-                        auxList.add(getPlaylist("default_username" ,JSONObject(response.get(i).toString())))
+                        auxList.add(getPlaylist(JSONObject(response.get(i).toString())))
                     synchronizer.updateList(auxList)
                     synchronizer.updateCounterAndCallBackIfNeeded(callBack)
                 },
@@ -225,14 +222,15 @@ class DataSource {
                     ), description, genre, suscription, authorId, false)
         }
 
-        private fun getPlaylist(userName: String, jsonPlaylist: JSONObject): SearchItem {
+        private fun getPlaylist(jsonPlaylist: JSONObject): SearchItem {
             val playlistName = jsonPlaylist.getString("playlist_name")
             val playlistId = jsonPlaylist.getString("id")
             val storageName = "covers/"+jsonPlaylist.getString("playlist_media")
+            val playlistDescription = jsonPlaylist.getString("playlist_description")
             val userName = jsonPlaylist.getString("artist_username")
             return Playlist(
                 playlistId,
-                playlistName,
+                playlistName, playlistDescription,
                 storageName, userName,
                 getListOfSongs(
                     userName,

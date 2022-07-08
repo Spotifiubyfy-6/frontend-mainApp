@@ -8,6 +8,7 @@ import java.io.Serializable
 data class Playlist (
     var playlist_id: String,
     var playlist_name: String,
+    var playlist_description: String,
     var playlist_image: String,
     var user_name: String,
     var song_list: List<Song>,

@@ -232,7 +232,7 @@ class ProfilePage : BaseActivity(), VolleyCallBack<Album> {
         val playlistId = jsonPlaylist.getString("id")
         val artistUsername = jsonPlaylist.getString("artist_username")
         val type = jsonPlaylist.getString("type")
-        return Playlist(playlistId, playlistName,playlistImage,artistUsername,
+        return Playlist(playlistId, playlistName, playlistDescription, playlistImage, artistUsername,
             getListOfSongs(
                 JSONArray(jsonPlaylist.getString("songs").toString())
             ), type, true)
