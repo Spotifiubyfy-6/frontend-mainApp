@@ -18,12 +18,22 @@ class SongViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val addToPlaylist: Button = view.findViewById(R.id.button)
     private val deleteButton: Button = view.findViewById(R.id.delete_song)
 
-    fun render(song: Song, onClickListener: (Song) -> Unit) {
+    fun render(
+        song: Song,
+        position: Int,
+        onClickListener: (Song) -> Unit,
+        onDeleteButtonClicked: ((Song, Int) -> Unit?)?
+    ) {
         songName.text = song.song_name
         artistName.text = song.artist
 
         if (song.forUsersProfile) {
             deleteButton.visibility = VISIBLE
+            if (onDeleteButtonClicked != null) {
+                deleteButton.setOnClickListener {
+                    onDeleteButtonClicked(song, position)
+                }
+            }
         }
 
         itemView.setOnClickListener { onClickListener(song) }

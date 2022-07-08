@@ -68,9 +68,9 @@ class MainPage: BaseActivity() {
 
         val recyclerViewSongs = findViewById<RecyclerView>(R.id.recycler_view_songs)
         recyclerViewSongs.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false)
-        recyclerViewSongs.adapter = SongRecyclerAdapter(listOfSong) {song ->
+        recyclerViewSongs.adapter = SongRecyclerAdapter(listOfSong, { song ->
             onSongClicked(song)
-        }
+        }, null)
     }
 
     private fun initRecyclerViewAlbum(listOfAlbums: List<Album>) {

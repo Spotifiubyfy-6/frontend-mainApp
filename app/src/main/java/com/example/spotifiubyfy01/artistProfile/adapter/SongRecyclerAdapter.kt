@@ -6,9 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.artistProfile.Song
 
-class SongRecyclerAdapter (
+class SongRecyclerAdapter(
     private var songList: List<Song>,
-    private val onClickListener:(Song) -> Unit
+    private val onClickListener: (Song) -> Unit,
+    private val onDeleteButtonClicked: ((Song, Int) -> Unit?)?
 ): RecyclerView.Adapter<SongViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongViewHolder {
@@ -20,7 +21,7 @@ class SongRecyclerAdapter (
 
     override fun onBindViewHolder(holder: SongViewHolder, position: Int) {
         val item = songList[position]
-        holder.render(item, onClickListener)
+        holder.render(item, position, onClickListener, onDeleteButtonClicked)
     }
 
     override fun getItemCount(): Int {
