@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.EditText
+import android.widget.ProgressBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.spotifiubyfy01.*
@@ -38,6 +40,8 @@ class SearchPage : BaseActivity(), VolleyCallBack<SearchItem> {
                 }
                 searchContainer.visibility = android.view.View.VISIBLE
                 DataSource.updateDataSet(this@SearchPage, searchText, this@SearchPage)
+                val progressBar = findViewById<ProgressBar>(R.id.progressBar1)
+                progressBar.visibility = View.VISIBLE
             }
         })
     }
@@ -77,6 +81,8 @@ class SearchPage : BaseActivity(), VolleyCallBack<SearchItem> {
     }
 
     override fun updateData(list: List<SearchItem>) {
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar1)
+        progressBar.visibility = View.GONE
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         val adapter = recyclerView.adapter as SearchRecyclerAdapter
         adapter.updateList(list)
