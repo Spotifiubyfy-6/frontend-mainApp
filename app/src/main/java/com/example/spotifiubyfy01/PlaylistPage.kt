@@ -27,6 +27,7 @@ class PlaylistPage : BaseActivity() {
         val playlist = intent.extras?.get("Playlist") as Playlist
         findViewById<TextView>(R.id.playlistName).text = playlist.playlist_name
         findViewById<TextView>(R.id.userName).text = playlist.user_name
+        findViewById<TextView>(R.id.playlistDescription).text = playlist.playlist_description
         val image = findViewById<ImageView>(R.id.playlist_image)
         val owned = intent.extras?.get("owned") as Boolean?
         if (owned != null) {
@@ -37,6 +38,7 @@ class PlaylistPage : BaseActivity() {
                 intent.putExtra("id", playlist.playlist_id)
                 intent.putExtra("image", playlist.playlist_image)
                 intent.putExtra("name", playlist.playlist_name)
+                intent.putExtra("description", playlist.playlist_description)
                 startActivity(intent)
             }
         }
@@ -73,6 +75,10 @@ class PlaylistPage : BaseActivity() {
     }
 
     private fun initRecyclerView(songList: List<Song>) {
+        if (songList.isEmpty()) {
+            val infoText = findViewById<TextView>(R.id.informationText)
+            infoText.visibility = VISIBLE
+        }
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = SongRecyclerAdapter(songList, R.layout.layout_song_list_album_item, { song ->

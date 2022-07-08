@@ -59,21 +59,21 @@
 
             <Button
                 android:id="@+id/playButton"
-                android:layout_width="71dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="28dp"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0.4"
+                android:layout_weight="0.2"
                 android:backgroundTint="#1DB954"
                 android:text="play" />
 
             <Button
                 android:id="@+id/invite"
-                android:layout_width="99dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="28dp"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0.4"
+                android:layout_weight="0.2"
                 android:backgroundTint="#1DB954"
                 android:text="Invite" />
         </LinearLayout>
@@ -85,14 +85,37 @@
             android:text="TextView"
             android:textColor="#FFFFFF"
             android:textSize="15sp" />
+        <TextView
+            android:id="@+id/informationText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingHorizontal="10dp"
+            android:textSize="25dp"
+            android:text="This playlist has no songs yet."
+            android:textColor="#7AFFFFFF"
+            android:visibility="gone"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
             android:background="@color/black"
-
             />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="Description:"
+            android:textSize="24sp"/>
+        <TextView
+            android:id="@+id/playlistDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="This playlist is the latest revolution in music. I was inspired by the latest Beatles work and I am glad I am able to share it with you people thanks to Spotifiubyfy. Enjoy it!"
+            android:textSize="14sp"/>
 
     </LinearLayout>
 
