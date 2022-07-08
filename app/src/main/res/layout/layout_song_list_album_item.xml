@@ -54,6 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="+"
+            android:textSize="16dp"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="4dp"
             android:backgroundTint="#1db954"
@@ -70,7 +71,7 @@
             android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="X"
+            android:text="x"
             android:backgroundTint="#F80000"
             android:visibility="gone" />
         <androidx.cardview.widget.CardView
