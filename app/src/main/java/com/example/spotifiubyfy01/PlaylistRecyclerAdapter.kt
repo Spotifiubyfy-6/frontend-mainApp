@@ -32,6 +32,6 @@ class PlaylistRecyclerAdapter(
         mutablePlaylist.removeAt(position)
         playlistList = mutablePlaylist
         notifyItemRemoved(position);
-        notifyItemRangeChanged(position, playlistList.size);
+        notifyItemRangeChanged(position, playlistList.size)
     }
 }

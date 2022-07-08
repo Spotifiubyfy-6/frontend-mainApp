@@ -7,7 +7,7 @@ import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.artistProfile.Song
 
 class SongRecyclerAdapter (
-    private val songList: List<Song>,
+    private var songList: List<Song>,
     private val onClickListener:(Song) -> Unit
 ): RecyclerView.Adapter<SongViewHolder>() {
 
@@ -25,5 +25,13 @@ class SongRecyclerAdapter (
 
     override fun getItemCount(): Int {
         return songList.size
+    }
+
+    fun deleteItemOfPosition(position: Int) {
+        val mutableSongList = songList as MutableList
+        mutableSongList.removeAt(position)
+        songList = mutableSongList
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, songList.size)
     }
 }

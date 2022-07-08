@@ -125,6 +125,7 @@ class ProfilePage : BaseActivity(), VolleyCallBack<Album> {
     private fun onItemClicked(album: Album) {
         val intent = Intent(this, AlbumPage::class.java)
         intent.putExtra("Album", album)
+        intent.putExtra("ownAlbum", true)
         startActivity(intent)
     }
 

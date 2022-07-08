@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -18,11 +19,14 @@ import com.example.spotifiubyfy01.artistProfile.adapter.default_album_image
 
 class AlbumPage : BaseActivity() {
 
+    private var ownAlbum: Boolean? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         val app = (this.application as Spotifiubify)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_album_page)
         val album = intent.extras?.get("Album") as Album
+        ownAlbum = intent.extras?.get("ownAlbum") as Boolean?
         findViewById<TextView>(R.id.albumName).text = album.album_name
         findViewById<TextView>(R.id.artistName).text = album.artist_name
         findViewById<TextView>(R.id.album_genre).text = album.album_genre
@@ -65,6 +69,23 @@ class AlbumPage : BaseActivity() {
         recyclerView.adapter = SongRecyclerAdapter(songList) {song ->
                 onItemClicked(song)
             }
+    }
+
+    private fun onDeleteButtonClicked(song: Song, position: Int) {
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder.setTitle("Do you want to delete this song?")
+        alertDialogBuilder.setMessage("This action is irreversible.")
+        alertDialogBuilder.setNegativeButton("yes") { _, _ ->
+            //DeleteSender.deletePlaylist(this, playlist.playlist_id, position, this::onPlaylistDeletion)
+            onSongDeletion(position)
+        }
+        alertDialogBuilder.setPositiveButton("no", null)
+        alertDialogBuilder.show()
+    }
+
+    private fun onSongDeletion(position: Int) {
+        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
+        (recyclerView.adapter as SongRecyclerAdapter).deleteItemOfPosition(position)
     }
 
     private fun onItemClicked(song: Song) {
