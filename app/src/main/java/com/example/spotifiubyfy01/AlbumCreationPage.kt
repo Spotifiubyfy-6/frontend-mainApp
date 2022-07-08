@@ -16,7 +16,7 @@ import java.io.UnsupportedEncodingException
 
 
 class AlbumCreationPage : BaseActivity() {
-    lateinit var albumMediaFile: Uri
+    var albumMediaFile: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +58,7 @@ class AlbumCreationPage : BaseActivity() {
                     if (albumMediaFile != null) {
                         val storageName = "covers/"+response.getString("album_media")
                         val coverRef =  app.getStorageReference().child(storageName)
-                        val uploadTask = coverRef.putFile(albumMediaFile)
+                        val uploadTask = coverRef.putFile(albumMediaFile!!)
                         uploadTask.addOnFailureListener {
                             Toast.makeText(app, "Cover not uploaded: ERROR", Toast.LENGTH_LONG).show()
                         }.addOnSuccessListener {
@@ -91,8 +91,8 @@ class AlbumCreationPage : BaseActivity() {
             && resultCode == Activity.RESULT_OK) {
             resultData?.data?.also { uri ->
                 this.albumMediaFile = uri
-                val image = findViewById<ImageView>(R.id.album_image)
-                Glide.with(image.context).load(uri).into(image)
+//                val image = findViewById<ImageView>(R.id.album_image)
+//                Glide.with(image.context).load(uri).into(image)
             }
         }
     }

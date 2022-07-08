@@ -15,7 +15,7 @@ import org.json.JSONObject
 import java.io.UnsupportedEncodingException
 
 class PlaylistCreationPage : BaseActivity() {
-    lateinit var playlistCoverFile: Uri
+    var playlistCoverFile: Uri? = null
 
 
 
@@ -52,19 +52,18 @@ class PlaylistCreationPage : BaseActivity() {
             val jsonRequest = JsonObjectRequest(
                 Request.Method.POST, url, requestBody,
                 { response ->
-
-
                     val intent = Intent(this, PlaylistPage::class.java).apply {
                         val playlist : Playlist = getPlaylist(response)
                         putExtra("Playlist", playlist)
-
-                        val storageName = "covers/"+response.getString("playlist_media")
-                        val coverRef =  app.getStorageReference().child(storageName)
-                        val uploadTask = coverRef.putFile(playlistCoverFile)
-                        uploadTask.addOnFailureListener {
-                            Toast.makeText(app, "Cover not uploaded: ERROR", Toast.LENGTH_LONG).show()
-                        }.addOnSuccessListener {
-                            Toast.makeText(app, "Cover successfully uploaded", Toast.LENGTH_SHORT).show()
+                        if (playlistCoverFile != null) {
+                            val storageName = "covers/"+response.getString("playlist_media")
+                            val coverRef =  app.getStorageReference().child(storageName)
+                            val uploadTask = coverRef.putFile(playlistCoverFile!!)
+                            uploadTask.addOnFailureListener {
+                                Toast.makeText(app, "Cover not uploaded: ERROR", Toast.LENGTH_LONG).show()
+                            }.addOnSuccessListener {
+                                Toast.makeText(app, "Cover successfully uploaded", Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
                     startActivity(intent)},
