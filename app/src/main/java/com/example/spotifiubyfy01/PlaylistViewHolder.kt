@@ -32,7 +32,7 @@ class PlaylistViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         }.addOnFailureListener {
             Glide.with(playlistImage.context).load(default_album_image).into(playlistImage)
         }
-        if (playlist.forUsersProfile) {
+        if (playlist.forUsersProfile && playlist.type.equals("owned")) {
             deleteButton.visibility = View.VISIBLE
             deleteButton.setOnClickListener {
                 if (onDeleteButtonListener != null) {
