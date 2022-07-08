@@ -193,10 +193,11 @@ class ProfilePage : BaseActivity(), VolleyCallBack<Album> {
         val playlistImage = "covers/"+jsonPlaylist.getString("playlist_media").toString()
         val playlistId = jsonPlaylist.getString("id")
         val artistUsername = jsonPlaylist.getString("artist_username")
+        val type = jsonPlaylist.getString("type")
         return Playlist(playlistId, playlistName,playlistImage,artistUsername,
             getListOfSongs(
                 JSONArray(jsonPlaylist.getString("songs").toString())
-            ), true)
+            ), type, true)
     }
 
     private fun getListOfSongs(jsonSongs: JSONArray): List<Song> {

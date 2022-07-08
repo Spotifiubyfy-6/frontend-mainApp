@@ -87,7 +87,7 @@ class ListOfPlaylistsPage : BaseActivity() {
         val userName = (this.application as Spotifiubify).getProfileData("username") as String
         val songs = ArrayList<Song>()
 
-        return Playlist(playlistID, playlistName, storageName, userName, songs, false)
+        return Playlist(playlistID, playlistName, storageName, userName, songs, "not applicable",false)
     }
 
     private fun getSong( jsonSong: JSONObject): Song {
@@ -116,7 +116,7 @@ class ListOfPlaylistsPage : BaseActivity() {
             storageName, userName,
             getListOfSongs(
                 JSONArray(jsonPlaylist.getString("songs").toString())
-            ), false)
+            ), "not applicable", false)
     }
 
     private fun fetchPlaylistById(playlistID : String) {

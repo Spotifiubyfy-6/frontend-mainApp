@@ -11,6 +11,7 @@ data class Playlist (
     var playlist_image: String,
     var user_name: String,
     var song_list: List<Song>,
+    val type: String,
     val forUsersProfile: Boolean
 ) : Serializable, SearchItem() {
 
