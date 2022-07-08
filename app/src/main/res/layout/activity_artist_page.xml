@@ -71,6 +71,31 @@
             android:orientation="horizontal"
             android:background="@color/black"/>
 
+        <TextView
+            android:id="@+id/playlist_key_word"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Playlists"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp" />
+        <TextView
+            android:id="@+id/playlistInformationText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingHorizontal="10dp"
+            android:textSize="25dp"
+            android:text="Artist has not created a playlist yet."
+            android:textColor="#7AFFFFFF"
+            android:visibility="gone"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_playlist_artist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/black"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

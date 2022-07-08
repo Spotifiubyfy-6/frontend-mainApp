@@ -1,8 +1,10 @@
 package com.example.spotifiubyfy01.artistProfile
 
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonArrayRequest
+import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.*
@@ -21,7 +24,10 @@ import com.example.spotifiubyfy01.artistProfile.adapter.default_album_image
 import com.example.spotifiubyfy01.artistProfile.adapter.AlbumRecyclerAdapter
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
+import com.example.spotifiubyfy01.search.adapter.SearchRecyclerAdapter
+import org.json.JSONArray
 import org.json.JSONObject
+import java.io.UnsupportedEncodingException
 
 class ArtistPage: BaseActivity(), VolleyCallBack<Album> {
     private var artist: Artist? = null
@@ -90,6 +96,8 @@ class ArtistPage: BaseActivity(), VolleyCallBack<Album> {
 
         getFollowings(followBtn)
         getFollowers(followersText)
+
+
 
     }
 
@@ -206,6 +214,7 @@ class ArtistPage: BaseActivity(), VolleyCallBack<Album> {
             url,
             null,
             { response ->   followersText.text = "${response.length()} Followers"
+                fetchArtistPlaylists()
 
             },
             {
@@ -214,19 +223,7 @@ class ArtistPage: BaseActivity(), VolleyCallBack<Album> {
         MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
     }
 
-    private fun initAlbumRecyclerView(albumList: List<Album>) {
-        if (albumList.isEmpty()) {
-            val text: TextView = findViewById(R.id.albumInformationText)
-            text.visibility = View.VISIBLE
-        }
-        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
-                                    false)
-        recyclerView.adapter =
-            AlbumRecyclerAdapter(albumList, { album ->
-                onItemClicked(album)
-            }, null)
-    }
+
 
     override fun updateData(list: List<Album>) {
         initAlbumRecyclerView(list)
@@ -244,5 +241,97 @@ class ArtistPage: BaseActivity(), VolleyCallBack<Album> {
         outState.putString("ArtistImage", artist!!.image)
         super.onSaveInstanceState(outState)
     }
+
+
+
+
+    private fun initRecyclerViewPlaylists(listOfPlaylists:  List<Playlist>) {
+        if (listOfPlaylists.isEmpty()) {
+            val text: TextView = findViewById(R.id.playlistInformationText)
+            text.visibility = View.VISIBLE
+        }
+
+
+        val recyclerViewPlaylist = findViewById<RecyclerView>(R.id.recycler_view_playlist_artist)
+        recyclerViewPlaylist.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
+            false)
+        recyclerViewPlaylist.adapter = PlaylistRecyclerAdapter(listOfPlaylists, this::onPlaylistClicked, null)
+    }
+
+    private fun initAlbumRecyclerView(albumList: List<Album>) {
+        if (albumList.isEmpty()) {
+            val text: TextView = findViewById(R.id.albumInformationText)
+            text.visibility = View.VISIBLE
+        }
+        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
+            false)
+        recyclerView.adapter =
+            AlbumRecyclerAdapter(albumList, { album ->
+                onItemClicked(album)
+            }, null)
+    }
+
+
+    private fun onPlaylistClicked(playlist: Playlist) {
+        val intent = Intent(this, PlaylistPage::class.java)
+        intent.putExtra("Playlist", playlist)
+        startActivity(intent)
+    }
+
+
+    private fun getListOfPlaylist(response: JSONArray): List<Playlist> {
+        val list = ArrayList<Playlist>()
+        for (i in 0 until response.length())
+            list.add(getPlaylist(JSONObject(response.get(i).toString())))
+        return list
+    }
+
+    private fun getPlaylist(jsonPlaylist: JSONObject): Playlist {
+        val playlistID = jsonPlaylist.getString("id")
+        val playlistName = jsonPlaylist.getString("playlist_name")
+        val storageName = "covers/"+jsonPlaylist.getString("playlist_media")
+        val userName = jsonPlaylist.getString("artist_username")
+
+        return Playlist(playlistID, playlistName, storageName, userName, getListOfSongs(
+            JSONArray(jsonPlaylist.getString("songs").toString())
+        ), "not applicable",false)
+    }
+
+    private fun getSong( jsonSong: JSONObject): Song {
+        val songName = jsonSong.getString("song_name")
+        val albumId = jsonSong.getString("album_id").toInt()
+        val id = jsonSong.getString("id").toInt()
+        val storageName = jsonSong.getString("storage_name")
+        val artistName = jsonSong.getString("artist_name")
+        val albumCover = jsonSong.getString("album_media")
+        return Song(songName, artistName, albumId, id, storageName, albumCover, false)
+    }
+    private fun getListOfSongs(jsonSongs: JSONArray): List<Song> {
+        val songs = ArrayList<Song>()
+        for (i in 0 until jsonSongs.length())
+            songs.add(getSong(JSONObject(jsonSongs.get(i).toString())))
+        return songs
+    }
+
+
+
+    private fun fetchArtistPlaylists() {
+        val userId = artist?.id
+        val url = "https://spotifiubyfy-music.herokuapp.com/users/$userId/playlists?skip=0&limit=100"
+
+        val getRequest = JsonArrayRequest(
+            Request.Method.GET,
+            url,
+            null,
+            { response ->
+                initRecyclerViewPlaylists(getListOfPlaylist(response))
+            },
+            { errorResponse ->
+                print(errorResponse)
+            })
+        MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
+    }
+
 
 }
