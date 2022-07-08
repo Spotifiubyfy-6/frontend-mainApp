@@ -2,8 +2,11 @@ package com.example.spotifiubyfy01.Messages.albumMessages
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +15,7 @@ import com.example.spotifiubyfy01.Messages.albumMessages.adapter.AlbumCommentsRe
 import com.example.spotifiubyfy01.artistProfile.ArtistPage
 import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
+import org.w3c.dom.Text
 
 class AlbumMessagesPage : BaseActivity(), VolleyCallBack<Comment> {
     private var ownAlbum: Boolean = false
@@ -26,9 +30,9 @@ class AlbumMessagesPage : BaseActivity(), VolleyCallBack<Comment> {
         val aux = intent.extras?.get("ownAlbum") as Boolean?
         if (aux != null)
             ownAlbum = true
-        initRecyclerView(ArrayList())
         CommentsDataSource.getCommentsOfAlbum(this, albumId, authorId, myId, ownAlbum, this)
-
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar1)
+        progressBar.visibility = View.VISIBLE
         val commentTextBox = findViewById<EditText>(R.id.comment_text)
         val myArtist = Artist(myId, (app.getProfileData("name") as String),
                 "profilePictures/"+app.getProfileData("username").toString())
@@ -42,6 +46,12 @@ class AlbumMessagesPage : BaseActivity(), VolleyCallBack<Comment> {
     }
 
     private fun initRecyclerView(commentsList: ArrayList<Comment>) {
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar1)
+        progressBar.visibility = View.GONE
+        if (commentsList.isEmpty()) {
+            val infoText = findViewById<TextView>(R.id.informationText)
+            infoText.visibility = View.VISIBLE
+        }
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = AlbumCommentsRecyclerAdapter(commentsList, this::onItemClicked,
@@ -71,6 +81,8 @@ class AlbumMessagesPage : BaseActivity(), VolleyCallBack<Comment> {
     }
 
     private fun addComment(comment: Comment) {
+        val infoText = findViewById<TextView>(R.id.informationText)
+        infoText.visibility = View.GONE
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         val adapter =(recyclerView.adapter as AlbumCommentsRecyclerAdapter)
         adapter.addComment(comment)
