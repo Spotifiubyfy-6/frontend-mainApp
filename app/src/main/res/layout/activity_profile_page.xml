@@ -103,20 +103,27 @@
             android:orientation="horizontal"
             android:background="@color/black"/>
 
-        <Button
-            android:id="@+id/wallet"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#1DB954"
-            android:text="wallet" />
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/wallet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="50dp"
+                android:backgroundTint="#1DB954"
+                android:text="wallet" />
 
-        <Button
-            android:id="@+id/following"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#1DB954"
-            android:text="Following" />
+            <Button
+                android:id="@+id/following"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#1DB954"
+                android:text="Following" />
+        </LinearLayout>
+
+
     </LinearLayout>
 
 </ScrollView>

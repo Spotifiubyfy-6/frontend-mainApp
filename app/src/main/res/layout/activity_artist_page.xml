@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView android:layout_width="match_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@color/black"
 
@@ -61,27 +61,34 @@
             android:orientation="horizontal"
             android:background="@color/black"/>
 
-        <Button
-            android:id="@+id/tip_button"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#1DB954"
-            android:layout_weight="1"
-            android:text="Tip" />
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/tip_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="50dp"
+                android:backgroundTint="#1DB954"
+                android:layout_gravity="top"
+                android:text="Tip" />
 
-        <TextView
-            android:id="@+id/followers"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
-            android:text="Followers" />
+            <Button
+                android:id="@+id/follow_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#1DB954"
+                android:text="Follow" />
+            <TextView
+                android:id="@+id/followers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="#FFFFFF"
+                android:text="Followers" />
 
-        <Button
-            android:id="@+id/follow_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#1DB954"
-            android:text="Follow" />
+        </LinearLayout>
 
     </LinearLayout>
 
