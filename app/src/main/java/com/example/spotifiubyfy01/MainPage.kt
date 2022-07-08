@@ -4,7 +4,9 @@ import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View.VISIBLE
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -62,7 +64,6 @@ class MainPage: BaseActivity() {
         fetchArtist()
         fetchPlaylists()
 
-
     }
     private fun initRecyclerViewSongs(listOfSong: List<Song>) {
 
@@ -83,6 +84,10 @@ class MainPage: BaseActivity() {
     }
 
     private fun initRecyclerViewAlbumRecGeo(listOfAlbums: List<Album>) {
+        if (listOfAlbums.isEmpty()) {
+            val infoText = findViewById<TextView>(R.id.geoInformationText)
+            infoText.visibility = VISIBLE
+        }
         val recyclerViewAlbums = findViewById<RecyclerView>(R.id.recycler_view_album_rec_geo)
         recyclerViewAlbums.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
             false)
@@ -101,6 +106,11 @@ class MainPage: BaseActivity() {
     }
 
     private fun initRecyclerViewArtistNearYou(listOfArtist: List<Artist>) {
+        if (listOfArtist.isEmpty()) {
+            val infoText = findViewById<TextView>(R.id.nearArtistsInformationText)
+            infoText.visibility = VISIBLE
+        }
+        Log.d("TAG", listOfArtist.size.toString())
         val recyclerViewArtist= findViewById<RecyclerView>(R.id.recycler_view_rec_artist_geo)
         recyclerViewArtist.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
             false)
@@ -118,6 +128,10 @@ class MainPage: BaseActivity() {
 
 
     private fun initRecyclerViewAlbumRecGenre(listOfAlbums: List<Album>) {
+        if (listOfAlbums.isEmpty()) {
+            val infoText = findViewById<TextView>(R.id.genreInformationText)
+            infoText.visibility = VISIBLE
+        }
         val recyclerViewAlbums = findViewById<RecyclerView>(R.id.recycler_view_album_rec_genre)
         recyclerViewAlbums.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
             false)
@@ -215,6 +229,7 @@ class MainPage: BaseActivity() {
 
             },
             {
+                fetchAlbumsRecGeo()
                 Toast.makeText(this, "Cant fetch albums right now", Toast.LENGTH_SHORT).show()
             })
         MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
@@ -232,10 +247,12 @@ class MainPage: BaseActivity() {
             null,
             { response ->
                 initRecyclerViewAlbumRecGeo(getListOfAlbums(response))
+                Log.d("TAG", "NEARBY ALBUMS FETCHED")
                 fetchAlbumsRecGenre()
             },
             {
-                Toast.makeText(this, "Cant fetch albums geo right now", Toast.LENGTH_SHORT).show()
+                initRecyclerViewAlbumRecGeo(ArrayList())
+                fetchAlbumsRecGenre()
             })
         MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
     }
@@ -250,10 +267,12 @@ class MainPage: BaseActivity() {
             null,
             { response ->
                 initRecyclerViewAlbumRecGenre(getListOfAlbums(response))
-
+                Log.d("TAG", "GENRE ALBUMS FETCHED")
                 fetchArtistsNearYou()
             },
             {
+                initRecyclerViewAlbumRecGenre(ArrayList())
+                fetchArtistsNearYou()
                 Toast.makeText(this, "Cant fetch albums genre right now", Toast.LENGTH_SHORT).show()
             })
         MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
@@ -268,9 +287,11 @@ class MainPage: BaseActivity() {
             url,
             null,
             { response ->
+                Log.d("TAG", "ARTISTS NEARBY FETCHED")
                 initRecyclerViewArtistNearYou(getListOfArtist(response))
             },
             {
+                initRecyclerViewArtistNearYou(ArrayList())
                 Toast.makeText(this, "Cant fetch artists right now", Toast.LENGTH_SHORT).show()
             })
         MyRequestQueue.getInstance(this).addToRequestQueue(getRequest)
