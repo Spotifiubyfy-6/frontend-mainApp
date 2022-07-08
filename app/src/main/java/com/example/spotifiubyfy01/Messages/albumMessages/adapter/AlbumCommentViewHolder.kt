@@ -37,7 +37,7 @@ class AlbumCommentViewHolder(view: View): RecyclerView.ViewHolder(view) {
         comment.text = item.comment
         val dateText = "•" + item.getTimeAgo()
         date.text = dateText
-        if (item.ownAlbum) {
+        if (item.canDelete) {
             deleteButton.visibility = View.VISIBLE
             deleteButton.setOnClickListener{
                 onDeleteButton(item, position)

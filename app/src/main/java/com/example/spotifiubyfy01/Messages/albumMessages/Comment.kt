@@ -12,7 +12,7 @@ data class Comment(
     val comment: String,
     val time: ZonedDateTime,
     val isAuthor: Boolean,
-    val ownAlbum: Boolean
+    val canDelete: Boolean
 ) : Serializable {
 
     fun getTimeAgo(): String {
