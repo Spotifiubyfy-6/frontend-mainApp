@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -71,8 +72,19 @@ class PlaylistPage : BaseActivity() {
     private fun onItemClicked(song: Song) {
         //Do something with the Song
         val app = (this.application as Spotifiubify)
-        app.songManager.play(song)
-        Log.d(ContentValues.TAG, song.song_name +" with id " + song.id.toString() + " made by " + song.artist)
+
+        val userSuscription = app.getProfileData("user_suscription")
+        val songSuscription = song.album_suscription
+        if ((userSuscription == "free" && (songSuscription == "platinum" || songSuscription == "gold")) ||
+            (userSuscription == "gold" && songSuscription == "platinum")
+        ) {
+            Toast.makeText(app, "Change your suscrption to $songSuscription to listen to this song",
+                Toast.LENGTH_LONG).show()
+        } else {
+            app.songManager.play(song)
+
+            Log.d(ContentValues.TAG, song.song_name +" with id " + song.id.toString() + " made by " + song.artist)
+        }
     }
 
 }

@@ -10,6 +10,7 @@ import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -67,9 +68,22 @@ class AlbumPage : BaseActivity() {
         val playButton = findViewById<Button>(R.id.playButton)
         playButton.setOnClickListener {
             //play album! obtain album songs using album.song_list
-            app.songManager.playSongList(album.song_list)
-            for (song in album.song_list)
-                Log.d(TAG, song.song_name)
+
+
+            val userSuscription = app.getProfileData("user_suscription")
+            val albumSuscription = album.album_suscription
+            if ((userSuscription == "free" && (albumSuscription == "platinum" || albumSuscription == "gold")) ||
+                (userSuscription == "gold" && albumSuscription == "platinum")
+            ) {
+                Toast.makeText(app, "Change your suscrption to $albumSuscription to listen to this song",
+                    Toast.LENGTH_LONG).show()
+            } else {
+                app.songManager.playSongList(album.song_list)
+                for (song in album.song_list)
+                    Log.d(TAG, song.song_name)
+            }
+
+
         }
 
         val commentsButton = findViewById<Button>(R.id.comments_button)
@@ -116,8 +130,18 @@ class AlbumPage : BaseActivity() {
     private fun onItemClicked(song: Song) {
         //Do something with the Song
         val app = (this.application as Spotifiubify)
-        app.songManager.play(song)
-        Log.d(TAG, song.song_name +" with id " + song.id.toString() + " made by " + song.artist)
+        val userSuscription = app.getProfileData("user_suscription")
+        val songSuscription = song.album_suscription
+        if ((userSuscription == "free" && (songSuscription == "platinum" || songSuscription == "gold")) ||
+            (userSuscription == "gold" && songSuscription == "platinum")
+        ) {
+            Toast.makeText(app, "Change your suscrption to $songSuscription to listen to this song",
+                Toast.LENGTH_LONG).show()
+        } else {
+            app.songManager.play(song)
+
+            Log.d(TAG, song.song_name +" with id " + song.id.toString() + " made by " + song.artist)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

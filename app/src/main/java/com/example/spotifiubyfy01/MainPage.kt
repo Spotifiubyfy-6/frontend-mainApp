@@ -154,8 +154,18 @@ class MainPage: BaseActivity() {
 
     private fun onSongClicked(song: Song) {
         val app = (this.application as Spotifiubify)
-        app.songManager.play(song)
-        Log.d(ContentValues.TAG, song.song_name +" with id " + song.id.toString() + " made by " + song.artist)
+        val userSuscription = app.getProfileData("user_suscription")
+        val songSuscription = song.album_suscription
+        if ((userSuscription == "free" && (songSuscription == "platinum" || songSuscription == "gold")) ||
+            (userSuscription == "gold" && songSuscription == "platinum")
+        ) {
+            Toast.makeText(app, "Change your suscrption to $songSuscription to listen to this song",
+            Toast.LENGTH_LONG).show()
+        } else {
+            app.songManager.play(song)
+        }
+
+
     }
 
     private fun onAlbumClicked(album: Album) {
@@ -327,8 +337,9 @@ class MainPage: BaseActivity() {
         val storageName = jsonSong.getString("storage_name")
         val artistName = jsonSong.getString("artist_name")
         val albumCover = "covers/"+jsonSong.getString("album_media")
+        val songSuscription = jsonSong.getString("album_suscription")
 
-        return Song(songName, artistName, albumId, id, storageName, albumCover, false)
+        return Song(songName, artistName, albumId, id, storageName, albumCover, false, songSuscription)
     }
 
     private fun getArtist( jsonArtist: JSONObject): Artist {
