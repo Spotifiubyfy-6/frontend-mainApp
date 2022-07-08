@@ -4,19 +4,20 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
+import android.util.Log
+import android.view.View
+import android.widget.*
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.bumptech.glide.Glide
+import com.example.spotifiubyfy01.search.DataSource
 import org.json.JSONObject
 import java.io.UnsupportedEncodingException
 
 
-class AlbumCreationPage : BaseActivity() {
+class AlbumCreationPage : BaseActivity(), AdapterView.OnItemClickListener {
     var albumMediaFile: Uri? = null
+    private var albumSuscription: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +36,7 @@ class AlbumCreationPage : BaseActivity() {
             chooseFile = Intent.createChooser(chooseFile, "Choose a file")
             startActivityForResult(chooseFile, 1)
         }
-
+        DataSource.getAvailableSuscriptions(this, this::addSuscriptionsToList)
 
         val createAlbumButton = findViewById<Button>(R.id.createAlbumButton)
         createAlbumButton.setOnClickListener {
@@ -44,7 +45,7 @@ class AlbumCreationPage : BaseActivity() {
             requestBody.put("album_name", albumName.text.toString())
             requestBody.put("album_description", albumDescription.text.toString())
             requestBody.put("album_genre", albumGenre.text.toString())
-            requestBody.put("suscription", "free") //todo agregar editText de tipo de suscription a la vista y extraer el dato
+            requestBody.put("suscription", "free")
             requestBody.put("artist_id", app.getProfileData("id"))
 
             val url = "http://spotifiubyfy-music.herokuapp.com/albums"
@@ -84,6 +85,17 @@ class AlbumCreationPage : BaseActivity() {
             MyRequestQueue.getInstance(this).addToRequestQueue(jsonRequest)
         }
     }
+
+    private fun addSuscriptionsToList(suscriptionList: List<String>) {
+        val dropDownMenu = findViewById<AutoCompleteTextView>(R.id.albumSuscription)
+        val adapter = ArrayAdapter(this, R.layout.dropdown_item, suscriptionList)
+        with(dropDownMenu) {
+            setAdapter(adapter)
+            onItemClickListener = this@AlbumCreationPage
+        }
+        dropDownMenu.isFocusable = true
+    }
+
     override fun onActivityResult(
         requestCode: Int, resultCode: Int, resultData: Intent?) {
         super.onActivityResult(requestCode, resultCode, resultData)
@@ -95,5 +107,12 @@ class AlbumCreationPage : BaseActivity() {
 //                Glide.with(image.context).load(uri).into(image)
             }
         }
+    }
+
+    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        val suscriptionType = parent?.getItemAtPosition(position).toString()
+        if (suscriptionType == null)
+            return
+        albumSuscription = suscriptionType
     }
 }

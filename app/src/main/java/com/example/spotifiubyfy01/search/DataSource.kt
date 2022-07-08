@@ -5,14 +5,16 @@ import android.content.Intent
 import androidx.core.content.ContextCompat.startActivity
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonArrayRequest
+import com.android.volley.toolbox.JsonObjectRequest
 import com.example.spotifiubyfy01.MyRequestQueue
+import com.example.spotifiubyfy01.Playlist
 import com.example.spotifiubyfy01.PopUpWindow
 import com.example.spotifiubyfy01.artistProfile.Album
-import com.example.spotifiubyfy01.Playlist
 import com.example.spotifiubyfy01.artistProfile.Song
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.UnsupportedEncodingException
+import kotlin.reflect.KFunction1
 
 
 class SearchListMonitor(private val countTo: Int) {
@@ -243,6 +245,24 @@ class DataSource {
                     for (i in 0 until response.length())
                         list.add(getArtist(JSONObject(response.get(i).toString())) as Artist)
                     callBack.updateData(list)
+                },
+                {
+
+                })
+            MyRequestQueue.getInstance(context).addToRequestQueue(getRequest)
+        }
+
+        fun getAvailableSuscriptions(context: Context, onSuscriptionsObtained: KFunction1<List<String>, Unit>) {
+            val url = "https://spotifiubyfy-users.herokuapp.com/users/user_subscription"
+            val getRequest = JsonObjectRequest(
+                Request.Method.GET,
+                url, null,
+                { response ->
+                    val suscriptionList = ArrayList<String>()
+                    for (i in 0 until response.names().length()) {
+                        suscriptionList.add(response.names().getString(i))
+                    }
+                    onSuscriptionsObtained(suscriptionList)
                 },
                 {
 
