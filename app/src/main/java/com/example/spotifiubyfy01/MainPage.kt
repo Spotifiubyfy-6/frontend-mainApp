@@ -307,7 +307,7 @@ class MainPage: BaseActivity() {
         val artistName = jsonSong.getString("artist_name")
         val albumCover = "covers/"+jsonSong.getString("album_media")
 
-        return Song(songName, artistName, albumId, id, storageName, albumCover)
+        return Song(songName, artistName, albumId, id, storageName, albumCover, false)
     }
 
     private fun getArtist( jsonArtist: JSONObject): Artist {

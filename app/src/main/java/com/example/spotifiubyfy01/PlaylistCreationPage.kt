@@ -117,7 +117,7 @@ class PlaylistCreationPage : BaseActivity() {
         val artistName = jsonSong.getString("artist_name")
         val albumCover = jsonSong.getString("album_media")
 
-        return Song(songName, artistName, albumId, id, storageName, albumCover)
+        return Song(songName, artistName, albumId, id, storageName, albumCover, false)
     }
     private fun getListOfSongs(jsonSongs: JSONArray): List<Song> {
         val songs = ArrayList<Song>()

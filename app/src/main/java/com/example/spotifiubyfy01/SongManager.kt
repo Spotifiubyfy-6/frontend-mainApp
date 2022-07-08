@@ -17,7 +17,7 @@ class SongManager(app: Spotifiubify) {
     var currentSong: Song
     private var wifiLock:  WifiLock
     private var app: Spotifiubify
-    private val nullSong =  Song("songName", "artist_name", 1,1, "storageName", "https://i.pinimg.com/originals/33/58/0c/33580cd023504630a4ea63fe0a1650f6.jpg")
+    private val nullSong =  Song("songName", "artist_name", 1,1, "storageName", "https://i.pinimg.com/originals/33/58/0c/33580cd023504630a4ea63fe0a1650f6.jpg", false)
 
     init {
         mediaPlayer.setWakeMode(app, PowerManager.PARTIAL_WAKE_LOCK)

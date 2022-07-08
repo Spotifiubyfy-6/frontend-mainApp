@@ -10,8 +10,9 @@ data class Song (
     var album_id: Int,
     var id: Int,
     var storage_name: String,
-    var album_cover: String
-    ) : Serializable, SearchItem() {
+    var album_cover: String,
+    val forUsersProfile: Boolean
+) : Serializable, SearchItem() {
     override fun getSearchItemType(): SearchItemEnum {
         return SearchItemEnum.SONG_SEARCH_ITEM
     }
