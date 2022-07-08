@@ -24,7 +24,12 @@
         </activity>
         <activity
             android:name=".SubscriptionPage"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ProfileEditPage">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".ProfileEditPage"/>
+        </activity>
         <activity
             android:name=".TippingPage"
             android:exported="false"

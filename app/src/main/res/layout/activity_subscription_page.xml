@@ -27,16 +27,6 @@
         android:divider="@color/white"
         android:dividerHeight="1dp"
         android:textAlignment="center">
-
-
     </ListView>
 
-    <Button
-        android:id="@+id/goBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#1DB954"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="Go Back" />
 </RelativeLayout>
