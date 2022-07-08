@@ -10,7 +10,8 @@ data class Comment(
     var artist: Artist,
     val comment: String,
     val time: ZonedDateTime,
-    val isAuthor: Boolean
+    val isAuthor: Boolean,
+    val ownAlbum: Boolean
 ) : Serializable {
 
     fun getTimeAgo(): String {

@@ -18,10 +18,7 @@ import com.example.spotifiubyfy01.search.Artist
 import com.example.spotifiubyfy01.search.VolleyCallBack
 
 class AlbumMessagesPage : BaseActivity(), VolleyCallBack<Comment> {
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.top_bar, menu)
-        return true
-    }
+    private var ownAlbum: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,8 +26,11 @@ class AlbumMessagesPage : BaseActivity(), VolleyCallBack<Comment> {
         val app = (this.application as Spotifiubify)
         val albumId = (intent.extras!!.get("albumId") as String).toInt()
         val authorId = (intent.extras!!.get("authorId") as String).toInt()
+        val aux = intent.extras?.get("ownAlbum") as Boolean?
+        if (aux != null)
+            ownAlbum = true
         initRecyclerView(ArrayList())
-        CommentsDataSource.getCommentsOfAlbum(this, albumId, authorId, this)
+        CommentsDataSource.getCommentsOfAlbum(this, albumId, authorId, ownAlbum, this)
 
         val commentTextBox = findViewById<EditText>(R.id.comment_text)
         val myId = (app.getProfileData("id") as String).toInt()
@@ -40,7 +40,7 @@ class AlbumMessagesPage : BaseActivity(), VolleyCallBack<Comment> {
 
         sendButton.setOnClickListener{
             CommentsDataSender.makeComment(this, myArtist, albumId, commentTextBox.text.toString(),
-                                            this::addComment, authorId == myId)
+                                            this::addComment, authorId == myId, ownAlbum)
             commentTextBox.text.clear()
         }
     }
@@ -57,17 +57,6 @@ class AlbumMessagesPage : BaseActivity(), VolleyCallBack<Comment> {
         val intent = Intent(this, ArtistPage::class.java)
         intent.putExtra("Artist", comment.artist)
         startActivity(intent)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-            return true
-        }
-        if (item.itemId == R.id.action_playback) {
-            startActivity(Intent(this, ReproductionPage::class.java))
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun addComment(comment: Comment) {

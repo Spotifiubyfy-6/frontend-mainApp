@@ -26,7 +26,7 @@ class CommentList(
     init {
         val localDate = LocalDateTime.now().atZone(UTC)
         for (i in 0 until numberOfComments)
-            commentList.add(Comment(Artist(0,"kotfu", "cklin"), "hateyou", localDate, false))
+            commentList.add(Comment(Artist(0,"kotfu", "cklin"), "hateyou", localDate, false, false))
     }
 
     fun addArtistCommentWithIdToPositionInList(position: Int, comment: Comment) {
@@ -50,7 +50,7 @@ class IdToListOfPositionNCommentMap(
     private var artistCounter = 0
     private var numberOfArtist = 0
 
-    fun fillMapWithComments(authorId: Int) {
+    fun fillMapWithComments(authorId: Int, ownAlbum: Boolean) {
         synchronized(shared) {
             for (i in 0 until commentArray.length()) {
                 val commentObject = JSONObject(commentArray.get(i).toString())
@@ -58,7 +58,7 @@ class IdToListOfPositionNCommentMap(
                 val comment = Comment(
                     Artist(userId, "", ""), commentObject.get("comment") as String,
                     MessagesDataSource.obtainDate(commentObject.get("time") as String),
-                            userId == authorId
+                            userId == authorId, ownAlbum
                 )
                 this.addCommentNPositionToUserWithId(userId, i, comment)
             }
@@ -120,13 +120,16 @@ class CommentsDataSource {
 
     companion object {
 
-        private fun searchRespectiveArtists(context: Context, commentArray: JSONArray, authorId: Int,
-                                            callBack: VolleyCallBack<Comment>) {
+        private fun searchRespectiveArtists(
+            context: Context, commentArray: JSONArray, authorId: Int,
+            callBack: VolleyCallBack<Comment>,
+            ownAlbum: Boolean
+        ) {
             val map = IdToListOfPositionNCommentMap(context, commentArray, callBack)
-            map.fillMapWithComments(authorId)
+            map.fillMapWithComments(authorId, ownAlbum)
         }
 
-        fun getCommentsOfAlbum(context: Context, albumId: Int, authorId: Int,
+        fun getCommentsOfAlbum(context: Context, albumId: Int, authorId: Int, ownAlbum: Boolean,
                                callBack: VolleyCallBack<Comment>
         ) {
             val url =
@@ -135,7 +138,7 @@ class CommentsDataSource {
                 Request.Method.GET,
                 url, null,
                 { response ->
-                    this.searchRespectiveArtists(context, response, authorId, callBack)
+                    this.searchRespectiveArtists(context, response, authorId, callBack, ownAlbum)
                 }
             ) { error ->
                 val intent = Intent(context, PopUpWindow::class.java).apply {
