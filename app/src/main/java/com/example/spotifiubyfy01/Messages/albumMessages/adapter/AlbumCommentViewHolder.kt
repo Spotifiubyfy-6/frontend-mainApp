@@ -1,6 +1,7 @@
 package com.example.spotifiubyfy01.Messages.albumMessages.adapter
 
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,7 @@ class AlbumCommentViewHolder(view: View): RecyclerView.ViewHolder(view) {
     private val comment: TextView = view.findViewById(R.id.comment)
     private val date: TextView = view.findViewById(R.id.date_ago)
     private val authorTag: TextView = view.findViewById(R.id.authorTag)
+    private val deleteButton: Button = view.findViewById(R.id.delete_comment)
 
     fun render(item: Comment, onClickListener: (Comment) -> Unit) {
         val artist = item.artist
@@ -30,6 +32,11 @@ class AlbumCommentViewHolder(view: View): RecyclerView.ViewHolder(view) {
         comment.text = item.comment
         val dateText = "•" + item.getTimeAgo()
         date.text = dateText
+        if (item.ownAlbum) {
+            deleteButton.visibility = View.VISIBLE
+
+        }
+
         itemView.setOnClickListener { onClickListener(item) }
         if (item.isAuthor)
             authorTag.visibility = View.VISIBLE
