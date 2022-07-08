@@ -77,12 +77,12 @@ class MainPage: BaseActivity() {
         val recyclerViewAlbums = findViewById<RecyclerView>(R.id.recycler_view_album)
         recyclerViewAlbums.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
             false)
-        recyclerViewAlbums.adapter = AlbumRecyclerAdapter(listOfAlbums as MutableList<Album>, { album ->
+        recyclerViewAlbums.adapter = AlbumRecyclerAdapter(listOfAlbums, { album ->
             onAlbumClicked(album)
         }, null)
     }
 
-    private fun initRecyclerViewAlbumRecGeo(listOfAlbums: MutableList<Album>) {
+    private fun initRecyclerViewAlbumRecGeo(listOfAlbums: List<Album>) {
         val recyclerViewAlbums = findViewById<RecyclerView>(R.id.recycler_view_album_rec_geo)
         recyclerViewAlbums.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
             false)
@@ -121,7 +121,7 @@ class MainPage: BaseActivity() {
         val recyclerViewAlbums = findViewById<RecyclerView>(R.id.recycler_view_album_rec_genre)
         recyclerViewAlbums.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
             false)
-        recyclerViewAlbums.adapter = AlbumRecyclerAdapter(listOfAlbums as MutableList<Album>, { album ->
+        recyclerViewAlbums.adapter = AlbumRecyclerAdapter(listOfAlbums, { album ->
             onAlbumClicked(album)
         }, null)
     }
@@ -231,7 +231,7 @@ class MainPage: BaseActivity() {
             url,
             null,
             { response ->
-                initRecyclerViewAlbumRecGeo(getListOfAlbums(response) as MutableList<Album>)
+                initRecyclerViewAlbumRecGeo(getListOfAlbums(response))
                 fetchAlbumsRecGenre()
             },
             {

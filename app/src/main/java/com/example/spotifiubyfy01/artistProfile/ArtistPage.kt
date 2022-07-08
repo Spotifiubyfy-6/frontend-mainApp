@@ -218,7 +218,7 @@ class ArtistPage: BaseActivity(), VolleyCallBack<Album> {
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
                                     false)
         recyclerView.adapter =
-            AlbumRecyclerAdapter(albumList as MutableList<Album>, { album ->
+            AlbumRecyclerAdapter(albumList, { album ->
                 onItemClicked(album)
             }, null)
     }

@@ -8,7 +8,7 @@ import com.example.spotifiubyfy01.artistProfile.Album
 import kotlin.reflect.KFunction2
 
 class AlbumRecyclerAdapter(
-    val albumList: MutableList<Album>,
+    var albumList: List<Album>,
     private val onClickListener: (Album) -> Unit,
     private val onDeleteButtonListener: KFunction2<Album, Int, Unit>?
 ): RecyclerView.Adapter<AlbumViewHolder>() {
@@ -29,7 +29,9 @@ class AlbumRecyclerAdapter(
     }
 
     fun deleteItemOfPosition(position: Int) {
-        albumList.removeAt(position)
+        val mutableAlbumList = albumList as MutableList
+        mutableAlbumList.removeAt(position)
+        albumList = mutableAlbumList
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, albumList.size);
     }
