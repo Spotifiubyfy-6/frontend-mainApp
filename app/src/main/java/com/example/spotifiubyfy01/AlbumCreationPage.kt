@@ -91,8 +91,8 @@ class AlbumCreationPage : BaseActivity() {
             && resultCode == Activity.RESULT_OK) {
             resultData?.data?.also { uri ->
                 this.albumMediaFile = uri
-                val image = findViewById<ImageView>(R.id.album_image)
-                Glide.with(image.context).load(uri).into(image)
+//                val image = findViewById<ImageView>(R.id.album_image)
+//                Glide.with(image.context).load(uri).into(image)
             }
         }
     }
