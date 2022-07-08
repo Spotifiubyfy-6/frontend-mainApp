@@ -60,5 +60,17 @@ class DeleteSender {
                 }){}
             MyRequestQueue.getInstance(context).addToRequestQueue(jsonRequest)
         }
+
+        fun deleteComment(context: Context, commentId: String, artistId: Int, position: Int, onDeletion: KFunction1<Int, Unit>) {
+            val url = "http://spotifiubyfy-messages.herokuapp.com/comments/delete/" + artistId + "/" + commentId
+            val jsonRequest: StringRequest = object : StringRequest(
+                Method.DELETE, url, {
+                    onDeletion(position)
+                },
+                { errorResponse ->
+                    Toast.makeText(context, "An error occured. Please retry again.", Toast.LENGTH_SHORT)
+                }){}
+            MyRequestQueue.getInstance(context).addToRequestQueue(jsonRequest)
+        }
     }
 }

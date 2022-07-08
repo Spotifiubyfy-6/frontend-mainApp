@@ -55,7 +55,7 @@ class IdToListOfPositionNCommentMap(
             for (i in 0 until commentArray.length()) {
                 val commentObject = JSONObject(commentArray.get(i).toString())
                 val userId = commentObject.get("user_id") as Int
-                val commentId = commentObject.get("id") as String
+                val commentId = (commentObject.get("id") as Int).toString()
                 val comment = Comment(
                     Artist(userId, "", ""), commentId,
                     commentObject.get("comment") as String,
@@ -106,7 +106,6 @@ class IdToListOfPositionNCommentMap(
             { jsonArtist ->
                 val artistName = jsonArtist.getString("name")
                 val artistImage = "profilePictures/"+jsonArtist.getString("photo")
-                Log.d("TAG", artistName)
                 replaceWithRightArtist(Artist(artistId, artistName, artistImage))
             }
         ) {
