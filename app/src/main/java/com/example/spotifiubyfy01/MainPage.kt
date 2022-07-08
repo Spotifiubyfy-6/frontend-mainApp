@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
@@ -66,8 +67,7 @@ class MainPage: BaseActivity() {
     private fun initRecyclerViewSongs(listOfSong: List<Song>) {
 
         val recyclerViewSongs = findViewById<RecyclerView>(R.id.recycler_view_songs)
-        recyclerViewSongs.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
-            false)
+        recyclerViewSongs.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false)
         recyclerViewSongs.adapter = SongRecyclerAdapter(listOfSong) {song ->
             onSongClicked(song)
         }
