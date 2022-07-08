@@ -55,7 +55,7 @@ class PlaylistPage : BaseActivity() {
         // Solo puede invitar el owner (falta que playlist devuelva username
         // del back, por ahora es deafult_username)
         if (app.getProfileData("username") != playlist.user_name) {
-            inviteBtn.visibility = View.INVISIBLE
+            inviteBtn.visibility = View.GONE
         }
 
         coverRef.downloadUrl.addOnSuccessListener { url ->
