@@ -3,6 +3,7 @@ package com.example.spotifiubyfy01
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -25,6 +26,7 @@ import org.json.JSONObject
 
 class ProfilePage : BaseActivity(), VolleyCallBack<Album> {
     private var artist: Artist? = null
+    var itemDeleted = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,6 +122,7 @@ class ProfilePage : BaseActivity(), VolleyCallBack<Album> {
     private fun onAlbumDeletion(position: Int) {
         val recyclerView = findViewById<RecyclerView>(R.id.album_recycler_view)
         (recyclerView.adapter as AlbumRecyclerAdapter).deleteItemOfPosition(position)
+        itemDeleted = true
     }
 
     private fun onItemClicked(album: Album) {
@@ -172,6 +175,7 @@ class ProfilePage : BaseActivity(), VolleyCallBack<Album> {
     private fun onPlaylistDeletion(position: Int) {
         val recyclerView = findViewById<RecyclerView>(R.id.playlist_recycler_view)
         (recyclerView.adapter as PlaylistRecyclerAdapter).deleteItemOfPosition(position)
+        itemDeleted = true
     }
 
     private fun onPlaylistClicked(playlist : Playlist) {
@@ -219,5 +223,12 @@ class ProfilePage : BaseActivity(), VolleyCallBack<Album> {
         return Song(songName, artistName, albumId, id, storageName, albumCover, false)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (itemDeleted) {
+            startActivity(Intent(this, MainPage::class.java))
+            true
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
 }

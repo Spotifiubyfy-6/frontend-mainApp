@@ -4,6 +4,7 @@ import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -19,6 +20,7 @@ import com.example.spotifiubyfy01.artistProfile.adapter.default_album_image
 
 class AlbumPage : BaseActivity() {
 
+    private var itemDeleted: Boolean = false
     private var ownAlbum: Boolean? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,6 +85,7 @@ class AlbumPage : BaseActivity() {
     private fun onSongDeletion(position: Int) {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         (recyclerView.adapter as SongRecyclerAdapter).deleteItemOfPosition(position)
+        itemDeleted = true
     }
 
     private fun onItemClicked(song: Song) {
@@ -90,6 +93,14 @@ class AlbumPage : BaseActivity() {
         val app = (this.application as Spotifiubify)
         app.songManager.play(song)
         Log.d(TAG, song.song_name +" with id " + song.id.toString() + " made by " + song.artist)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (itemDeleted) {
+            startActivity(Intent(this, MainPage::class.java))
+            true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }
