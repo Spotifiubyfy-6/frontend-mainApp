@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -53,6 +55,8 @@ class SearchArtistPage: BaseActivity(), VolleyCallBack<Artist> {
                 }
                 searchContainer.visibility = android.view.View.VISIBLE
                 DataSource.updateDataSetOfArtist(this@SearchArtistPage, searchText, this@SearchArtistPage)
+                val progressBar = findViewById<ProgressBar>(R.id.progressBar1)
+                progressBar.visibility = View.VISIBLE
             }
         })
     }
@@ -134,6 +138,8 @@ class SearchArtistPage: BaseActivity(), VolleyCallBack<Artist> {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         val adapter = recyclerView.adapter as ArtistSearchRecyclerAdapter
         adapter.updateList(list)
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar1)
+        progressBar.visibility = View.GONE
     }
 
     private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
