@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -33,6 +34,20 @@ class AlbumPage : BaseActivity() {
         findViewById<TextView>(R.id.artistName).text = album.artist_name
         findViewById<TextView>(R.id.album_genre).text = album.album_genre
         findViewById<TextView>(R.id.album_description).text = album.album_description
+        val editButton = findViewById<Button>(R.id.editAlbum)
+        if (ownAlbum != null) {
+            editButton.visibility = VISIBLE
+            editButton.setOnClickListener {
+                val intent = Intent(this, AlbumCreationPage::class.java)
+                intent.putExtra("id", album.album_id)
+                intent.putExtra("name", album.album_name)
+                intent.putExtra("description", album.album_description)
+                intent.putExtra("genre", album.album_genre)
+                //intent.putExtra("suscription", album.)
+                startActivity(intent)
+            }
+        }
+
         val image = findViewById<ImageView>(R.id.album_image)
 
 
