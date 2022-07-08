@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.StringRequest
 import com.example.spotifiubyfy01.artistProfile.Song
 import org.json.JSONArray
 import org.json.JSONObject
@@ -35,28 +36,19 @@ class PlaylistCreationPage : BaseActivity() {
             chooseFile = Intent.createChooser(chooseFile, "Choose a file")
             startActivityForResult(chooseFile, 1)
         }
-
         val createPlaylistButton = findViewById<Button>(R.id.createPlaylistPageButton)
-        createPlaylistButton.setOnClickListener {
-            val requestBody = JSONObject()
 
-            val playlistNameText = playlistName.text.toString()
-            requestBody.put("playlist_name", playlistNameText)
-            requestBody.put("playlist_description", playlistDescription.text.toString())
-            requestBody.put("playlist_media", playlistNameText)
-            requestBody.put("user_id", app.getProfileData("id"))
-
-
-            val url = "https://spotifiubyfy-music.herokuapp.com/playlists"
-
-            val jsonRequest = JsonObjectRequest(
-                Request.Method.POST, url, requestBody,
-                { response ->
-                    val intent = Intent(this, PlaylistPage::class.java).apply {
-                        val playlist : Playlist = getPlaylist(response)
-                        putExtra("Playlist", playlist)
+        val playlistId = intent.extras?.get("id") as String?
+        if (playlistId != null) {
+            playlistName.setText(intent.extras?.get("name") as String)
+            playlistDescription.setText(intent.extras?.get("description") as String)
+            val storageName = intent.extras?.get("image") as String
+            createPlaylistButton.text = "EDIT PLAYLIST"
+            createPlaylistButton.setOnClickListener {
+                val url = "http://spotifiubyfy-music.herokuapp.com/playlists/" + playlistId
+                val jsonRequest: StringRequest = object : StringRequest(
+                    Method.PUT, url, { response ->
                         if (playlistCoverFile != null) {
-                            val storageName = "covers/"+response.getString("playlist_media")
                             val coverRef =  app.getStorageReference().child(storageName)
                             val uploadTask = coverRef.putFile(playlistCoverFile!!)
                             uploadTask.addOnFailureListener {
@@ -65,22 +57,71 @@ class PlaylistCreationPage : BaseActivity() {
                                 Toast.makeText(app, "Cover successfully uploaded", Toast.LENGTH_SHORT).show()
                             }
                         }
+                        val intent = Intent(this, MainPage::class.java)
+                        startActivity(intent)
+                    },
+                    { errorResponse ->
+                        Toast.makeText(this, "Cant edit playlist right now", Toast.LENGTH_SHORT).show()
+                    }) {
+                    override fun getBodyContentType(): String {
+                        return "application/json"
                     }
-                    startActivity(intent)},
-                { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
-                    var body = "undefined error"
-                    if (errorResponse.networkResponse.data != null) {
-                        try {
-                            body = String(errorResponse.networkResponse.data, Charsets.UTF_8)
-                        } catch (e: UnsupportedEncodingException) {
-                            e.printStackTrace()
-                        }
+
+                    override fun getBody(): ByteArray {
+                        val params2 = HashMap<String, String>()
+                        params2["playlist_name"] = playlistName.text.toString()
+                        params2["playlist_description"] = playlistDescription.text.toString()
+                        return JSONObject(params2 as Map<String, String>).toString().toByteArray()
                     }
-                    putExtra("popuptext", body)
                 }
-                    startActivity(intent)}
-            )
-            MyRequestQueue.getInstance(this).addToRequestQueue(jsonRequest)
+                MyRequestQueue.getInstance(this).addToRequestQueue(jsonRequest)
+            }
+        } else {
+            createPlaylistButton.setOnClickListener {
+                val requestBody = JSONObject()
+
+                val playlistNameText = playlistName.text.toString()
+                requestBody.put("playlist_name", playlistNameText)
+                requestBody.put("playlist_description", playlistDescription.text.toString())
+                requestBody.put("playlist_media", playlistNameText)
+                requestBody.put("user_id", app.getProfileData("id"))
+
+
+                val url = "https://spotifiubyfy-music.herokuapp.com/playlists"
+
+                val jsonRequest = JsonObjectRequest(
+                    Request.Method.POST, url, requestBody,
+                    { response ->
+                        val intent = Intent(this, PlaylistPage::class.java).apply {
+                            val playlist : Playlist = getPlaylist(response)
+                            putExtra("Playlist", playlist)
+                            if (playlistCoverFile != null) {
+                                val storageName = "covers/"+response.getString("playlist_media")
+                                val coverRef =  app.getStorageReference().child(storageName)
+                                val uploadTask = coverRef.putFile(playlistCoverFile!!)
+                                uploadTask.addOnFailureListener {
+                                    Toast.makeText(app, "Cover not uploaded: ERROR", Toast.LENGTH_LONG).show()
+                                }.addOnSuccessListener {
+                                    Toast.makeText(app, "Cover successfully uploaded", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }
+                        startActivity(intent)},
+                    { errorResponse -> val intent = Intent(this, PopUpWindow::class.java).apply {
+                        var body = "undefined error"
+                        if (errorResponse.networkResponse.data != null) {
+                            try {
+                                body = String(errorResponse.networkResponse.data, Charsets.UTF_8)
+                            } catch (e: UnsupportedEncodingException) {
+                                e.printStackTrace()
+                            }
+                        }
+                        putExtra("popuptext", body)
+                    }
+                        startActivity(intent)}
+                )
+                MyRequestQueue.getInstance(this).addToRequestQueue(jsonRequest)
+            }
         }
     }
     override fun onActivityResult(

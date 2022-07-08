@@ -36,9 +36,9 @@ class PlaylistPage : BaseActivity() {
             editButton.setOnClickListener {
                 val intent = Intent(this, PlaylistCreationPage::class.java)
                 intent.putExtra("id", playlist.playlist_id)
-                intent.putExtra("image", playlist.playlist_image)
                 intent.putExtra("name", playlist.playlist_name)
                 intent.putExtra("description", playlist.playlist_description)
+                intent.putExtra("image", playlist.playlist_image)
                 startActivity(intent)
             }
         }
