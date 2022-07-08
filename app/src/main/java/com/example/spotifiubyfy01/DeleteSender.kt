@@ -38,7 +38,7 @@ class DeleteSender {
             position: Int,
             onDeletion: KFunction1<Int, Unit>
         ) {
-            val url = "http://spotifiubyfy-music.herokuapp.com/albums/" + playlistId
+            val url = "http://spotifiubyfy-music.herokuapp.com/playlists/" + playlistId
             val jsonRequest: StringRequest = object : StringRequest(
                 Method.DELETE, url, {
                     onDeletion(position)

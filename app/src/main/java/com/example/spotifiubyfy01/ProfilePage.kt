@@ -162,8 +162,7 @@ class ProfilePage : BaseActivity(), VolleyCallBack<Album> {
         alertDialogBuilder.setTitle("Do you want to delete this playlist?")
         alertDialogBuilder.setMessage("This action is irreversible.")
         alertDialogBuilder.setNegativeButton("yes") { _, _ ->
-            //DeleteSender.deletePlaylist(this, playlist.playlist_id, position, this::onPlaylistDeletion)
-            onPlaylistDeletion(position)
+            DeleteSender.deletePlaylist(this, playlist.playlist_id, position, this::onPlaylistDeletion)
         }
         alertDialogBuilder.setPositiveButton("no", null)
         alertDialogBuilder.show()
