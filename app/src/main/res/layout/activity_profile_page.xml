@@ -42,7 +42,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            android:weightSum="3">
             <TextView
                 android:id="@+id/albums_key_word"
                 android:layout_width="wrap_content"
@@ -51,20 +52,33 @@
                 android:layout_gravity="center_vertical"
                 android:textColor="#FFFFFF"
                 android:textSize="25sp" />
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" >
+            </Space>
             <Button
                 android:id="@+id/createAlbumButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:backgroundTint="#1DB954"
                 android:text="@string/createAlbum" />
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" >
+            </Space>
             <Button
                 android:id="@+id/createSongButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:backgroundTint="#1DB954"
                 android:text="@string/createSong" />
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" >
+            </Space>
         </LinearLayout>
 
         <TextView
@@ -154,7 +168,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:weightSum="3">
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" >
+            </Space>
             <Button
                 android:id="@+id/wallet"
                 android:layout_width="wrap_content"
@@ -162,13 +182,22 @@
                 android:layout_marginHorizontal="50dp"
                 android:backgroundTint="#1DB954"
                 android:text="wallet" />
-
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" >
+            </Space>
             <Button
                 android:id="@+id/following"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#1DB954"
                 android:text="Following" />
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" >
+            </Space>
         </LinearLayout>
 
 
