@@ -205,7 +205,7 @@ class DataSource {
             val albumId = jsonAlbum.getString("id")
             val storageName = "covers/"+jsonAlbum.getString("album_media")
             val songs = jsonAlbum.getJSONArray("songs")
-            var artistName = "default artist name"
+            var artistName = jsonAlbum.getString("artist_name")
             if (songs.length() > 0) {
                 val song = songs.getJSONObject(0)
                 artistName = song.getString("artist_name")

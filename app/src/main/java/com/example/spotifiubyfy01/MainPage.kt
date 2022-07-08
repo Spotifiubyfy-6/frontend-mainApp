@@ -344,7 +344,7 @@ class MainPage: BaseActivity() {
         val songs = jsonAlbum.getJSONArray("songs")
         val description = jsonAlbum.getString("album_description")
         val genre = jsonAlbum.getString("album_genre")
-        var artistName = "default artist name"
+        var artistName = jsonAlbum.getString("artist_name")
         val authorId = jsonAlbum.getString("artist_id")
         val suscription = jsonAlbum.getString("suscription")
         if (songs.length() > 0) {
