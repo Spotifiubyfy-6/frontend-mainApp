@@ -28,16 +28,17 @@ class SearchArtistPage: BaseActivity(), VolleyCallBack<Artist> {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_page)
+        val search = findViewById<EditText>(R.id.search_textfield)
+        search.hint = "Search artists to message..."
         if(intent.extras?.get("invite") != null) {
             val playlistId = intent.extras?.get("playlist_id")
             initRecyclerViewPlaylistInvite(playlistId as String)
+            search.hint = "Invite artist to collaborate in playlist... "
         } else {
             initRecyclerView()
         }
         val app = (this.application as Spotifiubify)
         userId = app.getProfileData("id")!!.toInt()
-        val search = findViewById<EditText>(R.id.search_textfield)
-        search.hint = "Search artists to message..."
         search.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
