@@ -70,7 +70,7 @@ class AlbumPage : BaseActivity() {
     private fun initRecyclerView(songList: List<Song>) {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = SongRecyclerAdapter(songList, this::onItemClicked, this::onDeleteButtonClicked)
+        recyclerView.adapter = SongRecyclerAdapter(songList, R.layout.layout_song_list_album_item, this::onItemClicked, this::onDeleteButtonClicked)
     }
 
     private fun onDeleteButtonClicked(song: Song, position: Int) {

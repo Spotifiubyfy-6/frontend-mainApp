@@ -8,14 +8,14 @@ import com.example.spotifiubyfy01.artistProfile.Song
 
 class SongRecyclerAdapter(
     private var songList: List<Song>,
+    private val resource: Int,
     private val onClickListener: (Song) -> Unit,
     private val onDeleteButtonClicked: ((Song, Int) -> Unit?)?
 ): RecyclerView.Adapter<SongViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.layout_song_list_album_item,
-                parent, false)
+            LayoutInflater.from(parent.context).inflate(resource, parent, false)
         return SongViewHolder(view)
     }
 
