@@ -38,20 +38,24 @@ class AlbumDataSource {
             MyRequestQueue.getInstance(context).addToRequestQueue(getRequest)
         }
 
-        private fun getSong(artist_name: String, jsonSong: JSONObject): Song {
+        private fun getSong(artist_name: String, jsonSong: JSONObject, forUsersProfile: Boolean): Song {
             val songName = jsonSong.getString("song_name")
             val albumId = jsonSong.getString("album_id").toInt()
             val id = jsonSong.getString("id").toInt()
             val storageName = jsonSong.getString("storage_name")
             val albumCover = "covers/"+jsonSong.getString("album_media")
 
-            return Song(songName, artist_name, albumId, id, storageName, albumCover, false)
+            return Song(songName, artist_name, albumId, id, storageName, albumCover, forUsersProfile)
         }
 
-        private fun getListOfSongs(artist_name: String, jsonSongs: JSONArray): List<Song> {
+        private fun getListOfSongs(
+            artist_name: String,
+            jsonSongs: JSONArray,
+            forUsersProfile: Boolean
+        ): List<Song> {
             val songs = ArrayList<Song>()
             for (i in 0 until jsonSongs.length())
-                songs.add(getSong(artist_name, JSONObject(jsonSongs.get(i).toString())))
+                songs.add(getSong(artist_name, JSONObject(jsonSongs.get(i).toString()), forUsersProfile))
             return songs
         }
 
@@ -63,7 +67,7 @@ class AlbumDataSource {
             val genre = jsonAlbum.getString("album_genre")
             val authorId = jsonAlbum.getString("artist_id")
             return Album(albumId, albumName, storageName, artist_name,
-                getListOfSongs(artist_name, JSONArray(jsonAlbum.getString("songs").toString())),
+                getListOfSongs(artist_name, JSONArray(jsonAlbum.getString("songs").toString()), forUsersProfile),
                 description, genre, authorId, forUsersProfile)
         }
 

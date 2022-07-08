@@ -215,7 +215,7 @@ class ProfilePage : BaseActivity(), VolleyCallBack<Album> {
         val artistName = jsonSong.getString("artist_name")
         val albumCover = "covers/"+jsonSong.getString("album_media")
 
-        return Song(songName, artistName, albumId, id, storageName, albumCover, true)
+        return Song(songName, artistName, albumId, id, storageName, albumCover, false)
     }
 
 
