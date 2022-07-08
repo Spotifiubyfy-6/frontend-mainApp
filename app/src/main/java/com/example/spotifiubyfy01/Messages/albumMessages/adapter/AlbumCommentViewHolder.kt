@@ -20,7 +20,12 @@ class AlbumCommentViewHolder(view: View): RecyclerView.ViewHolder(view) {
     private val authorTag: TextView = view.findViewById(R.id.authorTag)
     private val deleteButton: Button = view.findViewById(R.id.delete_comment)
 
-    fun render(item: Comment, onClickListener: (Comment) -> Unit) {
+    fun render(
+        item: Comment,
+        position: Int,
+        onClickListener: (Comment) -> Unit,
+        onDeleteButton: (Comment, Int) -> Unit
+    ) {
         val artist = item.artist
         artistName.text = artist.artistName
         val coverRef = app.getStorageReference().child(artist.image)
@@ -34,7 +39,9 @@ class AlbumCommentViewHolder(view: View): RecyclerView.ViewHolder(view) {
         date.text = dateText
         if (item.ownAlbum) {
             deleteButton.visibility = View.VISIBLE
-
+            deleteButton.setOnClickListener{
+                onDeleteButton(item, position)
+            }
         }
 
         itemView.setOnClickListener { onClickListener(item) }
@@ -43,4 +50,5 @@ class AlbumCommentViewHolder(view: View): RecyclerView.ViewHolder(view) {
         else
             authorTag.visibility = View.GONE
     }
+
 }
