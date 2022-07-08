@@ -26,7 +26,7 @@ class CommentList(
     init {
         val localDate = LocalDateTime.now().atZone(UTC)
         for (i in 0 until numberOfComments)
-            commentList.add(Comment(Artist(0,"kotfu", "cklin"), "hateyou", localDate, false, false))
+            commentList.add(Comment(Artist(0,"kotfu", "cklin"), "1", "hateyou", localDate, false, false))
     }
 
     fun addArtistCommentWithIdToPositionInList(position: Int, comment: Comment) {
@@ -55,8 +55,10 @@ class IdToListOfPositionNCommentMap(
             for (i in 0 until commentArray.length()) {
                 val commentObject = JSONObject(commentArray.get(i).toString())
                 val userId = commentObject.get("user_id") as Int
+                val commentId = commentObject.get("id") as String
                 val comment = Comment(
-                    Artist(userId, "", ""), commentObject.get("comment") as String,
+                    Artist(userId, "", ""), commentId,
+                    commentObject.get("comment") as String,
                     MessagesDataSource.obtainDate(commentObject.get("time") as String),
                             userId == authorId, ownAlbum
                 )

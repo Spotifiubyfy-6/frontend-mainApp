@@ -8,6 +8,7 @@ import java.time.ZonedDateTime
 
 data class Comment(
     var artist: Artist,
+    val id: String,
     val comment: String,
     val time: ZonedDateTime,
     val isAuthor: Boolean,

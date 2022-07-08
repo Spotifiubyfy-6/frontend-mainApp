@@ -27,7 +27,8 @@ class CommentsDataSender {
                     val jsonComment = JSONObject(response)
                     val dateNTime =
                         MessagesDataSource.obtainDate(jsonComment.get("time") as String)
-                    val commentItem = Comment(artist, jsonComment.get("comment") as String, dateNTime, isAuthor, ownAlbum)
+                    val commentId = jsonComment.get("id") as String
+                    val commentItem = Comment(artist, commentId, jsonComment.get("comment") as String, dateNTime, isAuthor, ownAlbum)
                     addComment(commentItem) },
                 { errorResponse ->
                     Log.d("TAG", errorResponse.toString())

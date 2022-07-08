@@ -53,7 +53,7 @@ class AlbumMessagesPage : BaseActivity(), VolleyCallBack<Comment> {
         alertDialogBuilder.setTitle("Do you want to delete this comment?")
         alertDialogBuilder.setMessage("This action is irreversible.")
         alertDialogBuilder.setNegativeButton("yes") { _, _ ->
-            //DeleteSender.deleteSong(this, song.id, position, this::onSongDeletion)
+            //DeleteSender.deleteComment(this, comment., position, this::onSongDeletion)
             onCommentDeletion(position)
         }
         alertDialogBuilder.setPositiveButton("no", null)
