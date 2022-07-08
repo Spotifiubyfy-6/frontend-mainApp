@@ -67,6 +67,17 @@
                 android:text="@string/createSong" />
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/albumInformationText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingHorizontal="10dp"
+            android:textSize="25dp"
+            android:text="You have zero albums. Create one and start sharing!"
+            android:textColor="#7AFFFFFF"
+            android:visibility="gone"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/album_recycler_view"
             android:layout_width="match_parent"
@@ -95,7 +106,16 @@
                 android:backgroundTint="#1DB954"
                 android:text="@string/createPlaylist" />
         </LinearLayout>
-
+        <TextView
+            android:id="@+id/playlistInformationText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingHorizontal="10dp"
+            android:textSize="25dp"
+            android:text="You do not own a playlist or collaborate on one. Create one so you can start saving songs you like!"
+            android:textColor="#7AFFFFFF"
+            android:visibility="gone"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/playlist_recycler_view"
             android:layout_width="match_parent"

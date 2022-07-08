@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -88,7 +89,6 @@ class ProfilePage : BaseActivity(), VolleyCallBack<Album> {
         }.addOnFailureListener {
             Glide.with(image.context).load(default_album_image).into(image)
         }
-        initAlbumRecyclerView(ArrayList())
         createAlbumList(this, artist!!.id, artist!!.artistName, true,this)
 
         val followingBtn = findViewById<Button>(R.id.following)
@@ -101,6 +101,10 @@ class ProfilePage : BaseActivity(), VolleyCallBack<Album> {
     }
 
     private fun initAlbumRecyclerView(albumList: MutableList<Album>) {
+        if (albumList.isEmpty()) {
+            val text: TextView = findViewById(R.id.albumInformationText)
+            text.visibility = VISIBLE
+        }
         val recyclerView = findViewById<RecyclerView>(R.id.album_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
             false)
@@ -155,6 +159,10 @@ class ProfilePage : BaseActivity(), VolleyCallBack<Album> {
     }
 
     private fun initRecyclerViewPlaylists(listOfPlaylists: List<Playlist>) {
+        if (listOfPlaylists.isEmpty()) {
+            val text: TextView = findViewById(R.id.playlistInformationText)
+            text.visibility = VISIBLE
+        }
         val recyclerViewPlaylist = findViewById<RecyclerView>(R.id.playlist_recycler_view)
         recyclerViewPlaylist.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
             false)
