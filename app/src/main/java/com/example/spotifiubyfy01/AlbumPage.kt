@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.ImageView
@@ -86,6 +87,10 @@ class AlbumPage : BaseActivity() {
     }
 
     private fun initRecyclerView(songList: List<Song>) {
+        if (songList.isEmpty()) {
+            val text: TextView = findViewById(R.id.informationText)
+            text.visibility = View.VISIBLE
+        }
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = SongRecyclerAdapter(songList, R.layout.layout_song_list_album_item, this::onItemClicked, this::onDeleteButtonClicked)

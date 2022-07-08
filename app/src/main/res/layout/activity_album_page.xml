@@ -72,6 +72,16 @@
             android:text="TextView"
             android:textColor="#FFFFFF"
             android:textSize="15sp" />
+        <TextView
+            android:id="@+id/informationText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingHorizontal="10dp"
+            android:textSize="25dp"
+            android:text="This album has no songs yet."
+            android:textColor="#7AFFFFFF"
+            android:visibility="gone"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"

@@ -3,6 +3,7 @@ package com.example.spotifiubyfy01.artistProfile
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -53,7 +54,7 @@ class ArtistPage: BaseActivity(), VolleyCallBack<Album> {
         }.addOnFailureListener {
             Glide.with(image.context).load(default_album_image).into(image)
         }
-        initAlbumRecyclerView(ArrayList())
+
         AlbumDataSource.createAlbumList(this, artist!!.id, artist!!.artistName, false, this)
 
         val messageButton = findViewById<Button>(R.id.message_button)
@@ -214,6 +215,10 @@ class ArtistPage: BaseActivity(), VolleyCallBack<Album> {
     }
 
     private fun initAlbumRecyclerView(albumList: List<Album>) {
+        if (albumList.isEmpty()) {
+            val text: TextView = findViewById(R.id.albumInformationText)
+            text.visibility = View.VISIBLE
+        }
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
                                     false)
