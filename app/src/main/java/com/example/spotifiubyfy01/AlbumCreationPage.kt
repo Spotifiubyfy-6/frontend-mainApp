@@ -7,9 +7,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.core.view.size
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
-import com.bumptech.glide.Glide
 import com.example.spotifiubyfy01.search.DataSource
 import org.json.JSONObject
 import java.io.UnsupportedEncodingException
@@ -18,6 +18,7 @@ import java.io.UnsupportedEncodingException
 class AlbumCreationPage : BaseActivity(), AdapterView.OnItemClickListener {
     var albumMediaFile: Uri? = null
     private var albumSuscription: String? = null
+    private var albumGenre: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,8 +27,6 @@ class AlbumCreationPage : BaseActivity(), AdapterView.OnItemClickListener {
 
         val albumName = findViewById<EditText>(R.id.albumName)
         val albumDescription = findViewById<EditText>(R.id.albumDescription)
-        val albumGenre = findViewById<EditText>(R.id.albumGenre)
-
 
         val findImage = findViewById<Button>(R.id.selectImage)
         findImage.setOnClickListener {
@@ -37,14 +36,14 @@ class AlbumCreationPage : BaseActivity(), AdapterView.OnItemClickListener {
             startActivityForResult(chooseFile, 1)
         }
         DataSource.getAvailableSuscriptions(this, this::addSuscriptionsToList)
-
+        DataSource.getAvailableIntetests(this, this::addInterestsToList)
         val createAlbumButton = findViewById<Button>(R.id.createAlbumButton)
         createAlbumButton.setOnClickListener {
             val requestBody = JSONObject()
 
             requestBody.put("album_name", albumName.text.toString())
             requestBody.put("album_description", albumDescription.text.toString())
-            requestBody.put("album_genre", albumGenre.text.toString())
+            requestBody.put("album_genre", albumGenre!!)
             requestBody.put("suscription", albumSuscription!!)
             requestBody.put("artist_id", app.getProfileData("id"))
 
@@ -86,15 +85,28 @@ class AlbumCreationPage : BaseActivity(), AdapterView.OnItemClickListener {
         }
     }
 
+    private fun addInterestsToList(interestsList: List<String>) {
+        val dropDownMenu = findViewById<AutoCompleteTextView>(R.id.albumGenre)
+        albumGenre = interestsList[0]
+        dropDownMenu.setText(albumGenre!!)
+        val adapter = ArrayAdapter(this, R.layout.dropdown_item, interestsList)
+        with(dropDownMenu) {
+            setAdapter(adapter)
+            onItemClickListener = this@AlbumCreationPage
+        }
+        dropDownMenu.isFocusable = true
+    }
+
     private fun addSuscriptionsToList(suscriptionList: List<String>) {
         val dropDownMenu = findViewById<AutoCompleteTextView>(R.id.albumSuscription)
+        albumSuscription = suscriptionList[0]
+        dropDownMenu.setText(albumSuscription)
         val adapter = ArrayAdapter(this, R.layout.dropdown_item, suscriptionList)
         with(dropDownMenu) {
             setAdapter(adapter)
             onItemClickListener = this@AlbumCreationPage
         }
         dropDownMenu.isFocusable = true
-        albumSuscription = suscriptionList[0]
     }
 
     override fun onActivityResult(
@@ -111,9 +123,24 @@ class AlbumCreationPage : BaseActivity(), AdapterView.OnItemClickListener {
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        val suscriptionType = parent?.getItemAtPosition(position).toString()
-        if (suscriptionType == null)
+        val item = parent?.getItemAtPosition(position).toString()
+        if (item == null)
             return
-        albumSuscription = suscriptionType
+        if (suscriptionsMenuWasClicked(parent)) {
+            albumSuscription = item
+        } else {
+            albumGenre = item
+        }
+
+    }
+
+    private fun suscriptionsMenuWasClicked(parent: AdapterView<*>?): Boolean {
+        if (parent?.size == null)
+            return false
+        for (i in 0 until parent?.size!!) {
+            if (parent?.getItemAtPosition(i).toString().equals(albumSuscription))
+                return true
+        }
+        return false
     }
 }

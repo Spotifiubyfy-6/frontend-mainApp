@@ -2,6 +2,9 @@ package com.example.spotifiubyfy01.search
 
 import android.content.Context
 import android.content.Intent
+import android.widget.ArrayAdapter
+import android.widget.ListView
+import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonArrayRequest
@@ -9,6 +12,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.example.spotifiubyfy01.MyRequestQueue
 import com.example.spotifiubyfy01.Playlist
 import com.example.spotifiubyfy01.PopUpWindow
+import com.example.spotifiubyfy01.R
 import com.example.spotifiubyfy01.artistProfile.Album
 import com.example.spotifiubyfy01.artistProfile.Song
 import org.json.JSONArray
@@ -265,9 +269,28 @@ class DataSource {
                     onSuscriptionsObtained(suscriptionList)
                 },
                 {
-
+                    Toast.makeText(context, "Cant get suscriptions types right now", Toast.LENGTH_SHORT).show()
                 })
             MyRequestQueue.getInstance(context).addToRequestQueue(getRequest)
+        }
+
+        fun getAvailableIntetests(context: Context, onInterestsObtained: (List<String>) -> Unit) {
+            val url = "https://spotifiubyfy-users.herokuapp.com/interests"
+            val getRequest = JsonArrayRequest(
+                Request.Method.GET,
+                url,
+                null,
+                { response ->
+                    val list = Array(response.length()) {
+                        response.getString(it)
+                    }
+                    onInterestsObtained(list.toList())
+                },
+                {
+                    Toast.makeText(context, "Cant get interests right now", Toast.LENGTH_SHORT).show()
+                })
+            MyRequestQueue.getInstance(context).addToRequestQueue(getRequest)
+
         }
     }
 }
